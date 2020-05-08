@@ -7,3 +7,8 @@ function dump($item) {
     echo '</pre>';
     return;
 }
+// Redirect
+function redirect($url)
+{
+    return header("location:$url");
+}
