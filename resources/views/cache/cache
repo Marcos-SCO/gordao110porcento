@@ -1,0 +1,3 @@
+in core/View.php chenge render template options to true
+//'cache' => false
+comment chache 

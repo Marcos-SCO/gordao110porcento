@@ -1,0 +1,16 @@
+{
+    "name": "marcos/oop",
+    "authors": [{
+        "name": "Marcos-SCO",
+        "email": "marcos_sco@outlook.com"
+    }],
+    "autoload": {
+        "psr-4": {
+            "App\\": "app//",
+            "Core\\": "core//"
+        }
+    },
+    "require": {
+        "twig/twig": "^3.0"
+    }
+}

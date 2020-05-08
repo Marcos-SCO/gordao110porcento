@@ -1,0 +1,16 @@
+{% extends "base/base.html" %}
+
+{% block title %}
+{{title ?? 'Welcome'}}
+{% endblock title %}
+
+{% block body %}
+<h1>Welcome</h1>
+
+<ul>
+{% for user in users %}
+    <li>{{ user.name }} - {{ user.email }}</li>
+{% endfor %}
+</ul>
+
+{% endblock %}
