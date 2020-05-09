@@ -1,0 +1,61 @@
+{% extends "base/base.html" %}
+
+{% block title %}
+{{title ?? 'Welcome'}}
+{% endblock title %}
+
+{% block body %}
+<h1>{{title ?? ''}}</h1>
+
+<div class="row">
+    <div class="col-md-6 mx-auto">
+        <div class="card card-body bg-light mt5">
+
+            {% if flash %}
+            <div class="{{flash.class}}" id='msg-flash'>
+                {{ flash.name }}
+            </div>
+            <script>
+                setTimeout(() => {
+                    document.querySelector('#msg-flash').style.display = 'none';    
+                }, 3000);
+            </script>
+            {% endif %}
+
+
+            <p>Preencha os campos</p>
+            <form action="{{BASE}}/user/login" method="post">
+                <!-- Email -->
+                <div class="form-group">
+                    <label for="email">E-mail: <sup>*</sup></label>
+                    <input type="email" name="email" id="email"
+                        class="form-control form-control-lg {{ data.email_error != '' ? 'is-invalid' : '' }}"
+                        value="{{ data.email ?? '' }}">
+                    <span class="invalid-feedback">
+                        {{ data.email_error }}
+                    </span>
+                </div>
+                <!-- Password -->
+                <div class="form-group">
+                    <label for="password">Senha: <sup>*</sup></label>
+                    <input type="password" name="password" id="password"
+                        class="form-control form-control-lg {{ data.password_error != '' ? 'is-invalid' : '' }}"
+                        value="{{ data.password ?? '' }}">
+                    <span class="invalid-feedback">
+                        {{ data.password_error }}
+                    </span>
+                </div>
+
+                <div class="row">
+                    <div class="col">
+                        <input type="submit" value="Login" class="btn btn-success btn-block">
+                    </div>
+                    <div class="col"><a href="{{BASE}}/users/register" class="btn btn-light btn-block">Sem conta?
+                            Registre-se</a></div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
