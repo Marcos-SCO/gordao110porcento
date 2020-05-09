@@ -14,7 +14,7 @@ class Config
      * Database name
      * @var string
      */
-    const DB_NAME = 'db_login_mvc';
+    const DB_NAME = 'db_corte_110porcento';
 
     /**
      * Database user

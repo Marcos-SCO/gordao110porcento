@@ -111,9 +111,16 @@ class Model extends Conn
                 $this->bind(":{$field}", $value);
             }
         }
+        // dump($query);
         $this->stmt->execute();
         $result = $this->stmt->fetch();
         $this->stmt->closeCursor();
         return $result;
+    }
+
+    // Get row count
+    public function rowCount()
+    {
+        return $this->stmt->rowCount();
     }
 }

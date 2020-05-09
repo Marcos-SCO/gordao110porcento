@@ -22,14 +22,15 @@ class Router
 
     /* Convert the string with hyphens to camelCase
     e.g. add new => addNew */
-    protected function convertToCamelCase($string): string
+    protected function convertToUc($string): string
     {
-        return lcfirst($this->convertToStudlyCaps($string));
+        return ucfirst($this->convertToStudlyCaps($string));
     }
 
     public function getUrl()
     {
         $url = $_SERVER['QUERY_STRING'];
+        $url = rtrim($url,"/");
         $url = $this->removeQueryStringVariables($url);
         if ($url) {
             $url = filter_var($url, FILTER_SANITIZE_URL);
@@ -42,10 +43,11 @@ class Router
     {
         $url = $this->getUrl();
 
+
         if (isset($url)) {
             // Controller
             if (isset($url[0])) {
-                $this->controller = $this->convertToCamelCase($url[0]);
+                $this->controller = $this->convertToUc($url[0]);
                 unset($url[0]);
             }
             // Method
@@ -65,7 +67,11 @@ class Router
         if (class_exists($controller)) {
             $controller_object = new $controller($this->params);
 
-            call_user_func_array([$controller_object, $this->method], $this->params);
+            if (method_exists($controller_object, $this->method)) {
+                call_user_func_array([$controller_object, $this->method], $this->params);
+            } else {
+                throw new \Exception("Method {$this->method} not found");
+            }
         } else {
             throw new \Exception("Controller class $controller not found");
         }

@@ -1,14 +1,17 @@
 <?php 
 
 // dump information
+
+use App\Config\Config;
+
 function dump($item) {
     echo '<pre style="font-size:1.3rem;">';
         var_dump($item);
     echo '</pre>';
     return;
 }
-// Redirect
-function redirect($url)
+// Simple page redirect
+function redirect($page)
 {
-    return header("location:$url");
+    header('Location: ' . Config::URL_BASE . '/' . $page);
 }
