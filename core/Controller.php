@@ -8,7 +8,7 @@ class Controller
     // Load Model
     public function model($model)
     {
-        $intance = "App\Models\\".$model;
+        $intance = "App\Models\\" . $model;
 
         // Instantiate model
         return new $intance;
