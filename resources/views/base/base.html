@@ -15,10 +15,13 @@
             <li><a href="{{BASE}}/galleria">Galleria</a></li>
             <li><a href="{{BASE}}/contato">Contato</a></li>
             <li><a href="{{BASE}}/trabalhe">Trabalhe conosco</a></li>
-            {% if logout %}
+            {% if SESSION_ID %}
             <li><a href="{{BASE}}/users/destroy">Sair</a></li>
             {% endif %}
         </nav>
+        {% if SESSION_USER_NAME %}
+            <li><a href="{{BASE}}/users/edit/{{SESSION_ID}}">{{ SESSION_USER_NAME }}</a>, Bem vindo!</li>
+        {% endif %}
     </ul>
 
     {% block body %}

@@ -1,0 +1,28 @@
+{% extends "base/base.html" %}
+
+{% block title %}
+{{title ?? 'Welcome'}}
+{% endblock title %}
+
+{% block body %}
+
+<h1>{{ data.title }}</h1>
+<div class="bg-secondary text-white p-2 mb-3">
+    Escrito por {{ data.name }} em {{ data.created_at }}
+</div>
+<p>
+    {{ data.body }}
+</p>
+
+{% if (data.user_id == data.session.user_id) %}
+    <hr>
+    <a href="{{BASE}}/posts/edit/{{ data.id }}" class="btn btn-dark">
+        Edit
+    </a>
+
+    <form class="pull-right" action="{{BASE}}/posts/delete/{{data.id}}" method="post">
+        <input type="submit" value="Deletar" class="btn btn-danger" name="delete">
+    </form>
+{% endif %}
+
+{% endblock %}
