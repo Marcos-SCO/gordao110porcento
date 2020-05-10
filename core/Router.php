@@ -43,7 +43,6 @@ class Router
     {
         $url = $this->getUrl();
 
-
         if (isset($url)) {
             // Controller
             if (isset($url[0])) {
