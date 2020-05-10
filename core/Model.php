@@ -34,7 +34,7 @@ class Model extends Conn
         return $this->stmt->bindValue($param, $value, $type);
     }
 
-    public function select($table)
+    public function selectQuery($table)
     {
         $query = "SELECT * FROM {$table}";
         $this->stmt = $this->conn->prepare($query);
@@ -44,7 +44,7 @@ class Model extends Conn
         return $result;
     }
 
-    public function insert($table, array $data)
+    public function insertQuery($table, array $data)
     {
         $fields = implode(',', array_keys($data));
         $places = ':' . implode(',:', array_keys($data));
@@ -60,7 +60,7 @@ class Model extends Conn
         return $this->conn->lastInsertId();
     }
 
-    public function update($table, array $data, array $id)
+    public function updateQuery($table, array $data, array $id)
     {
         // Destruct id
         list($idKey, $idVal) = $id;
@@ -84,7 +84,7 @@ class Model extends Conn
         return $result;
     }
 
-    public function delete($table, array $data)
+    public function deleteQuery($table, array $data)
     {
         $query = "DELETE FROM {$table} WHERE";
 
