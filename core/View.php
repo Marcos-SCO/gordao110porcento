@@ -51,6 +51,8 @@ class View
 
         // Get global path
         $twig->addGlobal('BASE', Config::URL_BASE);
+        $twig->addGlobal('SESSION_ID', $_SESSION['user_id'] ?? false);
+        $twig->addGlobal('SESSION_USER_NAME', $_SESSION['user_name'] ?? false);
 
         echo $twig->render($template, $args);
     }
