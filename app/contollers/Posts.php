@@ -20,12 +20,14 @@ class Posts extends Controller
 
     public function index()
     {
+        $data = $this->model->getAll();
         View::renderTemplate('posts/index.html', [
-            'title' => 'Posts - Açougue a 110%'
+            'title' => 'Posts - Açougue a 110%',
+            'posts' => $data
         ]);
     }
 
-    public function create()
+    public function create($data, $error)
     {
         $this->isLogin();
 
@@ -34,7 +36,9 @@ class Posts extends Controller
         }
 
         View::renderTemplate('posts/create.html', [
-            'title' => 'Criar Post - Açougue a 110%'
+            'title' => 'Criar Post - Açougue a 110%',
+            'data' => $data,
+            'error' => $error,
         ]);
     }
 
@@ -61,34 +65,32 @@ class Posts extends Controller
                     die('Algo deu errado..');
                 }
             } else {
-                View::renderTemplate('posts/create.html', [
-                    'title' => 'Criar Post - Açougue a 110%',
-                    'data' => $data,
-                    'error' => $error
-                ]);
+                return $this->create($data, $error);
             }
         }
     }
 
-    public function show($id, $flash = null)
+    public function show($id, array $flash = null)
     {
         $data = $this->model->getPost($id);
         $user = $this->model->getUser($id);
-        View::renderTemplate('posts/show.html', [
+        return View::renderTemplate('posts/show.html', [
             'title' => $data->title,
             'data' => $data,
-            'user' => $user
+            'user' => $user,
+            'flash' => $flash
         ]);
     }
 
-    public function edit($id)
+    public function edit($id, $error = false)
     {
         $this->isLogin();
         $data = $this->model->getPost($id);
 
         View::renderTemplate('posts/edit.html', [
             'title' => "Editar - $data->title",
-            'data' => $data
+            'data' => $data,
+            'error' => $error
         ]);
     }
 
@@ -97,19 +99,29 @@ class Posts extends Controller
         $this->isLogin();
 
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-            $data[0] = $this->model->getPostData();
+            $data = $this->model->getPostData();
+            $data[0] = $data;
+            $data[1] = $data;
+            $error = $data[1][1];
             $id = $data[0][0]['id'];
-            $postImg = $this->model->getImg($id);
-            $img = $data[0][0]['img'];
 
-            if ($img != $postImg) {
-                $fullPath = $this->imgFullPath('posts', $id, $img);
-                $this->moveUpload($fullPath);
-                $data['img'] = explode('/',$fullPath);
-            }
-            if ($this->model->updatePost($data[0][0])) {
+            if ($error['error'] != true) {
+                $img = $data[0][0]['img'];
+                $postImg = $data[0][0]['post_img'];
+                if ($img !== "") {
+                    $fullPath = $this->imgFullPath('posts', $id, $img);
+                    $this->moveUpload($fullPath);
+                    $data['img'] = explode('/', $fullPath);
+                } else {
+                    $data[0][0]['img'] = $postImg;
+                }
+
+                $this->model->updatePost($data[0][0]);
                 $flash = flash('post_message', 'Post Atualizado');
+
                 return $this->show($id, $flash);
+            } else {
+                return $this->edit($id, $error);
             }
         }
     }

@@ -15,10 +15,10 @@
         <div class="form-group">
             <label for="title">Titulo<sup>*</sup></label>
             <input type="text" name="title" id="title"
-                class="form-control form-control-lg {{ data.title_error != '' ? 'is-invalid' : '' }}"
+                class="form-control form-control-lg {{ error.title_error != '' ? 'is-invalid' : '' }}"
                 value="{{ data.title ?? '' }}">
             <span class="invalid-feedback">
-                {{ data.title_error }}
+                {{ error.title_error }}
             </span>
         </div>
 
@@ -26,7 +26,8 @@
             <label for="img">Imagem da postagem</label>
             <input type="file" name="img" id="img"
                 class="form-control form-control-lg {{ error.img_error != '' ? 'is-invalid' : '' }}"
-                value="{{ img.name ?? '' }}">
+                value="{{ data.img ?? '' }}">
+            <input type="hidden" name="img" id="img" value="{{data.img}}">
             <span class="invalid-feedback">
                 {{ error.img_error }}
             </span>
@@ -42,7 +43,7 @@
                 {{ data.body ?? '' }}
             </textarea>
             <span class="invalid-feedback">
-                {{ data.body_error }}
+                {{ error.body_error }}
             </span>
         </div>
 

@@ -10,9 +10,9 @@ class Post extends \Core\Model
      * @return array
      * 
      */
-    public static function getAll()
+    public function getAll()
     {
-        $result = $this->selectQuery('posts');
+        $result = $this->selectQuery('posts', "ORDER BY id DESC");
         return $result;
     }
 
@@ -33,7 +33,7 @@ class Post extends \Core\Model
         );
         return $result;
     }
-    
+
     public function getImg($id)
     {
         $result = $this->customQuery(
@@ -85,6 +85,7 @@ class Post extends \Core\Model
         $title = isset($_POST['title']) ? trim($_POST['title']) : '';
         $body = isset($_POST['body']) ? trim($_POST['body']) : '';
         $img = isset($_FILES['img']) ? $_FILES['img'] : null;
+        $postImg = isset($_POST['img']) ? $_POST['img'] : '';
         $userId = isset($_SESSION['user_id']) ? trim($_SESSION['user_id']) : '';
         $titleError = isset($_POST['title_error']) ? trim($_POST['title_error']) : '';
         $bodyError = isset($_POST['body_error']) ? trim($_POST['body_error']) : '';
@@ -96,6 +97,7 @@ class Post extends \Core\Model
             'title' => $title,
             'body' => $body,
             'img' => $img['name'],
+            'post_img' => $postImg,
             'user_id' => $userId,
         ];
 
@@ -114,9 +116,11 @@ class Post extends \Core\Model
             $error['body_error'] = "Preencha o campo de texto.";
             $error['error'] = true;
         }
-        if (empty($data['img'])) {
-            $error['img_error'] = "Insira uma imagem";
-            $error['error'] = true;
+        if (isset($_FILES) && $postImg == '') {
+            if (empty($data['img'])) {
+                $error['img_error'] = "Insira uma imagem";
+                $error['error'] = true;
+            }
         }
 
         return [$data, $error];

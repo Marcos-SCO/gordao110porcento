@@ -24,17 +24,17 @@
         {% endif %}
     </ul>
 
-    {% block body %}
     {% if flash %}
     <div class="{{flash.class}}" id='msg-flash'>
-        {{ flash.name }}
+        {{ flash.message }}
     </div>
     <script>
         setTimeout(() => {
             document.querySelector('#msg-flash').style.display = 'none';
-        }, 3000);
+        }, 4000);
     </script>
     {% endif %}
+    {% block body %}
     {% endblock %}
 
     <script src="{{BASE}}/public/js/app.js"></script>
