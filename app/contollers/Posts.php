@@ -53,9 +53,10 @@ class Posts extends Controller
                 $this->moveUpload($fullPath);
 
                 if ($this->model->addPost($data)) {
-                    flash('post_message', 'Post adicionado');
-                    dump('Envio deu bom');
                     $_SESSION['submitted'] = true;
+                    $flash = flash('post_message', 'Post adicionado');
+                    $id = $this->model->lastId();
+                    return $this->show($id, $flash);
                 } else {
                     die('Algo deu errado..');
                 }
@@ -69,21 +70,25 @@ class Posts extends Controller
         }
     }
 
-    public function show()
+    public function show($id, $flash = null)
     {
-        $this->isLogin();
-
+        $data = $this->model->getPost($id);
+        $user = $this->model->getUser($id);
         View::renderTemplate('posts/show.html', [
-            'title' => 'Show Post - Açougue a 110%'
+            'title' => $data->title,
+            'data' => $data,
+            'user' => $user
         ]);
     }
 
     public function edit($id)
     {
         $this->isLogin();
+        $data = $this->model->getPost($id);
 
         View::renderTemplate('posts/edit.html', [
-            'title' => "Edit Post {$id}"
+            'title' => "Editar - $data->title",
+            'data' => $data
         ]);
     }
 
@@ -92,8 +97,20 @@ class Posts extends Controller
         $this->isLogin();
 
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-            $data = $this->model->getPostData();
-            $this->model->updatePost($data);
+            $data[0] = $this->model->getPostData();
+            $id = $data[0][0]['id'];
+            $postImg = $this->model->getImg($id);
+            $img = $data[0][0]['img'];
+
+            if ($img != $postImg) {
+                $fullPath = $this->imgFullPath('posts', $id, $img);
+                $this->moveUpload($fullPath);
+                $data['img'] = explode('/',$fullPath);
+            }
+            if ($this->model->updatePost($data[0][0])) {
+                $flash = flash('post_message', 'Post Atualizado');
+                return $this->show($id, $flash);
+            }
         }
     }
 

@@ -20,11 +20,21 @@
             {% endif %}
         </nav>
         {% if SESSION_USER_NAME %}
-            <li><a href="{{BASE}}/users/edit/{{SESSION_ID}}">{{ SESSION_USER_NAME }}</a>, Bem vindo!</li>
+        <li><a href="{{BASE}}/users/edit/{{SESSION_ID}}">{{ SESSION_USER_NAME }}</a>, Bem vindo!</li>
         {% endif %}
     </ul>
 
     {% block body %}
+    {% if flash %}
+    <div class="{{flash.class}}" id='msg-flash'>
+        {{ flash.name }}
+    </div>
+    <script>
+        setTimeout(() => {
+            document.querySelector('#msg-flash').style.display = 'none';
+        }, 3000);
+    </script>
+    {% endif %}
     {% endblock %}
 
     <script src="{{BASE}}/public/js/app.js"></script>

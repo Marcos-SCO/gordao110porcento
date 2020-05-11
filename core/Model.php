@@ -123,7 +123,7 @@ class Model extends Conn
     {
         return $this->stmt->rowCount();
     }
-    public function lastInsert()
+    public function lastId()
     {
         return $this->conn->lastInsertId();
     }

@@ -25,6 +25,24 @@ class Post extends \Core\Model
         return $result;
     }
 
+    public function getPost($id)
+    {
+        $result = $this->customQuery(
+            "SELECT * FROM posts WHERE `id` = :id",
+            ['id' => $id]
+        );
+        return $result;
+    }
+    
+    public function getImg($id)
+    {
+        $result = $this->customQuery(
+            "SELECT img FROM posts WHERE `id` = :id",
+            ['id' => $id]
+        );
+        return $result;
+    }
+
     public function addPost($data)
     {
         // dump($data);
@@ -47,12 +65,12 @@ class Post extends \Core\Model
     {
         $this->updateQuery('posts', [
             'title' => $data['title'],
-            'body' => $data['title'],
-            'img' => $data['title']
+            'body' => $data['body'],
+            'img' => $data['img']
         ], ['id', $data['id']]);
 
         // Execute
-        if ($this->model->execute()) {
+        if ($this->rowCount()) {
             return true;
         } else {
             return false;
@@ -63,6 +81,7 @@ class Post extends \Core\Model
     {
         // Sanitize data
         $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+        $id = isset($_POST['id']) ? trim($_POST['id']) : '';
         $title = isset($_POST['title']) ? trim($_POST['title']) : '';
         $body = isset($_POST['body']) ? trim($_POST['body']) : '';
         $img = isset($_FILES['img']) ? $_FILES['img'] : null;
@@ -73,6 +92,7 @@ class Post extends \Core\Model
 
         // Add data to array
         $data = [
+            'id' => $id,
             'title' => $title,
             'body' => $body,
             'img' => $img['name'],
