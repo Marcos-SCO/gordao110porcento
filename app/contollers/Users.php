@@ -18,10 +18,8 @@ class Users extends Controller
 
     public function index()
     {
-        if (!isLoggedIn()) {
-            View::renderTemplate('users/login.html');
-            return exit();
-        }
+        $this->isLogin();
+        
         $users = $this->model->getAll();
         // dump($users);
 
@@ -44,10 +42,8 @@ class Users extends Controller
 
     public function store()
     {
-        if (!isLoggedIn()) {
-            View::renderTemplate('users/login.html');
-            return exit();
-        }
+        $this->isLogin();
+
         // Check for post
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
@@ -107,10 +103,7 @@ class Users extends Controller
 
     public function edit($id)
     {
-        if (!isLoggedIn()) {
-            View::renderTemplate('users/login.html');
-            return exit();
-        }
+        $this->isLogin();
 
         $data = $this->model->customQuery("SELECT * FROM users WHERE id = :id", ['id' => $id]);
 
@@ -125,10 +118,7 @@ class Users extends Controller
 
     public function update()
     {
-        if (!isLoggedIn()) {
-            View::renderTemplate('users/login.html');
-            return exit();
-        }
+        $this->isLogin();
 
         // Check for post
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -162,13 +152,6 @@ class Users extends Controller
                 $data['last_name_error'] = "Digite o sobrenome";
                 $data['errors'] = true;
             }
-
-            /*[
-                'name' => $data['name'],
-                'last_name' => $data['last_name'],
-                'email' => $data['email'],
-                'password' => $data['password'], 'created_at' => date("Y-m-d H:i:s")
-            ]*/
 
             // Make sure error are empty
             if ($errors != true && $data['errors'] != true) {

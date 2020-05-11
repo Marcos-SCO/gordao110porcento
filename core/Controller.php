@@ -13,4 +13,12 @@ class Controller
         // Instantiate model
         return new $intance;
     }
+
+    public function isLogin()
+    {
+        if (!isLoggedIn()) {
+            View::renderTemplate('users/login.html');
+            return exit();
+        }
+    }
 }

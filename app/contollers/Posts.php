@@ -20,9 +20,6 @@ class Posts extends Controller
 
     public function index()
     {
-        // $users = $this->model->getAll();
-        // dump($users);
-
         View::renderTemplate('posts/index.html', [
             'title' => 'Posts - Açougue a 110%'
         ]);
@@ -34,7 +31,6 @@ class Posts extends Controller
             'title' => 'Criar Post - Açougue a 110%'
         ]);
     }
-
 
     public function store()
     {
