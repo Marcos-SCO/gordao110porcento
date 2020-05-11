@@ -22,7 +22,6 @@
             </script>
             {% endif %}
 
-
             <p>Preencha os campos</p>
             <form action="{{BASE}}/users/login" method="post">
                 <!-- Email -->
@@ -39,8 +38,7 @@
                 <div class="form-group">
                     <label for="password">Senha: <sup>*</sup></label>
                     <input type="password" name="password" id="password"
-                        class="form-control form-control-lg {{ data.password_error != '' ? 'is-invalid' : '' }}"
-                        value="{{ data.password ?? '' }}">
+                        class="form-control form-control-lg {{ data.password_error != '' ? 'is-invalid' : '' }}">
                     <span class="invalid-feedback">
                         {{ data.password_error }}
                     </span>

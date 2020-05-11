@@ -10,23 +10,27 @@
     <h2>Add Post</h2>
     <p>Crie um post com esse formulário</p>
     <form action="{{BASE}}/posts/store" method="post" enctype="multipart/form-data">
+        
+        <div class="form-group">
+            <label for="img">Imagem da postagem</label>
+            <input type="file" name="img" id="img" class="form-control form-control-lg {{ data.img_error != '' ? 'is-invalid' : '' }}" value="{{ img.name ?? '' }}">
+            <span class="invalid-feedback">
+                {{ data.img_error }}
+            </span>
+            {% if imgFullPath %}
+                <img src="../public/{{imgFullPath}}" alt="">
+            {% endif %}
+        </div>
+
+        <input type="submit" class="btn btn-success" value="Enviar">
+    </form>
+    <form action="{{BASE}}/posts/store" method="post">
         <div class="form-group">
             <label for="title">Titulo<sup>*</sup></label>
             <input type="text" name="title" id="title" class="form-control form-control-lg {{ data.title_error != '' ? 'is-invalid' : '' }}" value="{{ data.title ?? '' }}">
             <span class="invalid-feedback">
                 {{ data.title_error }}
             </span>
-        </div>
-        
-        <div class="form-group">
-            <label for="img_path">Imagem da postagem</label>
-            <input type="file" name="img_path" id="img_path" class="form-control form-control-lg {{ data.img_path_error != '' ? 'is-invalid' : '' }}" value="{{ img_path.name ?? '' }}">
-            <span class="invalid-feedback">
-                {{ data.img_path_error }}
-            </span>
-            {% if imgFullPath %}
-                <img src="../public/{{imgFullPath}}" alt="">
-            {% endif %}
         </div>
 
         <div class="form-group">

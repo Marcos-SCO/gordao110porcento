@@ -14,6 +14,15 @@ class User extends Model
         return $result;
     }
 
+    public function getUser($id)
+    {
+        $result = $this->customQuery(
+            "SELECT * FROM users WHERE `id` = :id",
+            ['id' => $id]
+        );
+        return $result;
+    }
+
     // Login
     public function login($email, $password)
     {
@@ -31,10 +40,12 @@ class User extends Model
     {
         // Sanitize data
         $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+        $id = isset($_POST['id']) ? trim($_POST['id']) : '';
         $name = isset($_POST['name']) ? trim($_POST['name']) : '';
         $lastname = isset($_POST['last_name']) ? trim($_POST['last_name']) : '';
         $email = isset($_POST['email']) ? trim($_POST['email']) : '';
         $password = isset($_POST['password']) ? trim($_POST['password']) : '';
+        $bio = isset($_POST['bio']) ? trim($_POST['bio']) : null;
         $confirmPassword = isset($_POST['confirm_password']) ? trim($_POST['confirm_password']) : '';
         $nameError = isset($_POST['name_error']) ? trim($_POST['name_error']) : '';
         $lastnameError = isset($_POST['last_name_error']) ? trim($_POST['last_name_error']) : '';
@@ -46,10 +57,12 @@ class User extends Model
 
         // Add data to array
         $data = [
+            'id' => $id,
             'name' => $name,
             'last_name' => $lastname,
             'email' => $email,
             'password' => $password,
+            'bio' => $bio,
             'confirm_password' => $confirmPassword,
             'name_error' => $nameError,
             'last_name_error' => $lastnameError,
@@ -59,15 +72,6 @@ class User extends Model
             'errors' => $errors
         ];
 
-        // Validate Email
-        if (empty($data['email'])) {
-            $data['email_error'] = "Digite o E-mail";
-            $data['errors'] = true;
-        }
-        if (!filter_input(INPUT_POST, 'email', FILTER_VALIDATE_EMAIL)) {
-            $data['email_error'] = "E-mail inválido";
-            $data['errors'] = true;
-        }
         // Name
         if (empty($data['name'])) {
             $data['name_error'] = "Digite o nome";
@@ -79,24 +83,36 @@ class User extends Model
             $data['errors'] = true;
         }
 
-        // Password
-        if (empty($data['password'])) {
-            $data['password_error'] = "Digite a senha";
-            $data['errors'] = true;
-        } elseif (strlen($data['password']) < 6) {
-            $data['password_error'] = "Senha precisa no minimo de ser maior que 6 caracteres";
-            $data['errors'] = true;
+        if (isset($_POST['email'])) {
+            // Validate Email
+            if (empty($data['email'])) {
+                $data['email_error'] = "Digite o E-mail";
+                $data['errors'] = true;
+            }
+            if (!filter_input(INPUT_POST, 'email', FILTER_VALIDATE_EMAIL)) {
+                $data['email_error'] = "E-mail inválido";
+                $data['errors'] = true;
+            }
         }
 
         // Password validate
-        if (empty($data['confirm_password'])) {
-            $data['confirm_password_error'] = "Confirme a senha";
-            $data['errors'] = true;
-        } elseif ($data['password'] != $data['confirm_password']) {
-            $data['confirm_password_error'] = "Senhas estão diferentes";
-            $data['errors'] = true;
+        if (isset($_POST['password']) && isset($_POST['confirm_password'])) {
+            // Password
+            if (empty($data['password'])) {
+                $data['password_error'] = "Digite a senha";
+                $data['errors'] = true;
+            } elseif (strlen($data['password']) < 6) {
+                $data['password_error'] = "Senha precisa no minimo de ser maior que 6 caracteres";
+                $data['errors'] = true;
+            }
+            if (empty($data['confirm_password'])) {
+                $data['confirm_password_error'] = "Confirme a senha";
+                $data['errors'] = true;
+            } elseif ($data['password'] != $data['confirm_password']) {
+                $data['confirm_password_error'] = "Senhas estão diferentes";
+                $data['errors'] = true;
+            }
         }
-
         return $data;
     }
 

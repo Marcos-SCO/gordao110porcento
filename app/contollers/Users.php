@@ -19,7 +19,7 @@ class Users extends Controller
     public function index()
     {
         $this->isLogin();
-        
+
         $users = $this->model->getAll();
         // dump($users);
 
@@ -62,8 +62,6 @@ class Users extends Controller
 
             // Make sure error are empty
             if ($errors != true && $data['errors'] != true) {
-                // Validated
-
                 // Hash password
                 $data['password'] = password_hash($data['password'], PASSWORD_DEFAULT);
 
@@ -122,42 +120,15 @@ class Users extends Controller
 
         // Check for post
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-
             // Errors
             $errors = false;
 
             // Process Form
-            // $data = $this->model->getPostData();
-
-            $name = isset($_POST['name']) ? trim($_POST['name']) : '';
-            $lastname = isset($_POST['last_name']) ? trim($_POST['last_name']) : '';
-
-            $data = [
-                'id' => $_POST['id'],
-                'name_error' => '',
-                'name' => $name,
-                'last_name_error' => '',
-                'last_name' => $lastname,
-                'last_name_error' => '',
-                'errors' => false
-            ];
-
-            // Name
-            if (empty($name)) {
-                $data['name_error'] = "Digite o nome";
-                $data['errors'] = true;
-            }
-
-            if (empty($lastname)) {
-                $data['last_name_error'] = "Digite o sobrenome";
-                $data['errors'] = true;
-            }
+            $data = $this->model->getPostData();
 
             // Make sure error are empty
             if ($errors != true && $data['errors'] != true) {
-                $update = $this->model->updateQuery('users', ['name' => $data['name'],
-                'last_name' => $data['last_name'],
-                'updated_at' => date("Y-m-d H:i:s")], ['id', $data['id']]);
+                $this->model->updateQuery('users', ['name' => $data['name'], 'last_name' => $data['last_name'], 'bio' => $data['bio'], 'updated_at' => date("Y-m-d H:i:s")], ['id', $data['id']]);
 
                 // Update user
                 if ($this->model->rowCount()) {

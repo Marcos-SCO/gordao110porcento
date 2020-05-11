@@ -12,14 +12,17 @@ class Post extends \Core\Model
      */
     public static function getAll()
     {
-        // Connection
-        $conn = self::connection();
+        $result = $this->selectQuery('posts');
+        return $result;
+    }
 
-        $stmt = $conn->query('SELECT id, title, content FROM posts ORDER BY created_at');
-
-        $results = $stmt->fetchAll();
-
-        return $results;
+    public function getUser($id)
+    {
+        $result = $this->customQuery(
+            "SELECT * FROM users WHERE `id` = :id",
+            ['id' => $id]
+        );
+        return $result;
     }
 
     public function addPost($data)
@@ -28,7 +31,7 @@ class Post extends \Core\Model
             'user_id' => $data['user_id'],
             'title' => $data['title'],
             'body' => $data['body'],
-            'img_path' => $data['img_path']
+            'img' => $data['img']
         ]);
 
         // Execute
@@ -44,7 +47,7 @@ class Post extends \Core\Model
         $this->updateQuery('posts', [
             'title' => $data['title'],
             'body' => $data['title'],
-            'img_path' => $data['title']
+            'img' => $data['title']
         ], ['id', $data['id']]);
 
         // Execute
@@ -61,24 +64,57 @@ class Post extends \Core\Model
         $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
         $title = isset($_POST['title']) ? trim($_POST['title']) : '';
         $body = isset($_POST['body']) ? trim($_POST['body']) : '';
-        $imgPath = isset($_FILES['img_path']) ? $_FILES['img_path'] : '';
+        $imgPath = isset($_FILES['img']) ? $_FILES['img'] : '';
         $userId = isset($_SESSION['user_id']) ? trim($_SESSION['user_id']) : '';
         $titleError = isset($_POST['title_error']) ? trim($_POST['title_error']) : '';
         $bodyError = isset($_POST['body_error']) ? trim($_POST['body_error']) : '';
-        $imgPathError = isset($_POST['img_path_error']) ? trim($_POST['img_path_error']) : '';
+        $imgPathError = isset($_POST['img_error']) ? trim($_POST['img_error']) : '';
 
         // Add data to array
         $data = [
             'title' => $title,
             'body' => $body,
-            'img_path' => $imgPath,
+            'img' => $imgPath,
             'user_id' => $userId,
             'title_error' => $titleError,
             'body_error' => $bodyError,
-            'img_path_error' => $imgPathError,
+            'img_error' => $imgPathError,
         ];
 
+        if (empty($data['title'])) {
+            $data['title_error'] = "Coloque o título.";
+            $errors = true;
+        }
+        if (empty($data['body'])) {
+            $data['body_error'] = "Preencha o campo de texto.";
+            $errors = true;
+        }
+        if (empty($data['img'])) {
+            $data['img_error'] = "Insira uma imagem";
+            $errors = true;
+        }
+
         return $data;
+    }
+
+    public function moveUpload()
+    {
+        if ($data["img"]["tmp_name"] != "") {
+
+            $valid_extensions = ['jpeg', 'jpg', 'png', 'gif', 'pdf'];
+
+            $imgExt = strtolower(pathinfo($_FILES['img']['name'], PATHINFO_EXTENSION));
+
+            if (in_array($imgExt, $valid_extensions)) {
+                move_uploaded_file($_FILES['img']['tmp_name'], $imgFullPath);
+            } else {
+                $data['img_error'] = "Envie somente Imagens";
+                $errors = true;
+            }
+        } else {
+            $data['img_error'] = "Envie uma imagem";
+            $errors = true;
+        }
     }
 
     public function imgHandler($table)
@@ -93,12 +129,12 @@ class Post extends \Core\Model
         $tableId = strval($tableId->AUTO_INCREMENT);
 
         // Create post page
-        if (!file_exists("../public/img/posts/post$tableId")) {
-            mkdir("../public/img/posts/post$tableId");
+        if (!file_exists("../public/img/posts/id_$tableId")) {
+            mkdir("../public/img/posts/id_$tableId");
         }
-        $picProfile = $table . "_" . $tableId . "_" . $_FILES['img_path']['name'];
+        $picProfile = $table . "_" . $tableId . "_" . $_FILES['img']['name'];
 
-        $upload_dir = "img/{$table}/post$tableId/";
+        $upload_dir = "img/{$table}/id_$tableId/";
         $imgFullPath = $upload_dir . $picProfile;
 
         return $imgFullPath;
