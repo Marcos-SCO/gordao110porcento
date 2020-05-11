@@ -77,6 +77,11 @@ class Post extends \Core\Model
         }
     }
 
+    public function deletePost($table, $id) 
+    {
+        return $this->deleteQuery($table, $id);
+    }
+
     public function getPostData()
     {
         // Sanitize data

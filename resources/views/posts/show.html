@@ -22,13 +22,10 @@
 </div>
 
 {% if (data.user_id == SESSION_ID) %}
-    <hr>
     <a href="{{BASE}}/posts/edit/{{ data.id }}" class="btn btn-dark">
         Edit
     </a>
-    <form class="pull-right" action="{{BASE}}/posts/delete/{{data.id}}" method="post">
-        <input type="submit" value="Deletar" class="btn btn-danger" name="delete">
-    </form>
-{% endif %}
+    <a href="{{BASE}}/posts/delete/{{data.id}}" method="post" name="delete" onclick="return confirm('Quer Mesmo deletar?')">Deletar</a>
+    {% endif %}
 
 {% endblock %}

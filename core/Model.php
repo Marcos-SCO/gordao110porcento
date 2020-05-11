@@ -90,7 +90,7 @@ class Model extends Conn
     public function deleteQuery($table, array $data)
     {
         $query = "DELETE FROM {$table} WHERE";
-
+        
         foreach ($data as $field => $value) {
             $query .= " {$field} = :{$field} AND";
         }

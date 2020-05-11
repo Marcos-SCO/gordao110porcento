@@ -18,16 +18,17 @@ class Posts extends Controller
         $this->model = $this->model('Post');
     }
 
-    public function index()
+    public function index($flash = false)
     {
         $data = $this->model->getAll();
         View::renderTemplate('posts/index.html', [
             'title' => 'Posts - Açougue a 110%',
-            'posts' => $data
+            'posts' => $data,
+            'flash' => $flash
         ]);
     }
 
-    public function create($data, $error)
+    public function create($data = null, $error = null)
     {
         $this->isLogin();
 
@@ -73,7 +74,7 @@ class Posts extends Controller
     public function show($id, array $flash = null)
     {
         $data = $this->model->getPost($id);
-        $user = $this->model->getUser($id);
+        $user = $this->model->getUser($data->user_id);
         return View::renderTemplate('posts/show.html', [
             'title' => $data->title,
             'data' => $data,
@@ -126,8 +127,13 @@ class Posts extends Controller
         }
     }
 
-    public function destroy($id)
+    public function delete($id)
     {
-        //
+        $this->model->deletePost('posts', ['id' => $id]);
+        if ($this->model->rowCount() > 0) {
+            $this->deleteFolder('posts', $id);
+            $flash = flash('register_seccess', 'Deletado com sucesso');
+            return $this->index($flash);
+        }
     }
 }

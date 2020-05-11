@@ -55,13 +55,19 @@ class Controller
         return $this->imgFullPath($table, $tableId, $_FILES['img']['name']);
     }
 
-    public function imgFullPath($table, $id, $imgName)
+    public function deleteFolder($table, $id)
     {
         if (file_exists("../public/img/{$table}/id_$id")) {
             array_map('unlink', glob("../public/img/{$table}/id_{$id}/*.*"));
             rmdir("../public/img/{$table}/id_$id");
         }
-        // Create post page
+    }
+
+    public function imgFullPath($table, $id, $imgName)
+    {
+        // delete the folder
+        $this->deleteFolder($table, $id);
+        // Create post folder
         if (!file_exists("../public/img/{$table}/id_$id")) {
             mkdir("../public/img/{$table}/id_$id");
         }
