@@ -27,15 +27,16 @@ class Post extends \Core\Model
 
     public function addPost($data)
     {
+        // dump($data);
         $this->insertQuery('posts', [
-            'user_id' => $data['user_id'],
+            'user_id' => $_SESSION['user_id'],
             'title' => $data['title'],
             'body' => $data['body'],
             'img' => $data['img']
         ]);
 
         // Execute
-        if ($this->model->execute()) {
+        if ($this->rowCount()) {
             return true;
         } else {
             return false;
@@ -64,7 +65,7 @@ class Post extends \Core\Model
         $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
         $title = isset($_POST['title']) ? trim($_POST['title']) : '';
         $body = isset($_POST['body']) ? trim($_POST['body']) : '';
-        $imgPath = isset($_FILES['img']) ? $_FILES['img'] : '';
+        $img = isset($_FILES['img']) ? $_FILES['img'] : null;
         $userId = isset($_SESSION['user_id']) ? trim($_SESSION['user_id']) : '';
         $titleError = isset($_POST['title_error']) ? trim($_POST['title_error']) : '';
         $bodyError = isset($_POST['body_error']) ? trim($_POST['body_error']) : '';
@@ -74,69 +75,30 @@ class Post extends \Core\Model
         $data = [
             'title' => $title,
             'body' => $body,
-            'img' => $imgPath,
+            'img' => $img['name'],
             'user_id' => $userId,
+        ];
+
+        $error = [
             'title_error' => $titleError,
             'body_error' => $bodyError,
             'img_error' => $imgPathError,
+            'error' => false
         ];
 
         if (empty($data['title'])) {
-            $data['title_error'] = "Coloque o título.";
-            $errors = true;
+            $error['title_error'] = "Coloque o título.";
+            $error['error'] = true;
         }
         if (empty($data['body'])) {
-            $data['body_error'] = "Preencha o campo de texto.";
-            $errors = true;
+            $error['body_error'] = "Preencha o campo de texto.";
+            $error['error'] = true;
         }
         if (empty($data['img'])) {
-            $data['img_error'] = "Insira uma imagem";
-            $errors = true;
+            $error['img_error'] = "Insira uma imagem";
+            $error['error'] = true;
         }
 
-        return $data;
-    }
-
-    public function moveUpload()
-    {
-        if ($data["img"]["tmp_name"] != "") {
-
-            $valid_extensions = ['jpeg', 'jpg', 'png', 'gif', 'pdf'];
-
-            $imgExt = strtolower(pathinfo($_FILES['img']['name'], PATHINFO_EXTENSION));
-
-            if (in_array($imgExt, $valid_extensions)) {
-                move_uploaded_file($_FILES['img']['tmp_name'], $imgFullPath);
-            } else {
-                $data['img_error'] = "Envie somente Imagens";
-                $errors = true;
-            }
-        } else {
-            $data['img_error'] = "Envie uma imagem";
-            $errors = true;
-        }
-    }
-
-    public function imgHandler($table)
-    {
-        $tableId = $this->customQuery("SELECT AUTO_INCREMENT
-        FROM information_schema.TABLES
-        WHERE TABLE_SCHEMA = :schema
-        AND TABLE_NAME = :table", [
-            'schema' => 'db_corte_110porcento',
-            'table' => $table
-        ]);
-        $tableId = strval($tableId->AUTO_INCREMENT);
-
-        // Create post page
-        if (!file_exists("../public/img/posts/id_$tableId")) {
-            mkdir("../public/img/posts/id_$tableId");
-        }
-        $picProfile = $table . "_" . $tableId . "_" . $_FILES['img']['name'];
-
-        $upload_dir = "img/{$table}/id_$tableId/";
-        $imgFullPath = $upload_dir . $picProfile;
-
-        return $imgFullPath;
+        return [$data, $error];
     }
 }

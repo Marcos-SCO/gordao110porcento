@@ -123,4 +123,8 @@ class Model extends Conn
     {
         return $this->stmt->rowCount();
     }
+    public function lastInsert()
+    {
+        return $this->conn->lastInsertId();
+    }
 }

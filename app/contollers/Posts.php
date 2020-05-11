@@ -29,6 +29,10 @@ class Posts extends Controller
     {
         $this->isLogin();
 
+        if (isset($_SESSION['submitted'])) {
+            unset($_SESSION['submitted']);
+        }
+
         View::renderTemplate('posts/create.html', [
             'title' => 'Criar Post - Açougue a 110%'
         ]);
@@ -38,20 +42,20 @@ class Posts extends Controller
     {
         $this->isLogin();
 
-        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-            $data = $this->model->getPostData();
+        if ($_SERVER['REQUEST_METHOD'] == 'POST' && !isset($_SESSION['submitted'])) {
+            $result = $this->model->getPostData();
+            $data = $result[0];
+            $error = $result[1];
 
             // Validate data
-            $errors = false;
+            if ($error['error'] != true) {
+                $fullPath = $this->imgCreateHandler('posts');
+                $this->moveUpload($fullPath);
 
-            if (isset($_FILES)) {
-                $imgFullPath = $this->model->imgHandler('posts');
-            }
-            if ($errors != true) {
                 if ($this->model->addPost($data)) {
                     flash('post_message', 'Post adicionado');
-
                     dump('Envio deu bom');
+                    $_SESSION['submitted'] = true;
                 } else {
                     die('Algo deu errado..');
                 }
@@ -59,7 +63,7 @@ class Posts extends Controller
                 View::renderTemplate('posts/create.html', [
                     'title' => 'Criar Post - Açougue a 110%',
                     'data' => $data,
-                    'imgFullPath' => $imgFullPath
+                    'error' => $error
                 ]);
             }
         }
