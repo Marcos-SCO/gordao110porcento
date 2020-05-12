@@ -77,14 +77,21 @@ class Users extends Controller
 
     public function show($id)
     {
-        //
+        $user = $this->model->getAllFrom('users', $id);
+        // $posts = $this->model->getAllFrom('posts', $data->id, 'user_id');
+        $posts = $this->model->selectQuery('posts', "WHERE user_id = $user->id ORDER BY created_at DESC");
+        
+        View::renderTemplate('users/show.html', [
+            'user' => $user,
+            'posts' => $posts
+        ]);
     }
 
     public function edit($id, $error = null, $flash = null)
     {
         $this->isLogin();
 
-        $data = $this->model->customQuery("SELECT * FROM users WHERE id = :id", ['id' => $id]);
+        $data = $this->model->getAllFrom('users', $id);
 
         if ($data) {
             View::renderTemplate('users/edit.html', [

@@ -1,0 +1,46 @@
+{% extends "base/base.html" %}
+
+{% block title %}
+{{title ?? 'Welcome'}}
+{% endblock title %}
+
+{% block body %}
+<h1>{{user.name}} {{user.last_name}}</h1>
+<figure>
+    <img src="{{BASE}}/public/img/users/id_{{user.id}}/{{user.img}}" alt="{{user.img}}" title="{{user.title}}">
+    <figcaption style="white-space: nowrap;width: 450px;overflow: hidden;text-overflow: ellipsis;">
+        <p>
+            {{ user.bio }}
+        </p>
+    </figcaption>
+</figure>
+<ul>
+    {% for user in users %}
+    <li>id {{user.id}} - {{ user.name }} - {{ user.email }}</li>
+    {% endfor %}
+</ul>
+
+{% for data in posts %}
+<div>
+    <a href="{{BASE}}/posts/show/{{data.id}}">
+        <h1>{{ data.title }}</h1>
+        <figure>
+            <img src="{{BASE}}/public/img/posts/id_{{data.id}}/{{data.img}}" alt="{{data.img}}" title="{{data.title}}">
+            <figcaption style="white-space: nowrap;width: 450px;overflow: hidden;text-overflow: ellipsis;">
+                <p>
+                    {{ data.body }}
+                </p>
+            </figcaption>
+        </figure>
+    </a>
+    {% if (data.user_id == SESSION_ID) %}
+    <a href="{{BASE}}/posts/edit/{{ data.id }}" class="btn btn-dark">
+        Edit
+    </a>
+    <a href="{{BASE}}/posts/delete/{{data.id}}" method="post" name="delete"
+        onclick="return confirm('Quer Mesmo deletar?')">Deletar</a>
+    {% endif %}
+</div>
+{% endfor %}
+
+{% endblock %}

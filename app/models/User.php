@@ -14,15 +14,6 @@ class User extends Model
         return $result;
     }
 
-    public function getUser($id)
-    {
-        $result = $this->customQuery(
-            "SELECT * FROM users WHERE `id` = :id",
-            ['id' => $id]
-        );
-        return $result;
-    }
-
     // Login
     public function login($email, $password)
     {
