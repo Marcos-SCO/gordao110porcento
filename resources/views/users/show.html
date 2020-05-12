@@ -7,8 +7,8 @@
 {% block body %}
 <h1>{{user.name}} {{user.last_name}}</h1>
 <figure>
-    <img src="{{BASE}}/public/img/users/id_{{user.id}}/{{user.img}}" alt="{{user.img}}" title="{{user.title}}">
-    <figcaption style="white-space: nowrap;width: 450px;overflow: hidden;text-overflow: ellipsis;">
+    <img src="{{BASE}}/public/img/users/id_{{user.id}}/{{user.img}}" alt="{{user.img}}" title="{{user.name}}">
+    <figcaption>
         <p>
             {{ user.bio }}
         </p>
