@@ -121,6 +121,13 @@ class Model extends Conn
         return $result;
     }
 
+    // Get all from with id
+    public function getAllFrom($table, $id, $optionId = 'id')
+    {
+    $result = $this->customQuery("SELECT * FROM $table WHERE `{$optionId}` = :{$optionId}",["{$optionId}" => $id]);
+        return $result;
+    }
+
     // Get row count
     public function rowCount()
     {
