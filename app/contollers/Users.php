@@ -16,16 +16,16 @@ class Users extends Controller
         $this->model = $this->model('User');
     }
 
-    public function index()
+    public function index($flash = null)
     {
         $this->isLogin();
 
         $users = $this->model->getAll();
-        // dump($users);
 
         View::renderTemplate('users/index.html', [
             'title' => 'Users',
-            'users' => $users
+            'users' => $users,
+            'flash' => $flash
         ]);
     }
 
@@ -124,13 +124,11 @@ class Users extends Controller
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             // Process Form
             $data = $this->model->getPostData();
-            // dump($data);
             $data[0] = $data;
             $data[1] = $data;
             $error = $data[1][1];
             $id = $data[0][0]['id'];
             // Make sure error are empty
-            dump($error);
             if ($error['error'] != true) {
                 $img = $data[0][0]['img'];
                 $postImg = $data[0][0]['post_img'];
@@ -160,64 +158,46 @@ class Users extends Controller
     {
         // Check for post
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-
             // Process
             $data = $this->model->getPostData();
+            $data[0] = $data;
+            $data[1] = $data;
+            $error = $data[1][1];
+            $id = $data[0][0]['id'];
 
-            // Errors
-            $errors = false;
-
-            // Validate Email
-            if (empty($data['email'])) {
-                $data['email_error'] = "Digite o E-mail";
-                $errors = true;
-            } elseif (!filter_input(INPUT_POST, 'email', FILTER_VALIDATE_EMAIL)) {
-                $data['email_error'] = "E-mail inválido";
-            }
-
-            // Password
-            if (empty($data['password'])) {
-                $data['password_error'] = "Digite a senha";
-                $errors = true;
-            } elseif (strlen($data['password']) < 6) {
-                $data['password_error'] = "Senha precisa no minimo de ser maior que 6 caracteres";
-                $errors = true;
-            }
-
-            $this->model->customQuery("SELECT `email` FROM users WHERE email = :email", ['email' => $data['email']]);
-
+            $this->model->customQuery("SELECT `email` FROM users WHERE email = :email", ['email' => $data[0][0]['email']]);
             // Check for users/email
             if ($this->model->rowCount() < 0) {
                 // User not Found
-                $data['email_error'] = "Nenhum úsuário encontrado";
-                $errors = true;
+                $error['email_error'] = "Nenhum úsuário encontrado";
+                $error['error'] = true;
             }
 
             // Make sure error are empty
-            if ($errors != true) {
+            if ($error['error'] != true) {
                 // Validate
                 // Check an set logged in user
-                $loggedInUser = $this->model->login($data['email'], $data['password']);
+                $loggedInUser = $this->model->login($data[0][0]['email'], $data[0][0]['password']);
                 if ($loggedInUser) {
                     // Create session
                     $this->model->createUserSession($loggedInUser);
+                    $flash = flash('register_success', 'Logado com sucesso!');
+                    return $this->index($flash);
                 } else {
-                    $data['password_error'] = "Email ou Senha incorretos";
-
-                    View::renderTemplate('users/login.html', [
-                        'title' => 'Login',
-                        'data' => $data
+                    return View::renderTemplate('users/login.html', [
+                        'data' => $data[0][0],
+                        'error' => $error
                     ]);
                 }
             } else {
                 // Load view with errors
-                View::renderTemplate('users/login.html', [
-                    'title' => 'Login',
-                    'data' => $data
+                return View::renderTemplate('users/login.html', [
+                    'data' => $data[0][0],
+                    'error' => $error
                 ]);
             }
         } else {
-            View::renderTemplate('users/login.html');
+            return View::renderTemplate('users/login.html');
         }
     }
 

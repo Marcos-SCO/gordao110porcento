@@ -27,7 +27,6 @@ class User extends Model
     public function login($email, $password)
     {
         $result = $this->customQuery("SELECT `id`, `name`, `email`, `password` FROM users WHERE email = :email", ['email' => $email]);
-
         $hashed_password = $result->password;
         if (password_verify($password, $hashed_password)) {
             return $result;
@@ -83,52 +82,55 @@ class User extends Model
             'error' => false
         ];
 
-        // Name
-        if (empty($data['name'])) {
-            $error['name_error'] = "Digite o nome";
-            $error['errors'] = true;
+        if (isset($_POST['name']) || isset($_POST['last_name'])) {
+            // Name
+            if (empty($data['name'])) {
+                $error['name_error'] = "Digite o nome";
+                $error['error'] = true;
+            }
+            if (empty($data['last_name'])) {
+                $error['last_name_error'] = "Digite o sobrenome";
+                $error['error'] = true;
+            }
         }
 
-        if (empty($data['last_name'])) {
-            $error['last_name_error'] = "Digite o sobrenome";
-            $error['errors'] = true;
-        }
-
-        if (isset($_POST['email'])) {
+        if (isset($_POST['email']) != '') {
             // Validate Email
             if (empty($data['email'])) {
                 $error['email_error'] = "Digite o E-mail";
-                $error['errors'] = true;
+                $error['error'] = true;
             }
             if (!filter_input(INPUT_POST, 'email', FILTER_VALIDATE_EMAIL)) {
                 $error['email_error'] = "E-mail inválido";
-                $error['errors'] = true;
+                $error['error'] = true;
             }
         }
-
-        if (isset($_FILES) && $postImg == '') {
+        
+        if (isset($_FILES['img']) && $postImg == '') {
             if (empty($data['img'])) {
                 $error['img_error'] = "Insira uma imagem";
                 $error['error'] = true;
             }
         }
 
-        // Password validate
-        if (isset($_POST['password']) || isset($_POST['confirm_password'])) {
-            // Password
+        if (isset($_POST['password'])) {
             if (empty($data['password'])) {
                 $error['password_error'] = "Digite a senha";
-                $error['errors'] = true;
+                $error['error'] = true;
             } elseif (strlen($data['password']) < 6) {
                 $error['password_error'] = "Senha precisa no minimo de ser maior que 6 caracteres";
-                $error['errors'] = true;
+                $error['error'] = true;
             }
+        }
+        // Password validate
+        if (isset($_POST['confirm_password'])) {
+            // Password
             if (empty($data['confirm_password'])) {
                 $error['confirm_password_error'] = "Confirme a senha";
-                $error['errors'] = true;
+                $error['error'] = true;
             } elseif ($data['password'] != $data['confirm_password']) {
                 $error['confirm_password_error'] = "Senhas estão diferentes";
-                $error['errors'] = true;
+                $error['error'] = true;
             }
         }
         return [$data, $error];

@@ -17,7 +17,7 @@
                 <div class="form-group">
                     <label for="email">E-mail: <sup>*</sup></label>
                     <input type="email" name="email" id="email"
-                        class="form-control form-control-lg {{ data.email_error != '' ? 'is-invalid' : '' }}"
+                        class="form-control form-control-lg {{ error.email_error != '' ? 'is-invalid' : '' }}"
                         value="{{ data.email ?? '' }}">
                     <span class="invalid-feedback">
                         {{ error.email_error }}
