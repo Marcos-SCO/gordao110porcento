@@ -73,8 +73,8 @@ class Posts extends Controller
 
     public function show($id, array $flash = null)
     {
-        $data = $this->model->getPost($id);
-        $user = $this->model->getUser($data->user_id);
+        $data = $this->model->getAllFrom('posts', $id);
+        $user = $this->model->getAllFrom('users',$data->user_id);
         return View::renderTemplate('posts/show.html', [
             'title' => $data->title,
             'data' => $data,
@@ -86,7 +86,7 @@ class Posts extends Controller
     public function edit($id, $error = false)
     {
         $this->isLogin();
-        $data = $this->model->getPost($id);
+        $data = $this->model->getAllFrom('posts',$id);
 
         View::renderTemplate('posts/edit.html', [
             'title' => "Editar - $data->title",

@@ -16,24 +16,6 @@ class Post extends \Core\Model
         return $result;
     }
 
-    public function getUser($id)
-    {
-        $result = $this->customQuery(
-            "SELECT * FROM users WHERE `id` = :id",
-            ['id' => $id]
-        );
-        return $result;
-    }
-
-    public function getPost($id)
-    {
-        $result = $this->customQuery(
-            "SELECT * FROM posts WHERE `id` = :id",
-            ['id' => $id]
-        );
-        return $result;
-    }
-
     public function getImg($id)
     {
         $result = $this->customQuery(

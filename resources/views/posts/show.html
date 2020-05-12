@@ -9,7 +9,7 @@
 <div>
     <h1>{{ data.title }}</h1>
     <small class="bg-secondary text-white p-2 mb-3">
-        Escrito por {{ user.name }} em {{ data.created_at }}
+        Escrito por <a href="{{BASE}}/users/show/{{user.id}}">{{ user.name }}</a> em {{ data.created_at }}
     </small>
     <figure>
         <img src="{{BASE}}/public/img/posts/id_{{data.id}}/{{data.img}}" alt="{{data.img}}" title="{{data.title}}">
