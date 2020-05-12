@@ -36,6 +36,12 @@ class User extends Model
         }
     }
 
+    // update
+    public function updateUser($data)
+    {
+        return $this->updateQuery('users', ['name' => $data['name'], 'last_name' => $data['last_name'], 'img' => $data['img'], 'bio' => $data['bio'], 'updated_at' => date("Y-m-d H:i:s")], ['id', $data['id']]);
+    }
+
     public function getPostData()
     {
         // Sanitize data
@@ -45,6 +51,8 @@ class User extends Model
         $lastname = isset($_POST['last_name']) ? trim($_POST['last_name']) : '';
         $email = isset($_POST['email']) ? trim($_POST['email']) : '';
         $password = isset($_POST['password']) ? trim($_POST['password']) : '';
+        $img = isset($_FILES['img']) ? $_FILES['img']['name'] : null;
+        $postImg = isset($_POST['img']) ? $_POST['img'] : '';
         $bio = isset($_POST['bio']) ? trim($_POST['bio']) : null;
         $confirmPassword = isset($_POST['confirm_password']) ? trim($_POST['confirm_password']) : '';
         $nameError = isset($_POST['name_error']) ? trim($_POST['name_error']) : '';
@@ -53,8 +61,6 @@ class User extends Model
         $passwordError = isset($_POST['password_error']) ? trim($_POST['password_error']) : '';
         $confirmPasswordError = isset($_POST['confirm_password_error']) ? trim($_POST['confirm_password_error']) : '';
 
-        $errors = false;
-
         // Add data to array
         $data = [
             'id' => $id,
@@ -62,58 +68,70 @@ class User extends Model
             'last_name' => $lastname,
             'email' => $email,
             'password' => $password,
-            'bio' => $bio,
             'confirm_password' => $confirmPassword,
+            'bio' => $bio,
+            'img' => $img,
+            'post_img' => $postImg,
+        ];
+
+        $error = [
             'name_error' => $nameError,
             'last_name_error' => $lastnameError,
             'email_error' => $emailError,
             'password_error' => $passwordError,
             'confirm_password_error' => $confirmPasswordError,
-            'errors' => $errors
+            'error' => false
         ];
 
         // Name
         if (empty($data['name'])) {
-            $data['name_error'] = "Digite o nome";
-            $data['errors'] = true;
+            $error['name_error'] = "Digite o nome";
+            $error['errors'] = true;
         }
 
         if (empty($data['last_name'])) {
-            $data['last_name_error'] = "Digite o sobrenome";
-            $data['errors'] = true;
+            $error['last_name_error'] = "Digite o sobrenome";
+            $error['errors'] = true;
         }
 
         if (isset($_POST['email'])) {
             // Validate Email
             if (empty($data['email'])) {
-                $data['email_error'] = "Digite o E-mail";
-                $data['errors'] = true;
+                $error['email_error'] = "Digite o E-mail";
+                $error['errors'] = true;
             }
             if (!filter_input(INPUT_POST, 'email', FILTER_VALIDATE_EMAIL)) {
-                $data['email_error'] = "E-mail inválido";
-                $data['errors'] = true;
+                $error['email_error'] = "E-mail inválido";
+                $error['errors'] = true;
+            }
+        }
+
+        if (isset($_FILES) && $postImg == '') {
+            if (empty($data['img'])) {
+                $error['img_error'] = "Insira uma imagem";
+                $error['error'] = true;
             }
         }
 
         // Password validate
-        if (isset($_POST['password']) && isset($_POST['confirm_password'])) {
+        if (isset($_POST['password']) || isset($_POST['confirm_password'])) {
             // Password
             if (empty($data['password'])) {
-                $data['password_error'] = "Digite a senha";
-                $data['errors'] = true;
+                $error['password_error'] = "Digite a senha";
+                $error['errors'] = true;
             } elseif (strlen($data['password']) < 6) {
-                $data['password_error'] = "Senha precisa no minimo de ser maior que 6 caracteres";
-                $data['errors'] = true;
+                $error['password_error'] = "Senha precisa no minimo de ser maior que 6 caracteres";
+                $error['errors'] = true;
             }
             if (empty($data['confirm_password'])) {
-                $data['confirm_password_error'] = "Confirme a senha";
-                $data['errors'] = true;
+                $error['confirm_password_error'] = "Confirme a senha";
+                $error['errors'] = true;
             } elseif ($data['password'] != $data['confirm_password']) {
-                $data['confirm_password_error'] = "Senhas estão diferentes";
-                $data['errors'] = true;
+                $error['confirm_password_error'] = "Senhas estão diferentes";
+                $error['errors'] = true;
             }
         }
-        return $data;
+        return [$data, $error];
     }
 
     public function createUserSession($loggedInUser)

@@ -99,7 +99,7 @@ class Users extends Controller
         //
     }
 
-    public function edit($id)
+    public function edit($id, $error = null, $flash = null)
     {
         $this->isLogin();
 
@@ -107,7 +107,9 @@ class Users extends Controller
 
         if ($data) {
             View::renderTemplate('users/edit.html', [
-                'data' => $data
+                'data' => $data,
+                'flash' => $flash,
+                'error' => $error
             ]);
         } else {
             dump('Usuário não existe');
@@ -120,33 +122,36 @@ class Users extends Controller
 
         // Check for post
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-            // Errors
-            $errors = false;
-
             // Process Form
             $data = $this->model->getPostData();
-
+            // dump($data);
+            $data[0] = $data;
+            $data[1] = $data;
+            $error = $data[1][1];
+            $id = $data[0][0]['id'];
             // Make sure error are empty
-            if ($errors != true && $data['errors'] != true) {
-                $this->model->updateQuery('users', ['name' => $data['name'], 'last_name' => $data['last_name'], 'bio' => $data['bio'], 'updated_at' => date("Y-m-d H:i:s")], ['id', $data['id']]);
+            dump($error);
+            if ($error['error'] != true) {
+                $img = $data[0][0]['img'];
+                $postImg = $data[0][0]['post_img'];
+                if ($img !== "") {
+                    $fullPath = $this->imgFullPath('users', $id, $img);
+                    $this->moveUpload($fullPath);
+                    $data['img'] = explode('/', $fullPath);
+                } else {
+                    $data[0][0]['img'] = $postImg;
+                }
 
+                $this->model->updateUser($data[0][0]);
                 // Update user
                 if ($this->model->rowCount()) {
                     $flash = flash('register_success', 'Atualizado com sucesso!');
-
-                    View::renderTemplate('users/edit.html', [
-                        'title' => 'Edit',
-                        'data' => $data,
-                        'flash' => $flash
-                    ]);
+                    return $this->edit($id, $error = null, $flash);
                 } else {
                     die('Algo deu errado...');
                 }
             } else {
-                View::renderTemplate('users/edit.html', [
-                    'title' => 'Edit',
-                    'data' => $data
-                ]);
+                return $this->edit($id, $error);
             }
         }
     }

@@ -15,7 +15,7 @@
 
             <p>Preencha o formulário</p>
 
-            <form action="{{BASE}}/users/update" method="post">
+            <form action="{{BASE}}/users/update" method="post" enctype="multipart/form-data">
 
                 <input type="hidden" name="id" value="{{ data.id }}">
 
@@ -23,19 +23,19 @@
                 <div class="form-group">
                     <label for="name">Nome: <sup>*</sup></label>
                     <input type="text" name="name" id="name"
-                        class="form-control form-control-lg {{data.name_error != '' ? 'is-invalid' : '' }}"
+                        class="form-control form-control-lg {{error.name_error != '' ? 'is-invalid' : '' }}"
                         value="{{ data.name ?? '' }}">
                     <span class=" invalid-feedback">
-                        {{ data.name_error }} </span>
+                        {{ error.name_error }} </span>
                 </div>
 
                 <div class="form-group">
                     <label for="last_name">Sobrenome: <sup>*</sup></label>
                     <input type="text" name="last_name" id="last_name"
-                        class="form-control form-control-lg {{data.last_name_error != '' ? 'is-invalid' : '' }}"
+                        class="form-control form-control-lg {{error.last_name_error != '' ? 'is-invalid' : '' }}"
                         value="{{ data.last_name ?? '' }}">
                     <span class=" invalid-feedback">
-                        {{ data.last_name_error }} </span>
+                        {{ error.last_name_error }} </span>
                 </div>
 
                 <div class="form-group">
@@ -43,6 +43,21 @@
                     <textarea type="text" name="bio" id="bio" class="form-control form-control-lg">
                         {{ data.bio ?? '' }}
                     </textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="img">Imagem de perfil</label>
+                    <input type="file" name="img" id="img"
+                        class="form-control form-control-lg {{ error.img_error != '' ? 'is-invalid' : '' }}"
+                        value="{{ data.img ?? '' }}">
+                    <input type="hidden" name="img" id="img" value="{{data.img}}">
+                    <span class="invalid-feedback">
+                        {{ error.img_error }}
+                    </span>
+                    {% if data.img %}
+                    <img src="{{BASE}}/public/img/users/id_{{data.id}}/{{data.img}}" alt="{{data.img}}"
+                        title="{{data.name}}">
+                    {% endif %}
                 </div>
 
                 <div class="row">
