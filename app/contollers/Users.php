@@ -29,14 +29,14 @@ class Users extends Controller
         ]);
     }
 
-    public function create()
+    public function create($data = false, $error = false)
     {
-        if (!isLoggedIn()) {
-            View::renderTemplate('users/login.html');
-            return exit();
-        }
+        $this->isLogin();
+
         View::renderTemplate('users/create.html', [
-            'title' => 'Cadastro'
+            'title' => 'Cadastro',
+            'data' => $data,
+            'error' => $error
         ]);
     }
 
@@ -46,50 +46,31 @@ class Users extends Controller
 
         // Check for post
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-
-            // Errors
-            $errors = false;
-
             // Process Form
             $data = $this->model->getPostData();
+            $error = $data[1];
+            $id = $data[0]['id'];
 
-            $this->model->customQuery("SELECT `email` FROM users WHERE email = :email", ['email' => $data['email']]);
+            $this->model->customQuery("SELECT `email` FROM users WHERE email = :email", ['email' => $data[0]['email']]);
 
             if ($this->model->rowCount() > 0) {
-                $data['email_error'] = "Já existe um úsuário com esse E-mail";
-                $errors = true;
+                $error['email_error'] = "Já existe um úsuário com esse E-mail";
+                $error['error'] = true;
             }
 
             // Make sure error are empty
-            if ($errors != true && $data['errors'] != true) {
+            if ($error['error'] != true) {
                 // Hash password
-                $data['password'] = password_hash($data['password'], PASSWORD_DEFAULT);
-
+                $data[0]['password'] = password_hash($data[0]['password'], PASSWORD_DEFAULT);
                 // Register user
-                if ($this->model->insertQuery(
-                    'users',
-                    [
-                        'name' => $data['name'],
-                        'last_name' => $data['last_name'],
-                        'email' => $data['email'],
-                        'password' => $data['password'], 'created_at' => date("Y-m-d H:i:s")
-                    ]
-                )) {
-                    $flash = flash('register_success', 'Registrado com sucesso, faça Login');
-
-                    View::renderTemplate('users/login.html', [
-                        'title' => 'Login',
-                        'data' => $data,
-                        'flash' => $flash
-                    ]);
+                if ($this->model->insertUser($data[0])) {
+                    $flash = flash('register_success', 'Usuário registrado com sucesso!');
+                    return $this->index($flash);
                 } else {
                     die('Algo deu errado...');
                 }
             } else {
-                View::renderTemplate('users/create.html', [
-                    'title' => 'Login',
-                    'data' => $data
-                ]);
+                return $this->create($data[0], $error);
             }
         }
     }
@@ -124,23 +105,21 @@ class Users extends Controller
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             // Process Form
             $data = $this->model->getPostData();
-            $data[0] = $data;
-            $data[1] = $data;
-            $error = $data[1][1];
-            $id = $data[0][0]['id'];
+            $error = $data[1];
+            $id = $data[0]['id'];
             // Make sure error are empty
             if ($error['error'] != true) {
-                $img = $data[0][0]['img'];
-                $postImg = $data[0][0]['post_img'];
+                $img = $data[0]['img'];
+                $postImg = $data[0]['post_img'];
                 if ($img !== "") {
                     $fullPath = $this->imgFullPath('users', $id, $img);
                     $this->moveUpload($fullPath);
                     $data['img'] = explode('/', $fullPath);
                 } else {
-                    $data[0][0]['img'] = $postImg;
+                    $data[0]['img'] = $postImg;
                 }
 
-                $this->model->updateUser($data[0][0]);
+                $this->model->updateUser($data[0]);
                 // Update user
                 if ($this->model->rowCount()) {
                     $flash = flash('register_success', 'Atualizado com sucesso!');
@@ -154,22 +133,21 @@ class Users extends Controller
         }
     }
 
-    public function login()
+    public function login($flash = null)
     {
         // Check for post
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             // Process
             $data = $this->model->getPostData();
-            $data[0] = $data;
-            $data[1] = $data;
-            $error = $data[1][1];
-            $id = $data[0][0]['id'];
+            $error = $data[1];
+            $id = $data[0]['id'];
 
-            $this->model->customQuery("SELECT `email` FROM users WHERE email = :email", ['email' => $data[0][0]['email']]);
+            $this->model->customQuery("SELECT `email` FROM users WHERE `email` = :email", ['email' => $data[0]['email']]);
+
             // Check for users/email
-            if ($this->model->rowCount() < 0) {
+            if ($this->model->rowCount() <= 0) {
                 // User not Found
-                $error['email_error'] = "Nenhum úsuário encontrado";
+                $error['email_error'] = "Nenhum usuário encontrado";
                 $error['error'] = true;
             }
 
@@ -177,27 +155,28 @@ class Users extends Controller
             if ($error['error'] != true) {
                 // Validate
                 // Check an set logged in user
-                $loggedInUser = $this->model->login($data[0][0]['email'], $data[0][0]['password']);
+                $loggedInUser = $this->model->login($data[0]['email'], $data[0]['password']);
                 if ($loggedInUser) {
                     // Create session
                     $this->model->createUserSession($loggedInUser);
                     $flash = flash('register_success', 'Logado com sucesso!');
                     return $this->index($flash);
                 } else {
+                    $error['password_error'] = "Email ou senha incorretos";
                     return View::renderTemplate('users/login.html', [
-                        'data' => $data[0][0],
+                        'data' => $data[0],
                         'error' => $error
                     ]);
                 }
             } else {
                 // Load view with errors
                 return View::renderTemplate('users/login.html', [
-                    'data' => $data[0][0],
+                    'data' => $data[0],
                     'error' => $error
                 ]);
             }
         } else {
-            return View::renderTemplate('users/login.html');
+            return View::renderTemplate('users/login.html', ['flash' => $flash]);
         }
     }
 

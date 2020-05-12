@@ -35,6 +35,12 @@ class User extends Model
         }
     }
 
+    // insert
+    public function insertUser($data)
+    {
+        return $this->insertQuery('users', ['name' => $data['name'], 'last_name' => $data['last_name'], 'email' => $data['email'], 'password' => $data['password'], 'created_at' => date("Y-m-d H:i:s")]);
+    }
+
     // update
     public function updateUser($data)
     {
@@ -105,7 +111,7 @@ class User extends Model
                 $error['error'] = true;
             }
         }
-        
+
         if (isset($_FILES['img']) && $postImg == '') {
             if (empty($data['img'])) {
                 $error['img_error'] = "Insira uma imagem";

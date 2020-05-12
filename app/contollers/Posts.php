@@ -101,23 +101,21 @@ class Posts extends Controller
 
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $data = $this->model->getPostData();
-            $data[0] = $data;
-            $data[1] = $data;
-            $error = $data[1][1];
-            $id = $data[0][0]['id'];
+            $error = $data[1];
+            $id = $data[0]['id'];
 
             if ($error['error'] != true) {
-                $img = $data[0][0]['img'];
-                $postImg = $data[0][0]['post_img'];
+                $img = $data[0]['img'];
+                $postImg = $data[0]['post_img'];
                 if ($img !== "") {
                     $fullPath = $this->imgFullPath('posts', $id, $img);
                     $this->moveUpload($fullPath);
                     $data['img'] = explode('/', $fullPath);
                 } else {
-                    $data[0][0]['img'] = $postImg;
+                    $data[0]['img'] = $postImg;
                 }
 
-                $this->model->updatePost($data[0][0]);
+                $this->model->updatePost($data[0]);
                 $flash = flash('post_message', 'Post Atualizado');
 
                 return $this->show($id, $flash);
