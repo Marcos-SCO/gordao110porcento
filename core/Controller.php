@@ -17,7 +17,7 @@ class Controller
     public function isLogin()
     {
         if (!isLoggedIn()) {
-            View::renderTemplate('users/login.html');
+            redirect('users/login');
             return exit();
         }
     }

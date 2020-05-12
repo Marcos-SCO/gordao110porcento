@@ -19,6 +19,25 @@
 
                 <input type="hidden" name="id" value="{{ data.id }}">
 
+                {% if (ADM_ID == 1) and data.id != 1 %}
+                <!-- Tipo de usuario -->
+                <div class="form-group">
+                    <label for="adm">Nivel administrativo</label>
+                    <select name="adm" id="adm">
+                        <optgroup label="Tipo de usuário">
+                            {%  for i in 0..1 %}
+                            {% if data.adm == i %}
+                            <option value="{{i}}" selected>{% if i == 1 %}Administrador{% else %}Comum{% endif %}
+                            </option>
+                            {% else %}
+                            <option value="{{i}}">{% if i == 1 %}Administrador{% else %}Comum{% endif %}</option>
+                            {% endif %}
+                            {% endfor %}
+                        </optgroup>
+                    </select>
+                </div>
+                {% endif %}
+
                 <!-- Name -->
                 <div class="form-group">
                     <label for="name">Nome: <sup>*</sup></label>

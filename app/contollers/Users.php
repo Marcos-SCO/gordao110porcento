@@ -21,7 +21,6 @@ class Users extends Controller
         $this->isLogin();
 
         $users = $this->model->getAll();
-
         View::renderTemplate('users/index.html', [
             'title' => 'Users',
             'users' => $users,
@@ -75,12 +74,23 @@ class Users extends Controller
         }
     }
 
+    public function status($id, $status) {
+        if ((isset($_SESSION['adm_id']) && $_SESSION['adm_id'] != 1) || !(isset($_SESSION['user_id'])) && $id == 1) {
+            return redirect('home');
+        } else {
+            $this->model->updateStatus($id, $status);
+            ($status == 1) ? $message = 'Usuário ativado com sucesso' : $message = 'Usuário desativado com sucesso!';
+            $flash = flash('register_success', $message);
+            return $this->index($flash);
+        }
+    }
+
     public function show($id)
     {
         $user = $this->model->getAllFrom('users', $id);
         // $posts = $this->model->getAllFrom('posts', $data->id, 'user_id');
         $posts = $this->model->selectQuery('posts', "WHERE user_id = $user->id ORDER BY created_at DESC");
-        
+
         View::renderTemplate('users/show.html', [
             'user' => $user,
             'posts' => $posts
@@ -144,11 +154,16 @@ class Users extends Controller
     {
         // Check for post
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+
+            
             // Process
             $data = $this->model->getPostData();
             $error = $data[1];
             $id = $data[0]['id'];
 
+            // Dont let users with status 0 login
+            $this->model->blockLogin($data[0]['email']);
+            
             $this->model->customQuery("SELECT `email` FROM users WHERE `email` = :email", ['email' => $data[0]['email']]);
 
             // Check for users/email
@@ -190,6 +205,7 @@ class Users extends Controller
     public function destroy()
     {
         unset($_SESSION['user_id']);
+        unset($_SESSION['adm_id']);
         unset($_SESSION['user_email']);
         unset($_SESSION['user_name']);
 

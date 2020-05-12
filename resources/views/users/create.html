@@ -14,6 +14,19 @@
             <p>Preencha o formulário para se inscrever</p>
 
             <form action="{{BASE}}/users/store" method="post">
+                {% if ADM_ID == 1 %}
+                <!-- Tipo de usuario -->
+                <div class="form-group">
+                    <label for="adm">Nivel administrativo</label>
+                    <select name="adm" id="adm">
+                        <optgroup label="Tipo de usuário">
+                            <option value="1">Administrador</option>
+                            <option value="0" selected>Comum</option>
+                        </optgroup>
+                    </select>
+                </div>
+                {% endif %}
+
                 <!-- Name -->
                 <div class="form-group">
                     <label for="name">Nome: <sup>*</sup></label>

@@ -10,14 +10,14 @@ class User extends Model
 {
     public function getAll()
     {
-        $result = $this->selectQuery('users');
+        $result = $this->selectQuery('users', 'ORDER BY id AND status DESC');
         return $result;
     }
 
     // Login
     public function login($email, $password)
     {
-        $result = $this->customQuery("SELECT `id`, `name`, `email`, `password` FROM users WHERE email = :email", ['email' => $email]);
+        $result = $this->customQuery("SELECT `status`, `id`, `adm`, `name`, `email`, `password` FROM users WHERE email = :email", ['email' => $email]);
         $hashed_password = $result->password;
         if (password_verify($password, $hashed_password)) {
             return $result;
@@ -29,13 +29,30 @@ class User extends Model
     // insert
     public function insertUser($data)
     {
-        return $this->insertQuery('users', ['name' => $data['name'], 'last_name' => $data['last_name'], 'email' => $data['email'], 'password' => $data['password'], 'created_at' => date("Y-m-d H:i:s")]);
+        return $this->insertQuery('users', ['adm' => $data['adm'], 'name' => $data['name'], 'last_name' => $data['last_name'], 'email' => $data['email'], 'password' => $data['password'], 'created_at' => date("Y-m-d H:i:s")]);
     }
 
     // update
     public function updateUser($data)
     {
-        return $this->updateQuery('users', ['name' => $data['name'], 'last_name' => $data['last_name'], 'img' => $data['img'], 'bio' => $data['bio'], 'updated_at' => date("Y-m-d H:i:s")], ['id', $data['id']]);
+        return $this->updateQuery('users', ['adm' => $data['adm'], 'name' => $data['name'], 'last_name' => $data['last_name'], 'img' => $data['img'], 'bio' => $data['bio'], 'updated_at' => date("Y-m-d H:i:s")], ['id', $data['id']]);
+    }
+
+    public function updateStatus($id, $status)
+    {
+        return $this->updateQuery('users', ['status' => $status], ['id', $id]);
+    }
+
+    public function blockLogin($email)
+    {
+        $status = $this->customQuery("SELECT `status` FROM users WHERE `email` = :email", ['email' => $email]);
+        if ($status->status < 1) {
+            $error['email_error'] = 'Usuário está desativado do sistema';
+            View::renderTemplate('users/login.html', [
+                'error' => $error
+            ]);
+            return exit();
+        }
     }
 
     public function getPostData()
@@ -43,6 +60,7 @@ class User extends Model
         // Sanitize data
         $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
         $id = isset($_POST['id']) ? trim($_POST['id']) : '';
+        $adm = isset($_POST['adm']) ? intval(trim($_POST['adm'])) : 0;
         $name = isset($_POST['name']) ? trim($_POST['name']) : '';
         $lastname = isset($_POST['last_name']) ? trim($_POST['last_name']) : '';
         $email = isset($_POST['email']) ? trim($_POST['email']) : '';
@@ -60,6 +78,7 @@ class User extends Model
         // Add data to array
         $data = [
             'id' => $id,
+            'adm' => $adm,
             'name' => $name,
             'last_name' => $lastname,
             'email' => $email,
@@ -135,7 +154,9 @@ class User extends Model
 
     public function createUserSession($loggedInUser)
     {
+        $_SESSION['user_status'] = $loggedInUser->status;
         $_SESSION['user_id'] = $loggedInUser->id;
+        $_SESSION['adm_id'] = $loggedInUser->adm;
         $_SESSION['user_email'] = $loggedInUser->email;
         $_SESSION['user_name'] = $loggedInUser->name;
         dump($_SESSION);

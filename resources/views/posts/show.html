@@ -21,11 +21,10 @@
     </figure>
 </div>
 
-{% if (data.user_id == SESSION_ID) %}
+{% if ((data.user_id == SESSION_ID) or (ADM_ID == 1)) %}
     <a href="{{BASE}}/posts/edit/{{ data.id }}" class="btn btn-dark">
-        Edit
+        Editar
     </a>
     <a href="{{BASE}}/posts/delete/{{data.id}}" method="post" name="delete" onclick="return confirm('Quer Mesmo deletar?')">Deletar</a>
     {% endif %}
-
 {% endblock %}
