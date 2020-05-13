@@ -16,6 +16,7 @@ class Post extends \Core\Model
         return $result;
     }
 
+
     public function getImg($id)
     {
         $result = $this->customQuery(

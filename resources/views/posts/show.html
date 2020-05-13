@@ -9,7 +9,11 @@
 <div>
     <h1>{{ data.title }}</h1>
     <small class="bg-secondary text-white p-2 mb-3">
+        {% if user.status == 1 %}
         Escrito por <a href="{{BASE}}/users/show/{{user.id}}">{{ user.name }}</a> em {{ data.created_at }}
+        {% else %}
+        Escrito por <a href="{{BASE}}/posts">{{ user.name }}</a> em {{ data.created_at }}
+        {% endif %}
     </small>
     <figure>
         <img src="{{BASE}}/public/img/posts/id_{{data.id}}/{{data.img}}" alt="{{data.img}}" title="{{data.title}}">
@@ -22,9 +26,10 @@
 </div>
 
 {% if ((data.user_id == SESSION_ID) or (ADM_ID == 1)) %}
-    <a href="{{BASE}}/posts/edit/{{ data.id }}" class="btn btn-dark">
-        Editar
-    </a>
-    <a href="{{BASE}}/posts/delete/{{data.id}}" method="post" name="delete" onclick="return confirm('Quer Mesmo deletar?')">Deletar</a>
-    {% endif %}
+<a href="{{BASE}}/posts/edit/{{ data.id }}" class="btn btn-dark">
+    Editar
+</a>
+<a href="{{BASE}}/posts/delete/{{data.id}}" method="post" name="delete"
+    onclick="return confirm('Quer Mesmo deletar?')">Deletar</a>
+{% endif %}
 {% endblock %}
