@@ -34,8 +34,27 @@
         }, 4000);
     </script>
     {% endif %}
+
     {% block body %}
     {% endblock %}
+    
+    {% if totalPages > 1 %}
+    <ul>
+        {% if pageId != 1 %}
+        <li><a href="{{BASE}}/users/index/1">Inicio</a></li>
+        <li><a href="{{BASE}}/users/index/{{prev}}">Anterior</a></li>
+        {% endif %}
+        {% if pageId != totalPages %}
+        {% endif %}
+        {% for i in 1..totalPages %}
+        <li><a href="{{BASE}}/users/index/{{i}}">{{i}}</a></li>
+        {% endfor %}
+        {% if pageId != totalPages %}
+        <li><a href="{{BASE}}/users/index/{{next}}">Próxima</a></li>
+        <li><a href="{{BASE}}/users/index/{{totalPages}}">Final</a></li>
+        {% endif %}
+    </ul>
+    {% endif %}
 
     <script src="{{BASE}}/public/js/app.js"></script>
 </body>

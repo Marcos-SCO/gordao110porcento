@@ -78,4 +78,21 @@ class Controller
 
         return $imgFullPath;
     }
+
+    public function pagination($table, $id = 1, $limit = 5, $option = '')
+    {
+        /* Set current, prev and next page */
+        $prev = ($id - 1);
+        $next = ($id + 1);
+        /* Calculate the offset */
+        $offset = (($id * $limit) - $limit);
+        /* Query the db for total results.*/
+        $totalResults = $this->model->customQuery("SELECT COUNT(*) AS total FROM {$table}");
+        $totalPages = ceil($totalResults->total / $limit);
+
+        $orderBy = "ORDER BY id {$option} LIMIT $limit OFFSET $offset";
+        $resultTable = $this->model->selectQuery($table, $orderBy);
+
+        return [$prev, $next, $totalResults, $totalPages, $resultTable];
+    }
 }

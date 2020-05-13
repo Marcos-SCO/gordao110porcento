@@ -15,12 +15,14 @@
         {% if user.status == 1 %}
         (Ativo)
         -
-        <a href="{{BASE}}/users/status/{{user.id}}/0" method="post" name="delete" onclick="return confirm('Quer Mesmo desativar esse usuario?')">
+        <a href="{{BASE}}/users/status/{{user.id}}/0" method="post" name="delete"
+            onclick="return confirm('Quer Mesmo desativar esse usuario?')">
             Desativar
         </a>
         {% else %}
         Inativo
-        <a href="{{BASE}}/users/status/{{user.id}}/1" method="post" name="delete" onclick="return confirm('Quer Mesmo ativar esse usuario?')">
+        <a href="{{BASE}}/users/status/{{user.id}}/1" method="post" name="delete"
+            onclick="return confirm('Quer Mesmo ativar esse usuario?')">
             Ativar
         </a>
         {% endif %}
@@ -29,6 +31,5 @@
 
     {% endfor %}
 </ul>
-
 
 {% endblock %}

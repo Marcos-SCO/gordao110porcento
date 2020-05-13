@@ -16,15 +16,21 @@ class Users extends Controller
         $this->model = $this->model('User');
     }
 
-    public function index($flash = null)
+    public function index($id = 1, $flash = null)
     {
         $this->isLogin();
 
-        $users = $this->model->getAll();
+        $results = $this->pagination('users', $id, $limit = 10, $option = 'AND `status` DESC');
+
         View::renderTemplate('users/index.html', [
             'title' => 'Users',
-            'users' => $users,
-            'flash' => $flash
+            'users' => $results[4],
+            'flash' => $flash,
+            'pageId'=> $id,
+            'prev' => $results[0],
+            'next' => $results[1],
+            'totalResults' => $results[2],
+            'totalPages' => $results[3],
         ]);
     }
 
@@ -74,14 +80,15 @@ class Users extends Controller
         }
     }
 
-    public function status($id, $status) {
+    public function status($id, $status)
+    {
         if ((isset($_SESSION['adm_id']) && $_SESSION['adm_id'] != 1) || !(isset($_SESSION['user_id'])) && $id == 1) {
             return redirect('home');
         } else {
             $this->model->updateStatus($id, $status);
             ($status == 1) ? $message = 'Usuário ativado com sucesso' : $message = 'Usuário desativado com sucesso!';
             $flash = flash('register_success', $message);
-            return $this->index($flash);
+            return $this->index($id = 1, $flash);
         }
     }
 
@@ -155,7 +162,7 @@ class Users extends Controller
         // Check for post
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
-            
+
             // Process
             $data = $this->model->getPostData();
             $error = $data[1];
@@ -163,7 +170,7 @@ class Users extends Controller
 
             // Dont let users with status 0 login
             $this->model->blockLogin($data[0]['email']);
-            
+
             $this->model->customQuery("SELECT `email` FROM users WHERE `email` = :email", ['email' => $data[0]['email']]);
 
             // Check for users/email
