@@ -44,7 +44,7 @@ class Config
      * URL_BASE
      * @var string
      */
-    const URL_BASE = 'http://localhost/projetosCompletos/corte110porcento';
+    const URL_BASE = 'http://localhost/projetosCompletos/lanche110porcento';
 
     /**
      * Show or hide error messages on screen
