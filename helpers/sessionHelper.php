@@ -6,6 +6,8 @@ session_start();
  */
 date_default_timezone_set('America/Sao_Paulo');
 
+ini_set('default_charset','UTF-8');
+
 /**
  * Error and Exception handling
  */

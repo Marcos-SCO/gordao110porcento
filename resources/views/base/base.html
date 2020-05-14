@@ -13,8 +13,8 @@
             <li><a href="{{BASE}}/">Home</a></li>
             <li><a href="{{BASE}}/posts">Posts</a></li>
             <li><a href="{{BASE}}/galleria">Galleria</a></li>
-            <li><a href="{{BASE}}/contato">Contato</a></li>
-            <li><a href="{{BASE}}/trabalhe">Trabalhe conosco</a></li>
+            <li><a href="{{BASE}}/contact/message">Contato</a></li>
+            <li><a href="{{BASE}}/contact/work">Trabalhe conosco</a></li>
             {% if SESSION_ID %}
             <li><a href="{{BASE}}/users/destroy">Sair</a></li>
             {% endif %}
@@ -41,17 +41,17 @@
     {% if totalPages > 1 %}
     <ul>
         {% if pageId != 1 %}
-        <li><a href="{{BASE}}/users/index/1">Inicio</a></li>
-        <li><a href="{{BASE}}/users/index/{{prev}}">Anterior</a></li>
+        <li><a href="{{BASE}}/{{table}}/index/1">Inicio</a></li>
+        <li><a href="{{BASE}}/{{table}}/index/{{prev}}">Anterior</a></li>
         {% endif %}
         {% if pageId != totalPages %}
         {% endif %}
         {% for i in 1..totalPages %}
-        <li><a href="{{BASE}}/users/index/{{i}}">{{i}}</a></li>
+        <li><a href="{{BASE}}/{{table}}/index/{{i}}">{{i}}</a></li>
         {% endfor %}
         {% if pageId != totalPages %}
-        <li><a href="{{BASE}}/users/index/{{next}}">Próxima</a></li>
-        <li><a href="{{BASE}}/users/index/{{totalPages}}">Final</a></li>
+        <li><a href="{{BASE}}/{{table}}/index/{{next}}">Próxima</a></li>
+        <li><a href="{{BASE}}/{{table}}/index/{{totalPages}}">Final</a></li>
         {% endif %}
     </ul>
     {% endif %}

@@ -9,71 +9,72 @@ use Core\View;
 
 use App\Config\Config;
 
-class Posts extends Controller
+class Contact extends Controller
 {
     public $model;
 
     public function __construct()
     {
-        $this->model = $this->model('Post');
+        $this->model = $this->model('Contact');
     }
 
-    public function index($id = 1,$flash = false)
+    public function index($type = null)
     {
-        $table = 'posts';
-        $results = $this->pagination($table, $id, $limit = 2, $option = 'DESC');
-        View::renderTemplate('posts/index.html', [
-            'title' => 'Posts - Açougue a 110%',
-            'posts' => $results[4],
-            'flash' => $flash,
-            'table' => $table,
-            'pageId'=> $id,
-            'prev' => $results[0],
-            'next' => $results[1],
-            'totalResults' => $results[2],
-            'totalPages' => $results[3],
-        ]);
+        if ($type == 'message') {
+            return $this->message();
+        } else if($type == 'work') {
+            return $this->work();
+        } else {
+            return redirect('home');
+        }
     }
 
-    public function create($data = null, $error = null)
+    public function message($data = null, $error = null, $flash = null)
     {
-        $this->isLogin();
-
         if (isset($_SESSION['submitted'])) {
             unset($_SESSION['submitted']);
         }
-
-        View::renderTemplate('posts/create.html', [
-            'title' => 'Criar Post - Açougue a 110%',
+        View::renderTemplate('contact/message.html', [
+            'title' => 'Contato - envie sua menssagem',
             'data' => $data,
             'error' => $error,
+            'flash' => $flash
+        ]);
+    }
+    public function work($data = null, $error = null, $flash = null)
+    {
+        if (isset($_SESSION['submitted'])) {
+            unset($_SESSION['submitted']);
+        }
+        View::renderTemplate('contact/work.html', [
+            'title' => 'Envio sua mensagem com um pdf',
+            'data' => $data,
+            'error' => $error,
+            'flash' => $flash
         ]);
     }
 
     public function store()
     {
-        $this->isLogin();
-
         if ($_SERVER['REQUEST_METHOD'] == 'POST' && !isset($_SESSION['submitted'])) {
             $result = $this->model->getPostData();
             $data = $result[0];
             $error = $result[1];
-
             // Validate data
             if ($error['error'] != true) {
-                $fullPath = $this->imgCreateHandler('posts');
-                $this->moveUpload($fullPath);
+                $_SESSION['submitted'] = true;
+                $flash = flash('post_message', 'Menssagem Enviada com sucesso');
 
-                if ($this->model->addPost($data)) {
-                    $_SESSION['submitted'] = true;
-                    $flash = flash('post_message', 'Post adicionado');
-                    $id = $this->model->lastId();
-                    return $this->show($id, $flash);
-                } else {
-                    die('Algo deu errado..');
-                }
+                $name = strip_tags($data['name']);
+                $email = strip_tags($data['email']);
+                $subject = strip_tags($data['subject']);
+                $bodyStriped = strip_tags($data['body']);
+                $body = "<b>{$name}</b> com email <b>{$email}</b><p>Enviou:</p><p>{$bodyStriped}</p>";
+                $this->Mailer($email, 'marcos_sco@outlook.com', $name, $subject, $body, 1);
+                $this->Mailer('marcosXsco@gmail.com', $email, $name, "{$name} sua mensagem foi enviada", "<br>Olá {$name}, Obrigado por enviar sua menssagem.<p><b>Você enviou:</b><br>{$bodyStriped}</p>");
+                View::renderTemplate('home/index.html', ['flash' => $flash]);
             } else {
-                return $this->create($data, $error);
+                return $this->message($data, $error);
             }
         }
     }
@@ -81,7 +82,7 @@ class Posts extends Controller
     public function show($id, array $flash = null)
     {
         $data = $this->model->getAllFrom('posts', $id);
-        $user = $this->model->getAllFrom('users',$data->user_id);
+        $user = $this->model->getAllFrom('users', $data->user_id);
         return View::renderTemplate('posts/show.html', [
             'title' => $data->title,
             'data' => $data,
@@ -93,7 +94,7 @@ class Posts extends Controller
     public function edit($id, $error = false)
     {
         $this->isLogin();
-        $data = $this->model->getAllFrom('posts',$id);
+        $data = $this->model->getAllFrom('posts', $id);
 
         View::renderTemplate('posts/edit.html', [
             'title' => "Editar - $data->title",

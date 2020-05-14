@@ -10,7 +10,7 @@
 <ul>
     {% for user in users %}
     <li>
-        id {{user.id}} - {{ user.name }} - {{ user.email }}
+        id {{user.id}} - <a href="{{BASE}}/users/edit/{{user.id}}">{{ user.name }}</a> - {{ user.email }}
         {% if (ADM_ID == 1) and (user.id != 1) %}
         {% if user.status == 1 %}
         (Ativo)

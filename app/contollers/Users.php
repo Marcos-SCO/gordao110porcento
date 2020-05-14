@@ -19,13 +19,14 @@ class Users extends Controller
     public function index($id = 1, $flash = null)
     {
         $this->isLogin();
-
-        $results = $this->pagination('users', $id, $limit = 10, $option = 'AND `status` DESC');
-
+        $table = 'users';
+        $results = $this->pagination($table, $id, $limit = 10, $option = 'AND `status` DESC');
+        
         View::renderTemplate('users/index.html', [
             'title' => 'Users',
             'users' => $results[4],
             'flash' => $flash,
+            'table' => $table,
             'pageId'=> $id,
             'prev' => $results[0],
             'next' => $results[1],
@@ -161,8 +162,6 @@ class Users extends Controller
     {
         // Check for post
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-
-
             // Process
             $data = $this->model->getPostData();
             $error = $data[1];
@@ -189,7 +188,7 @@ class Users extends Controller
                     // Create session
                     $this->model->createUserSession($loggedInUser);
                     $flash = flash('register_success', 'Logado com sucesso!');
-                    return $this->index($flash);
+                    return $this->index(1,$flash);
                 } else {
                     $error['password_error'] = "Email ou senha incorretos";
                     return View::renderTemplate('users/login.html', [
@@ -211,6 +210,7 @@ class Users extends Controller
 
     public function destroy()
     {
+        unset($_SESSION['user_status']);
         unset($_SESSION['user_id']);
         unset($_SESSION['adm_id']);
         unset($_SESSION['user_email']);

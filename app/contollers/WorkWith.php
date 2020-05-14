@@ -9,7 +9,7 @@ use Core\View;
 
 use App\Config\Config;
 
-class Posts extends Controller
+class WorkWith extends Controller
 {
     public $model;
 
@@ -18,20 +18,10 @@ class Posts extends Controller
         $this->model = $this->model('Post');
     }
 
-    public function index($id = 1,$flash = false)
+    public function index()
     {
-        $table = 'posts';
-        $results = $this->pagination($table, $id, $limit = 2, $option = 'DESC');
-        View::renderTemplate('posts/index.html', [
-            'title' => 'Posts - Açougue a 110%',
-            'posts' => $results[4],
-            'flash' => $flash,
-            'table' => $table,
-            'pageId'=> $id,
-            'prev' => $results[0],
-            'next' => $results[1],
-            'totalResults' => $results[2],
-            'totalPages' => $results[3],
+        View::renderTemplate('WorkWith/create.html', [
+            'title' => 'Entrar em contato'
         ]);
     }
 
