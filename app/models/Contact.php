@@ -71,13 +71,14 @@ class Contact extends \Core\Model
         $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
         $name = isset($_POST['name']) ? trim($_POST['name']) : '';
         $subject = isset($_POST['subject']) ? trim($_POST['subject']) : '';
-        $pdf = isset($_POST['subject']) ? trim($_POST['subject']) : '';
+        $attachment = isset($_FILES['attachment']) ? $_FILES['attachment'] : '';
         $email = isset($_POST['email']) ? trim($_POST['email']) : '';
         $body = isset($_POST['body']) ? trim($_POST['body']) : '';
         $nameError = isset($_POST['name_error']) ? trim($_POST['name_error']) : '';
         $emailError = isset($_POST['email_error']) ? trim($_POST['email_error']) : '';
         $subjectError = isset($_POST['subject_error']) ? trim($_POST['subject_error']) : '';
         $bodyError = isset($_POST['body_error']) ? trim($_POST['body_error']) : '';
+        $attachmentError = isset($_POST['attachment_error']) ? $_POST['attachment_error'] : '';
 
         // Add data to array
         $data = [
@@ -85,6 +86,7 @@ class Contact extends \Core\Model
             'email' => $email,
             'subject' => $subject,
             'body' => $body,
+            'attachment' => $attachment,
         ];
 
         $error = [
@@ -92,6 +94,7 @@ class Contact extends \Core\Model
             'email_error' => $emailError,
             'subject_error' => $subjectError,
             'body_error' => $bodyError,
+            'attachment_error' => $attachmentError,
             'error' => false
         ];
 
@@ -115,7 +118,20 @@ class Contact extends \Core\Model
             $error['body_error'] = "Preencha o campo de menssagem.";
             $error['error'] = true;
         }
-
+        if (isset($_FILES['attachment'])) {
+            if (empty($data['attachment']['tmp_name'])) {
+                $error['attachment_error'] = "Coloque seu curriculo como anexo.";
+                $error['error'] = true;
+            } else {
+                $valid_extensions = ['pdf', 'doc', 'docx'];
+                $imgExt = strtolower(pathinfo($_FILES['attachment']['name'], PATHINFO_EXTENSION));
+                if (!in_array($imgExt, $valid_extensions)) {
+                    $valid_extensions = implode(', ', $valid_extensions);
+                    $error['attachment_error'] = "Enviei somente {$valid_extensions} ";
+                    $error['error'] = true;
+                }
+            }
+        }
         return [$data, $error];
     }
 }

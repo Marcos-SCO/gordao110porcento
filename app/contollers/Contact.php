@@ -22,11 +22,17 @@ class Contact extends Controller
     {
         if ($type == 'message') {
             return $this->message();
-        } else if($type == 'work') {
+        } else if ($type == 'work') {
             return $this->work();
         } else {
             return redirect('home');
         }
+    }
+    public function success()
+    {
+        View::renderTemplate('contact/success.html', [
+            'title' => 'Sua menssagem foi enviada com sucesso!',
+        ]);
     }
 
     public function message($data = null, $error = null, $flash = null)
@@ -47,14 +53,14 @@ class Contact extends Controller
             unset($_SESSION['submitted']);
         }
         View::renderTemplate('contact/work.html', [
-            'title' => 'Envio sua mensagem com um pdf',
+            'title' => 'Envie sua mensagem com um anexo',
             'data' => $data,
             'error' => $error,
             'flash' => $flash
         ]);
     }
 
-    public function store()
+    public function messageSend()
     {
         if ($_SERVER['REQUEST_METHOD'] == 'POST' && !isset($_SESSION['submitted'])) {
             $result = $this->model->getPostData();
@@ -63,18 +69,30 @@ class Contact extends Controller
             // Validate data
             if ($error['error'] != true) {
                 $_SESSION['submitted'] = true;
-                $flash = flash('post_message', 'Menssagem Enviada com sucesso');
-
-                $name = strip_tags($data['name']);
-                $email = strip_tags($data['email']);
-                $subject = strip_tags($data['subject']);
-                $bodyStriped = strip_tags($data['body']);
-                $body = "<b>{$name}</b> com email <b>{$email}</b><p>Enviou:</p><p>{$bodyStriped}</p>";
-                $this->Mailer($email, 'marcos_sco@outlook.com', $name, $subject, $body, 1);
-                $this->Mailer('marcosXsco@gmail.com', $email, $name, "{$name} sua mensagem foi enviada", "<br>Olá {$name}, Obrigado por enviar sua menssagem.<p><b>Você enviou:</b><br>{$bodyStriped}</p>");
-                View::renderTemplate('home/index.html', ['flash' => $flash]);
+                $this->sendEmailHandler($data);
+                return redirect('contact/success');
             } else {
                 return $this->message($data, $error);
+            }
+        }
+    }
+
+    public function workSend()
+    {
+        if ($_SERVER['REQUEST_METHOD'] == 'POST' && !isset($_SESSION['submitted'])) {
+            $result = $this->model->getPostData();
+            $data = $result[0];
+            $error = $result[1];
+            
+            // Validate data
+            if ($error['error'] != true) {
+                $flash = flash('post_message', 'Menssagem Enviada com sucesso');
+                $this->sendEmailHandler($data, $data['attachment']);
+                return redirect('contact/success');
+            } else {
+                $data['attachment'] = $_FILES["attachment"]['tmp_name'];
+                //dump($data);
+                return $this->work($data, $error);
             }
         }
     }

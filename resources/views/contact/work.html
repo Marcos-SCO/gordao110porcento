@@ -9,7 +9,7 @@
 <div class="card card-body bg-light mt5">
     <h2>Entrar em contato</h2>
     <p>Envie sua menssagem</p>
-    <form action="{{BASE}}/contact/store" method="post">
+    <form action="{{BASE}}/contact/workSend" method="post" enctype="multipart/form-data">
         <div class="form-group">
             <label for="name">Nome<sup>*</sup></label>
             <input type="text" name="name" id="name"
@@ -46,6 +46,16 @@
             </textarea>
             <span class="invalid-feedback">
                 {{ error.body_error }}
+            </span>
+        </div>
+
+        <div class="form-group">
+            <label for="attachment">Anexo: <sup>*</sup></label>
+            <input type="file" name="attachment" id="attachment"
+                class="form-control form-control-lg {{ error.attachment_error != '' ? 'is-invalid' : '' }}"
+                value="{{ data.attachment ?? '' }}">
+            <span class="invalid-feedback">
+                {{ error.attachment_error }}
             </span>
         </div>
 

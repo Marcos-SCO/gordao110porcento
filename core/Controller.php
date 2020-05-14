@@ -102,7 +102,18 @@ class Controller
         return [$prev, $next, $totalResults, $totalPages, $resultTable];
     }
 
-    public function Mailer($sentFrom, $email, $name, $subject, $body, $cc = null, $pdf = null)
+    public function sendEmailHandler($data, $attachment = null)
+    {
+        $name = strip_tags($data['name']);
+        $email = strip_tags($data['email']);
+        $subject = strip_tags($data['subject']);
+        $bodyStriped = strip_tags($data['body']);
+        $body = "<b>{$name}</b> com email <b>{$email}</b><p>Enviou:</p><p>{$bodyStriped}</p>";
+        $this->Mailer($email, 'marcos_sco@outlook.com', $name, $subject, $body, 1, $attachment);
+        $this->Mailer('marcosXsco@gmail.com', $email, $name, "{$name} sua mensagem foi enviada", "<br>Olá {$name}, Obrigado por enviar sua menssagem.<p><b>Você enviou:</b><br>{$bodyStriped}</p>", null, $attachment);
+    }
+
+    public function Mailer($sentFrom, $email, $name, $subject, $body, $cc = null, $attachment = null)
     {
         // Instantiation and passing `true` enables exceptions
         $mail = new PHPMailer(true);
@@ -119,7 +130,7 @@ class Controller
             $mail->SMTPAuth   = true;                                   // Enable SMTP authentication
             // $mail->Username   = 'user@example.com';                     // SMTP username
             $mail->Username   = 'marcosXsco@gmail.com'; // SMTP username
-            $mail->Password   = '*********'; // SMTP password
+            $mail->Password   = '*******************'; // SMTP password
             $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;         // Enable TLS encryption; `PHPMailer::ENCRYPTION_SMTPS` encouraged
             $mail->Port       = 587;                                    // TCP port to connect to, use 465 for `PHPMailer::ENCRYPTION_SMTPS` above
 
@@ -137,10 +148,10 @@ class Controller
             //$mail->addBCC('bcc@example.com');
 
             // Attachments
-            if ($pdf != null) {
+            if ($attachment != null) {
                 // $mail->addAttachment('/var/tmp/file.tar.gz');// Add attachments
-                $mail->addAttachment($pdf);
-            }         
+                $mail->addAttachment($attachment['tmp_name'], $attachment['name'], 'base64', $attachment['type']);
+            }
             // $mail->addAttachment('/tmp/image.jpg', 'new.jpg');    // Optional name
 
             // Content
