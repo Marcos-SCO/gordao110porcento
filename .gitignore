@@ -1,4 +1,3 @@
 /vendor
 /public/img/posts/*
 /public/img/users/*
-/core/Controller.php
