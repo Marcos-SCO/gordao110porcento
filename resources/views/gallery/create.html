@@ -13,10 +13,10 @@
         <div class="form-group">
             <label for="img_description">Descrição da imagem<sup>*</sup></label>
             <input type="text" name="img_description" id="img_description"
-                class="form-control form-control-lg {{ error.img_description != '' ? 'is-invalid' : '' }}"
+                class="form-control form-control-lg {{ error.img_description_error != '' ? 'is-invalid' : '' }}"
                 value="{{ data.img_description ?? '' }}">
             <span class="invalid-feedback">
-                {{ error.img_description }}
+                {{ error.img_description_error }}
             </span>
         </div>
 

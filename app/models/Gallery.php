@@ -47,9 +47,9 @@ class Gallery extends \Core\Model
     public function updateImg($data)
     {
         $this->updateQuery('gallery', [
-            'title' => $data['title'],
-            'body' => $data['body'],
-            'img' => $data['img']
+            'img_description' => $data['img_description'],
+            'img' => $data['img'],
+            'updated_at' => date("Y-m-d H:i:s")
         ], ['id', $data['id']]);
 
         // Execute
