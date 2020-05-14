@@ -21,13 +21,13 @@ class Users extends Controller
         $this->isLogin();
         $table = 'users';
         $results = $this->pagination($table, $id, $limit = 10, $option = 'AND `status` DESC');
-        
+
         View::renderTemplate('users/index.html', [
             'title' => 'Users',
             'users' => $results[4],
             'flash' => $flash,
             'table' => $table,
-            'pageId'=> $id,
+            'pageId' => $id,
             'prev' => $results[0],
             'next' => $results[1],
             'totalResults' => $results[2],
@@ -53,7 +53,7 @@ class Users extends Controller
         // Check for post
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             // Process Form
-            $data = $this->model->getPostData();
+            $data = $this->getPostData();
             $error = $data[1];
             $id = $data[0]['id'];
 
@@ -129,9 +129,10 @@ class Users extends Controller
         // Check for post
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             // Process Form
-            $data = $this->model->getPostData();
+            $data = $this->getPostData();
             $error = $data[1];
             $id = $data[0]['id'];
+            dump($data);
             // Make sure error are empty
             if ($error['error'] != true) {
                 $img = $data[0]['img'];
@@ -163,12 +164,14 @@ class Users extends Controller
         // Check for post
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             // Process
-            $data = $this->model->getPostData();
+            $data = $this->getPostData();
             $error = $data[1];
             $id = $data[0]['id'];
 
             // Dont let users with status 0 login
-            $this->model->blockLogin($data[0]['email']);
+            if ($data[0]['email'] != '') {
+                $this->model->blockLogin($data[0]['email']);
+            }
 
             $this->model->customQuery("SELECT `email` FROM users WHERE `email` = :email", ['email' => $data[0]['email']]);
 
@@ -188,7 +191,7 @@ class Users extends Controller
                     // Create session
                     $this->model->createUserSession($loggedInUser);
                     $flash = flash('register_success', 'Logado com sucesso!');
-                    return $this->index(1,$flash);
+                    return $this->index(1, $flash);
                 } else {
                     $error['password_error'] = "Email ou senha incorretos";
                     return View::renderTemplate('users/login.html', [
@@ -208,16 +211,105 @@ class Users extends Controller
         }
     }
 
-    public function destroy()
+    public function getPostData()
     {
-        unset($_SESSION['user_status']);
-        unset($_SESSION['user_id']);
-        unset($_SESSION['adm_id']);
-        unset($_SESSION['user_email']);
-        unset($_SESSION['user_name']);
+        // Sanitize data
+        $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+        $id = isset($_POST['id']) ? trim($_POST['id']) : '';
+        $adm = isset($_POST['adm']) ? intval(trim($_POST['adm'])) : 0;
+        $name = isset($_POST['name']) ? trim($_POST['name']) : '';
+        $lastname = isset($_POST['last_name']) ? trim($_POST['last_name']) : '';
+        $email = isset($_POST['email']) ? trim($_POST['email']) : '';
+        $password = isset($_POST['password']) ? trim($_POST['password']) : '';
+        $img = isset($_FILES['img']) ? $_FILES['img']['name'] : null;
+        $postImg = isset($_POST['img']) ? $_POST['img'] : '';
+        $bio = isset($_POST['bio']) ? trim($_POST['bio']) : null;
+        $confirmPassword = isset($_POST['confirm_password']) ? trim($_POST['confirm_password']) : '';
+        $nameError = isset($_POST['name_error']) ? trim($_POST['name_error']) : '';
+        $lastnameError = isset($_POST['last_name_error']) ? trim($_POST['last_name_error']) : '';
+        $emailError = isset($_POST['email_error']) ? trim($_POST['email_error']) : '';
+        $passwordError = isset($_POST['password_error']) ? trim($_POST['password_error']) : '';
+        $confirmPasswordError = isset($_POST['confirm_password_error']) ? trim($_POST['confirm_password_error']) : '';
 
-        session_destroy();
+        // Add data to array
+        $data = [
+            'id' => $id,
+            'adm' => $adm,
+            'name' => $name,
+            'last_name' => $lastname,
+            'email' => $email,
+            'password' => $password,
+            'confirm_password' => $confirmPassword,
+            'bio' => $bio,
+            'img' => $img,
+            'post_img' => $postImg,
+        ];
 
-        redirect('users/login');
+        $error = [
+            'name_error' => $nameError,
+            'last_name_error' => $lastnameError,
+            'email_error' => $emailError,
+            'password_error' => $passwordError,
+            'confirm_password_error' => $confirmPasswordError,
+            'error' => false
+        ];
+
+        if (isset($_POST['name']) || isset($_POST['last_name'])) {
+            // Name
+            if (empty($data['name'])) {
+                $error['name_error'] = "Digite o nome";
+                $error['error'] = true;
+            }
+            if (empty($data['last_name'])) {
+                $error['last_name_error'] = "Digite o sobrenome";
+                $error['error'] = true;
+            }
+        }
+
+        if (isset($_POST['email']) != '') {
+            // Validate Email
+            if (empty($data['email'])) {
+                $error['email_error'] = "Digite o E-mail";
+                $error['error'] = true;
+            }
+            if (!filter_input(INPUT_POST, 'email', FILTER_VALIDATE_EMAIL)) {
+                $error['email_error'] = "E-mail inválido";
+                $error['error'] = true;
+            }
+        }
+
+        if (isset($_FILES['img']) && $postImg == '') {
+            if (empty($data['img'])) {
+                $error['img_error'] = "Insira uma imagem";
+                $error['error'] = true;
+            }
+        }
+
+        if (isset($_POST['password'])) {
+            if (empty($data['password'])) {
+                $error['password_error'] = "Digite a senha";
+                $error['error'] = true;
+            } elseif (strlen($data['password']) < 6) {
+                $error['password_error'] = "Senha precisa no minimo de ser maior que 6 caracteres";
+                $error['error'] = true;
+            }
+        }
+        // Password validate
+        if (isset($_POST['confirm_password'])) {
+            // Password
+            if (empty($data['confirm_password'])) {
+                $error['confirm_password_error'] = "Confirme a senha";
+                $error['error'] = true;
+            } elseif ($data['password'] != $data['confirm_password']) {
+                $error['confirm_password_error'] = "Senhas estão diferentes";
+                $error['error'] = true;
+            }
+        }
+        return [$data, $error];
+    }
+
+    public function logout() 
+    {
+        return $this->model->destroy();
     }
 }

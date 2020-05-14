@@ -63,7 +63,7 @@ class Contact extends Controller
     public function messageSend()
     {
         if ($_SERVER['REQUEST_METHOD'] == 'POST' && !isset($_SESSION['submitted'])) {
-            $result = $this->model->getPostData();
+            $result = $this->getPostData();
             $data = $result[0];
             $error = $result[1];
             // Validate data
@@ -80,10 +80,10 @@ class Contact extends Controller
     public function workSend()
     {
         if ($_SERVER['REQUEST_METHOD'] == 'POST' && !isset($_SESSION['submitted'])) {
-            $result = $this->model->getPostData();
+            $result = $this->getPostData();
             $data = $result[0];
             $error = $result[1];
-            
+
             // Validate data
             if ($error['error'] != true) {
                 $flash = flash('post_message', 'Menssagem Enviada com sucesso');
@@ -97,67 +97,89 @@ class Contact extends Controller
         }
     }
 
-    public function show($id, array $flash = null)
+    public function show()
     {
-        $data = $this->model->getAllFrom('posts', $id);
-        $user = $this->model->getAllFrom('users', $data->user_id);
-        return View::renderTemplate('posts/show.html', [
-            'title' => $data->title,
-            'data' => $data,
-            'user' => $user,
-            'flash' => $flash
-        ]);
     }
 
-    public function edit($id, $error = false)
+    public function edit()
     {
-        $this->isLogin();
-        $data = $this->model->getAllFrom('posts', $id);
-
-        View::renderTemplate('posts/edit.html', [
-            'title' => "Editar - $data->title",
-            'data' => $data,
-            'error' => $error
-        ]);
     }
 
     public function update()
     {
-        $this->isLogin();
-
-        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-            $data = $this->model->getPostData();
-            $error = $data[1];
-            $id = $data[0]['id'];
-
-            if ($error['error'] != true) {
-                $img = $data[0]['img'];
-                $postImg = $data[0]['post_img'];
-                if ($img !== "") {
-                    $fullPath = $this->imgFullPath('posts', $id, $img);
-                    $this->moveUpload($fullPath);
-                    $data['img'] = explode('/', $fullPath);
-                } else {
-                    $data[0]['img'] = $postImg;
-                }
-
-                $this->model->updatePost($data[0]);
-                $flash = flash('post_message', 'Post Atualizado');
-
-                return $this->show($id, $flash);
-            } else {
-                return $this->edit($id, $error);
-            }
-        }
     }
 
-    public function delete($id)
+    public function delete()
     {
-        $this->model->deletePost('posts', ['id' => $id]);
-        if ($this->model->rowCount() > 0) {
-            $this->deleteFolder('posts', $id);
-            $flash = flash('register_seccess', 'Deletado com sucesso');
-            return $this->index(1, $flash);
+    }
+
+    public function getPostData()
+    {
+        // Sanitize data
+        $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+        $name = isset($_POST['name']) ? trim($_POST['name']) : '';
+        $subject = isset($_POST['subject']) ? trim($_POST['subject']) : '';
+        $attachment = isset($_FILES['attachment']) ? $_FILES['attachment'] : '';
+        $email = isset($_POST['email']) ? trim($_POST['email']) : '';
+        $body = isset($_POST['body']) ? trim($_POST['body']) : '';
+        $nameError = isset($_POST['name_error']) ? trim($_POST['name_error']) : '';
+        $emailError = isset($_POST['email_error']) ? trim($_POST['email_error']) : '';
+        $subjectError = isset($_POST['subject_error']) ? trim($_POST['subject_error']) : '';
+        $bodyError = isset($_POST['body_error']) ? trim($_POST['body_error']) : '';
+        $attachmentError = isset($_POST['attachment_error']) ? $_POST['attachment_error'] : '';
+
+        // Add data to array
+        $data = [
+            'name' => $name,
+            'email' => $email,
+            'subject' => $subject,
+            'body' => $body,
+            'attachment' => $attachment,
+        ];
+
+        $error = [
+            'name_error' => $nameError,
+            'email_error' => $emailError,
+            'subject_error' => $subjectError,
+            'body_error' => $bodyError,
+            'attachment_error' => $attachmentError,
+            'error' => false
+        ];
+
+        if (empty($data['name'])) {
+            $error['name_error'] = "Informe seu nome.";
+            $error['error'] = true;
         }
+        if (!filter_input(INPUT_POST, 'email', FILTER_VALIDATE_EMAIL)) {
+            $error['email_error'] = "E-mail inválido";
+            $error['error'] = true;
+        }
+        if (empty($data['email'])) {
+            $error['email_error'] = "Digite seu email";
+            $error['error'] = true;
+        }
+        if (empty($data['subject'])) {
+            $error['subject_error'] = "Coloque o Assunto.";
+            $error['error'] = true;
+        }
+        if (empty($data['body'])) {
+            $error['body_error'] = "Preencha o campo de menssagem.";
+            $error['error'] = true;
+        }
+        if (isset($_FILES['attachment'])) {
+            if (empty($data['attachment']['tmp_name'])) {
+                $error['attachment_error'] = "Coloque seu curriculo como anexo.";
+                $error['error'] = true;
+            } else {
+                $valid_extensions = ['pdf', 'doc', 'docx'];
+                $imgExt = strtolower(pathinfo($_FILES['attachment']['name'], PATHINFO_EXTENSION));
+                if (!in_array($imgExt, $valid_extensions)) {
+                    $valid_extensions = implode(', ', $valid_extensions);
+                    $error['attachment_error'] = "Enviei somente {$valid_extensions} ";
+                    $error['error'] = true;
+                }
+            }
+        }
+        return [$data, $error];
     }
 }
