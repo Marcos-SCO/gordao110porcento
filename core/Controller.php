@@ -130,7 +130,7 @@ class Controller
             $mail->SMTPAuth   = true;                                   // Enable SMTP authentication
             // $mail->Username   = 'user@example.com';                     // SMTP username
             $mail->Username   = 'marcosXsco@gmail.com'; // SMTP username
-            $mail->Password   = '*******************'; // SMTP password
+            $mail->Password   = '****************'; // SMTP password
             $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;         // Enable TLS encryption; `PHPMailer::ENCRYPTION_SMTPS` encouraged
             $mail->Port       = 587;                                    // TCP port to connect to, use 465 for `PHPMailer::ENCRYPTION_SMTPS` above
 
@@ -150,7 +150,7 @@ class Controller
             // Attachments
             if ($attachment != null) {
                 // $mail->addAttachment('/var/tmp/file.tar.gz');// Add attachments
-                $mail->addAttachment($attachment['tmp_name'], $attachment['name'], 'base64', $attachment['type']);
+                $mail->addAttachment($attachment['tmp_name'], utf8_decode($attachment['name']), 'base64', $attachment['type']);
             }
             // $mail->addAttachment('/tmp/image.jpg', 'new.jpg');    // Optional name
 
