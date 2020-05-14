@@ -1,0 +1,31 @@
+{% extends "base/base.html" %}
+
+{% block title %}
+{{title ?? 'Welcome'}}
+{% endblock title %}
+
+{% block body %}
+
+{% if USER_STATUS == 1 %}
+<a href="{{BASE}}/posts/create">Criar uma nova postagem</a>
+{% endif %}
+<div>
+    <h1>{{ data.title }}</h1>
+    <small class="bg-secondary text-white p-2 mb-3">
+        {% if USER_STATUS == 1 %}
+        Imagem adicionada por <a href="{{BASE}}/users/show/{{user.id}}">{{ user.name }}</a> em {{ data.created_at }}
+        {% endif %}
+    </small>
+    <figure>
+        <img src="{{BASE}}/public/img/gallery/id_{{data.id}}/{{data.img}}" alt="{{data.img}}" title="{{data.img_description}}">
+    </figure>
+</div>
+
+{% if ((data.user_id == SESSION_ID) or (ADM_ID == 1)) %}
+<a href="{{BASE}}/gallery/edit/{{ data.id }}" class="btn btn-dark">
+    Editar
+</a>
+<a href="{{BASE}}/gallery/delete/{{data.id}}" method="post" name="delete"
+    onclick="return confirm('Quer Mesmo deletar essa imagem?')">Deletar</a>
+{% endif %}
+{% endblock %}
