@@ -45,13 +45,17 @@ class User extends Model
 
     public function blockLogin($email)
     {
+        $data['email'] = $email;
         $status = $this->customQuery("SELECT `status` FROM users WHERE `email` = :email", ['email' => $email]);
-        if ($status->status < 1) {
-            $error['email_error'] = 'Usuário está desativado do sistema';
-            View::renderTemplate('users/login.html', [
-                'error' => $error
-            ]);
-            return exit();
+        if (isset($status->status)) {
+            if ($status->status != 1) {
+                $error['email_error'] = 'Usuário está desativado do sistema';
+                View::renderTemplate('users/login.html', [
+                    'error' => $error,
+                    'data' => $data
+                ]);
+                return exit();
+            }
         }
     }
 

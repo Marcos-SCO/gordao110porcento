@@ -59,7 +59,7 @@ class Router
                 $this->params[] = $params;
             }
         }
-        dump($this->params);
+        //dump($this->params);
 
         $controller = 'App\Controllers\\' . $this->controller;
 
