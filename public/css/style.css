@@ -1,3 +1,16 @@
 body {
-    background: #eee
+    overflow-x: hidden;
+}
+main {
+    height: 100%;
+}
+html, body {height: 100%}
+img {width:100%; max-width:500px}
+.flex {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+}
+.flex-center {
+    justify-content: center;
 }
