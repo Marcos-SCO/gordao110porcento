@@ -1,0 +1,29 @@
+{% extends "base/base.html" %}
+
+{% block title %}
+{{title ?? 'Welcome'}}
+{% endblock title %}
+
+{% block body %}
+<h1>Categorias</h1>
+
+{% if USER_STATUS == 1 %}
+<a href="{{BASE}}/categories/create">Adicionar mais categorias</a>
+{% endif %}
+{% for data in categories %}
+<div>
+    <a href="{{BASE}}/categories/show/{{data.id}}">
+        <h1>{{ data.category_name }}</h1>
+    </a>
+    {% if ((data.user_id == SESSION_ID) or (ADM_ID == 1)) %}
+    <a href="{{BASE}}/categories/edit/{{ data.id }}" class="btn btn-dark">
+        Editar
+    </a>
+    <a href="{{BASE}}/categories/delete/{{data.id}}" method="post" name="delete"
+        onclick="return confirm('Quer Mesmo deletar a categoria?')">Deletar</a>
+    {% endif %}
+</div>
+{% endfor %}
+
+
+{% endblock %}
