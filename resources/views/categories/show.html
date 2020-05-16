@@ -11,11 +11,11 @@
 {% endif %}
 <div>
     <h1>{{ data.category_name }}</h1>
+    {% if USER_STATUS == 1 %}
     <small class="bg-secondary text-white p-2 mb-3">
-        {% if USER_STATUS == 1 %}
-        Imagem adicionada por <a href="{{BASE}}/users/show/{{user.id}}">{{ user.name }}</a> em {{ data.created_at }}
-        {% endif %}
+        Categoria adicionada por <a href="{{BASE}}/users/show/{{user.id}}">{{ user.name }}</a> em {{ data.created_at }}
     </small>
+    {% endif %}
     <figure>
         <img src="{{BASE}}/public/img/categories/id_{{data.id}}/{{data.img}}" alt="{{data.img}}"
             title="{{data.img_title}}">
@@ -24,12 +24,28 @@
         </figcaption>
     </figure>
 </div>
-
 {% if ((data.user_id == SESSION_ID) or (ADM_ID == 1)) %}
 <a href="{{BASE}}/categories/edit/{{ data.id }}" class="btn btn-dark">
     Editar
 </a>
 <a href="{{BASE}}/categories/delete/{{data.id}}" method="post" name="delete"
     onclick="return confirm('Quer Mesmo deletar essa imagem?')">Deletar</a>
+
+<h4>Produtos com a categoria {{ data.category_name }}</h4>
+
+{% for data in products %}
+<figure>
+    <a href="{{BASE}}/products/show/{{data.id}}">
+        <img src="{{BASE}}/public/img/products/id_{{data.id}}/{{data.img}}" alt="{{data.img}}" title="{{data.product_name}}">
+    </a>
+    <figcaption>
+        <h3>{{data.product_name}}</h3>
+        <h5>Preço {{data.price}}</h5>
+        <p>{{data.product_description}}</p>
+    </figcaption>
+</figure>
+{% endfor %}
+
+
 {% endif %}
 {% endblock %}

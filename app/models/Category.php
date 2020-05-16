@@ -25,6 +25,12 @@ class Category extends \Core\Model
         );
         return $result;
     }
+    
+    public function getProducts($id)
+    {
+        $result = $this->customQuery("SELECT * FROM products WHERE `id_category` = :id_category",['id_category' => $id],1);
+        return $result;
+    }
 
     public function addCategory($data)
     {

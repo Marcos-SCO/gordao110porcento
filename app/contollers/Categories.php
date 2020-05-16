@@ -82,10 +82,12 @@ class Categories extends Controller
     {
         $data = $this->model->getAllFrom('categories', $id);
         $user = $this->model->getAllFrom('users', $data->user_id);
+        $products = $this->model->getProducts($data->id);
         return View::renderTemplate('categories/show.html', [
             'category_description' => $data->category_description,
             'data' => $data,
             'user' => $user,
+            'products' => $products,
             'flash' => $flash
         ]);
     }
