@@ -1,0 +1,29 @@
+{% extends "base/base.html" %}
+
+{% block title %}
+{{title ?? 'Welcome'}}
+{% endblock title %}
+
+{% block body %}
+<h1>Categorias</h1>
+
+{% if USER_STATUS == 1 %}
+<a href="{{BASE}}/products/create">Adicionar mais produtos</a>
+{% endif %}
+{% for data in products %}
+<div>
+    <a href="{{BASE}}/products/show/{{data.id}}">
+        <h1>{{ data.product_name }}</h1>
+    </a>
+    {% if ((data.user_id == SESSION_ID) or (ADM_ID == 1)) %}
+    <a href="{{BASE}}/products/edit/{{ data.id }}" class="btn btn-dark">
+        Editar
+    </a>
+    <a href="{{BASE}}/products/delete/{{data.id}}" method="post" name="delete"
+        onclick="return confirm('Quer Mesmo deletar a categoria?')">Deletar</a>
+    {% endif %}
+</div>
+{% endfor %}
+
+
+{% endblock %}

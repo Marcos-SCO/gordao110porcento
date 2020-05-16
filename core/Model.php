@@ -90,7 +90,7 @@ class Model extends Conn
     public function deleteQuery($table, array $data)
     {
         $query = "DELETE FROM {$table} WHERE";
-        
+
         foreach ($data as $field => $value) {
             $query .= " {$field} = :{$field} AND";
         }
@@ -106,7 +106,7 @@ class Model extends Conn
         return $result;
     }
 
-    public function customQuery($query, array $data = null)
+    public function customQuery($query, array $data = null, $fetch = null)
     {
         $this->stmt = $this->conn->prepare($query);
         if ($data) {
@@ -116,7 +116,11 @@ class Model extends Conn
         }
         // dump($query);
         $this->stmt->execute();
-        $result = $this->stmt->fetch();
+        if ($fetch != null) {
+            $result = $this->stmt->fetchAll();
+        } else {
+            $result = $this->stmt->fetch();
+        }
         $this->stmt->closeCursor();
         return $result;
     }
@@ -124,7 +128,7 @@ class Model extends Conn
     // Get all from with id
     public function getAllFrom($table, $id, $optionId = 'id')
     {
-    $result = $this->customQuery("SELECT * FROM $table WHERE `{$optionId}` = :{$optionId}",["{$optionId}" => $id]);
+        $result = $this->customQuery("SELECT * FROM $table WHERE `{$optionId}` = :{$optionId}", ["{$optionId}" => $id]);
         return $result;
     }
 
