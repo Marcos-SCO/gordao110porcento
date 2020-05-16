@@ -136,7 +136,7 @@ class Gallery extends Controller
     {
         $this->model->deletePost('gallery', ['id' => $id]);
         if ($this->model->rowCount() > 0) {
-            $this->deleteFolder('posts', $id);
+            $this->deleteFolder('gallery', $id);
             $flash = flash('register_seccess', 'Imagem foi deletada com sucesso');
             return $this->index(1, $flash);
         }
