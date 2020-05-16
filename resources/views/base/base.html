@@ -67,10 +67,11 @@
                     {% if SESSION_ID %}
                     <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                         <a class="dropdown-item" href="{{BASE}}/users/edit/{{SESSION_ID}}">Meu perfil</a>
+                        <a class="dropdown-item" href="{{BASE}}/users/">Usuários</a>
 
                         <a class="dropdown-item" href="{{BASE}}/users/logout">Sair</a>
-                        {% endif %}
                     </div>
+                    {% endif %}
                     {% endif %}
                 </li>
             </ul>
@@ -78,12 +79,14 @@
     </nav>
     <main class="container p-1">
         {% if flash %}
-        <div class="{{flash.class}}" id='msg-flash' style="transition: transform .18s, opacity .18s, visibility 0s .18s;">
+        <div class="{{flash.class}}" id='msg-flash'
+            style="transition: transform .18s, opacity .18s, visibility 0s .18s;">
             {{ flash.message }}
         </div>
         <script>
             setTimeout(() => {
-                document.querySelector('#msg-flash').style = 'display:none;transition: transform .18s, opacity .18s, visibility 0s .18s;';
+                document.querySelector('#msg-flash').style =
+                    'display:none;transition: transform .18s, opacity .18s, visibility 0s .18s;';
             }, 4000);
         </script>
         {% endif %}

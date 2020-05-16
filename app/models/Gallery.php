@@ -31,7 +31,7 @@ class Gallery extends \Core\Model
         // dump($data);
         $this->insertQuery('gallery', [
             'user_id' => $_SESSION['user_id'],
-            'img_description' => $data['img_description'],
+            'img_title' => $data['img_title'],
             'img' => $data['img'],
             'created_at' => date("Y-m-d H:i:s")
         ]);
@@ -47,7 +47,7 @@ class Gallery extends \Core\Model
     public function updateImg($data)
     {
         $this->updateQuery('gallery', [
-            'img_description' => $data['img_description'],
+            'img_title' => $data['img_title'],
             'img' => $data['img'],
             'updated_at' => date("Y-m-d H:i:s")
         ], ['id', $data['id']]);

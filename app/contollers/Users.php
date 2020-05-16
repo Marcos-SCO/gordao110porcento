@@ -110,16 +110,23 @@ class Users extends Controller
         $this->isLogin();
 
         $data = $this->model->getAllFrom('users', $id);
-
-        if ($data) {
+        if ($id == 1 && $_SESSION['user_id'] == 1) {
             View::renderTemplate('users/edit.html', [
                 'data' => $data,
                 'flash' => $flash,
                 'error' => $error
             ]);
         } else {
-            dump('Usuário não existe');
-        }
+            if ($data->id != 1) {
+                View::renderTemplate('users/edit.html', [
+                    'data' => $data,
+                    'flash' => $flash,
+                    'error' => $error
+                ]);
+            } else {
+                return $this->index(1,null);
+            }
+        } 
     }
 
     public function update()
@@ -132,7 +139,6 @@ class Users extends Controller
             $data = $this->getPostData();
             $error = $data[1];
             $id = $data[0]['id'];
-            dump($data);
             // Make sure error are empty
             if ($error['error'] != true) {
                 $img = $data[0]['img'];

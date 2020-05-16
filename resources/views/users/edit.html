@@ -19,6 +19,10 @@
 
                 <input type="hidden" name="id" value="{{ data.id }}">
 
+                {% if data.id == 1 %}
+                    <input type="hidden" name="adm" id="adm" value="1">
+                {% endif %}
+
                 {% if (ADM_ID == 1) and data.id != 1 %}
                 <!-- Tipo de usuario -->
                 <div class="form-group">

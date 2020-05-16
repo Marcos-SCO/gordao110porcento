@@ -16,7 +16,7 @@
             <label for="title">Titulo<sup>*</sup></label>
             <input type="text" name="title" id="title"
                 class="form-control form-control-lg {{ error.title_error != '' ? 'is-invalid' : '' }}"
-                value="{{ data.title ?? '' }}">
+                value="{{ data.title|replace({'&#39;': "'" }) }}">
             <span class="invalid-feedback">
                 {{ error.title_error }}
             </span>
@@ -27,19 +27,19 @@
             <input type="file" name="img" id="img"
                 class="form-control form-control-lg {{ error.img_error != '' ? 'is-invalid' : '' }}"
                 value="{{ data.img ?? '' }}">
-            <input type="hidden" name="img" id="img" value="{{data.img}}">
+            <input type="hidden" name="img" id="img" value="{{data.img|replace({'&#39;': "'" }) }}">
             <span class="invalid-feedback">
                 {{ error.img_error }}
             </span>
             {% if data.img %}
-            <img src="{{BASE}}/public/img/posts/id_{{data.id}}/{{data.img}}" alt="{{data.img}}" title="{{data.title}}">
+            <img src="{{BASE}}/public/img/posts/id_{{data.id}}/{{ data.img|replace({'&#39;': "'" }) }}" alt="{{ data.img|replace({'&#39;': "'" }) }}" title="{{ data.title|replace({'&#39;': "'" }) }}">
             {% endif %}
         </div>
 
         <div class="form-group">
             <label for="body">Digite o texto: <sup>*</sup></label>
             <textarea name="body" id="body"
-                class="form-control form-control-lg {{ data.body_error != '' ? 'is-invalid' : '' }}">{{ data.body ?? '' }}</textarea>
+                class="form-control form-control-lg {{ data.body_error != '' ? 'is-invalid' : '' }}">{{ data.body|replace({'&#39;': "'" }) }}</textarea>
             <span class="invalid-feedback">
                 {{ error.body_error }}
             </span>

@@ -83,7 +83,7 @@ class Gallery extends Controller
         $data = $this->model->getAllFrom('gallery', $id);
         $user = $this->model->getAllFrom('users', $data->user_id);
         return View::renderTemplate('gallery/show.html', [
-            'img_description' => $data->img_description,
+            'img_title' => $data->img_title,
             'data' => $data,
             'user' => $user,
             'flash' => $flash
@@ -96,7 +96,7 @@ class Gallery extends Controller
         $data = $this->model->getAllFrom('gallery', $id);
 
         View::renderTemplate('gallery/edit.html', [
-            'title' => "Editar - $data->img_description",
+            'title' => "Editar - $data->img_title",
             'data' => $data,
             'error' => $error
         ]);
@@ -147,30 +147,30 @@ class Gallery extends Controller
         // Sanitize data
         $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
         $id = isset($_POST['id']) ? trim($_POST['id']) : '';
-        $imgDescription = isset($_POST['img_description']) ? trim($_POST['img_description']) : '';
+        $imgDescription = isset($_POST['img_title']) ? trim($_POST['img_title']) : '';
         $img = isset($_FILES['img']) ? $_FILES['img'] : null;
         $postImg = isset($_POST['img']) ? $_POST['img'] : '';
         $userId = isset($_SESSION['user_id']) ? $_SESSION['user_id'] : '';
-        $imgDescriptionError = isset($_POST['img_description_error']) ? trim($_POST['img_description_error']) : '';
+        $imgDescriptionError = isset($_POST['img_title_error']) ? trim($_POST['img_title_error']) : '';
         $imgPathError = isset($_POST['img_error']) ? trim($_POST['img_error']) : '';
 
         // Add data to array
         $data = [
             'id' => $id,
-            'img_description' => $imgDescription,
+            'img_title' => $imgDescription,
             'img' => $img['name'],
             'post_img' => $postImg,
             'user_id' => $userId,
         ];
 
         $error = [
-            'img_description_error' => $imgDescription,
+            'img_title_error' => $imgDescription,
             'img_error' => $imgPathError,
             'error' => false
         ];
 
-        if (empty($data['img_description'])) {
-            $error['img_description_error'] = "Coloque uma descrição para imagem";
+        if (empty($data['img_title'])) {
+            $error['img_title_error'] = "Coloque uma descrição para imagem";
             $error['error'] = true;
         }
         if (isset($_FILES) && $postImg == '') {

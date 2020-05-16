@@ -23,12 +23,12 @@
 {% for data in posts %}
 <div>
     <a href="{{BASE}}/posts/show/{{data.id}}">
-        <h1>{{ data.title }}</h1>
+        <h1>{{ data.title|replace({'&#39;': "'" }) }}</h1>
         <figure>
-            <img src="{{BASE}}/public/img/posts/id_{{data.id}}/{{data.img}}" alt="{{data.img}}" title="{{data.title}}">
+            <img src="{{BASE}}/public/img/posts/id_{{data.id}}/{{data.img|replace({'&#39;': "'" }) }}" alt="{{data.img|replace({'&#39;': "'" }) }}" title="{{data.title|replace({'&#39;': "'" }) }}">
             <figcaption style="white-space: nowrap;width: 450px;overflow: hidden;text-overflow: ellipsis;">
                 <p>
-                    {{ data.body }}
+                    {{ data.body|replace({'&#39;': "'" }) }}
                 </p>
             </figcaption>
         </figure>

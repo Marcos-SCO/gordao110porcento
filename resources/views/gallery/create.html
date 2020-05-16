@@ -11,12 +11,12 @@
     <p>Crie um post com esse formulário</p>
     <form action="{{BASE}}/gallery/store" method="post" enctype="multipart/form-data">
         <div class="form-group">
-            <label for="img_description">Descrição da imagem<sup>*</sup></label>
-            <input type="text" name="img_description" id="img_description"
-                class="form-control form-control-lg {{ error.img_description_error != '' ? 'is-invalid' : '' }}"
-                value="{{ data.img_description ?? '' }}">
+            <label for="img_title">Descrição da imagem<sup>*</sup></label>
+            <input type="text" name="img_title" id="img_title"
+                class="form-control form-control-lg {{ error.img_title_error != '' ? 'is-invalid' : '' }}"
+                value="{{ data.img_title ?? '' }}">
             <span class="invalid-feedback">
-                {{ error.img_description_error }}
+                {{ error.img_title_error }}
             </span>
         </div>
 

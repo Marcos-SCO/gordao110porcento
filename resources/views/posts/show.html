@@ -10,19 +10,19 @@
 <a href="{{BASE}}/posts/create">Criar uma nova postagem</a>
 {% endif %}
 <div>
-    <h1>{{ data.title }}</h1>
+    <h1>{{ data.title|replace({'&#39;': "'" }) }}</h1>
     <small class="bg-secondary text-white p-2 mb-3">
         {% if USER_STATUS == 1 %}
-        Escrito por <a href="{{BASE}}/users/show/{{user.id}}">{{ user.name }}</a> em {{ data.created_at }}
+        Escrito por <a href="{{BASE}}/users/show/{{user.id}}">{{ user.name|replace({'&#39;': "'" }) }}</a> em {{ data.created_at }}
         {% else %}
-        Escrito por <a href="{{BASE}}/posts">{{ user.name }}</a> em {{ data.created_at }}
+        Escrito por <a href="{{BASE}}/posts">{{ user.name|replace({'&#39;': "'" }) }}</a> em {{ data.created_at }}
         {% endif %}
     </small>
     <figure>
-        <img src="{{BASE}}/public/img/posts/id_{{data.id}}/{{data.img}}" alt="{{data.img}}" title="{{data.title}}">
+        <img src="{{BASE}}/public/img/posts/id_{{data.id}}/{{data.img|replace({'&#39;': "'" }) }}" alt="{{ data.img|replace({'&#39;': "'" }) }}" title="{{data.title|replace({'&#39;': "'" }) }}">
         <figcaption>
             <p>
-                {{ data.body }}
+                {{ data.body|replace({'&#39;': "'" }) }}
             </p>
         </figcaption>
     </figure>
