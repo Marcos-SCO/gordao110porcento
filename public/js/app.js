@@ -1,3 +1,6 @@
+// import helpers
+import {qSelect, qSelectAll, gID, log} from './helpers.js';
+
 // on load spinner
 document.onreadystatechange = function () {
     if (document.readyState !== "complete") {
@@ -39,3 +42,22 @@ $('#carousel-principal').owlCarousel({
     autoplaySpeed: 1000,
     reponsiveRefreshRatio: 10
 });
+
+// get elements with data-anima
+const elements = qSelectAll('[data-anima]');
+const animationClass = 'animation';
+function animaScroll() {
+    const topPageWindow = window.pageYOffset + ((window.innerHeight * 3) / 4); // 3/4 da janela
+    elements.forEach(element => {
+        if (topPageWindow > element.offsetTop) {
+            element.classList.add(animationClass);
+        } else {
+            element.classList.remove(animationClass);
+        }
+    });
+}
+// Carrega Animações
+if (elements.length) {
+    window.addEventListener('scroll', animaScroll);
+}
+// end get elements
