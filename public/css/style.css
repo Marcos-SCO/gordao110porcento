@@ -15,6 +15,29 @@ img {
     width: 100%
 }
 
+.img-objFitCover {
+    /* substitution of object-fit */
+    width: auto;
+    height: auto;
+    min-width: 100%;
+    min-height: 100%;
+    position: absolute;
+    right: 50%;
+    -webkit-transform: translate(50%, 0);
+    -ms-transform: translate(50%, 0);
+    transform: translate(50%, 0);
+    /* object-fit: cover; */
+}
+.img-prevent-drag {
+     /* prevent User drag */
+     user-drag: none;
+     user-select: none;
+     -moz-user-select: none;
+     -webkit-user-drag: none;
+     -webkit-user-select: none;
+     -ms-user-select: none
+}
+
 .flex {
     display: flex;
     flex-wrap: wrap;
@@ -34,11 +57,13 @@ img {
     height: 70px;
     animation: spin 1s linear infinite;
 }
+
 @keyframes spin {
     100% {
         transform: rotate(360deg);
     }
 }
+
 /* end Spinner */
 
 .center {
@@ -48,4 +73,62 @@ img {
     left: 0;
     right: 0;
     margin: auto;
+}
+
+/* Home Sections */
+.background-section {
+    padding: 1rem;
+    height: 250px;
+    background-attachment: fixed;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #fff;
+    background-color: #e9ff6e42;
+    /* background-blend-mode: darken; */
+}
+
+.section img {
+    max-width: 400px;
+}
+.section p {
+    max-width: 300px;
+}
+
+.img-1 {
+    background-image: url(../img/section/comida-rapida-espacio-abajo.png);
+}
+
+/* End Home Sections */
+
+/* Animatins */
+[data-anima] {
+    opacity: 0;
+    transition: .5s
+}
+
+[data-anima='left'] {
+    transform: translate3d(-50px, 0, 0)
+        /* X Y Z*/
+}
+
+[data-anima='right'] {
+    transform: translate3d(50px, 0, 0)
+        /* X Y Z*/
+}
+
+[data-anima='center'] {
+    transform: translate3d(0, 50px, 0)
+        /* X Y Z*/
+}
+
+[data-anima].animation {
+    opacity: 1;
+    ;
+    transform: translate3d(0, 0, 0);
+}
+
+/* End Animations */
+.font-swashCaps {
+    font-family: 'Oleo Script Swash Caps', cursive
 }

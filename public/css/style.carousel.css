@@ -1,119 +1,17 @@
-.owl-carousel {
-    float: left
+.carousel-inner {
+    max-height: 500px
 }
 
-.owl-carousel,
-.owl-stage-outer,
-.owl-stage,
-.owl-item,
-.owl-lazy {
-    height: 100%;
-    width: 100%;
-    position: relative;
-
+.carousel-caption {
+    bottom: 41% !important
 }
 
-.owl-lazy {
-    padding: 0;
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-position: center center
+.carousel-indicators {
+    bottom: 12% !important
 }
 
-@media screen and (min-width: 1125px) {
-    .owl-lazy {
-        background-position: top center
+@media all and (min-width: 750px) {
+    .carousel-inner {
+        margin-bottom: 1rem !important
     }
-}
-
-.owl-prev,
-.owl-next {
-    position: absolute;
-    background-color: rgba(0, 0, 0, .5);
-    transform: translateY(-50%);
-    -webkit-transform: translateY(-50%);
-    top: 50%;
-    padding: 20px 12px;
-    color: #fff
-}
-
-.owl-prev {
-    left: 0;
-    border-radius: 0 4px 4px 0;
-    -webkit-border-radius: 0 4px 4px 0;
-}
-
-.owl-next {
-    right: 0;
-    border-radius: 4px 0 0 4px;
-    -webkit-border-radius: 4px 0 0 4px;
-}
-
-.owl-prev:hover,
-.owl-next:hover {
-    background-color: #f47933
-}
-
-.owl-dots {
-    position: absolute;
-    bottom: 2rem;
-    width: 100%;
-    z-index: 0;
-    text-align: center
-}
-
-.owl-dots .owl-dot {
-    display: inline-block;
-    background-color: #fff;
-    width: 35px;
-    height: 10px;
-    margin: 4px
-}
-
-.owl-dots .owl-dot.active {
-    background-color: #f47933
-}
-
-/* Carousel Principal */
-#carousel-principal {
-    height: calc(100% - 56px);
-}
-
-#carousel-principal .owl-caption {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    -webkit-transform: translate(-50%, -50%);
-    background: rgba(244, 171, 51, .7);
-    border-radius: 10px;
-    -webkit-border-radius: 10px;
-    color: #fff;
-    text-align: center;
-    padding: 10px
-}
-
-#carousel-principal .owl-caption strong {
-    font-size: 1.5rem;
-}
-
-/* Carrousel testemunas */
-#carousel-testemunhas .owl-prev,
-#carousel-testemunhas .owl-next {
-    padding: 5px 11px;
-    border-radius: 50%;
-    -webkit-border-radius: 50%;
-}
-
-#carousel-testemunhas .owl-prev {
-    left: -50px;
-}
-
-#carousel-testemunhas .owl-next {
-    right: -50px;
-}
-
-#carousel-testemunhas .owl-dots {
-    position: relative;
-    top: 20px
 }
