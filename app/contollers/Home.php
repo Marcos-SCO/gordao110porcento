@@ -28,6 +28,7 @@ class Home extends Controller
         // dump($users);
 
         View::renderTemplate('home/index.html', [
+            'carousel' => true,
             'title' => 'Açougue a 110%'
         ]);
     }

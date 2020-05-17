@@ -12,8 +12,7 @@ body {
 }
 
 img {
-    width: 100%;
-    max-width: 500px
+    width: 100%
 }
 
 .flex {
@@ -26,7 +25,7 @@ img {
     justify-content: center;
 }
 
-
+/* Spinner */
 #loader {
     border: 12px solid #f3f3f3;
     border-radius: 50%;
@@ -35,12 +34,12 @@ img {
     height: 70px;
     animation: spin 1s linear infinite;
 }
-
 @keyframes spin {
     100% {
         transform: rotate(360deg);
     }
 }
+/* end Spinner */
 
 .center {
     position: absolute;
