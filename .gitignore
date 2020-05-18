@@ -1,4 +1,5 @@
 /vendor
+/node_modules
 /public/img/posts/*
 /public/img/users/*
 /public/img/gallery/*
