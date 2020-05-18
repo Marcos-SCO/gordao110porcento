@@ -1,3 +1,4 @@
+* {margin: 0}
 body {
     overflow-x: hidden;
 }
@@ -13,39 +14,6 @@ body {
 
 img {
     width: 100%
-}
-
-.img-objFitCover {
-    /* substitution of object-fit */
-    width: auto;
-    height: auto;
-    min-width: 100%;
-    min-height: 100%;
-    position: absolute;
-    right: 50%;
-    -webkit-transform: translate(50%, 0);
-    -ms-transform: translate(50%, 0);
-    transform: translate(50%, 0);
-    /* object-fit: cover; */
-}
-.img-prevent-drag {
-     /* prevent User drag */
-     user-drag: none;
-     user-select: none;
-     -moz-user-select: none;
-     -webkit-user-drag: none;
-     -webkit-user-select: none;
-     -ms-user-select: none
-}
-
-.flex {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: flex-start;
-}
-
-.flex-center {
-    justify-content: center;
 }
 
 /* Spinner */
@@ -65,6 +33,83 @@ img {
 }
 
 /* end Spinner */
+
+.img-objFitCover {
+    /* substitution of object-fit */
+    width: auto;
+    height: auto;
+    min-width: 100%;
+    min-height: 100%;
+    position: absolute;
+    right: 50%;
+    -webkit-transform: translate(50%, 0);
+    -ms-transform: translate(50%, 0);
+    transform: translate(50%, 0);
+    /* object-fit: cover; */
+}
+
+.img-prevent-drag {
+    /* prevent User drag */
+    user-drag: none;
+    user-select: none;
+    -moz-user-select: none;
+    -webkit-user-drag: none;
+    -webkit-user-select: none;
+    -ms-user-select: none
+}
+
+.object-fit {
+    min-height: 150px;
+    max-height: 150px;
+    object-fit: cover;
+    object-position: top
+}
+
+.img-section-max {
+    min-height: 150px;
+    max-height: 150px;
+}
+
+.img-fig {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    background: aliceblue;
+    text-align: left;
+    padding: 0.2rem;
+    padding-left: .5rem;
+    text-decoration: none
+}
+/* Owl */
+.item img::before{
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    background: black;
+}
+.owl-carousel a {
+    text-decoration: none;
+    color: #000!important;
+}
+.item {margin-bottom: 0}
+.item img {
+    max-width: 206px;
+    transition: all ease-in-out .5s;
+}
+.item img:hover {
+    transform: scale(1.12)
+} 
+/* end owl */
+
+.flex {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+}
+
+.flex-center {
+    justify-content: center;
+}
 
 .center {
     position: absolute;
@@ -91,6 +136,7 @@ img {
 .section img {
     max-width: 400px;
 }
+
 .section p {
     max-width: 300px;
 }

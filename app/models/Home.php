@@ -4,11 +4,14 @@ namespace App\Models;
 
 use Core\Model;
 
-abstract class Home extends Model
+class Home extends Model
 {
     public function getAll()
     {
-        $result = $this->select('users');
-        return $result;
+    }
+
+    public function getPosts() 
+    {
+        return $this->selectQuery("posts", "ORDER BY id DESC LIMIT 10");
     }
 }

@@ -1,5 +1,5 @@
 // import helpers
-import {qSelect, qSelectAll, gID, log} from './helpers.js';
+import { qSelect, qSelectAll, gID, log } from './helpers.js';
 
 // on load spinner
 document.onreadystatechange = function () {
@@ -63,11 +63,23 @@ if (elements.length) {
 // end get elements
 
 var owl = $('.owl-carousel');
-owl.owlCarousel({
-    items:4,
-    loop:true,
-    margin:10,
-    autoplay:true,
-    autoplayTimeout:3000,
-    autoplayHoverPause:true
-});
+if (window.innerWidth < 400) {
+    owl.owlCarousel({
+        items: 1,
+        loop: true,
+        margin: 10,
+        autoplay: true,
+        autoplayTimeout: 3000,
+        autoplayHoverPause: true,
+    });
+} else {
+    owl.owlCarousel({
+        dots: false,
+        items: 4,
+        loop: true,
+        margin: 10,
+        autoplay: true,
+        autoplayTimeout: 3000,
+        autoplayHoverPause: true,
+    });
+}
