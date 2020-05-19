@@ -87,8 +87,8 @@ class Categories extends Controller
 
         // Pagination for products with id category
         $table = 'products';
-        $results = $this->pagination($table, $page, $limit = 4, ['id_category', $id], $orderOption = '');
-        
+        $results = $this->pagination($table, $page, $limit = 4, ['id_category', $id], $orderOption = 'DESC');
+
         // Display results
         return View::renderTemplate('categories/show.html', [
             'category_description' => $data->category_description,
