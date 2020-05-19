@@ -23,8 +23,8 @@ class Home extends Controller
         View::renderTemplate('home/index.html', [
             'carousel' => true,
             'title' => 'Açougue a 110%',
-            'pizzas' => $pizzas,
             'hamburguers' => $hamburguers,
+            'pizzas' => $pizzas,
             'posts' => $posts
         ]);
     }
