@@ -1,8 +1,7 @@
 /vendor
 /node_modules
+/public/img/carousel/*
 /public/img/posts/*
 /public/img/users/*
 /public/img/gallery/*
-/public/img/categories/*
-/public/img/products/*
-/public/img/*
+/public/img/section/*
