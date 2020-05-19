@@ -145,10 +145,25 @@
         {% if totalPages > 1 %}
         <!-- Pagination -->
         <ul>
+            {% if method == 'show' %}
+            {% if page != 1 %}
+            <li><a href="{{BASE}}/{{table}}/{{method}}/{{pageId}}/1">Inicio</a></li>
+            <li><a href="{{BASE}}/{{table}}/{{method}}/{{pageId}}/{{prev}}">Anterior</a></li>
+            {% endif %}
+
+            {% for i in 1..totalPages %}
+            <li><a href="{{BASE}}/{{table}}/{{method}}/{{pageId}}/{{i}}">{{i}}</a></li>
+            {% endfor %}
+            {% if page != totalPages %}
+            <li><a href="{{BASE}}/{{table}}/{{method}}/{{pageId}}/{{next}}">Próxima</a></li>
+            <li><a href="{{BASE}}/{{table}}/{{method}}/{{pageId}}/{{totalPages}}">Final</a></li>
+            {% endif %}
+            {% else %}
             {% if pageId != 1 %}
             <li><a href="{{BASE}}/{{table}}/index/1">Inicio</a></li>
             <li><a href="{{BASE}}/{{table}}/index/{{prev}}">Anterior</a></li>
             {% endif %}
+
             {% if pageId != totalPages %}
             {% endif %}
             {% for i in 1..totalPages %}
@@ -157,6 +172,7 @@
             {% if pageId != totalPages %}
             <li><a href="{{BASE}}/{{table}}/index/{{next}}">Próxima</a></li>
             <li><a href="{{BASE}}/{{table}}/index/{{totalPages}}">Final</a></li>
+            {% endif %}
             {% endif %}
         </ul>
         {% endif %}

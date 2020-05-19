@@ -21,7 +21,7 @@ class Products extends Controller
     public function index($id = 1, $flash = false)
     {
         $table = 'products';
-        $results = $this->pagination($table, $id, $limit = 2, $option = 'DESC');
+        $results = $this->pagination($table, $id, $limit = 2, '', $orderOption = 'DESC');
         View::renderTemplate('products/index.html', [
             'title' => 'Galeria de imagens',
             'products' => $results[4],

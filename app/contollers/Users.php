@@ -20,7 +20,7 @@ class Users extends Controller
     {
         $this->isLogin();
         $table = 'users';
-        $results = $this->pagination($table, $id, $limit = 10, $option = 'AND `status` DESC');
+        $results = $this->pagination($table, $id, $limit = 10, '', $orderOption = 'AND `status` DESC');
 
         View::renderTemplate('users/index.html', [
             'title' => 'Users',

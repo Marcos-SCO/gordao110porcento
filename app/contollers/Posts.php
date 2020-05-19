@@ -21,7 +21,7 @@ class Posts extends Controller
     public function index($id = 1, $flash = false)
     {
         $table = 'posts';
-        $results = $this->pagination($table, $id, $limit = 2, $option = 'DESC');
+        $results = $this->pagination($table, $id, $limit = 2, '', $oderOption = 'DESC');
         View::renderTemplate('posts/index.html', [
             'title' => 'Posts - Açougue a 110%',
             'posts' => $results[4],
