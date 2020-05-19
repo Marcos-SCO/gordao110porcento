@@ -21,7 +21,7 @@ class Categories extends Controller
     public function index($id = 1, $flash = false)
     {
         $table = 'categories';
-        $results = $this->pagination($table, $id, $limit = 2, $option = 'DESC');
+        $results = $this->pagination($table, $id, $limit = 2,'', $orderOption = 'DESC');
         View::renderTemplate('categories/index.html', [
             'title' => 'Galeria de imagens',
             'categories' => $results[4],
@@ -68,7 +68,7 @@ class Categories extends Controller
                     $_SESSION['submitted'] = true;
                     $flash = flash('post_message', 'Imagem adicionada com successo');
                     $id = $this->model->lastId();
-                    return $this->show($id, $flash);
+                    return $this->show($id, 1, $flash);
                 } else {
                     die('Algo deu errado..');
                 }
@@ -78,17 +78,31 @@ class Categories extends Controller
         }
     }
 
-    public function show($id, array $flash = null)
+    public function show($id, $page = 1, array $flash = null)
     {
+        // get category fata
         $data = $this->model->getAllFrom('categories', $id);
-        $user = $this->model->getAllFrom('users', $data->user_id);
-        $products = $this->model->getProducts($data->id);
+        // get user data
+        $user = $this->model->getAllFrom('users',$data->user_id);
+        
+        // Pagination for products with id category
+        $table = 'products';
+        $results = $this->pagination($table, $page, $limit = 4, ['id_category', $id], $orderOption = '');
+        // Display results
         return View::renderTemplate('categories/show.html', [
             'category_description' => $data->category_description,
+            'pageId' => $id,
             'data' => $data,
             'user' => $user,
-            'products' => $products,
-            'flash' => $flash
+            'flash' => $flash,
+            'table' => 'categories',
+            'method' => 'show',
+            'page' => $page,
+            'products' => $results[4],
+            'prev' => $results[0],
+            'next' => $results[1],
+            'totalResults' => $results[2],
+            'totalPages' => $results[3],
         ]);
     }
 
@@ -127,7 +141,7 @@ class Categories extends Controller
                 $this->model->updateCategory($data[0]);
                 $flash = flash('post_message', 'Gategoria foi atualizada com sucesso!');
 
-                return $this->show($id, $flash);
+                return $this->show($id, 1, $flash);
             } else {
                 return $this->edit($id, $error);
             }
