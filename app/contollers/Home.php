@@ -17,10 +17,12 @@ class Home extends Controller
     public function index()
     {
         $posts = $this->model->getPosts();
-        
+        $hamburguers = $this->model->getProducts(1);
+
         View::renderTemplate('home/index.html', [
             'carousel' => true,
             'title' => 'Açougue a 110%',
+            'hamburguers' => $hamburguers,
             'posts' => $posts
         ]);
     }
