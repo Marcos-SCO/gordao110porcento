@@ -61,6 +61,7 @@ function animaScroll() {
         }
     });
 }
+
 // Carrega Animações
 if (elements.length) {
     window.addEventListener('scroll', animaScroll);
