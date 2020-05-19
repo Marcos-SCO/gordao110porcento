@@ -18,10 +18,12 @@ class Home extends Controller
     {
         $posts = $this->model->getPosts();
         $hamburguers = $this->model->getProducts(1);
+        $pizzas = $this->model->getProducts(2);
 
         View::renderTemplate('home/index.html', [
             'carousel' => true,
             'title' => 'Açougue a 110%',
+            'pizzas' => $pizzas,
             'hamburguers' => $hamburguers,
             'posts' => $posts
         ]);

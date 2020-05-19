@@ -44,6 +44,22 @@
             </div>
         </section>
         <section>
+            <header>
+                <h2>Pizzas</h2>
+            </header>
+            <div class="owl-carousel owl-theme">
+                {% for data in pizzas %}
+                <a href="{{BASE}}/products/show/{{data.id}}">
+                    <figure class="item"><img class="mx-auto"
+                            src="{{BASE}}/public/img/products/id_{{data.id}}/{{ data.img|replace({'&#39;': "'" }) }}"
+                            alt="{{data.title}}" title="{{data.title|replace({'&#39;': "'" }) }}">
+                        <figcaption>{{data.product_name|replace({'&#39;': "'" }) }}</figcaption>
+                    </figure>
+                </a>
+                {% endfor %}
+            </div>
+        </section>
+        <section>
             <header class="m-3">
                 <h2>Conheça nosso blog</h2>
                 <p>Últimas noticias</p>
