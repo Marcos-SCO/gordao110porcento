@@ -84,10 +84,11 @@ class Categories extends Controller
         $data = $this->model->getAllFrom('categories', $id);
         // get user data
         $user = $this->model->getAllFrom('users',$data->user_id);
-        
+
         // Pagination for products with id category
         $table = 'products';
         $results = $this->pagination($table, $page, $limit = 4, ['id_category', $id], $orderOption = '');
+        
         // Display results
         return View::renderTemplate('categories/show.html', [
             'category_description' => $data->category_description,
