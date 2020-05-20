@@ -17,7 +17,7 @@
             <?php } ?>
         <?php } ?>
 
-        <?php if (!$method && isset($pageId)) { ?>
+        <?php if (!isset($method) && isset($pageId)) { ?>
             <?php if ($pageId != 1) { ?>
                 <li><a href="<?= $BASE ?>/<?= $table ?>/index/1">Inicio</a></li>
                 <li><a href="<?= $BASE ?>/<?= $table ?>/index/<?=$prev?>">Anterior</a></li>
