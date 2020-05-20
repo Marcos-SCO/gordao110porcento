@@ -66,7 +66,6 @@ class User extends Model
         $_SESSION['adm_id'] = $loggedInUser->adm;
         $_SESSION['user_email'] = $loggedInUser->email;
         $_SESSION['user_name'] = $loggedInUser->name;
-        dump($_SESSION);
     }
 
     public function destroy()

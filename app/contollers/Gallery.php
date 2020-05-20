@@ -22,7 +22,7 @@ class Gallery extends Controller
     {
         $table = 'gallery';
         $results = $this->pagination($table, $id, $limit = 2, '', $orderOption = 'DESC');
-        View::renderTemplate('gallery/index.html', [
+        View::render('gallery/index.php', [
             'title' => 'Galeria de imagens',
             'gallery' => $results[4],
             'flash' => $flash,
@@ -43,7 +43,7 @@ class Gallery extends Controller
             unset($_SESSION['submitted']);
         }
 
-        View::renderTemplate('gallery/create.html', [
+        View::render('gallery/create.php', [
             'title' => 'Enviar uma nova foto para galeria',
             'data' => $data,
             'error' => $error,
@@ -82,7 +82,7 @@ class Gallery extends Controller
     {
         $data = $this->model->getAllFrom('gallery', $id);
         $user = $this->model->getAllFrom('users', $data->user_id);
-        return View::renderTemplate('gallery/show.html', [
+        return View::render('gallery/show.php', [
             'img_title' => $data->img_title,
             'data' => $data,
             'user' => $user,
@@ -95,7 +95,7 @@ class Gallery extends Controller
         $this->isLogin();
         $data = $this->model->getAllFrom('gallery', $id);
 
-        View::renderTemplate('gallery/edit.html', [
+        View::render('gallery/edit.php', [
             'title' => "Editar - $data->img_title",
             'data' => $data,
             'error' => $error

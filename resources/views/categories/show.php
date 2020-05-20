@@ -1,12 +1,12 @@
 <?php
-if (isset($_SESSION['user_status']) && $_SESSION['user_status'] == 1) {
+if ($_SESSION['user_status'] && $_SESSION['user_status'] == 1) {
 ?>
     <a href="<?= $BASE ?>/categories/create">Adicionar mais categorias</a>
 <?php } ?>
 <div>
     <h1><?= $data->category_name ?></h1>
     <?php
-    if (isset($_SESSION['user_status']) && $_SESSION['user_status'] == 1) {
+    if ($_SESSION['user_status'] && $_SESSION['user_status'] == 1) {
     ?>
         <small class="bg-secondary text-white p-2 mb-3">
             Categoria adicionada por <a href="<?= $BASE ?>/users/show/<?= $user->id ?>"><?= $user->name ?></a> em <?= $data->created_at ?>
@@ -20,7 +20,7 @@ if (isset($_SESSION['user_status']) && $_SESSION['user_status'] == 1) {
     </figure>
 </div>
 <?php
-if (isset($_SESSION['user_id']) && isset($_SESSION['adm_id'])) {
+if ($_SESSION['user_id'] && $_SESSION['adm_id']) {
     if ($data->user_id == $_SESSION['user_id'] || $_SESSION['adm_id'] == 1) {
 ?>
         <a href="<?= $BASE ?>/categories/edit/<?= $data->id ?>" class="btn btn-dark">
