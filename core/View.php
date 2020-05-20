@@ -15,12 +15,16 @@ class View
      */
     public static function render(string $view, array $args = []): void
     {
+        $args['BASE'] = Config::URL_BASE;
+        $BASE = Config::URL_BASE;
         extract($args, EXTR_SKIP);
 
-        $file = "../app/views/$view"; // Relative to Core directory
-
+        // $file = "$BASE/resources/views/$view"; // Relative to Core directory
+        $file = "../resources/views/$view"; // Relative to Core directory
         if (is_readable($file)) {
+            require_once "../resources/views/base/header.php";
             require $file;
+            require_once "../resources/views/base/footer.php";
         } else {
             // echo "$file not found";
             throw new \Exception("$file not found");
