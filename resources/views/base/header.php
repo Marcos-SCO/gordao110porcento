@@ -83,7 +83,7 @@
     </nav>
     <!-- end nav -->
 
-    <?php if (isset($carousel)) { ?>
+    <?php if (isset($carousel) && $carousel == 1) { ?>
         <!-- Header carousel -->
         <header id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
             <ol class="carousel-indicators">
@@ -125,7 +125,7 @@
         </header>
     <?php } ?>
 
-    <?php if (isset($flash)) { ?>
+    <?php if (isset($flash) && $flash != false && $flash != null) { ?>
         <div class="<?= $flash['class'] ?>" id='msg-flash' style="transition: transform .18s, opacity .18s, visibility 0s .18s;">
             <?= $flash['message'] ?>
         </div>
