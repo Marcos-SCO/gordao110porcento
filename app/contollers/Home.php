@@ -8,7 +8,7 @@ use Core\Controller;
 use Core\View;
 
 class Home extends Controller
-{    
+{
     public function __construct()
     {
         $this->model = $this->model('Home');
@@ -20,8 +20,9 @@ class Home extends Controller
         $hamburguers = $this->model->getProducts(1);
         $pizzas = $this->model->getProducts(2);
 
-        View::renderTemplate('home/index.html', [
-            'carousel' => true,
+        $carousel = true;
+        View::render('home/index.php', [
+            'carousel' => $carousel,
             'title' => 'Açougue a 110%',
             'hamburguers' => $hamburguers,
             'pizzas' => $pizzas,
