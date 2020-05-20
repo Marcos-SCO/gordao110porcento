@@ -22,7 +22,8 @@ class Categories extends Controller
     {
         $table = 'categories';
         $results = $this->pagination($table, $id, $limit = 2,'', $orderOption = 'DESC');
-        View::renderTemplate('categories/index.html', [
+       
+        View::render('categories/index.php', [
             'title' => 'Galeria de imagens',
             'categories' => $results[4],
             'flash' => $flash,
@@ -90,7 +91,7 @@ class Categories extends Controller
         $results = $this->pagination($table, $page, $limit = 4, ['id_category', $id], $orderOption = 'DESC');
 
         // Display results
-        return View::renderTemplate('categories/show.html', [
+        return View::render('categories/show.php', [
             'category_description' => $data->category_description,
             'pageId' => $id,
             'data' => $data,
@@ -105,6 +106,7 @@ class Categories extends Controller
             'totalResults' => $results[2],
             'totalPages' => $results[3],
         ]);
+        dump($data);
     }
 
     public function edit($id, $error = false)

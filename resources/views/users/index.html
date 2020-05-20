@@ -1,7 +1,7 @@
 {% extends "base/base.html" %}
 
 {% block title %}
-{{title ?? 'Welcome'}}
+<?=title ?? 'Welcome'?>
 {% endblock title %}
 
 {% block body %}
@@ -13,9 +13,9 @@
             {% for user in users %}
             {% if user.status == 1 %}
             <li>
-                id {{user.id}} - <a href="{{BASE}}/users/edit/{{user.id}}">{{ user.name }}</a> - {{ user.email }}
+                id <?=user.id?> - <a href="<?=$BASE?>/users/edit/<?=user.id?>"><?= user.name ?></a> - <?= user.email ?>
                 {% if (ADM_ID == 1) and (user.id != 1) %}
-                <a href="{{BASE}}/users/status/{{user.id}}/0" method="post" name="delete"
+                <a href="<?=$BASE?>/users/status/<?=user.id?>/0" method="post" name="delete"
                     onclick="return confirm('Quer Mesmo desativar esse usuario?')">
                     Desativar
                 </a>
@@ -28,9 +28,9 @@
             {% for user in users %}
             {% if user.status == 0 %}
             <li>
-                id {{user.id}} - <a href="{{BASE}}/users/edit/{{user.id}}">{{ user.name }}</a> - {{ user.email }}
+                id <?=user.id?> - <a href="<?=$BASE?>/users/edit/<?=user.id?>"><?= user.name ?></a> - <?= user.email ?>
                 {% if (ADM_ID == 1) and (user.id != 1) %}
-                <a href="{{BASE}}/users/status/{{user.id}}/1" method="post" name="delete"
+                <a href="<?=$BASE?>/users/status/<?=user.id?>/1" method="post" name="delete"
                     onclick="return confirm('Quer Mesmo ativar esse usuario?')">
                     Ativar
                 </a>

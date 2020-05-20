@@ -8,13 +8,13 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
     <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"> -->
     <!-- Owl css -->
-    <link rel="stylesheet" href="{{BASE}}/public/css/owl.carousel.min.css">
-    <link rel="stylesheet" href="{{BASE}}/public/css/owl.theme.default.css">
+    <link rel="stylesheet" href="<?=$BASE?>/public/css/owl.carousel.min.css">
+    <link rel="stylesheet" href="<?=$BASE?>/public/css/owl.theme.default.css">
     <!-- Google fonts  -->
     <link href="https://fonts.googleapis.com/css2?family=Oleo+Script+Swash+Caps:wght@700&display=swap" rel="stylesheet">
     <!-- Css -->
-    <link rel="stylesheet" href="{{BASE}}/public/css/style.css">
-    <link rel="stylesheet" href="{{BASE}}/public/css/style.carousel.css">
+    <link rel="stylesheet" href="<?=$BASE?>/public/css/style.css">
+    <link rel="stylesheet" href="<?=$BASE?>/public/css/style.carousel.css">
     <title>{% block title %}{% endblock %}</title>
 </head>
 
@@ -25,7 +25,7 @@
     <!-- Nav -->
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <!--  Show this only on mobile to medium screens  -->
-        <a class="navbar-brand d-lg-none" href="{{BASE}}">Navbar</a>
+        <a class="navbar-brand d-lg-none" href="<?=$BASE?>">Navbar</a>
 
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggle"
             aria-controls="navbarToggle" aria-expanded="false" aria-label="Toggle navigation">
@@ -35,24 +35,24 @@
         <div class="collapse navbar-collapse justify-content-between" id="navbarToggle" style="padding-right: 4.4rem;">
             <ul class="navbar-nav">
                 <li class="nav-item active">
-                    <a class="nav-link" href="{{BASE}}">Home<span class="sr-only">(current)</span></a>
+                    <a class="nav-link" href="<?=$BASE?>">Home<span class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{BASE}}/">Produtos</a>
+                    <a class="nav-link" href="<?=$BASE?>/">Produtos</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{BASE}}/posts">Postagens</a>
+                    <a class="nav-link" href="<?=$BASE?>/posts">Postagens</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{BASE}}/gallery">Galeria</a>
+                    <a class="nav-link" href="<?=$BASE?>/gallery">Galeria</a>
                 </li>
             </ul>
             <!--   Show this only lg screens and up   -->
-            <a class="navbar-brand d-none d-lg-block" style="  margin-right: 9%" href="{{BASE}}">Navbar</a>
+            <a class="navbar-brand d-none d-lg-block" style="  margin-right: 9%" href="<?=$BASE?>">Navbar</a>
 
             <ul class="navbar-nav">
                 <li class="nav-item">
-                    <a class="nav-link" href="{{BASE}}">Sobre</a>
+                    <a class="nav-link" href="<?=$BASE?>">Sobre</a>
                 </li>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button"
@@ -60,23 +60,23 @@
                         Contato
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                        <a class="dropdown-item" href="{{BASE}}/contact/message">Enviar Messagem</a>
-                        <a class="dropdown-item" href="{{BASE}}/contact/work">Trabalhe conosco</a>
+                        <a class="dropdown-item" href="<?=$BASE?>/contact/message">Enviar Messagem</a>
+                        <a class="dropdown-item" href="<?=$BASE?>/contact/work">Trabalhe conosco</a>
                     </div>
                 </li>
                 {% if SESSION_USER_NAME %}
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button"
                         data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        {{ SESSION_USER_NAME }}
+                        <?= SESSION_USER_NAME ?>
                     </a>
                     {% if SESSION_ID %}
                     <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                        <a class="dropdown-item" href="{{BASE}}/users/edit/{{SESSION_ID}}">Meu perfil</a>
-                        <a class="dropdown-item" href="{{BASE}}/users/">Usuários</a>
-                        <a class="dropdown-item" href="{{BASE}}/categories/">Categorias</a>
+                        <a class="dropdown-item" href="<?=$BASE?>/users/edit/<?=SESSION_ID?>">Meu perfil</a>
+                        <a class="dropdown-item" href="<?=$BASE?>/users/">Usuários</a>
+                        <a class="dropdown-item" href="<?=$BASE?>/categories/">Categorias</a>
 
-                        <a class="dropdown-item" href="{{BASE}}/users/logout">Sair</a>
+                        <a class="dropdown-item" href="<?=$BASE?>/users/logout">Sair</a>
                     </div>
                     {% endif %}
                     {% endif %}
@@ -96,7 +96,7 @@
         </ol>
         <section class="carousel-inner">
             <figure class="carousel-item active">
-                <img src="{{BASE}}/public/img/carousel/black_hole_on_earth-wallpaper-1920x1080.jpg" alt="..."
+                <img src="<?=$BASE?>/public/img/carousel/black_hole_on_earth-wallpaper-1920x1080.jpg" alt="..."
                     class="img-prevent-drag">
                 <figcaption class="carousel-caption d-none d-md-block">
                     <h5>Olá</h5>
@@ -104,7 +104,7 @@
                 </figcaption>
             </figure>
             <figure class="carousel-item">
-                <img src="{{BASE}}/public/img/carousel/black_hole_on_earth-wallpaper-1920x1080.jpg" alt="..."
+                <img src="<?=$BASE?>/public/img/carousel/black_hole_on_earth-wallpaper-1920x1080.jpg" alt="..."
                     class="img-prevent-drag">
                 <figcaption class="carousel-caption d-none d-md-block">
                     <h5>Olá</h5>
@@ -112,7 +112,7 @@
                 </figcaption>
             </figure>
             <figure class="carousel-item">
-                <img src="{{BASE}}/public/img/carousel/black_hole_on_earth-wallpaper-1920x1080.jpg" alt="..."
+                <img src="<?=$BASE?>/public/img/carousel/black_hole_on_earth-wallpaper-1920x1080.jpg" alt="..."
                     class="img-prevent-drag">
                 <figcaption class="carousel-caption d-none d-md-block">
                     <h5>Olá</h5>
@@ -133,9 +133,9 @@
 
     <main class="">
         {% if flash %}
-        <div class="{{flash.class}}" id='msg-flash'
+        <div class="<?=flash.class?>" id='msg-flash'
             style="transition: transform .18s, opacity .18s, visibility 0s .18s;">
-            {{ flash.message }}
+            <?= flash.message ?>
         </div>
         {% endif %}
 
@@ -147,31 +147,31 @@
         <ul>
             {% if method == 'show' %}
             {% if page != 1 %}
-            <li><a href="{{BASE}}/{{table}}/{{method}}/{{pageId}}/1">Inicio</a></li>
-            <li><a href="{{BASE}}/{{table}}/{{method}}/{{pageId}}/{{prev}}">Anterior</a></li>
+            <li><a href="<?=$BASE?>/<?=table?>/<?=method?>/<?=pageId?>/1">Inicio</a></li>
+            <li><a href="<?=$BASE?>/<?=table?>/<?=method?>/<?=pageId?>/<?=prev?>">Anterior</a></li>
             {% endif %}
 
             {% for i in 1..totalPages %}
-            <li><a href="{{BASE}}/{{table}}/{{method}}/{{pageId}}/{{i}}">{{i}}</a></li>
+            <li><a href="<?=$BASE?>/<?=table?>/<?=method?>/<?=pageId?>/<?=i?>"><?=i?></a></li>
             {% endfor %}
             {% if page != totalPages %}
-            <li><a href="{{BASE}}/{{table}}/{{method}}/{{pageId}}/{{next}}">Próxima</a></li>
-            <li><a href="{{BASE}}/{{table}}/{{method}}/{{pageId}}/{{totalPages}}">Final</a></li>
+            <li><a href="<?=$BASE?>/<?=table?>/<?=method?>/<?=pageId?>/<?=next?>">Próxima</a></li>
+            <li><a href="<?=$BASE?>/<?=table?>/<?=method?>/<?=pageId?>/<?=totalPages?>">Final</a></li>
             {% endif %}
             {% else %}
             {% if pageId != 1 %}
-            <li><a href="{{BASE}}/{{table}}/index/1">Inicio</a></li>
-            <li><a href="{{BASE}}/{{table}}/index/{{prev}}">Anterior</a></li>
+            <li><a href="<?=$BASE?>/<?=table?>/index/1">Inicio</a></li>
+            <li><a href="<?=$BASE?>/<?=table?>/index/<?=prev?>">Anterior</a></li>
             {% endif %}
 
             {% if pageId != totalPages %}
             {% endif %}
             {% for i in 1..totalPages %}
-            <li><a href="{{BASE}}/{{table}}/index/{{i}}">{{i}}</a></li>
+            <li><a href="<?=$BASE?>/<?=table?>/index/<?=i?>"><?=i?></a></li>
             {% endfor %}
             {% if pageId != totalPages %}
-            <li><a href="{{BASE}}/{{table}}/index/{{next}}">Próxima</a></li>
-            <li><a href="{{BASE}}/{{table}}/index/{{totalPages}}">Final</a></li>
+            <li><a href="<?=$BASE?>/<?=table?>/index/<?=next?>">Próxima</a></li>
+            <li><a href="<?=$BASE?>/<?=table?>/index/<?=totalPages?>">Final</a></li>
             {% endif %}
             {% endif %}
         </ul>
@@ -189,11 +189,11 @@
         integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous">
     </script>
 
-    <!-- <script src='{{BASE}}/public/js/jquery.min.js'></script> -->
+    <!-- <script src='<?=$BASE?>/public/js/jquery.min.js'></script> -->
     <!-- Owl -->
-    <script src='{{BASE}}/public/js/owl.carousel.min.js'></script>
+    <script src='<?=$BASE?>/public/js/owl.carousel.min.js'></script>
     <!-- App -->
-    <script src="{{BASE}}/public/js/app.js"></script>
+    <script src="<?=$BASE?>/public/js/app.js"></script>
 </body>
 
 </html>

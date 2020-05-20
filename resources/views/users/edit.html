@@ -1,23 +1,23 @@
 {% extends "base/base.html" %}
 
 {% block title %}
-{{title ?? 'Editar Usúario'}}
+<?=title ?? 'Editar Usúario'?>
 {% endblock title %}
 
 {% block body %}
-<h1>{{ title ?? 'Editar usuário'}}</h1>
+<h1><?= title ?? 'Editar usuário'?></h1>
 
 <div class="row">
     <div class="col-md-6 mx-auto">
         <div class="card card-body bg-light mt5">
 
-            {{ flash.flash }}
+            <?= flash.flash ?>
 
             <p>Preencha o formulário</p>
 
-            <form action="{{BASE}}/users/update" method="post" enctype="multipart/form-data">
+            <form action="<?=$BASE?>/users/update" method="post" enctype="multipart/form-data">
 
-                <input type="hidden" name="id" value="{{ data.id }}">
+                <input type="hidden" name="id" value="<?= data.id ?>">
 
                 {% if data.id == 1 %}
                     <input type="hidden" name="adm" id="adm" value="1">
@@ -31,10 +31,10 @@
                         <optgroup label="Tipo de usuário">
                             {%  for i in 0..1 %}
                             {% if data.adm == i %}
-                            <option value="{{i}}" selected>{% if i == 1 %}Administrador{% else %}Comum{% endif %}
+                            <option value="<?=i?>" selected>{% if i == 1 %}Administrador{% else %}Comum{% endif %}
                             </option>
                             {% else %}
-                            <option value="{{i}}">{% if i == 1 %}Administrador{% else %}Comum{% endif %}</option>
+                            <option value="<?=i?>">{% if i == 1 %}Administrador{% else %}Comum{% endif %}</option>
                             {% endif %}
                             {% endfor %}
                         </optgroup>
@@ -46,38 +46,38 @@
                 <div class="form-group">
                     <label for="name">Nome: <sup>*</sup></label>
                     <input type="text" name="name" id="name"
-                        class="form-control form-control-lg {{error.name_error != '' ? 'is-invalid' : '' }}"
-                        value="{{ data.name ?? '' }}">
+                        class="form-control form-control-lg <?=error.name_error != '' ? 'is-invalid' : '' ?>"
+                        value="<?= data.name ?? '' ?>">
                     <span class=" invalid-feedback">
-                        {{ error.name_error }} </span>
+                        <?= error.name_error ?> </span>
                 </div>
 
                 <div class="form-group">
                     <label for="last_name">Sobrenome: <sup>*</sup></label>
                     <input type="text" name="last_name" id="last_name"
-                        class="form-control form-control-lg {{error.last_name_error != '' ? 'is-invalid' : '' }}"
-                        value="{{ data.last_name ?? '' }}">
+                        class="form-control form-control-lg <?=error.last_name_error != '' ? 'is-invalid' : '' ?>"
+                        value="<?= data.last_name ?? '' ?>">
                     <span class=" invalid-feedback">
-                        {{ error.last_name_error }} </span>
+                        <?= error.last_name_error ?> </span>
                 </div>
 
                 <div class="form-group">
                     <label for="bio">Sobre: <sup>*</sup></label>
-                    <textarea type="text" name="bio" id="bio" class="form-control form-control-lg">{{ data.bio ?? '' }}</textarea>
+                    <textarea type="text" name="bio" id="bio" class="form-control form-control-lg"><?= data.bio ?? '' ?></textarea>
                 </div>
 
                 <div class="form-group">
                     <label for="img">Imagem de perfil</label>
                     <input type="file" name="img" id="img"
-                        class="form-control form-control-lg {{ error.img_error != '' ? 'is-invalid' : '' }}"
-                        value="{{ data.img ?? '' }}">
-                    <input type="hidden" name="img" id="img" value="{{data.img}}">
+                        class="form-control form-control-lg <?= error.img_error != '' ? 'is-invalid' : '' ?>"
+                        value="<?= data.img ?? '' ?>">
+                    <input type="hidden" name="img" id="img" value="<?=data.img?>">
                     <span class="invalid-feedback">
-                        {{ error.img_error }}
+                        <?= error.img_error ?>
                     </span>
                     {% if data.img %}
-                    <img src="{{BASE}}/public/img/users/id_{{data.id}}/{{data.img}}" alt="{{data.img}}"
-                        title="{{data.name}}">
+                    <img src="<?=$BASE?>/public/img/users/id_<?=data.id?>/<?=data.img?>" alt="<?=data.img?>"
+                        title="<?=data.name?>">
                     {% endif %}
                 </div>
 
