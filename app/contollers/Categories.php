@@ -44,7 +44,7 @@ class Categories extends Controller
             unset($_SESSION['submitted']);
         }
 
-        View::renderTemplate('categories/create.html', [
+        View::render('categories/create.php', [
             'title' => 'Adicione mais uma categoria',
             'data' => $data,
             'error' => $error,
@@ -106,7 +106,6 @@ class Categories extends Controller
             'totalResults' => $results[2],
             'totalPages' => $results[3],
         ]);
-        dump($data);
     }
 
     public function edit($id, $error = false)
@@ -114,7 +113,7 @@ class Categories extends Controller
         $this->isLogin();
         $data = $this->model->getAllFrom('categories', $id);
 
-        View::renderTemplate('categories/edit.html', [
+        View::render('categories/edit.php', [
             'title' => "Editar - $data->category_name",
             'data' => $data,
             'error' => $error
