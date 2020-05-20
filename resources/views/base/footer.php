@@ -7,7 +7,7 @@
                 <li><a href="<?= $BASE ?>/<?= $table ?>/<?= $method ?>/<?= $pageId ?>/<?=$prev?>">Anterior</a></li>
             <?php } ?>
 
-            <?php for ($i = 1; $i < $totalPages; $i++) { ?>
+            <?php for ($i = 1; $i <= $totalPages; $i++) { ?>
                 <li><a href="<?= $BASE ?>/<?= $table ?>/<?= $method ?>/<?= $pageId ?>/<?= $i ?>"><?= $i ?></a></li>
             <?php } ?>
 
@@ -17,14 +17,14 @@
             <?php } ?>
         <?php } ?>
 
-        <?php if (isset($pageId)) { ?>
+        <?php if (!$method && isset($pageId)) { ?>
             <?php if ($pageId != 1) { ?>
                 <li><a href="<?= $BASE ?>/<?= $table ?>/index/1">Inicio</a></li>
                 <li><a href="<?= $BASE ?>/<?= $table ?>/index/<?=$prev?>">Anterior</a></li>
             <?php } ?>
 
             <?php if ($pageId != $totalPages) { ?>
-                <?php for ($i = 1; $i < $totalPages; $i++) { ?>
+                <?php for ($i = 1; $i <= $totalPages; $i++) { ?>
                     <li><a href="<?= $BASE ?>/<?= $table ?>/index/<?= $i ?>"><?= $i ?></a></li>
                 <?php } ?>
             <?php } ?>
