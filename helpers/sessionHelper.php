@@ -1,6 +1,13 @@
 <?php
 // Start Session
 session_start();
+// Session variables
+isset($_SESSION['user_status']) ? $_SESSION['user_status'] : $_SESSION['user_status'] = null;
+isset($_SESSION['user_id']) ? $_SESSION['user_id'] : $_SESSION['user_id'] = null;
+isset($_SESSION['adm_id']) ? $_SESSION['adm_id'] : $_SESSION['adm_id'] = null;
+isset($_SESSION['user_email']) ? $_SESSION['user_email'] : $_SESSION['user_email'] = null;
+isset($_SESSION['user_name']) ? $_SESSION['user_name'] : $_SESSION['user_name'] = null;
+
 /**
  * Time zone São Paulo
  */
