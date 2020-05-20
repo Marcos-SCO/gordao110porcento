@@ -164,7 +164,7 @@ class Gallery extends Controller
         ];
 
         $error = [
-            'img_title_error' => $imgDescription,
+            'img_title_error' => $imgDescriptionError,
             'img_error' => $imgPathError,
             'error' => false
         ];
