@@ -22,7 +22,7 @@ class Posts extends Controller
     {
         $table = 'posts';
         $results = $this->pagination($table, $id, $limit = 2, '', $oderOption = 'DESC');
-        View::renderTemplate('posts/index.html', [
+        View::render('posts/index.php', [
             'title' => 'Posts - Açougue a 110%',
             'posts' => $results[4],
             'flash' => $flash,
@@ -43,7 +43,7 @@ class Posts extends Controller
             unset($_SESSION['submitted']);
         }
 
-        View::renderTemplate('posts/create.html', [
+        View::render('posts/create.php', [
             'title' => 'Criar Post - Açougue a 110%',
             'data' => $data,
             'error' => $error,
@@ -83,7 +83,7 @@ class Posts extends Controller
         $data = $this->model->getAllFrom('posts', $id);
         //dump($data);
         $user = $this->model->getAllFrom('users', $data->user_id);
-        return View::renderTemplate('posts/show.html', [
+        return View::render('posts/show.php', [
             'title' => $data->title,
             'data' => $data,
             'user' => $user,
@@ -95,7 +95,7 @@ class Posts extends Controller
     {
         $this->isLogin();
         $data = $this->model->getAllFrom('posts', $id);
-        View::renderTemplate('posts/edit.html', [
+        View::render('posts/edit.php', [
             'title' => "Editar - $data->title",
             'data' => $data,
             'error' => $error
