@@ -30,7 +30,7 @@ class Contact extends Controller
     }
     public function success()
     {
-        View::renderTemplate('contact/success.html', [
+        View::render('contact/success.php', [
             'title' => 'Sua menssagem foi enviada com sucesso!',
         ]);
     }
@@ -40,7 +40,7 @@ class Contact extends Controller
         if (isset($_SESSION['submitted'])) {
             unset($_SESSION['submitted']);
         }
-        View::renderTemplate('contact/message.html', [
+        View::render('contact/message.php', [
             'title' => 'Contato - envie sua menssagem',
             'data' => $data,
             'error' => $error,
@@ -52,7 +52,7 @@ class Contact extends Controller
         if (isset($_SESSION['submitted'])) {
             unset($_SESSION['submitted']);
         }
-        View::renderTemplate('contact/work.html', [
+        View::render('contact/work.php', [
             'title' => 'Envie sua mensagem com um anexo',
             'data' => $data,
             'error' => $error,
