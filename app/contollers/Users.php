@@ -39,6 +39,10 @@ class Users extends Controller
     {
         $this->isLogin();
 
+        if (isset($_SESSION['submitted'])) {
+            unset($_SESSION['submitted']);
+        }
+
         View::render('users/create.php', [
             'title' => 'Cadastro',
             'data' => $data,
@@ -51,7 +55,7 @@ class Users extends Controller
         $this->isLogin();
 
         // Check for post
-        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+        if ($_SERVER['REQUEST_METHOD'] == 'POST' && !isset($_SESSION['submitted'])) {
             // Process Form
             $data = $this->getPostData();
             $error = $data[1];
@@ -66,18 +70,21 @@ class Users extends Controller
 
             // Make sure error are empty
             if ($error['error'] != true) {
+                $_SESSION['submitted'] = true;
                 // Hash password
                 $data[0]['password'] = password_hash($data[0]['password'], PASSWORD_DEFAULT);
                 // Register user
                 if ($this->model->insertUser($data[0])) {
                     $flash = flash('register_success', 'Usuário registrado com sucesso!');
-                    return $this->index(1,$flash);
+                    return $this->index(1, $flash);
                 } else {
                     die('Algo deu errado...');
                 }
             } else {
                 return $this->create($data[0], $error);
             }
+        } else {
+            redirect('users');
         }
     }
 
@@ -96,7 +103,7 @@ class Users extends Controller
     public function show($id, $page = 1, $flash = null)
     {
         $user = $this->model->getAllFrom('users', $id);
-        
+
         // Pagination for posts with user id
         $table = 'posts';
         $results = $this->pagination($table, $page, $limit = 4, ['user_id', $user->id], $orderOption = 'DESC');
@@ -272,19 +279,21 @@ class Users extends Controller
             'error' => false
         ];
 
-        $validate = $this->imgValidate();
-        if (isset($_FILES['img']) && $postImg == '') {
-            if (empty($data['img'])) {
-                $error['img_error'] = "Insira uma imagem";
-                $error['error'] = true;
-            }
-            if (!empty($data['img'])) {
+        if (isset($_FILES['img']) || $postImg) {
+            $validate = $this->imgValidate();
+            if (isset($_FILES['img']) && $postImg == '') {
+                if (empty($data['img'])) {
+                    $error['img_error'] = "Insira uma imagem";
+                    $error['error'] = true;
+                }
+                if (!empty($data['img'])) {
+                    $error['img_error'] = $validate[1];
+                    $error['error'] = $validate[0];
+                }
+            } else if ($postImg && !empty($data['img'])) {
                 $error['img_error'] = $validate[1];
                 $error['error'] = $validate[0];
             }
-        } else if ($postImg && !empty($data['img'])) {
-            $error['img_error'] = $validate[1];
-            $error['error'] = $validate[0];
         }
 
         if (isset($_POST['name']) || isset($_POST['last_name'])) {

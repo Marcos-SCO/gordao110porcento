@@ -75,6 +75,8 @@ class Gallery extends Controller
             } else {
                 return $this->create($data, $error);
             }
+        } else {
+            redirect('gallery');
         }
     }
 

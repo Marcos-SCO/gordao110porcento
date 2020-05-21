@@ -20,6 +20,7 @@ class Controller
         return new $intance;
     }
 
+    // Verifies if a user is login, if not redirect
     public function isLogin()
     {
         if (!isLoggedIn()) {
@@ -28,34 +29,35 @@ class Controller
         }
     }
 
-    public static function createMore($BASE, $table, $text = 'Quer adicionar mais?') {
+    /* Dinamic page links start */
+    public static function createMore($BASE, $table, $text = 'Quer adicionar mais?')
+    {
         if ($_SESSION['user_status'] == 1) {
             echo "<a href='$BASE/$table/create'>$text</a>";
         }
     }
 
-    public static function editDelete($BASE, $table, $data, $text = 'Quer Mesmo deletar?') {
-        if (($data->user_id == $_SESSION['user_id']) or ($_SESSION['adm_id'] == 1)) {
-            ?>
-                <a href="<?="{$BASE}/{$table}/edit/{$data->id}"?>" class="btn btn-dark">
-                    Editar
-                </a>
-                <form action="<?="{$BASE}/{$table}/delete/{$data->id}"?>" method="post">
-                    <button onclick="return confirm('<?=$text?>')">Deletar</button>
-                </form>
-            <?php
-        }
+    public static function editDelete($BASE, $table, $data, $text = 'Quer Mesmo deletar?')
+    {
+        if (($data->user_id == $_SESSION['user_id']) or ($_SESSION['adm_id'] == 1)) { ?>
+            <a href="<?= "{$BASE}/{$table}/edit/{$data->id}" ?>" class="btn btn-dark">Editar</a>
+            <form action="<?= "{$BASE}/{$table}/delete/{$data->id}" ?>" method="post">
+                <button onclick="return confirm('<?= $text ?>')">Deletar</button>
+            </form>
+<?php }
     }
+    /* Dinamic page links end */
 
+    // Delete functoin for controllers
     public function delete($id)
     {
         $url = explode('/', $_SERVER['QUERY_STRING']);
+        // Get table with url
         $table = $url[0];
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-            //$this->model->deletePost('posts', ['id' => $id]);
             $this->model->deleteQuery($table, ['id' => $id]);
             if ($this->model->rowCount() > 0) {
-                $this->deleteFolder('posts', $id);
+                $this->deleteFolder($table, $id);
                 $flash = flash('register_seccess', 'Deletado com sucesso');
                 return $this->index(1, $flash);
             } else {
@@ -129,6 +131,7 @@ class Controller
     }
     /* Img methods End  */
 
+    /* Pagination start */
     public function pagination($table, $id = 1, $limit = 5, $optionID = '', $orderOption = '')
     {
         /* Set current, prev and next page */
@@ -153,7 +156,9 @@ class Controller
 
         return [$prev, $next, $totalResults, $totalPages, $resultTable];
     }
+    /* pagination end */
 
+    // Email start
     public function sendEmailHandler($data, $attachment = null)
     {
         $name = strip_tags($data['name']);

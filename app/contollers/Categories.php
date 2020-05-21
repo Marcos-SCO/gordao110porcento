@@ -21,8 +21,8 @@ class Categories extends Controller
     public function index($id = 1, $flash = false)
     {
         $table = 'categories';
-        $results = $this->pagination($table, $id, $limit = 2,'', $orderOption = 'DESC');
-       
+        $results = $this->pagination($table, $id, $limit = 2, '', $orderOption = 'DESC');
+
         View::render('categories/index.php', [
             'title' => 'Galeria de imagens',
             'categories' => $results[4],
@@ -59,7 +59,6 @@ class Categories extends Controller
             $result = $this->getPostData();
             $data = $result[0];
             $error = $result[1];
-            dump($error);
             // Validate data
             if ($error['error'] != true) {
                 $fullPath = $this->imgCreateHandler('categories');
@@ -76,6 +75,8 @@ class Categories extends Controller
             } else {
                 return $this->create($data, $error);
             }
+        } else {
+            redirect('categories');
         }
     }
 
@@ -84,7 +85,7 @@ class Categories extends Controller
         // get category fata
         $data = $this->model->getAllFrom('categories', $id);
         // get user data
-        $user = $this->model->getAllFrom('users',$data->user_id);
+        $user = $this->model->getAllFrom('users', $data->user_id);
 
         // Pagination for products with id category
         $table = 'products';
@@ -147,6 +148,8 @@ class Categories extends Controller
             } else {
                 return $this->edit($id, $error);
             }
+        } else {
+            redirect('categories');
         }
     }
 
@@ -155,7 +158,7 @@ class Categories extends Controller
         // Sanitize data
         $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
         $id = isset($_POST['id']) ? trim($_POST['id']) : '';
-        $categoryName = isset($_POST['category_name']) ?(trim($_POST['category_name'])) : '';
+        $categoryName = isset($_POST['category_name']) ? (trim($_POST['category_name'])) : '';
         $categoryDescription = isset($_POST['category_description']) ? trim($_POST['category_description']) : '';
         $img = isset($_FILES['img']) ? $_FILES['img'] : null;
         $postImg = isset($_POST['img']) ? $_POST['img'] : '';

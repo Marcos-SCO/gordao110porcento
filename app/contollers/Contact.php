@@ -74,6 +74,8 @@ class Contact extends Controller
             } else {
                 return $this->message($data, $error);
             }
+        } else {
+            redirect('contact/message');
         }
     }
 
@@ -94,23 +96,9 @@ class Contact extends Controller
                 //dump($data);
                 return $this->work($data, $error);
             }
+        } else {
+            redirect('contact/work');
         }
-    }
-
-    public function show()
-    {
-    }
-
-    public function edit()
-    {
-    }
-
-    public function update()
-    {
-    }
-
-    public function delete()
-    {
     }
 
     public function getPostData()
