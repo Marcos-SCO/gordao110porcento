@@ -9,6 +9,8 @@ use Core\View;
 
 use App\Config\Config;
 
+use function PHPSTORM_META\type;
+
 class Products extends Controller
 {
     public $model;
@@ -22,7 +24,7 @@ class Products extends Controller
     {
         $table = 'products';
         $results = $this->pagination($table, $id, $limit = 2, '', $orderOption = 'DESC');
-        View::renderTemplate('products/index.html', [
+        View::render('products/index.php', [
             'title' => 'Galeria de imagens',
             'products' => $results[4],
             'flash' => $flash,
@@ -43,10 +45,10 @@ class Products extends Controller
             unset($_SESSION['submitted']);
         }
         $categories = $this->model->getCategories();
-        View::renderTemplate('products/create.html', [
+        View::render('products/create.php', [
             'title' => 'Adicione mais produtos',
             'data' => $data,
-            'category' => $categories,
+            'categories' => $categories,
             'error' => $error,
         ]);
     }
@@ -84,11 +86,11 @@ class Products extends Controller
         $data = $this->model->getAllFrom('products', $id);
         $categories = $this->model->getCategories();
         $user = $this->model->getAllFrom('users', $data->user_id);
-        return View::renderTemplate('products/show.html', [
+        return View::render('products/show.php', [
             'product_name' => $data->product_name,
             'data' => $data,
             'user' => $user,
-            'category' => $categories,
+            'categories' => $categories,
             'flash' => $flash
         ]);
     }
@@ -99,10 +101,10 @@ class Products extends Controller
         $data = $this->model->getAllFrom('products', $id);
         $categories = $this->model->getCategories();
 
-        View::renderTemplate('products/edit.html', [
+        View::render('products/edit.php', [
             'title' => "Editar - $data->product_name",
             'data' => $data,
-            'category' => $categories,
+            'categories' => $categories,
             'id_category' => $data->id_category,
             'error' => $error
         ]);
@@ -116,10 +118,10 @@ class Products extends Controller
             $data = $this->getPostData();
             $error = $data[1];
             $id = $data[0]['id'];
+            $img = $data[0]['img'];
+            $postImg = $data[0]['post_img'];
 
             if ($error['error'] != true) {
-                $img = $data[0]['img'];
-                $postImg = $data[0]['post_img'];
                 if ($img !== "") {
                     $fullPath = $this->imgFullPath('products', $id, $img);
                     $this->moveUpload($fullPath);
@@ -127,7 +129,6 @@ class Products extends Controller
                 } else {
                     $data[0]['img'] = $postImg;
                 }
-
                 $this->model->updateproduct($data[0]);
                 $flash = flash('post_message', 'Produto foi atualizado com sucesso!');
 
@@ -154,10 +155,10 @@ class Products extends Controller
         $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
         $id = isset($_POST['id']) ? trim($_POST['id']) : '';
         $idCategory = isset($_POST['id_category']) ? trim($_POST['id_category']) : 1;
-        $productName = isset($_POST['product_name']) ?(trim($_POST['product_name'])) : '';
+        $productName = isset($_POST['product_name']) ? (trim($_POST['product_name'])) : '';
         $productDescription = isset($_POST['product_description']) ? trim($_POST['product_description']) : '';
-        $price = isset($_POST['price']) ? trim(preg_replace("/[^0-9,]+/i",",",$_POST["price"])) : '';
-        $price = str_replace(",",".",$price);
+        $price = isset($_POST['price']) ? trim(preg_replace("/[^0-9,.]+/i", "", $_POST["price"])) : '';
+        $price = str_replace(",", ".", $price);
         $img = isset($_FILES['img']) ? $_FILES['img'] : null;
         $postImg = isset($_POST['img']) ? $_POST['img'] : '';
         $userId = isset($_SESSION['user_id']) ? $_SESSION['user_id'] : '';
@@ -188,6 +189,21 @@ class Products extends Controller
             'error' => false
         ];
 
+        $validate = $this->imgValidate();
+        if (isset($_FILES['img']) && $postImg == '') {
+            if (empty($data['img'])) {
+                $error['img_error'] = "Insira uma imagem";
+                $error['error'] = true;
+            }
+            if (!empty($data['img'])) {
+                $error['img_error'] = $validate[1];
+                $error['error'] = $validate[0];
+            }
+        } else if ($postImg && !empty($data['img'])) {
+            $error['img_error'] = $validate[1];
+            $error['error'] = $validate[0];
+        }
+
         if (empty($data['id_category'])) {
             $error['id_category_error'] = "Escolha a categoria";
             $error['error'] = true;
@@ -200,13 +216,9 @@ class Products extends Controller
             $error['product_description_error'] = "Coloque a descrição do produto";
             $error['error'] = true;
         }
-        if (empty($data['price'])) {
-            $error['price_error'] = "Insira o valor do produto";
-            $error['error'] = true;
-        }
-        if (isset($_FILES) && $postImg == '') {
-            if (empty($data['img'])) {
-                $error['img_error'] = "Insira uma imagem";
+        if (isset($data['price'])) {
+            if (empty($data['price'])) {
+                $error['price_error'] = "Insira o preço do produto e somente valores monetários.";
                 $error['error'] = true;
             }
         }
