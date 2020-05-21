@@ -59,7 +59,7 @@ class Categories extends Controller
             $result = $this->getPostData();
             $data = $result[0];
             $error = $result[1];
-
+            dump($error);
             // Validate data
             if ($error['error'] != true) {
                 $fullPath = $this->imgCreateHandler('categories');
@@ -191,6 +191,21 @@ class Categories extends Controller
             'error' => false
         ];
 
+        $validate = $this->imgValidate();
+        if (isset($_FILES['img']) && $postImg == '') {
+            if (empty($data['img'])) {
+                $error['img_error'] = "Insira uma imagem";
+                $error['error'] = true;
+            }
+            if (!empty($data['img'])) {
+                $error['img_error'] = $validate[1];
+                $error['error'] = $validate[0];
+            }
+        } else if ($postImg && !empty($data['img'])) {
+            $error['img_error'] = $validate[1];
+            $error['error'] = $validate[0];
+        }
+
         if (empty($data['category_name'])) {
             $error['category_name_error'] = "Coloque o nome da categoria";
             $error['error'] = true;
@@ -198,12 +213,6 @@ class Categories extends Controller
         if (empty($data['category_description'])) {
             $error['category_description_error'] = "Coloque uma descrição para imagem";
             $error['error'] = true;
-        }
-        if (isset($_FILES) && $postImg == '') {
-            if (empty($data['img'])) {
-                $error['img_error'] = "Insira uma imagem";
-                $error['error'] = true;
-            }
         }
 
         return [$data, $error];

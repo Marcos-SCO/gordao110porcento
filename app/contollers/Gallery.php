@@ -169,15 +169,24 @@ class Gallery extends Controller
             'error' => false
         ];
 
-        if (empty($data['img_title'])) {
-            $error['img_title_error'] = "Coloque uma descrição para imagem";
-            $error['error'] = true;
-        }
-        if (isset($_FILES) && $postImg == '') {
+        $validate = $this->imgValidate();
+        if (isset($_FILES['img']) && $postImg == '') {
             if (empty($data['img'])) {
                 $error['img_error'] = "Insira uma imagem";
                 $error['error'] = true;
             }
+            if (!empty($data['img'])) {
+                $error['img_error'] = $validate[1];
+                $error['error'] = $validate[0];
+            }
+        } else if ($postImg && !empty($data['img'])) {
+            $error['img_error'] = $validate[1];
+            $error['error'] = $validate[0];
+        }
+
+        if (empty($data['img_title'])) {
+            $error['img_title_error'] = "Coloque uma descrição para imagem";
+            $error['error'] = true;
         }
 
         return [$data, $error];

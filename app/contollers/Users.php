@@ -260,6 +260,21 @@ class Users extends Controller
             'error' => false
         ];
 
+        $validate = $this->imgValidate();
+        if (isset($_FILES['img']) && $postImg == '') {
+            if (empty($data['img'])) {
+                $error['img_error'] = "Insira uma imagem";
+                $error['error'] = true;
+            }
+            if (!empty($data['img'])) {
+                $error['img_error'] = $validate[1];
+                $error['error'] = $validate[0];
+            }
+        } else if ($postImg && !empty($data['img'])) {
+            $error['img_error'] = $validate[1];
+            $error['error'] = $validate[0];
+        }
+
         if (isset($_POST['name']) || isset($_POST['last_name'])) {
             // Name
             if (empty($data['name'])) {
@@ -280,13 +295,6 @@ class Users extends Controller
             }
             if (!filter_input(INPUT_POST, 'email', FILTER_VALIDATE_EMAIL)) {
                 $error['email_error'] = "E-mail inválido";
-                $error['error'] = true;
-            }
-        }
-
-        if (isset($_FILES['img']) && $postImg == '') {
-            if (empty($data['img'])) {
-                $error['img_error'] = "Insira uma imagem";
                 $error['error'] = true;
             }
         }

@@ -28,23 +28,27 @@ class Controller
         }
     }
 
+    /* Img methods Start */
+
+    public function imgValidate()
+    {
+        $valid_extensions = ['jpeg', 'jpg', 'png', 'gif'];
+        $imgExt = strtolower(pathinfo($_FILES['img']['name'], PATHINFO_EXTENSION));
+        $error = [0 => false, 1 => false];
+        if (!in_array($imgExt, $valid_extensions)) {
+            $valid_extensions = implode(', ', $valid_extensions);
+            $error = [0 => true, 1 =>  "Enviei somente {$valid_extensions} "];
+        }
+        return $error;
+    }
+
     public function moveUpload($imgFullPath)
     {
         if ($_FILES["img"]["tmp_name"] != "") {
-
-            $valid_extensions = ['jpeg', 'jpg', 'png', 'gif', 'pdf'];
-
-            $imgExt = strtolower(pathinfo($_FILES['img']['name'], PATHINFO_EXTENSION));
-
-            if (in_array($imgExt, $valid_extensions)) {
-                move_uploaded_file($_FILES['img']['tmp_name'], $imgFullPath);
-            } else {
-                $data['img_error'] = "Envie somente Imagens";
-                $errors = true;
-            }
+            move_uploaded_file($_FILES['img']['tmp_name'], $imgFullPath);
         } else {
             $data['img_error'] = "Envie uma imagem";
-            $errors = true;
+            $error = true;
         }
     }
 
@@ -84,6 +88,7 @@ class Controller
 
         return $imgFullPath;
     }
+    /* Img methods End  */
 
     public function pagination($table, $id = 1, $limit = 5, $optionID = '', $orderOption = '')
     {
@@ -101,7 +106,7 @@ class Controller
             $optionID = " WHERE {$key} = {$val}";
         }
         $totalResults = $this->model->customQuery("SELECT COUNT(*) AS total FROM {$table} $optionID");
-        
+
         $totalPages = ceil($totalResults->total / $limit);
 
         $orderBy = "$optionID ORDER BY id {$orderOption} LIMIT $limit OFFSET $offset";
