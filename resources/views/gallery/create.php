@@ -1,5 +1,5 @@
 <div class="card card-body bg-light mt5">
-    <h2>Add Post</h2>
+    <h2>Adicionar mais imagens</h2>
     <p>Crie um post com esse formulário</p>
     <form action="<?=$BASE?>/gallery/store" method="post" enctype="multipart/form-data">
         <div class="form-group">

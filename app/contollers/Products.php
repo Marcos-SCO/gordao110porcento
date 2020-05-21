@@ -78,6 +78,8 @@ class Products extends Controller
             } else {
                 return $this->create($data, $error);
             }
+        } else {
+            redirect('products');
         }
     }
 
@@ -136,16 +138,6 @@ class Products extends Controller
             } else {
                 return $this->edit($id, $error);
             }
-        }
-    }
-
-    public function delete($id)
-    {
-        $this->model->deletePost('products', ['id' => $id]);
-        if ($this->model->rowCount() > 0) {
-            $this->deleteFolder('products', $id);
-            $flash = flash('register_seccess', 'Produto foi deletada com sucesso');
-            return $this->index(1, $flash);
         }
     }
 

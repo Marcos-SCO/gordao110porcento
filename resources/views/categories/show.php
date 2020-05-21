@@ -1,8 +1,6 @@
 <?php
-if ($_SESSION['user_status'] && $_SESSION['user_status'] == 1) {
+Core\Controller::createMore($BASE, 'gallery', 'Adicionar mais categoris?');
 ?>
-    <a href="<?= $BASE ?>/categories/create">Adicionar mais categorias</a>
-<?php } ?>
 <div>
     <h1><?= $data->category_name ?></h1>
     <?php
@@ -20,17 +18,9 @@ if ($_SESSION['user_status'] && $_SESSION['user_status'] == 1) {
     </figure>
 </div>
 <?php
-if ($_SESSION['user_id'] && $_SESSION['adm_id']) {
-    if ($data->user_id == $_SESSION['user_id'] || $_SESSION['adm_id'] == 1) {
+Core\Controller::editDelete($BASE, 'categories', $data, "Quer deletar a categoria de $data->category_name?");
 ?>
-        <a href="<?= $BASE ?>/categories/edit/<?= $data->id ?>" class="btn btn-dark">
-            Editar
-        </a>
-        <a href="<?= $BASE ?>/categories/delete/<?= $data->id ?>" method="post" name="delete" onclick="return confirm('Quer Mesmo deletar essa imagem?')">Deletar</a>
-<?php
-    }
-}
-?>
+
 <h4>Produtos com a categoria <?= $data->category_name ?></h4>
 <?php foreach ($products as $data) { ?>
     <figure>

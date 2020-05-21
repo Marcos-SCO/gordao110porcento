@@ -150,16 +150,6 @@ class Categories extends Controller
         }
     }
 
-    public function delete($id)
-    {
-        $this->model->deletePost('categories', ['id' => $id]);
-        if ($this->model->rowCount() > 0) {
-            $this->deleteFolder('categories', $id);
-            $flash = flash('register_seccess', 'Categoria foi deletada com sucesso');
-            return $this->index(1, $flash);
-        }
-    }
-
     public function getPostData()
     {
         // Sanitize data

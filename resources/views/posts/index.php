@@ -1,8 +1,8 @@
 <h1>Welcome</h1>
 
-<?php if ($_SESSION['user_status'] == 1) { ?>
-    <a href="<?= $BASE ?>/posts/create">Criar uma nova postagem</a>
-<?php } ?>
+<?php
+    Core\Controller::createMore($BASE, 'posts', 'Adicionar mais postagens?');
+?>
 
 <?php foreach ($posts as $data) { ?>
     <div>
@@ -16,12 +16,7 @@
             </figure>
         </a>
         <?php
-        if (($data->user_id == $_SESSION['user_id']) or ($_SESSION['adm_id'] == 1)) {
+        Core\Controller::editDelete($BASE, 'posts', $data, 'Quer mesmo deletar essa postagem?');
         ?>
-            <a href="<?= $BASE ?>/posts/edit/<?= $data->id ?>" class="btn btn-dark">
-                Editar
-            </a>
-            <a href="<?= $BASE ?>/posts/delete/<?= $data->id ?>" method="post" name="delete" onclick="return confirm('Quer Mesmo deletar?')">Deletar</a>
-        <?php } ?>
     </div>
 <?php } ?>

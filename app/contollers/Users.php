@@ -93,15 +93,27 @@ class Users extends Controller
         }
     }
 
-    public function show($id)
+    public function show($id, $page = 1, $flash = null)
     {
         $user = $this->model->getAllFrom('users', $id);
-        // $posts = $this->model->getAllFrom('posts', $data->id, 'user_id');
-        $posts = $this->model->selectQuery('posts', "WHERE user_id = $user->id ORDER BY created_at DESC");
+        
+        // Pagination for posts with user id
+        $table = 'posts';
+        $results = $this->pagination($table, $page, $limit = 4, ['user_id', $user->id], $orderOption = 'DESC');
 
-        View::render('users/show.php', [
+        // Display results
+        return View::render('users/show.php', [
+            'pageId' => $id,
             'user' => $user,
-            'posts' => $posts
+            'flash' => $flash,
+            'table' => 'users',
+            'method' => 'show',
+            'page' => $page,
+            'posts' => $results[4],
+            'prev' => $results[0],
+            'next' => $results[1],
+            'totalResults' => $results[2],
+            'totalPages' => $results[3],
         ]);
     }
 

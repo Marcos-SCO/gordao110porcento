@@ -1,7 +1,6 @@
 <?php
-if ($_SESSION['user_status'] == 1) { ?>
-    <a href="<?= $BASE ?>/gallery/create">Adicionar mais imagens para galleria</a>
-<?php } ?>
+Core\Controller::createMore($BASE, 'gallery', 'Quer adicionar Mais imagens?');
+?>
 <div>
     <h1><?= $data->img_title ?></h1>
     <small class="bg-secondary text-white p-2 mb-3">
@@ -16,10 +15,5 @@ if ($_SESSION['user_status'] == 1) { ?>
 </div>
 
 <?php
-if (($data->user_id == $_SESSION['user_id']) or ($_SESSION['adm_id'] == 1)) {
+Core\Controller::editDelete($BASE, 'gallery', $data, 'Quer mesmo deletar essa foto?');
 ?>
-    <a href="<?= $BASE ?>/gallery/edit/<?= $data->id ?>" class="btn btn-dark">
-        Editar
-    </a>
-    <a href="<?= $BASE ?>/gallery/delete/<?= $data->id ?>" method="post" name="delete" onclick="return confirm('Quer Mesmo deletar essa imagem?')">Deletar</a>
-<?php } ?>

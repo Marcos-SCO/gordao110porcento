@@ -1,8 +1,8 @@
 <h1>Welcome</h1>
 
-<?php if ($_SESSION['user_status'] == 1) { ?>
-    <a href="<?= $BASE ?>/gallery/create">Adicionar mais imagens</a>
-<?php } ?>
+<?php
+    Core\Controller::createMore($BASE, 'gallery', 'Quer adicionar Mais imagens?');
+?>
 <?php foreach ($gallery as $data) { ?>
     <div>
         <a href="<?= $BASE ?>/gallery/show/<?= $data->id ?>">
@@ -15,12 +15,7 @@
         </a>
 
         <?php
-        if (($data->user_id == $_SESSION['user_id']) or ($_SESSION['adm_id'] == 1)) {
-        ?>
-            <a href="<?= $BASE ?>/gallery/edit/<?= $data->id ?>" class="btn btn-dark">
-                Editar
-            </a>
-            <a href="<?= $BASE ?>/gallery/delete/<?= $data->id ?>" method="post" name="delete" onclick="return confirm('Quer Mesmo deletar?')">Deletar</a>
-        <?php } ?>
+        Core\Controller::editDelete($BASE, 'gallery', $data, 'Quer mesmo deletar essa foto?');
+        ?>        
     </div>
 <?php } ?>

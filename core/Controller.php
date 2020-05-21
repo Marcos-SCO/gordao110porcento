@@ -28,6 +28,45 @@ class Controller
         }
     }
 
+    public static function createMore($BASE, $table, $text = 'Quer adicionar mais?') {
+        if ($_SESSION['user_status'] == 1) {
+            echo "<a href='$BASE/$table/create'>$text</a>";
+        }
+    }
+
+    public static function editDelete($BASE, $table, $data, $text = 'Quer Mesmo deletar?') {
+        if (($data->user_id == $_SESSION['user_id']) or ($_SESSION['adm_id'] == 1)) {
+            ?>
+                <a href="<?="{$BASE}/{$table}/edit/{$data->id}"?>" class="btn btn-dark">
+                    Editar
+                </a>
+                <form action="<?="{$BASE}/{$table}/delete/{$data->id}"?>" method="post">
+                    <button onclick="return confirm('<?=$text?>')">Deletar</button>
+                </form>
+            <?php
+        }
+    }
+
+    public function delete($id)
+    {
+        $url = explode('/', $_SERVER['QUERY_STRING']);
+        $table = $url[0];
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            //$this->model->deletePost('posts', ['id' => $id]);
+            $this->model->deleteQuery($table, ['id' => $id]);
+            if ($this->model->rowCount() > 0) {
+                $this->deleteFolder('posts', $id);
+                $flash = flash('register_seccess', 'Deletado com sucesso');
+                return $this->index(1, $flash);
+            } else {
+                $flash = flash('register_seccess', 'Occorreu um erro');
+                redirect($table);
+            }
+        } else {
+            redirect($table);
+        }
+    }
+
     /* Img methods Start */
 
     public function imgValidate()

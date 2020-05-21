@@ -22,9 +22,8 @@
                 </figcaption>
             </figure>
         </a>
-        <?php if ($data->user_id == $_SESSION['user_id']) { ?>
-            <a href="<?= $BASE ?>/posts/edit/<?= $data->id ?>" class="btn btn-dark">Edit</a>
-            <a href="<?= $BASE ?>/posts/delete/<?= $data->id ?>" method="post" name="delete" onclick="return confirm('Quer Mesmo deletar?')">Deletar</a>
-        <?php } ?>
+        <?php 
+         Core\Controller::editDelete($BASE, 'posts', $data, 'Quer mesmo deletar essa postagem?');
+        ?>
     </div>
 <?php } ?>

@@ -132,16 +132,6 @@ class Gallery extends Controller
         }
     }
 
-    public function delete($id)
-    {
-        $this->model->deletePost('gallery', ['id' => $id]);
-        if ($this->model->rowCount() > 0) {
-            $this->deleteFolder('gallery', $id);
-            $flash = flash('register_seccess', 'Imagem foi deletada com sucesso');
-            return $this->index(1, $flash);
-        }
-    }
-
     public function getPostData()
     {
         // Sanitize data

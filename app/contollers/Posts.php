@@ -75,6 +75,8 @@ class Posts extends Controller
             } else {
                 return $this->create($data, $error);
             }
+        } else {
+            redirect('posts');
         }
     }
 
@@ -129,16 +131,6 @@ class Posts extends Controller
             } else {
                 return $this->edit($id, $error);
             }
-        }
-    }
-
-    public function delete($id)
-    {
-        $this->model->deletePost('posts', ['id' => $id]);
-        if ($this->model->rowCount() > 0) {
-            $this->deleteFolder('posts', $id);
-            $flash = flash('register_seccess', 'Deletado com sucesso');
-            return $this->index(1, $flash);
         }
     }
 
