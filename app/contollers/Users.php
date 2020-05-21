@@ -22,7 +22,7 @@ class Users extends Controller
         $table = 'users';
         $results = $this->pagination($table, $id, $limit = 10, '', $orderOption = 'AND `status` DESC');
 
-        View::renderTemplate('users/index.html', [
+        View::render('users/index.php', [
             'title' => 'Users',
             'users' => $results[4],
             'flash' => $flash,
@@ -39,7 +39,7 @@ class Users extends Controller
     {
         $this->isLogin();
 
-        View::renderTemplate('users/create.html', [
+        View::render('users/create.php', [
             'title' => 'Cadastro',
             'data' => $data,
             'error' => $error
@@ -71,7 +71,7 @@ class Users extends Controller
                 // Register user
                 if ($this->model->insertUser($data[0])) {
                     $flash = flash('register_success', 'Usuário registrado com sucesso!');
-                    return $this->index($flash);
+                    return $this->index(1,$flash);
                 } else {
                     die('Algo deu errado...');
                 }
@@ -99,7 +99,7 @@ class Users extends Controller
         // $posts = $this->model->getAllFrom('posts', $data->id, 'user_id');
         $posts = $this->model->selectQuery('posts', "WHERE user_id = $user->id ORDER BY created_at DESC");
 
-        View::renderTemplate('users/show.html', [
+        View::render('users/show.php', [
             'user' => $user,
             'posts' => $posts
         ]);
@@ -111,22 +111,22 @@ class Users extends Controller
 
         $data = $this->model->getAllFrom('users', $id);
         if ($id == 1 && $_SESSION['user_id'] == 1) {
-            View::renderTemplate('users/edit.html', [
+            View::render('users/edit.php', [
                 'data' => $data,
                 'flash' => $flash,
                 'error' => $error
             ]);
         } else {
             if ($data->id != 1) {
-                View::renderTemplate('users/edit.html', [
+                View::render('users/edit.php', [
                     'data' => $data,
                     'flash' => $flash,
                     'error' => $error
                 ]);
             } else {
-                return $this->index(1,null);
+                return $this->index(1, null);
             }
-        } 
+        }
     }
 
     public function update()
@@ -182,7 +182,7 @@ class Users extends Controller
             $this->model->customQuery("SELECT `email` FROM users WHERE `email` = :email", ['email' => $data[0]['email']]);
 
             // Check for users/email
-            if ($this->model->rowCount() <= 0) {
+            if ($_POST['email'] != '' && $this->model->rowCount() <= 0) {
                 // User not Found
                 $error['email_error'] = "Nenhum usuário encontrado";
                 $error['error'] = true;
@@ -200,20 +200,20 @@ class Users extends Controller
                     return $this->index(1, $flash);
                 } else {
                     $error['password_error'] = "Email ou senha incorretos";
-                    return View::renderTemplate('users/login.html', [
+                    return View::render('users/login.php', [
                         'data' => $data[0],
                         'error' => $error
                     ]);
                 }
             } else {
                 // Load view with errors
-                return View::renderTemplate('users/login.html', [
+                return View::render('users/login.php', [
                     'data' => $data[0],
                     'error' => $error
                 ]);
             }
         } else {
-            return View::renderTemplate('users/login.html', ['flash' => $flash]);
+            return View::render('users/login.php', ['flash' => $flash]);
         }
     }
 
@@ -314,7 +314,7 @@ class Users extends Controller
         return [$data, $error];
     }
 
-    public function logout() 
+    public function logout()
     {
         return $this->model->destroy();
     }
