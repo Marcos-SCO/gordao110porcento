@@ -7,9 +7,7 @@ Core\Controller::createMore($BASE, 'posts', 'Adicionar mais postagens');
     </small>
     <figure>
         <img src="<?= $BASE ?>/public/img/posts/id_<?= $data->id ?>/<?= $data->img ?>" alt="<?= $data->img ?>" title="<?= $data->title ?>">
-        <figcaption>
-            <p><?= $data->body ?></p>
-        </figcaption>
+        <figcaption><?= $data->body ?></figcaption>
     </figure>
 </div>
 

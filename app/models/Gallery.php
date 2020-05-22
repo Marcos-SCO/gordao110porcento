@@ -16,7 +16,6 @@ class Gallery extends \Core\Model
         return $result;
     }
 
-
     public function getImg($id)
     {
         $result = $this->customQuery(

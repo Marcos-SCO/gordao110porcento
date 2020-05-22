@@ -83,7 +83,7 @@ class Posts extends Controller
     public function show($id, array $flash = null)
     {
         $data = $this->model->getAllFrom('posts', $id);
-        //dump($data);
+
         $user = $this->model->getAllFrom('users', $data->user_id);
         return View::render('posts/show.php', [
             'title' => $data->title,
@@ -131,16 +131,21 @@ class Posts extends Controller
             } else {
                 return $this->edit($id, $error);
             }
+        } else {
+            redirect('posts');
         }
     }
 
     public function getPostData()
     {
+        $notPermitedTags = array('<script>', '<a>');
+        $body = isset($_POST['body']) ? trim($_POST['body']) : '';
+        $body = trim(str_replace($notPermitedTags, '', $body));
+
         // Sanitize data
         $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
         $id = isset($_POST['id']) ? trim($_POST['id']) : '';
         $title = isset($_POST['title']) ? trim($_POST['title']) : '';
-        $body = isset($_POST['body']) ? trim($_POST['body']) : '';
         $img = isset($_FILES['img']) ? $_FILES['img'] : null;
         $postImg = isset($_POST['img']) ? $_POST['img'] : '';
         $userId = isset($_SESSION['user_id']) ? $_SESSION['user_id'] : '';
