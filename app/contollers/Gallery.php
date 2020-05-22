@@ -92,6 +92,7 @@ class Gallery extends Controller
                 'flash' => $flash
             ]);
         } else {
+            // if id is not encountered
             throw new \Exception("$id not found");
         }
     }
