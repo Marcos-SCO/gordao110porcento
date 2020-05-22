@@ -4,9 +4,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <?php 
-    // tiny MCE 
+    <?php
+    // getQueryString
     $getQuery = getQueryString();
+    // tiny MCE 
     echo ($getQuery[0] == 'posts' && $getQuery[1] == 'create' || $getQuery[1] == 'edit') ? "<!-- Tiny MCE -->
     <script src='https://cdn.tiny.cloud/1/no-api-key/tinymce/5/tinymce.min.js' referrerpolicy='origin'></script><script>tinymce.init({selector:'#tinyMCE'});</script>" : '';
     ?>
@@ -20,7 +21,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Oleo+Script+Swash+Caps:wght@700&display=swap" rel="stylesheet">
     <!-- Css -->
     <link rel="stylesheet" href="<?= $BASE ?>/public/css/style.css">
-    <link rel="stylesheet" href="<?= $BASE ?>/public/css/style.carousel.css">
+    <link rel="stylesheet" href="<?= $BASE ?>/public/css/style.hero.css">
     <title><?= $title ?? 'Olá mundo!' ?></title>
 </head>
 
@@ -85,51 +86,16 @@
         </div>
     </nav>
     <!-- end nav -->
+    <?= ($getQuery[0] == 'home' || $getQuery[0] == '') ? '<!-- Header --><header id="hero" class="d-flex justify-content-center align-items-center">
+            <div>
+                <h1>Gordão a 110%</h1>
+                <p>A melhor lanchonete</p>
+            </div>
+        </header>' : ''
+    ?>
 
-    <?php if (isset($carousel) && $carousel == 1) { ?>
-        <!-- Header carousel -->
-        <header id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
-            <ol class="carousel-indicators">
-                <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
-                <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
-                <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
-            </ol>
-            <section class="carousel-inner">
-                <figure class="carousel-item active">
-                    <img src="<?= $BASE ?>/public/img/carousel/black_hole_on_earth-wallpaper-1920x1080.jpg" alt="..." class="img-prevent-drag">
-                    <figcaption class="carousel-caption d-none d-md-block">
-                        <h5>Olá</h5>
-                        <p>...</p>
-                    </figcaption>
-                </figure>
-                <figure class="carousel-item">
-                    <img src="<?= $BASE ?>/public/img/carousel/black_hole_on_earth-wallpaper-1920x1080.jpg" alt="..." class="img-prevent-drag">
-                    <figcaption class="carousel-caption d-none d-md-block">
-                        <h5>Olá</h5>
-                        <p>...</p>
-                    </figcaption>
-                </figure>
-                <figure class="carousel-item">
-                    <img src="<?= $BASE ?>/public/img/carousel/black_hole_on_earth-wallpaper-1920x1080.jpg" alt="..." class="img-prevent-drag">
-                    <figcaption class="carousel-caption d-none d-md-block">
-                        <h5>Olá</h5>
-                        <p>...</p>
-                    </figcaption>
-                </figure>
-            </section>
-            <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
-                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                <span class="sr-only">Previous</span>
-            </a>
-            <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
-                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                <span class="sr-only">Next</span>
-            </a>
-        </header>
-    <?php } ?>
-
-    <?php if (isset($flash) && $flash != false && $flash != null) { ?>
-        <div class="<?= $flash['class'] ?>" id='msg-flash' style="transition: transform .18s, opacity .18s, visibility 0s .18s;">
-            <?= $flash['message'] ?>
-        </div>
-    <?php } ?>
+    <?php
+    // Display flash messages
+    echo (isset($flash) && $flash != false && $flash != null) ? "<div class='" . $flash['class'] . "' id='msg-flash' style='transition: transform .18s, opacity .18s, visibility 0s .18s;position:absolute;width: 100%;text-align: center;'>" . $flash['message'] . "</div><script> /*flash message*/ let flash = document.querySelector('#msg-flash'); if (flash != null) {setTimeout(() => { flash.style = 'display:none;transition: transform .18s, opacity .18s, visibility 0s .18s;'; }, 4000); }</script>" : ''
+    ?>
+    <main>

@@ -1,0 +1,11 @@
+#hero {
+    height: 100%;
+    width: 100%;
+    color: #fff;
+    background-color: #000;
+    background-image: url(../img/template/dark-magian-girl.jpg);
+    background: url(../img//template/dark-magian-girl.jpg) no-repeat fixed #2e2e2e9c;
+    background-blend-mode: color-burn;
+    background-size: cover;
+    background-position: right center;
+}

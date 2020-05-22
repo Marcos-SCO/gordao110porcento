@@ -1,17 +1,15 @@
-<h1><?= $title ?? ''?></h1>
-
-<div class="row">
+<section class="container">
+    <header>
+        <h1><?= $title ?? 'Logar' ?></h1>
+    </header>
     <div class="col-md-6 mx-auto">
-        <div class="card card-body bg-light mt5">
-
+        <div class="card card-body mt5">
             <p>Preencha os campos</p>
-            <form action="<?=$BASE?>/users/login" method="post">
+            <form action="<?= $BASE ?>/users/login" method="post">
                 <!-- Email -->
                 <div class="form-group">
                     <label for="email">E-mail: <sup>*</sup></label>
-                    <input type="email" name="email" id="email"
-                        class="form-control form-control-lg <?= isset($error['email_error']) && $error['email_error'] != '' ? 'is-invalid' : '' ?>"
-                        value="<?= $data['email'] ?? '' ?>">
+                    <input type="email" name="email" id="email" class="form-control form-control <?= isset($error['email_error']) && $error['email_error'] != '' ? 'is-invalid' : '' ?>" value="<?= $data['email'] ?? '' ?>">
                     <span class="invalid-feedback">
                         <?= $error['email_error'] ?? '' ?>
                     </span>
@@ -19,8 +17,7 @@
                 <!-- Password -->
                 <div class="form-group">
                     <label for="password">Senha: <sup>*</sup></label>
-                    <input type="password" name="password" id="password"
-                        class="form-control form-control-lg <?= isset($error['password_error']) && $error['password_error'] != '' ? 'is-invalid' : '' ?>">
+                    <input type="password" name="password" id="password" class="form-control form-control <?= isset($error['password_error']) && $error['password_error'] != '' ? 'is-invalid' : '' ?>">
                     <span class="invalid-feedback">
                         <?= $error['password_error'] ?? '' ?>
                     </span>
@@ -34,4 +31,4 @@
             </form>
         </div>
     </div>
-</div>
+</section>

@@ -19,10 +19,7 @@ class Home extends Controller
         $posts = $this->model->getPosts();
         $hamburguers = $this->model->getProducts(1);
         $pizzas = $this->model->getProducts(2);
-
-        $carousel = true;
         View::render('home/index.php', [
-            'carousel' => $carousel,
             'title' => 'Açougue a 110%',
             'hamburguers' => $hamburguers,
             'pizzas' => $pizzas,

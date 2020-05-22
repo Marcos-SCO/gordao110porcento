@@ -40,10 +40,12 @@ class Controller
     public static function editDelete($BASE, $table, $data, $text = 'Quer Mesmo deletar?')
     {
         if (($data->user_id == $_SESSION['user_id']) or ($_SESSION['adm_id'] == 1)) { ?>
-            <a href="<?= "{$BASE}/{$table}/edit/{$data->id}" ?>" class="btn btn-dark">Editar</a>
-            <form action="<?= "{$BASE}/{$table}/delete/{$data->id}" ?>" method="post">
-                <button onclick="return confirm('<?= $text ?>')">Deletar</button>
-            </form>
+            <div class="d-flex p-1">
+                <a href="<?= "{$BASE}/{$table}/edit/{$data->id}" ?>" class="btn btn-warning m-1">Editar</a>
+                <form action="<?= "{$BASE}/{$table}/delete/{$data->id}" ?>" method="post">
+                    <button onclick="return confirm('<?= $text ?>')" class="btn btn-danger m-1">Deletar</button>
+                </form>
+            </div>
 <?php }
     }
     /* Dinamic page links end */

@@ -186,6 +186,12 @@ class Users extends Controller
 
     public function login($flash = null)
     {
+        // if user is already loged redirect to profile
+        if ($_SESSION['user_id']) {
+            $userId = $_SESSION['user_id'];
+            redirect("users/show/$userId");
+        }
+
         // Check for post
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             // Process
@@ -216,7 +222,7 @@ class Users extends Controller
                     // Create session
                     $this->model->createUserSession($loggedInUser);
                     $flash = flash('register_success', 'Logado com sucesso!');
-                    return $this->index(1, $flash);
+                    return $this->show($_SESSION['user_id'],1, $flash);
                 } else {
                     $error['password_error'] = "Email ou senha incorretos";
                     return View::render('users/login.php', [

@@ -1,18 +1,31 @@
-* {
-    margin: 0
+:root {
+    --primary-color: #000;
 }
 
-body {
-    overflow-x: hidden;
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
+
+body {}
+
+@media screen and (max-width:600px) {
+    html,body {
+        overflow-x: hidden!important;
+    }
+}
+html,
+body {
+    height: 100%;
+    width: 100%;
+    overflow-y: visible;
+    overflow-x: visible;
+}
+
 
 main {
     height: 100%;
-}
-
-html,
-body {
-    height: 100%
 }
 
 img {
@@ -92,6 +105,17 @@ img {
     max-height: 150px;
 }
 
+/* main */
+main {
+    background: var(--primary-color);
+}
+
+main figure {
+    margin-bottom: 0 !important;
+}
+
+/* end main */
+
 /* Sections */
 /* Home Sections */
 .background-section {
@@ -134,13 +158,6 @@ img {
 /* End Home Sections */
 
 /* Owl */
-.item img::before {
-    position: absolute;
-    height: 100%;
-    width: 100%;
-    background: black;
-}
-
 .owl-carousel a {
     text-decoration: none;
     color: #000 !important;
@@ -162,30 +179,33 @@ img {
 /* end owl */
 
 /* Animatins */
-[data-anima] {
-    opacity: 0;
-    transition: .5s
-}
+@media screen and (min-width:600px) {
+    [data-anima] {
+        opacity: 0;
+        transition: .5s
+    }
 
-[data-anima='left'] {
-    transform: translate3d(-50px, 0, 0)
-        /* X Y Z*/
-}
+    [data-anima='left'] {
+        transform: translate3d(-50px, 0, 0)
+            /* X Y Z*/
+    }
 
-[data-anima='right'] {
-    transform: translate3d(50px, 0, 0)
-        /* X Y Z*/
-}
+    [data-anima='right'] {
+        transform: translate3d(50px, 0, 0)
+            /* X Y Z*/
+    }
 
-[data-anima='center'] {
-    transform: translate3d(0, 50px, 0)
-        /* X Y Z*/
-}
+    [data-anima='center'] {
+        transform: translate3d(0, 50px, 0)
+            /* X Y Z*/
+    }
 
-[data-anima].animation {
-    opacity: 1;
-    ;
-    transform: translate3d(0, 0, 0);
+    [data-anima].animation {
+        opacity: 1;
+        ;
+        transform: translate3d(0, 0, 0);
+        position: inherit;
+    }
 }
 
 /* End Animations */

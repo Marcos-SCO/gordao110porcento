@@ -19,31 +19,6 @@ document.onreadystatechange = function () {
     }
 };
 
-// flash message
-let flash = document.querySelector('#msg-flash');
-if (flash != null) {
-    setTimeout(() => {
-        flash.style =
-            'display:none;transition: transform .18s, opacity .18s, visibility 0s .18s;';
-    }, 4000);
-}
-
-// Carousel Principal
-$('#carousel-principal').owlCarousel({
-    items: 1,
-    lazyLoad: true,
-    loop: true,
-    margin: 10,
-    nav: true,
-    navSpeed: 1000,
-    navText: ['<i class="fas fa-arrow-left"></i>', '<i class="fas fa-arrow-right"></i>'],
-    dots: true,
-    dotsSpeed: 1000,
-    // autoplay: true,
-    autoplaySpeed: 1000,
-    reponsiveRefreshRatio: 10
-});
-
 // get elements with data-anima
 const elements = qSelectAll('[data-anima]');
 const animationClass = 'animation';
@@ -65,25 +40,27 @@ if (elements.length) {
 // end get elements
 
 var owl = $('.owl-carousel');
-if (window.innerWidth < 400) {
-    owl.owlCarousel({
-        items: 1,
-        loop: true,
-        margin: 10,
-        autoplay: true,
-        autoplayTimeout: 3000,
-        autoplayHoverPause: true,
-    });
-} else {
-    owl.owlCarousel({
-        dots: false,
-        items: 4,
-        loop: true,
-        margin: 10,
-        autoplay: true,
-        autoplayTimeout: 3000,
-        autoplayHoverPause: true,
-    });
-}
+owl.owlCarousel({
+    loop: true,
+    margin: 10,
+    autoplay: true,
+    autoplayTimeout: 3000,
+    autoplayHoverPause: true,
+    responsive: {
+        // breakpoint from 0 up
+        0: {
+            items: 1,
+        },
+        // breakpoint from 480 up
+        480: {
+            items: 2,
+        },
+        // breakpoint from 768 up
+        768: {
+            items: 4,
+        }
+    }
+});
 
-log('ola ie');
+
+log('osadsala ieasdsad');

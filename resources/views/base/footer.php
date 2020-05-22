@@ -1,10 +1,11 @@
+</main>
 <?php if (isset($totalPages) && ($totalPages) > 1) { ?>
     <!-- Pagination -->
     <ul>
         <?php if (isset($method) && $method == 'show') { ?>
             <?php if ($page != 1) { ?>
                 <li><a href="<?= $BASE ?>/<?= $table ?>/<?= $method ?>/<?= $pageId ?>/1">Inicio</a></li>
-                <li><a href="<?= $BASE ?>/<?= $table ?>/<?= $method ?>/<?= $pageId ?>/<?=$prev?>">Anterior</a></li>
+                <li><a href="<?= $BASE ?>/<?= $table ?>/<?= $method ?>/<?= $pageId ?>/<?= $prev ?>">Anterior</a></li>
             <?php } ?>
 
             <?php for ($i = 1; $i <= $totalPages; $i++) { ?>
@@ -12,15 +13,15 @@
             <?php } ?>
 
             <?php if ($page != $totalPages) { ?>
-                <li><a href="<?= $BASE ?>/<?= $table ?>/<?= $method ?>/<?= $pageId ?>/<?=$next?>">Próxima</a></li>
-                <li><a href="<?= $BASE ?>/<?= $table ?>/<?= $method ?>/<?= $pageId ?>/<?=$totalPages?>">Final</a></li>
+                <li><a href="<?= $BASE ?>/<?= $table ?>/<?= $method ?>/<?= $pageId ?>/<?= $next ?>">Próxima</a></li>
+                <li><a href="<?= $BASE ?>/<?= $table ?>/<?= $method ?>/<?= $pageId ?>/<?= $totalPages ?>">Final</a></li>
             <?php } ?>
         <?php } ?>
 
         <?php if (!isset($method) && isset($pageId)) { ?>
             <?php if ($pageId != 1) { ?>
                 <li><a href="<?= $BASE ?>/<?= $table ?>/index/1">Inicio</a></li>
-                <li><a href="<?= $BASE ?>/<?= $table ?>/index/<?=$prev?>">Anterior</a></li>
+                <li><a href="<?= $BASE ?>/<?= $table ?>/index/<?= $prev ?>">Anterior</a></li>
             <?php } ?>
 
             <?php if ($pageId != $totalPages) { ?>
@@ -29,13 +30,12 @@
                 <?php } ?>
             <?php } ?>
             <?php if ($pageId != $totalPages) { ?>
-                <li><a href="<?= $BASE ?>/<?= $table ?>/index/<?=$next?>">Próxima</a></li>
-                <li><a href="<?= $BASE ?>/<?= $table ?>/index/<?=$totalPages?>">Final</a></li>
+                <li><a href="<?= $BASE ?>/<?= $table ?>/index/<?= $next ?>">Próxima</a></li>
+                <li><a href="<?= $BASE ?>/<?= $table ?>/index/<?= $totalPages ?>">Final</a></li>
             <?php } ?>
         <?php } ?>
     </ul>
 <?php } ?>
-</main>
 
 <!-- Bootstrap -->
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous">
