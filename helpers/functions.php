@@ -10,6 +10,15 @@ function dump($item) {
     echo '</pre>';
     return;
 }
+// Get query strings
+function getQueryString() {
+    $url = explode('/', $_SERVER['QUERY_STRING']);
+        // Get table with url
+    $table = $url[0] ?? '';
+    $method = $url[1] ?? '';
+    $id = $url[2] ?? '';
+    return [$table, $method, $id];
+}
 // Simple page redirect
 function redirect($page)
 {
