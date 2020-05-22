@@ -83,13 +83,17 @@ class Gallery extends Controller
     public function show($id, array $flash = null)
     {
         $data = $this->model->getAllFrom('gallery', $id);
-        $user = $this->model->getAllFrom('users', $data->user_id);
-        return View::render('gallery/show.php', [
-            'img_title' => $data->img_title,
-            'data' => $data,
-            'user' => $user,
-            'flash' => $flash
-        ]);
+        if ($this->model->rowCount() > 0) {
+            $user = $this->model->getAllFrom('users', $data->user_id);
+            return View::render('gallery/show.php', [
+                'img_title' => $data->img_title,
+                'data' => $data,
+                'user' => $user,
+                'flash' => $flash
+            ]);
+        } else {
+            throw new \Exception("$id not found");
+        }
     }
 
     public function edit($id, $error = false)
