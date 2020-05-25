@@ -75,13 +75,6 @@ owl.owlCarousel({
         url = url.replace('/home', '');
         // initial counter
         i = 0;
-        // intervals
-        let interval = setInterval(() => moveSlide(1), 7000);
-        function intervalSet() {
-            clearTimeout(interval);
-            moveSlide();
-            interval = setInterval(() => moveSlide(1), 7000);
-        }
         // slides content
         slide = [
             ['pizzasRefris_template.png', 'Gordão a 110%', 'A melhor lanchonete da região'],
@@ -89,6 +82,13 @@ owl.owlCarousel({
             ['hamburguerBatataTomate_template.png', 'Melhor menu', 'Vasto menu feito com igredientes de qualidade'],
             ['hamburguer_template.png', 'Experimente nossas ofertas', 'Mataremos sua fome com a porcentagem acima, satisfação em 110%']
         ];
+        // intervals
+        let interval = setInterval(() => moveSlide(1), 7000);
+        function intervalSet() {
+            clearTimeout(interval);
+            moveSlide();
+            interval = setInterval(() => moveSlide(1), 7000);
+        }
         // prev next buttons
         prev = document.querySelector('#prev');
         next = document.querySelector('#next');
@@ -98,9 +98,11 @@ owl.owlCarousel({
             intervalSet();
         });
         next.addEventListener('click', () => {
-            (i >= slide.length) ? i = slide.length : i += 1;
+            i += 1;
+            (i == slide.length) ? i = 0 : i;
             intervalSet();
         });
+        
         // select slider elements
         hero = document.querySelector('#hero');
         quoteTitle = document.querySelector('#quoteTitle');
@@ -111,7 +113,7 @@ owl.owlCarousel({
         quote.innerText = slide[i][2];
         hero.style = "transition: all ease-in-out .5s; background-image:url(" + url + path + slide[i][0] + ")";
         hero.backgroundImage = "url(" + url + path + slide[i][0] + ")";
-        
+
         // Hero ul slider selection
         let heroCounter = document.querySelector('#heroCounter');
         for (let item in slide) {
@@ -124,13 +126,14 @@ owl.owlCarousel({
         heroCounterItem[i].classList.add('active');
         for (let i in slide) {
             heroCounterItem[i].addEventListener('click', function (i) {
-                console.log(i);
                 clearTimeout(interval);
-                moveSlide(null, i);
+                // get the i in string and transform into int with + sign.
+                // move slide with inc null and i interger
+                moveSlide(null, +i);
             }.bind(null, i));
         }
         // end ul slider selection
-
+        
         // function to move sliders
         function moveSlide(inc = null, index = null) {
             // if inc, than counter recive +1
