@@ -48,6 +48,10 @@ img {
     width: 100%
 }
 
+.z-index {
+    z-index: 999999!important;
+}
+
 .flex {
     display: flex;
     flex-wrap: wrap;

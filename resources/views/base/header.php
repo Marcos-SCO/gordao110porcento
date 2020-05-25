@@ -32,7 +32,7 @@
     <!-- Spinner -->
     <div id="loader" class="center"></div>
 
-    <header class="fixed-top">
+    <header class="fixed-top z-index">
         <!-- Nav -->
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <!--  Show this only on mobile to medium screens  -->
