@@ -3,9 +3,110 @@
     width: 100%;
     color: #fff;
     background-color: #000;
-    background-image: url(../img/template/dark-magian-girl.jpg);
-    background: url(../img//template/dark-magian-girl.jpg) no-repeat fixed #2e2e2e9c;
-    background-blend-mode: color-burn;
-    background-size: cover;
+    background-image: url(../img/template/pizzasRefris_template.png);
+    background-blend-mode: multiply;
     background-position: right center;
+    background: url(../img/template/pizzasRefris_template.png) no-repeat fixed;
+    background-size: cover;
+    transition: all ease-in-out .5s;
+    transition-delay: .3s;
+}
+
+#hero header {
+    position: absolute;
+    left: 14%;
+    padding: 1rem;
+    z-index: 9999;
+    transition: all ease-in-out .5s
+}
+
+#hero h1 {
+    font-size: 1.9rem;
+}
+
+#hero p {
+    padding-right: 1rem;
+    opacity: 1;
+    transition: all ease-in-out .5s;
+}
+
+#hero a {
+    position: relative;
+    padding: .6rem;
+    background: #d65106;
+    z-index: 9999;
+    left: 0%;
+    color: #fff;
+    /* height: 48px; */
+    width: 134px;
+    text-align: center;
+    text-transform: uppercase;
+}
+
+@media screen and (min-width:900px){
+    #hero header {
+        min-width: 750px;
+    }
+}
+
+/* Hero start */
+@media screen and (min-width:600px) and (max-width:799.9px) {
+    #hero h1 {
+        font-size: 2.767rem;
+        max-width: 500px;
+    }
+}
+
+@media screen and (min-width:800px) {
+    #hero h1 {
+        font-size: 4rem;
+    }
+}
+
+.hero::after {
+    content: '';
+    background: #333;
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    left: 0;
+    top: 0;
+    opacity: 0.5;
+}
+
+/* prev and next buttons */
+#prev,
+#next {
+    position: absolute;
+    font-size: 50px;
+    z-index: 9999;
+    padding: .5rem;
+    background-color: #d65106;
+}
+
+#prev {
+    left: 0rem;
+}
+
+#next {
+    right: 0rem;
+}
+
+#heroCounter {
+    display: flex;
+    position: absolute;
+    z-index: 99999;
+    bottom: 0;
+}
+.heroCounterItem {
+    list-style: none;
+    margin: .15rem;
+    border: 2px solid #ffffff;
+    border-radius: 15px;
+    width: 12px;
+    height: 45px;
+}
+.heroCounterItem.active {
+    background: #d65106;
+    border: 2px solid #d65106;
 }

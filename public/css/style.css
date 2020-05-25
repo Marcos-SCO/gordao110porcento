@@ -1,26 +1,42 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box !important;
+}
+
 :root {
     --primary-color: #000;
 }
 
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
 
-body {}
+@media screen and (max-width:299.9px) {
 
-@media screen and (max-width:600px) {
-    html,body {
-        overflow-x: hidden!important;
+    html,
+    body {
+        overflow-x: hidden !important;
     }
 }
+
+@media screen and (max-width:500px) {
+    ::-webkit-scrollbar {
+        width: 0px !important;
+        /* Remove scrollbar space */
+        background: transparent !important;
+        /* Optional: just make scrollbar invisible */
+    }
+}
+
 html,
 body {
     height: 100%;
+    min-width: 100%;
     width: 100%;
     overflow-y: visible;
-    overflow-x: visible;
+    /* overflow-x: hidden; */
+}
+
+body {
+    overflow-x: hidden !important;
 }
 
 
@@ -59,6 +75,7 @@ img {
     width: 70px;
     height: 70px;
     animation: spin 1s linear infinite;
+    z-index: 99999;
 }
 
 @keyframes spin {
@@ -126,8 +143,7 @@ main figure {
     justify-content: center;
     align-items: center;
     color: #fff;
-    background-color: #e9ff6e42;
-    /* background-blend-mode: darken; */
+    background-color: #22241742;
 }
 
 .section img {
@@ -140,6 +156,8 @@ main figure {
 
 .img-1 {
     background-image: url(../img/section/comida-rapida-espacio-abajo.png);
+    background: url(../img/section/comida-rapida-espacio-abajo.png) scroll;
+    background-attachment: fixed;
 }
 
 .img-fig {
@@ -179,7 +197,7 @@ main figure {
 /* end owl */
 
 /* Animatins */
-@media screen and (min-width:600px) {
+@media screen and (min-width:600px) and (min-height:600px) and (orientation:landscape) {
     [data-anima] {
         opacity: 0;
         transition: .5s

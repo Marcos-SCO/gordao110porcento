@@ -1,6 +1,6 @@
 <article>
     <div class="section">
-        <section class="container">
+        <section class="container animate__fadeInLeft">
             <header class="text-center">
                 <h2 class="font-swashCaps">Gordão a 110%</h2>
             </header>
@@ -54,7 +54,7 @@
                 <?php } ?>
             </div>
         </section>
-        <section>
+        <section class="bg-light">
             <header class="m-3">
                 <h2>Conheça nosso blog</h2>
                 <p>Últimas noticias</p>
