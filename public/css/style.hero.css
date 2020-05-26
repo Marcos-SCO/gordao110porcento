@@ -14,14 +14,22 @@
 
 #hero header {
     position: absolute;
-    left: 14%;
+    left: 8%;
     padding: 1rem;
     z-index: 9999;
     transition: all ease-in-out .5s
 }
 
+#hero .headerQuotes {
+    display: flex;
+    min-height: 168px;
+    max-height: 168px;
+    flex-direction: column;
+    justify-content: flex-end;
+}
+
 #hero h1 {
-    font-size: 1.9rem;
+    font-size: 2.5rem;
 }
 
 #hero p {
@@ -33,7 +41,7 @@
 #hero a {
     position: relative;
     padding: .6rem;
-    background: #d65106;
+    background: var(--primary);
     z-index: 9999;
     left: 0%;
     color: #fff;
@@ -43,7 +51,7 @@
     text-transform: uppercase;
 }
 
-@media screen and (min-width:900px){
+@media screen and (min-width:900px) {
     #hero header {
         min-width: 750px;
     }
@@ -58,6 +66,10 @@
 }
 
 @media screen and (min-width:800px) {
+    #hero header {
+        left: 14%
+    }
+
     #hero h1 {
         font-size: 4rem;
     }
@@ -81,7 +93,7 @@
     font-size: 50px;
     z-index: 9999;
     padding: .5rem;
-    background-color: #d65106;
+    background-color: var(--primary);
 }
 
 #prev {
@@ -98,6 +110,7 @@
     z-index: 99999;
     bottom: 0;
 }
+
 .heroCounterItem {
     list-style: none;
     margin: .15rem;
@@ -106,7 +119,8 @@
     width: 12px;
     height: 45px;
 }
+
 .heroCounterItem.active {
-    background: #d65106;
-    border: 2px solid #d65106;
+    background: var(--primary);
+    border: 2px solid var(--primary);
 }

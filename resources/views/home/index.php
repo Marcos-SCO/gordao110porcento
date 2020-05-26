@@ -1,8 +1,8 @@
 <article>
     <div class="section">
-        <section class="container animate__fadeInLeft">
+        <section class="homeAbout">
             <header class="text-center">
-                <h2 class="font-swashCaps">Gordão a 110%</h2>
+                <h2 class="title font-swashCaps">Gordão a 110%</h2>
             </header>
             <figure class="d-flex flex-wrap flex-md-nowrap flex-row-reverse justify-content-center align-items-center">
                 <img src="<?=$BASE?>/public/img/section/burger-french-fries.png" alt="" data-anima="right">

@@ -77,9 +77,9 @@ owl.owlCarousel({
         i = 0;
         // slides content
         slide = [
-            ['pizzasRefris_template.png', 'Gordão a 110%', 'A melhor lanchonete da região'],
+            ['pizzasRefris_template.png', 'Gordão a 110%', 'O melhor restaurante e lanchonete da região'],
             ['lanchesTemplate.png', 'Os Melhores lanches', 'Aqui você encontra váriedade e lanches com o sabor imperdivél'],
-            ['hamburguerBatataTomate_template.png', 'Melhor menu', 'Vasto menu feito com igredientes de qualidade'],
+            ['hamburguerBatataTomate_template.png', 'Melhor menu', 'Vasto menu feito com igredientes frescos e de qualidade'],
             ['hamburguer_template.png', 'Experimente nossas ofertas', 'Mataremos sua fome com a porcentagem acima, satisfação em 110%']
         ];
         // intervals

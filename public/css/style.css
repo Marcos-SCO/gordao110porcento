@@ -1,11 +1,24 @@
 * {
     margin: 0;
     padding: 0;
-    box-sizing: border-box !important;
+    box-sizing: border-box !important
 }
 
+
 :root {
-    --primary-color: #000;
+    --primary: #d65106;
+    --secondary: #010101;
+}
+
+a {
+    color: var(--primary);
+    text-decoration: none;
+    transition: ease-in-out .1s;
+}
+
+a:hover {
+    color: var(--secondary) !important;
+    text-decoration: none;
 }
 
 
@@ -49,7 +62,7 @@ img {
 }
 
 .z-index {
-    z-index: 999999!important;
+    z-index: 999999 !important;
 }
 
 .flex {
@@ -127,15 +140,39 @@ img {
 }
 
 /* main */
-main {
-    background: var(--primary-color);
-}
+main {}
 
 main figure {
     margin-bottom: 0 !important;
 }
 
 /* end main */
+
+.title {
+    color: var(--secondary);
+    padding: 1rem;
+}
+
+.title::before,
+.title::after {
+    content: '';
+    height: 3px;
+    background-color: var(--primary);
+}
+
+.homeAbout {
+    padding-bottom: 3rem;
+    background: url(../img/section/comida-rapida-espacio-abajo.png);
+}
+
+.homeAbout img {
+    padding: 1.2rem
+}
+.homeAbout figcaption {
+    border: 1px solid;
+    margin: 1rem 0;
+    box-shadow: 20px 20px 0px var(--primary);
+}
 
 /* Sections */
 /* Home Sections */

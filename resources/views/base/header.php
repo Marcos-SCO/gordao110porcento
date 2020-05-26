@@ -93,7 +93,7 @@
     <!-- end nav -->
     <?= ($getQuery[0] == 'home' || $getQuery[0] == '') ? '<!-- Hero --><div id="hero" class="hero d-flex justify-content-center align-items-center flex-column">
             <header class="p-4 d-flex flex-column justify-content-center">
-                <div>
+                <div class="headerQuotes">
                     <h1 id="quoteTitle" class="text-left font-swashCaps">Gordão a 110%</h1>
                     <p id="quote">lorem</p>
                 </div>
