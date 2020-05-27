@@ -5,11 +5,13 @@
                 <h2>Os melhores lanches</h2>
             </header>
         </section>
-        <div>
+        <div class="lanches">
             <section class="bg-light">
                 <header>
-                    <h2>Hambúrgueres</h2>
-                    <p>Deliciosos hamburgueres</p>
+                    <span data-anima="left">
+                        <h2>Hambúrgueres</h2>
+                        <p>Deliciosos hamburgueres</p>
+                    </span>
                 </header>
                 <div class="owl-carousel owl-theme">
                     <?php
@@ -25,8 +27,10 @@
             </section>
             <section class="bg-light">
                 <header>
-                    <h2>Pizzas</h2>
-                    <p>Recheio rico e suculento</p>
+                    <span data-anima="left">
+                        <h2>Pizzas</h2>
+                        <p>Recheio rico e suculento</p>
+                    </span>
                 </header>
                 <div class="owl-carousel owl-theme">
                     <?php foreach ($pizzas as $data) { ?>
@@ -40,8 +44,10 @@
             </section>
             <section class="bg-light">
                 <header>
-                    <h2>Categorias</h2>
-                    <p>Selecione uma das categorias</p>
+                    <span data-anima="left">
+                        <h2>Categorias</h2>
+                        <p>Todas as delicias</p>
+                    </span>
                 </header>
                 <div class="owl-carousel owl-theme">
                     <?php foreach ($categories as $data) { ?>
