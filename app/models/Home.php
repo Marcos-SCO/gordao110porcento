@@ -17,6 +17,11 @@ class Home extends Model
 
     public function getProducts($id_category)
     {
-        return $this->selectQuery("products", "WHERE id_category = {$id_category} ORDER BY id DESC LIMIT 10");
+        return $this->selectQuery("products", "WHERE id_category = {$id_category} ORDER BY id DESC LIMIT 8");
+    }
+
+    public function getCategories()
+    {
+        return $this->selectQuery("categories", "ORDER BY id DESC");
     }
 }

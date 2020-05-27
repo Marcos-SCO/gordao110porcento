@@ -58,6 +58,10 @@ owl.owlCarousel({
         // breakpoint from 768 up
         768: {
             items: 4,
+        },
+        // breakpoint from 1000 up
+        1161: {
+            items: 5,
         }
     }
 });
