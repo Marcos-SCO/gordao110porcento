@@ -7,19 +7,12 @@
                     <h3 class="text-left">Sobre nós</h3>
                 </span>
             </header>
-            <figure>
-                <img src="<?= $BASE ?>/public/img/template/gordaoRestaurante.png" alt="gordaoRestaurante.png" title="Gordão a 110% Restaurante" data-anima="right">
-                <figcaption data-anima="center">
+            <div class="about">
+                <div data-anima="center">
                     <strong class="font-swashCaps">Gordão a 110%</strong>
                     <p>Somos uma lanchonete e restaurante com mais de <span id="activeYears" class="link">vinte e três</span> anos de tradição.<br>Já servimos todo tipo de refeição com nosso extenso <span class="link" id="menu">menu</span>, peça já!<br>Te convidamos a se deliciar com nossas ofertas.<br>Você terá a satisfação a 110% e garantia de qualidade.<br>É gordão ou nada! <a href="">Saiba mais</a></p>
-                </figcaption>
-            </figure>
-            <script>
-                let date = new Date();
-                let activeYears = document.getElementById('activeYears');
-                let year = date.getFullYear() - 1997;
-                activeYears.innerText = year;
-            </script>
+                </div>
+            </div>
         </section>
         <section class="background-section img-1">
             <header>
@@ -35,13 +28,25 @@
                     </span>
                 </header>
                 <div class="owl-carousel owl-theme">
+                    <!-- Button trigger modal -->
                     <?php
                     foreach ($hamburguers as $h) { ?>
-                        <a href="<?= $BASE ?>/products/show/<?= $h->id ?>">
+                        <a style="border:none!important;background:none!important;outline:none!important" data-toggle="modal" data-target="#itemModal" id="product_<?= $h->id ?>" onclick="callItem(this)">
+                            <span style="display:none;" id="inputItens">
+                                <input type="hidden" name="id" value="<?= $h->id ?>">
+                                <input type="hidden" name="id_category" value="<?= $h->id_category ?>">
+                                <input type="hidden" name="product_name" value="<?= $h->product_name ?>">
+                                <input type="hidden" name="category_name" value="<?= ($h->id_category == 1) ? 'Hamburgueres' : 'Pizzas' ?>">
+                                <input type="hidden" name="product_description" value="<?= $h->product_description ?>">
+                                <input type="hidden" name="img" value="<?= $h->img ?>">
+                                <input type="hidden" name="price" value="<?= $h->price ?>">
+                            </span>
+                            <!--<a href="<?//= $BASE ?>/products/show/<?//= $h->id ?>"> -->
                             <figure class="item">
                                 <img class="mx-auto" src="<?= $BASE ?>/public/img/products/id_<?= $h->id ?>/<?= $h->img ?>" alt="<?= $h->img ?>" title="<?= $h->product_name ?>">
                                 <figcaption><?= $h->product_name ?></figcaption>
                             </figure>
+                            <!-- </a> -->
                         </a>
                     <?php } ?>
                 </div>
@@ -55,7 +60,17 @@
                 </header>
                 <div class="owl-carousel owl-theme">
                     <?php foreach ($pizzas as $data) { ?>
-                        <a href="<?= $BASE ?>/products/show/<?= $data->id ?>">
+                        <a style="border:none!important;background:none!important;outline:none!important" data-toggle="modal" data-target="#itemModal" id="product_<?= $data->id ?>" onclick="callItem(this)">
+                            <span style="display:none;" id="inputItens">
+                                <input type="hidden" name="id" value="<?= $data->id ?>">
+                                <input type="hidden" name="id_category" value="<?= $data->id_category ?>">
+                                <input type="hidden" name="product_name" value="<?= $data->product_name ?>">
+                                <input type="hidden" name="category_name" value="<?= ($data->id_category == 1) ? 'Hamburgueres' : 'Pizzas' ?>">
+                                <input type="hidden" name="product_description" value="<?= $data->product_description ?>">
+                                <input type="hidden" name="img" value="<?= $data->img ?>">
+                                <input type="hidden" name="price" value="<?= $data->price ?>">
+                            </span>
+                            <!-- <a href="<?//= $BASE ?>/products/show/<?//= $data->id ?>"> -->
                             <figure class="item"><img class="mx-auto" src="<?= $BASE ?>/public/img/products/id_<?= $data->id ?>/<?= $data->img ?>" alt="<?= $data->img ?>" title="<?= $data->product_name ?>">
                                 <figcaption><?= $data->product_name ?></figcaption>
                             </figure>
@@ -81,15 +96,17 @@
                 </div>
             </section>
         </div>
-        <section class="bg-light">
-            <header class="m-3">
-                <h2>Conheça nosso blog</h2>
-                <p>Últimas noticias</p>
+        <section class="homeBlogSection bg-light">
+            <header class="homeBlog d-flex flex-wrap justify-content-center flex-column">
+                <span>
+                    <h2 class="text-left">Conheça nosso blog</h2>
+                    <h3 class="text-left">ùltimas noticias</h3>
+                </span>
             </header>
             <div class="owl-carousel owl-theme">
                 <?php foreach ($posts as $data) { ?>
                     <a href="<?= $BASE ?>/posts/show/<?= $data->id ?>">
-                        <figure class="item overflow-hidden img-section-max"><img class="object-fit mx-auto" src="<?= $BASE ?>/public/img/posts/id_<?= $data->id ?>/<?= $data->img ?>" alt="<?= $data->title ?>" title="<?= $data->title ?>">
+                        <figure class="item overflow-hidden img-section-max"><img class="object-fit" src="<?= $BASE ?>/public/img/posts/id_<?= $data->id ?>/<?= $data->img ?>" alt="<?= $data->title ?>" title="<?= $data->title ?>">
                             <figcaption class="img-fig"><?= $data->title ?></figcaption>
                         </figure>
                     </a>
@@ -98,3 +115,63 @@
         </section>
     </div>
 </article>
+
+<!-- Modal -->
+<script>
+    function callItem(item) {
+        // Get the information in the selected product
+        let qtdInputs, inputs, values, i;
+        // Count inputs
+        qtdInputs = document.querySelector(`#${item.id} #inputItens`).children;
+        // get Inputs
+        inputs = document.querySelector(`#${item.id} #inputItens`).children;
+        values = [];
+        for (i = 0; i < qtdInputs.length; i++) {
+            // Store on array
+            values[i] = inputs[i].defaultValue;
+        }
+        // Product values
+        let id, id_category, product_name, category_name, product_description, img, price;
+        // Get array values
+        id = values[0];
+        id_category = values[1];
+        product_name = values[2];
+        category_name = values[3];
+        product_description = values[4];
+        img = values[5];
+        price = values[6];
+        console.log(id, product_name, category_name, product_description, img, price);
+        let itemModal = document.getElementById('itemModal');
+        // console.log(itemModal[1]);
+        let url = window.location.href;
+        let modalContent =
+            `<div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <header class="modal-header">
+                    <h3 class="modal-title" id="name">${product_name}</h3>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                    </header>
+                    <div class="modal-body">
+                    <figure>
+                    <img src="${url}/public/img/products/id_${id}/${img}" alt="${img}" title="${product_name}">
+                        <figcaption>
+                            <p>Categoria: ${category_name}</p>
+                            <p>${product_description = values[4]}</>
+                            <p>Valor: R$ ${price}</p>
+                        </figcaption>
+                    </figure>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+                        <!-- <button type="button" class="btn btn-primary">Save changes</button> -->
+                    </div>
+                </div>
+            </div>`;
+        itemModal.innerHTML = modalContent;
+    }
+</script>
+<section class="modal fade" style="top: -1%!important;z-index:999999999;" id="itemModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+</section>
+<!-- End modal -->

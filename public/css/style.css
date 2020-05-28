@@ -139,6 +139,44 @@ img {
     max-height: 150px;
 }
 
+/* nav */
+.navbar {
+    padding: 0 1rem!important;
+}
+.navbar button {
+    outline: none!important;
+}
+nav img {
+    max-width: 100px;
+    margin-right: 3.6rem;
+}
+/* end nav */
+
+/* Owl */
+.owl-carousel {
+    padding: .65rem 0 .5rem
+}
+
+.owl-carousel a {
+    text-decoration: none;
+    color: #000 !important;
+    text-align: center
+}
+
+.item {
+    margin-bottom: 0
+}
+
+.item img {
+    max-width: 260px !important;
+    transition: all ease-in-out .5s;
+}
+
+.item img:hover {
+    transform: scale(1.12)
+}
+
+/* end owl */
 /* main */
 main {}
 
@@ -188,17 +226,13 @@ main figure {
     ;
 }
 
-.lanches h2,
-.lanches p {
-    z-index: 1;
-    margin-left: 1rem;
+.lanches header span {
+    margin-left: 2%;
 }
 
 @media screen and (min-width:950px) {
-
-    .lanches h2,
-    .lanches p {
-        margin-left: 23%
+    .lanches header span {
+        margin-left: 20%;
     }
 }
 
@@ -230,35 +264,6 @@ main figure {
 }
 
 /* Home about */
-.homeAbout figure {
-    display: flex;
-    flex-direction: row-reverse;
-    flex-wrap: wrap;
-    justify-content: space-evenly;
-    align-items: center;
-    line-height: 1.85rem;
-    margin: auto;
-    white-space: pre-line;
-    background-image: url(../img/template/gordaoRestaurante.png);
-    background-color: #ffffffd6;
-    background-blend-mode: unset;
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-blend-mode: color-burn;
-}
-
-.homeAbout figcaption {
-    padding: 0 2rem;
-    background-color: #fff;
-    border: #ccc;
-}
-
-.homeAbout figure strong {
-    align-self: flex-start;
-    font-size: 2rem;
-    padding-bottom: 1rem;
-}
-
 .homeHeaderAbout {
     position: relative;
     height: 100%;
@@ -272,49 +277,109 @@ main figure {
 
 .homeHeaderAbout span {
     padding: 1rem;
-    max-width: 300px;
     width: 100%;
     z-index: 1;
     color: #fff;
 }
 
-@media screen and (min-width:590px) and (max-width:1129.99px) {
-    .homeAbout figure {
+.homeHeaderAbout span,
+.homeHeaderAbout div {
+    max-width: 300px;
+
+}
+
+.homeAbout .about {
+    display: flex;
+    flex-direction: row-reverse;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    align-items: center;
+    margin: auto;
+    white-space: pre-line;
+    background-image: url(../img/template/gordaoRestaurante.png);
+    background-color: #ffffffd6;
+    background-blend-mode: unset;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-blend-mode: color-burn;
+}
+
+.homeAbout .about div {
+    padding: 0 2rem;
+    background-color: #fff;
+    border: #ccc;
+}
+
+.homeAbout strong {
+    align-self: flex-start;
+    font-size: 2rem;
+    padding-bottom: 1rem;
+}
+
+@media screen and (min-width:590px) {
+    .homeAbout .about {
         justify-content: center;
-        padding: 2rem
+        padding: 2rem;
+        line-height: 1.85rem;
+        /* box-shadow: 20px 20px 0px #d65106; */
     }
 
     .homeAbout figcaption {
         margin: 1rem !important;
     }
-
-    .homeAbout figure,
-    .homeAbout figure img {
-        margin: 0;
-    }
-
-    .homeAbout figure img {
-        display: none
-    }
-}
-
-@media screen and (min-width:1130px) {
-    .homeAbout figure {
-        justify-content: center;
-        padding: 1.5rem
-    }
-    .homeAbout figure img {
-        max-width: 400px;
-        margin:1rem;
-        box-shadow: 20px 20px 0px #d65106;
-    }
-
-    .homeAbout figcaption {
-    }
 }
 
 /* Home about end */
 
+/* blog */
+.homeBlogSection div {
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+.homeBlogSection img {
+    width: 100% !important;
+    max-width: 100% !important;
+}
+
+.homeBlog {
+    position: relative;
+    background-image: url(http://localhost/projetosCompletos/gordao110porcento/public/img/template/blog.png);
+    min-height: 250px;
+    background-position: left, right;
+    background-size: cover;
+    background-repeat: no-repeat;
+    align-items: center;
+    color: #fff;
+}
+
+.homeBlog::before {
+    position: absolute;
+    content: '';
+    height: 100%;
+    width: 100%;
+    background-image: url(http://localhost/projetosCompletos/gordao110porcento/public/img/template/logoFaixa.png);
+    background-position: bottom right;
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+.img-fig {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    background: var(--primary);
+    text-align: left;
+    padding: 0.2rem;
+    padding-left: .5rem;
+    text-decoration: none;
+    color: #fff;
+    overflow: hidden;
+    white-space: pre;
+    text-overflow: ellipsis;
+}
+
+/* end blog */
 
 /* Sections */
 /* Home Sections */
@@ -334,46 +399,9 @@ main figure {
     background: url(../img/section/comida-rapida-espacio-abajo.png) scroll;
 }
 
-.img-fig {
-    position: absolute;
-    bottom: 0;
-    width: 100%;
-    background: aliceblue;
-    text-align: left;
-    padding: 0.2rem;
-    padding-left: .5rem;
-    text-decoration: none
-}
-
 /* end sections */
 
 /* End Home Sections */
-
-/* Owl */
-.owl-carousel {
-    padding: .5rem 0 0
-}
-
-.owl-carousel a {
-    text-decoration: none;
-    color: #000 !important;
-    text-align: center
-}
-
-.item {
-    margin-bottom: 0
-}
-
-.item img {
-    max-width: 260px !important;
-    transition: all ease-in-out .5s;
-}
-
-.item img:hover {
-    transform: scale(1.12)
-}
-
-/* end owl */
 
 /* Animatins */
 @media screen and (min-width:600px) and (min-height:600px) and (orientation:landscape) {

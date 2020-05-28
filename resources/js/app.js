@@ -6,6 +6,15 @@ if (window.NodeList && !NodeList.prototype.forEach) {
     NodeList.prototype.forEach = Array.prototype.forEach;
 }
 
+let url = window.location.href;
+
+// Dates
+let date = new Date();
+let currentYear = date.getFullYear();
+// Home active years
+let activeYears = document.getElementById('activeYears');
+let years = currentYear - 1997;
+(activeYears != null) ? activeYears.innerText = years : '';
 // on load spinner
 document.onreadystatechange = function () {
     if (document.readyState !== "complete") {
@@ -106,7 +115,7 @@ owl.owlCarousel({
             (i == slide.length) ? i = 0 : i;
             intervalSet();
         });
-        
+
         // select slider elements
         hero = document.querySelector('#hero');
         quoteTitle = document.querySelector('#quoteTitle');
@@ -137,7 +146,7 @@ owl.owlCarousel({
             }.bind(null, i));
         }
         // end ul slider selection
-        
+
         // function to move sliders
         function moveSlide(inc = null, index = null) {
             // if inc, than counter recive +1
@@ -152,7 +161,7 @@ owl.owlCarousel({
             quoteTitle.innerText = slide[i][1];
             quote.style = 'transition:all ease-in-out .5s;transition-delay: .5s;';
             quote.innerText = slide[i][2];
-            
+
             // remove and class to active slider item
             heroCounterItem.forEach(item => {
                 item.classList.remove('active');
