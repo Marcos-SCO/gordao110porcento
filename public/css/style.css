@@ -160,7 +160,7 @@ main figure {
     background-color: var(--primary);
 }
 
-.lanches section header{
+.lanches section header {
     padding: 1rem 0 .5rem;
     display: flex;
     flex-direction: column;
@@ -172,70 +172,149 @@ main figure {
     background-repeat: no-repeat;
     background-size: 50%;
 }
+
 .lanches section:nth-child(1) header {
-    background-color: #ffbf00;;
+    background-color: #ffbf00;
+    ;
 }
+
 .lanches section:nth-child(2) header {
-    background-color: #F44336;;
+    background-color: #F44336;
+    ;
 }
+
 .lanches section:nth-child(3) header {
-    background-color: #6fbc3f;;
+    background-color: #6fbc3f;
+    ;
 }
-.lanches h2, .lanches p {
+
+.lanches h2,
+.lanches p {
     z-index: 1;
     margin-left: 1rem;
 }
+
 @media screen and (min-width:950px) {
-    .lanches h2, .lanches p {
+
+    .lanches h2,
+    .lanches p {
         margin-left: 23%
-    }    
+    }
 }
+
 .lanches section:nth-child(1) header {
     background-image: url(../img/categories/id_1/hamburguers.png)
 }
+
 .lanches section:nth-child(2) header {
     background-image: url(../img/categories/id_2/pizzas.png)
 }
+
 .lanches section:nth-child(3) header {
     background-image: url(../img/template/categories.png)
 }
 
-/* .homeAbout {
-    background-image: url(https://image.freepik.com/fotos-gratis/criancas-com-papeis-na-lanchonete_23-2147666907.jpg), url(https://image.freepik.com/fotos-gratis/borrao-ou-imagem-desfocada-de-cafeteria-ou-lanchonete_23-2148066961.jpg);
-    background-position: right bottom, left center;
-    background-repeat: no-repeat, repeat;
-    z-index: 99999;
-    padding-bottom: 3rem!important;
-} */
-.homeAbout {
+.homeHeaderAbout::before {
+    content: '';
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    background-color: #333;
+    opacity: .8;
+}
+
+@media screen and (min-width:650px) {
+    .homeHeaderAbout::before {
+        opacity: .5;
+    }
+}
+
+/* Home about */
+.homeAbout figure {
+    display: flex;
+    flex-direction: row-reverse;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    align-items: center;
+    line-height: 1.85rem;
+    margin: auto;
+    white-space: pre-line;
+    background-image: url(../img/template/gordaoRestaurante.png);
+    background-color: #ffffffd6;
+    background-blend-mode: unset;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-blend-mode: color-burn;
+}
+
+.homeAbout figcaption {
+    padding: 0 2rem;
+    background-color: #fff;
+    border: #ccc;
+}
+
+.homeAbout figure strong {
+    align-self: flex-start;
+    font-size: 2rem;
+    padding-bottom: 1rem;
+}
+
+.homeHeaderAbout {
+    position: relative;
     height: 100%;
     width: 100%;
     min-height: 250px;
-    background-image: url(../img/template/clientes.png), url(../img/template/clientes.png);
-    background-position: left bottom, right;
-    background-repeat: no-repeat, no-repeat;
-    background-size: contain, cover;
-}
-.homeAbout div {
-    background-color: #fff;
-    background: #fff;
-    padding: 1rem;
-    max-width: 400px;
-    /* min-height: 250px; */
-    width: 100%;
-}
-.homeAbout img {
-    padding: 0!important;
+    background-image: url(../img/section/gordao110.png);
+    background-position: right;
+    background-repeat: no-repeat;
+    background-size: cover;
 }
 
-.homeAbout img {
-    padding: 1.2rem
+.homeHeaderAbout span {
+    padding: 1rem;
+    max-width: 300px;
+    width: 100%;
+    z-index: 1;
+    color: #fff;
 }
-.homeAbout figcaption {
-    border: 1px solid;
-    margin: 1rem 0;
-    box-shadow: 20px 20px 0px var(--primary);
+
+@media screen and (min-width:590px) and (max-width:1129.99px) {
+    .homeAbout figure {
+        justify-content: center;
+        padding: 2rem
+    }
+
+    .homeAbout figcaption {
+        margin: 1rem !important;
+    }
+
+    .homeAbout figure,
+    .homeAbout figure img {
+        margin: 0;
+    }
+
+    .homeAbout figure img {
+        display: none
+    }
 }
+
+@media screen and (min-width:1130px) {
+    .homeAbout figure {
+        justify-content: center;
+        padding: 2rem
+    }
+    .homeAbout figure img {
+        max-width: 480px;
+        margin:1rem;
+        box-shadow: 20px 20px 0px #d65106;
+    }
+
+    .homeAbout figcaption {
+    }
+}
+
+/* Home about end */
+
 
 /* Sections */
 /* Home Sections */
@@ -248,14 +327,6 @@ main figure {
     align-items: center;
     color: #fff;
     background-color: #22241742;
-}
-
-.section img {
-    max-width: 400px;
-}
-
-.section p {
-    max-width: 378px;
 }
 
 .img-1 {
@@ -282,6 +353,7 @@ main figure {
 .owl-carousel {
     padding: .5rem 0 0
 }
+
 .owl-carousel a {
     text-decoration: none;
     color: #000 !important;

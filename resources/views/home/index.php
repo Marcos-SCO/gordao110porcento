@@ -1,5 +1,26 @@
 <article>
     <div class="section">
+        <section class="homeAbout">
+            <header class="homeHeaderAbout d-flex flex-wrap justify-content-center flex-row">
+                <span>
+                    <img src="<?= $BASE ?>/public/img/template/gordao110_logo.png" alt="gordao110_logo.png" title="Gordão 110% logo">
+                    <h3 class="text-left">Sobre nós</h3>
+                </span>
+            </header>
+            <figure>
+                <img src="<?= $BASE ?>/public/img/template/gordaoRestaurante.png" alt="gordaoRestaurante.png" title="Gordão a 110% Restaurante" data-anima="right">
+                <figcaption data-anima="center">
+                    <strong class="font-swashCaps">Gordão a 110%</strong>
+                    <p>Somos uma lanchonete e restaurante com mais de <span id="activeYears" class="link">vinte e três</span> anos de tradição.<br>Já servimos todo tipo de refeição com nosso extenso <span class="link" id="menu">menu</span>, peça já!<br>Te convidamos a se deliciar com nossas ofertas.<br>Você terá a satisfação a 110% e garantia de qualidade.<br>É gordão ou nada! <a href="">Saiba mais</a></p>
+                </figcaption>
+            </figure>
+            <script>
+                let date = new Date();
+                let activeYears = document.getElementById('activeYears');
+                let year = date.getFullYear() - 1997;
+                activeYears.innerText = year;
+            </script>
+        </section>
         <section class="background-section img-1">
             <header>
                 <h2>Os melhores lanches</h2>
@@ -60,20 +81,6 @@
                 </div>
             </section>
         </div>
-        <section class="homeAbout d-flex flex-wrap justify-content-center flex-row">
-            <!-- <section class="homeAbout d-flex flex-column justify-content-center align-items-center p-2"> -->
-            <div data-anima="center">
-                <header>
-                    <h3 class="text-left">Sobre nós</h3>
-                </header>
-                <p>
-                    Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ut veritatis nulla molestiae! Facere
-                    itaque ut nulla sit, dicta quibusdam quod dolorum? Excepturi neque fugit corporis tempore
-                    dignissimos odit. Veniam, ipsum!
-                    <a href="">Saiba mais</a>
-                </p>
-            </div>
-        </section>
         <section class="bg-light">
             <header class="m-3">
                 <h2>Conheça nosso blog</h2>

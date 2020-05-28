@@ -15,8 +15,6 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
     <!-- Font awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <!-- Animate css -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.0.0/animate.min.css" />
     <!-- Owl css -->
     <link rel="stylesheet" href="<?= $BASE ?>/public/css/owl.carousel.min.css">
     <link rel="stylesheet" href="<?= $BASE ?>/public/css/owl.theme.default.css">
