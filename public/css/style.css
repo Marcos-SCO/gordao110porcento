@@ -301,10 +301,10 @@ main figure {
 @media screen and (min-width:1130px) {
     .homeAbout figure {
         justify-content: center;
-        padding: 2rem
+        padding: 1.5rem
     }
     .homeAbout figure img {
-        max-width: 480px;
+        max-width: 400px;
         margin:1rem;
         box-shadow: 20px 20px 0px #d65106;
     }
