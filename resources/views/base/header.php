@@ -43,7 +43,7 @@
         <!-- Nav -->
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <!--  Show this only on mobile to medium screens  -->
-            <a class="navbar-brand d-lg-none" href="<?= $BASE ?>"><img src="http://localhost/projetosCompletos/gordao110porcento/public/img/template/gordao110_logo.png" alt="gordao110_logo.png" title="Grodão a 110%"></a>
+            <a class="navbar-brand d-lg-none" href="<?= $BASE ?>"><img src="http://localhost/projetosCompletos/gordao110porcento/public/img/template/gordao110_logo_300px.png" alt="gordao110_logo_300px.png" title="Grodão a 110%"></a>
 
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggle" aria-controls="navbarToggle" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -65,7 +65,7 @@
                     </li>
                 </ul>
                 <!--   Show this only lg screens and up   -->
-                <a class="navbar-brand d-none d-lg-block" <?= (isset($_SESSION['user_name'])) ? 'style="margin-right:-3.88rem!important"' : '' ?> href="<?= $BASE ?>"><img src="http://localhost/projetosCompletos/gordao110porcento/public/img/template/gordao110_logo.png" alt="gordao110_logo.png" title="Grodão a 110%"></a>
+                <a class="navbar-brand d-none d-lg-block" <?= (isset($_SESSION['user_name'])) ? 'style="margin-right:-3.88rem!important"' : '' ?> href="<?= $BASE ?>"><img src="http://localhost/projetosCompletos/gordao110porcento/public/img/template/gordao110_logo_300px.png" alt="gordao110_logo_300px.png" title="Grodão a 110%"></a>
 
                 <ul class="navbar-nav">
                     <li class="nav-item"><a class="nav-link" href="<?= $BASE ?>">Sobre</a></li>

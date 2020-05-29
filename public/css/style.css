@@ -141,15 +141,18 @@ img {
 
 /* nav */
 .navbar {
-    padding: 0 1rem!important;
+    padding: 0 1rem !important;
 }
+
 .navbar button {
-    outline: none!important;
+    outline: none !important;
 }
+
 nav img {
     max-width: 100px;
-    margin-right: 3.6rem;
+    margin-right: 3.5rem;
 }
+
 /* end nav */
 
 /* Owl */
@@ -212,22 +215,19 @@ main figure {
 }
 
 .lanches section:nth-child(1) header {
-    background-color: #ffbf00;
-    ;
+    background-color: #ffbf00
 }
 
 .lanches section:nth-child(2) header {
-    background-color: #F44336;
-    ;
+    background-color: #F44336
 }
 
 .lanches section:nth-child(3) header {
-    background-color: #6fbc3f;
-    ;
+    background-color: #6fbc3f
 }
 
 .lanches header span {
-    margin-left: 2%;
+    margin-left: 2%
 }
 
 @media screen and (min-width:950px) {
@@ -296,12 +296,9 @@ main figure {
     align-items: center;
     margin: auto;
     white-space: pre-line;
-    background-image: url(../img/template/gordaoRestaurante.png);
-    background-color: #ffffffd6;
-    background-blend-mode: unset;
+    background-image: url(../img/template/gordaoRestaurante_fundoBranco.png);
     background-repeat: no-repeat;
-    background-size: cover;
-    background-blend-mode: color-burn;
+    background-size: cover
 }
 
 .homeAbout .about div {
@@ -345,12 +342,11 @@ main figure {
 .homeBlog {
     position: relative;
     background-image: url(http://localhost/projetosCompletos/gordao110porcento/public/img/template/blog.png);
-    min-height: 250px;
+    height: 250px;
     background-position: left, right;
     background-size: cover;
     background-repeat: no-repeat;
-    align-items: center;
-    color: #fff;
+    color: #fff
 }
 
 .homeBlog::before {
