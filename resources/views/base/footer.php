@@ -8,9 +8,16 @@
                 <li><a href="<?= $BASE ?>/<?= $table ?>/<?= $method ?>/<?= $pageId ?>/<?= $prev ?>">Anterior</a></li>
             <?php } ?>
 
-            <?php for ($i = 1; $i <= $totalPages; $i++) { ?>
-                <li><a href="<?= $BASE ?>/<?= $table ?>/<?= $method ?>/<?= $pageId ?>/<?= $i ?>"><?= $i ?></a></li>
-            <?php } ?>
+            <?php if ($pageId != $totalPages) {
+                $elements = 0;
+                for ($i = $page; $i <= $totalPages; $i++) {
+                    $elements += 1;
+                    if ($elements < 5) {
+                        echo "<li><a href='$BASE/$table/$method/$pageId/$i'>$i</a></li>";
+                    }
+                }
+            }
+            ?>
 
             <?php if ($page != $totalPages) { ?>
                 <li><a href="<?= $BASE ?>/<?= $table ?>/<?= $method ?>/<?= $pageId ?>/<?= $next ?>">Próxima</a></li>
@@ -24,11 +31,17 @@
                 <li><a href="<?= $BASE ?>/<?= $table ?>/index/<?= $prev ?>">Anterior</a></li>
             <?php } ?>
 
-            <?php if ($pageId != $totalPages) { ?>
-                <?php for ($i = 1; $i <= $totalPages; $i++) { ?>
-                    <li><a href="<?= $BASE ?>/<?= $table ?>/index/<?= $i ?>"><?= $i ?></a></li>
-                <?php } ?>
-            <?php } ?>
+            <?php if ($pageId != $totalPages) {
+                $elements = 0;
+                for ($i = $pageId; $i <= $totalPages; $i++) {
+                    $elements += 1;
+                    if ($elements < 5) {
+                        echo "<li><a href='$BASE/$table/index/$i'>$i</a></li>";
+                    }
+                }
+            }
+            ?>
+
             <?php if ($pageId != $totalPages) { ?>
                 <li><a href="<?= $BASE ?>/<?= $table ?>/index/<?= $next ?>">Próxima</a></li>
                 <li><a href="<?= $BASE ?>/<?= $table ?>/index/<?= $totalPages ?>">Final</a></li>
