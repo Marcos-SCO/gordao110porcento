@@ -129,6 +129,7 @@ class Users extends Controller
         $this->isLogin();
 
         $data = $this->model->getAllFrom('users', $id);
+        
         if ($id == 1 && $_SESSION['user_id'] == 1) {
             View::render('users/edit.php', [
                 'data' => $data,

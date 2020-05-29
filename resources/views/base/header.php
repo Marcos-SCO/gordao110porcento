@@ -5,11 +5,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <!-- fav icons -->
-    <link rel="apple-touch-icon" sizes="180x180" href="<?=$BASE?>/public/img/favicon/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="<?=$BASE?>/public/img/favicon/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="<?=$BASE?>/public/img/favicon/favicon-16x16.png">
-    <link rel="manifest" href="<?=$BASE?>/public/img/favicon/site.webmanifest">
-    <link rel="mask-icon" href="<?=$BASE?>/public/img/favicon/safari-pinned-tab.svg" color="#5bbad5">
+    <link rel="apple-touch-icon" sizes="180x180" href="<?= $BASE ?>/public/img/favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="<?= $BASE ?>/public/img/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="<?= $BASE ?>/public/img/favicon/favicon-16x16.png">
+    <link rel="manifest" href="<?= $BASE ?>/public/img/favicon/site.webmanifest">
+    <link rel="mask-icon" href="<?= $BASE ?>/public/img/favicon/safari-pinned-tab.svg" color="#5bbad5">
     <meta name="msapplication-TileColor" content="#da532c">
     <meta name="theme-color" content="#ffffff">
     <!-- end favicon -->
@@ -39,9 +39,9 @@
     <!-- Spinner -->
     <div id="loader" class="center"></div>
 
-    <header class="fixed-top z-index">
+    <header class="<?= ($getQuery[0] == '' || $getQuery[0] == 'home') ? 'fixed-top' : '' ?> z-index">
         <!-- Nav -->
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light" style="min-height: 75px;">
             <!--  Show this only on mobile to medium screens  -->
             <a class="navbar-brand d-lg-none" href="<?= $BASE ?>"><img src="http://localhost/projetosCompletos/gordao110porcento/public/img/template/gordao110_logo_300px.png" alt="gordao110_logo_300px.png" title="Grodão a 110%"></a>
 
@@ -65,7 +65,7 @@
                     </li>
                 </ul>
                 <!--   Show this only lg screens and up   -->
-                <a class="navbar-brand d-none d-lg-block" <?= (isset($_SESSION['user_name'])) ? 'style="margin-right:-3.88rem!important"' : '' ?> href="<?= $BASE ?>"><img src="http://localhost/projetosCompletos/gordao110porcento/public/img/template/gordao110_logo_300px.png" alt="gordao110_logo_300px.png" title="Grodão a 110%"></a>
+                <a class="navbar-brand d-none d-lg-block" style="position:absolute;top:0;right:45.9%;margin:0!important;" href="<?= $BASE ?>"><img src="http://localhost/projetosCompletos/gordao110porcento/public/img/template/gordao110_logo_300px.png" alt="gordao110_logo_300px.png" title="Grodão a 110%"></a>
 
                 <ul class="navbar-nav">
                     <li class="nav-item"><a class="nav-link" href="<?= $BASE ?>">Sobre</a></li>
@@ -79,9 +79,8 @@
                     <?php if (isset($_SESSION['user_name']) && isset($_SESSION['user_id'])) { ?>
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><?= $_SESSION['user_name'] ?? "" ?></a>
-
                             <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                                <a class="dropdown-item" href="<?= $BASE ?>/users/edit/{{SESSION_ID}}">Meu perfil</a>
+                                <a class="dropdown-item" href="<?= $BASE ?>/users/edit/<?= $_SESSION['user_id'] ?>">Meu perfil</a>
                                 <a class="dropdown-item" href="<?= $BASE ?>/users/">Usuários</a>
                                 <a class="dropdown-item" href="<?= $BASE ?>/categories/">Categorias</a>
 
@@ -110,6 +109,6 @@
 
     <?php
     // Display flash messages
-    echo (isset($flash) && $flash != false && $flash != null) ? "<div class='" . $flash['class'] . "' id='msg-flash' style='transition: transform .18s, opacity .18s, visibility 0s .18s;position:absolute;width: 100%;text-align: center;'>" . $flash['message'] . "</div><script> /*flash message*/ let flash = document.querySelector('#msg-flash'); if (flash != null) {setTimeout(() => { flash.style = 'display:none;transition: transform .18s, opacity .18s, visibility 0s .18s;'; }, 4000); }</script>" : ''
+    echo (isset($flash) && $flash != false && $flash != null) ? "<div class='" . $flash['class'] . "' id='msg-flash' style='transition: transform .18s, opacity .18s, visibility 0s .18s;position:absolute;width: 100%;text-align: center;z-index:999999999;'>" . $flash['message'] . "</div><script> /*flash message*/ let flash = document.querySelector('#msg-flash'); if (flash != null) {setTimeout(() => { flash.style = 'display:none;transition: transform .18s, opacity .18s, visibility 0s .18s;'; }, 4000); }</script>" : ''
     ?>
     <main>
