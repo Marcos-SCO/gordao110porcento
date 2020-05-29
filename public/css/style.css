@@ -152,6 +152,16 @@ nav img {
     max-width: 100px
 }
 
+.navbar-brand {
+    right: 45.9%;
+}
+
+@media screen and (min-width:1388px) {
+    .navbar-brand {
+        right: 46.9% !important
+    }
+}
+
 /* end nav */
 
 /* Owl */

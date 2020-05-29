@@ -65,7 +65,7 @@
                     </li>
                 </ul>
                 <!--   Show this only lg screens and up   -->
-                <a class="navbar-brand d-none d-lg-block" style="position:absolute;top:0;right:45.9%;margin:0!important;" href="<?= $BASE ?>"><img src="http://localhost/projetosCompletos/gordao110porcento/public/img/template/gordao110_logo_300px.png" alt="gordao110_logo_300px.png" title="Grodão a 110%"></a>
+                <a class="navbar-brand d-none d-lg-block" style="position:absolute;top:0;margin:0!important;" href="<?= $BASE ?>"><img src="http://localhost/projetosCompletos/gordao110porcento/public/img/template/gordao110_logo_300px.png" alt="gordao110_logo_300px.png" title="Grodão a 110%"></a>
 
                 <ul class="navbar-nav">
                     <li class="nav-item"><a class="nav-link" href="<?= $BASE ?>">Sobre</a></li>
