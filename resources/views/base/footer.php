@@ -6,9 +6,9 @@
             <?php if ($page != 1) { ?>
                 <li><a href="<?= $BASE ?>/<?= $table ?>/<?= $method ?>/<?= $pageId ?>/1">Inicio</a></li>
                 <li><a href="<?= $BASE ?>/<?= $table ?>/<?= $method ?>/<?= $pageId ?>/<?= $prev ?>">Anterior</a></li>
-            <?php } ?>
+            <?php }
 
-            <?php if ($pageId != $totalPages) {
+            if ($page != $totalPages) {
                 $elements = 0;
                 for ($i = $page; $i <= $totalPages; $i++) {
                     $elements += 1;
@@ -17,9 +17,8 @@
                     }
                 }
             }
-            ?>
 
-            <?php if ($page != $totalPages) { ?>
+            if ($page != $totalPages) { ?>
                 <li><a href="<?= $BASE ?>/<?= $table ?>/<?= $method ?>/<?= $pageId ?>/<?= $next ?>">Próxima</a></li>
                 <li><a href="<?= $BASE ?>/<?= $table ?>/<?= $method ?>/<?= $pageId ?>/<?= $totalPages ?>">Final</a></li>
             <?php } ?>
