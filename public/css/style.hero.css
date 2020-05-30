@@ -21,6 +21,11 @@
     transition: all ease-in-out .5s
 }
 
+#hero a:hover, #prev:hover, #next:hover, #heroCounter li.active:hover {
+    color: #fff!important;
+    background-color:#ee6d25!important
+}
+
 #hero .headerQuotes {
     display: flex;
     min-height: 168px;
