@@ -23,9 +23,13 @@ class Products extends Controller
     public function index($id = 1, $flash = false)
     {
         $table = 'products';
-        $results = $this->pagination($table, $id, $limit = 2, '', $orderOption = 'DESC');
+        $results = $this->pagination($table, $id, $limit = 20, '', $orderOption = 'DESC');
+        
+        // Category elements from table categories
+        $categoryElements = $this->model->customQuery('SELECT id, category_name FROM categories', null, 1);
         View::render('products/index.php', [
-            'title' => 'Galeria de imagens',
+            'title' => 'Todos nossos Produtos',
+            'categoryElements' => $categoryElements,
             'products' => $results[4],
             'flash' => $flash,
             'table' => $table,
