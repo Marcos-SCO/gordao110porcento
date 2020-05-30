@@ -31,7 +31,7 @@
                     <!-- Button trigger modal -->
                     <?php
                     foreach ($hamburguers as $h) { ?>
-                        <a style="border:none!important;background:none!important;outline:none!important" data-toggle="modal" data-target="#itemModal" id="product_<?= $h->id ?>" onclick="callItem(this)">
+                        <a data-toggle="modal" data-target="#itemModal" id="product_<?= $h->id ?>" onclick="callItem(this)">
                             <span style="display:none;" id="inputItens">
                                 <input type="hidden" name="id" value="<?= $h->id ?>">
                                 <input type="hidden" name="id_category" value="<?= $h->id_category ?>">
@@ -60,7 +60,7 @@
                 </header>
                 <div class="owl-carousel owl-theme">
                     <?php foreach ($pizzas as $data) { ?>
-                        <a style="border:none!important;background:none!important;outline:none!important" data-toggle="modal" data-target="#itemModal" id="product_<?= $data->id ?>" onclick="callItem(this)">
+                        <a data-toggle="modal" data-target="#itemModal" id="product_<?= $data->id ?>" onclick="callItem(this)">
                             <span style="display:none;" id="inputItens">
                                 <input type="hidden" name="id" value="<?= $data->id ?>">
                                 <input type="hidden" name="id_category" value="<?= $data->id_category ?>">

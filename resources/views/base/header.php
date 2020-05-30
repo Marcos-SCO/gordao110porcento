@@ -97,7 +97,7 @@
             <header class="p-4 d-flex flex-column justify-content-center">
                 <div class="headerQuotes">
                     <h1 id="quoteTitle" class="text-left font-swashCaps" style="color:#fff;">Gordão a 110%</h1>
-                    <p id="quote" style="color:#fff;>lorem</p>
+                    <p id="quote" style="color:#fff;">lorem</p>
                 </div>
                 <a href="">Pedir agora</a>
             </header>

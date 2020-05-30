@@ -172,7 +172,8 @@ nav img {
 .owl-carousel a {
     text-decoration: none;
     color: #000 !important;
-    text-align: center
+    text-align: center;
+    cursor: pointer
 }
 
 .item {
