@@ -41,7 +41,7 @@
 
     <header class="<?= ($getQuery[0] == '' || $getQuery[0] == 'home') ? 'fixed-top' : '' ?> z-index">
         <!-- Nav -->
-        <nav class="navbar navbar-expand-lg navbar-light bg-light" style="min-height:75px;background-color:#f8f9fa;">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light" style="height:75px;background-color:#f8f9fa;">
             <!--  Show this only on mobile to medium screens  -->
             <a class="navbar-brand d-lg-none" href="<?= $BASE ?>"><img src="http://localhost/projetosCompletos/gordao110porcento/public/img/template/gordao110_logo_300px.png" alt="gordao110_logo_300px.png" title="Grodão a 110%"></a>
 
