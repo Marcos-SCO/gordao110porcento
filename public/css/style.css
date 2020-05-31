@@ -200,6 +200,19 @@ nav img {
 
 /* end nav */
 
+/* Edit delete start */
+.editDelete {
+    position: relative;
+}
+.editDelete::before {
+    content: 'Modificar';
+    position: absolute;
+    position: absolute;
+    top: -21px;
+    left: 9px
+}
+/* Edit delete end */
+
 /* Animatins */
 @media screen and (min-width:600px) and (min-height:600px) and (orientation:landscape) {
     [data-anima] {
@@ -474,6 +487,7 @@ nav img {
     flex-wrap: wrap;
     justify-content: space-around;
     align-content: center;
+    align-self: center;
     width: 100%;
     max-width: 320px
 }
@@ -525,5 +539,9 @@ nav img {
 /* -------- Products End -------- */
 
 /* -------- Catecories Start -------- */
-
+.categoryHeader {
+    display: flex;
+    align-items: center;
+    flex-direction: column
+}
 /* -------- Catecories End -------- */

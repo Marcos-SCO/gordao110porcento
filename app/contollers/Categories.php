@@ -22,9 +22,11 @@ class Categories extends Controller
     {
         $table = 'categories';
         $results = $this->pagination($table, $id, $limit = 2, '', $orderOption = 'DESC');
-
+        // Category elements from table categories
+        $categoryElements = $this->model->customQuery('SELECT id, category_name FROM categories', null, 1);
         View::render('categories/index.php', [
             'title' => 'Galeria de imagens',
+            'categoryElements' => $categoryElements,
             'categories' => $results[4],
             'flash' => $flash,
             'table' => $table,
@@ -90,10 +92,12 @@ class Categories extends Controller
         // Pagination for products with id category
         $table = 'products';
         $results = $this->pagination($table, $page, $limit = 4, ['id_category', $id], $orderOption = 'DESC');
-
+        
+        $categoryElements = $this->model->customQuery('SELECT id, category_name FROM categories', null, 1);
         // Display results
         return View::render('categories/show.php', [
             'category_description' => $data->category_description,
+            'categoryElements' => $categoryElements,
             'pageId' => $id,
             'data' => $data,
             'user' => $user,
