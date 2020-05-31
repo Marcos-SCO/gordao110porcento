@@ -1,7 +1,7 @@
 <article>
     <div class="section">
         <section class="homeAbout">
-            <header class="homeHeaderAbout d-flex flex-wrap justify-content-center flex-row">
+            <header class="homeHeaderAbout imgBackgroundArea d-flex flex-wrap justify-content-center flex-row">
                 <span>
                     <img src="<?= $BASE ?>/public/img/template/gordao110_logo_300px.png" alt="gordao110_logo.png" title="Gordão 110% logo">
                     <h3 class="text-left">Sobre nós</h3>
@@ -14,12 +14,12 @@
                 </div>
             </div>
         </section>
-        <section class="background-section img-1">
+        <section class="bestsSnacks imgBackgroundArea">
             <header>
                 <h2>Os melhores lanches</h2>
             </header>
         </section>
-        <div class="lanches">
+        <div class="snacks">
             <section class="bg-light">
                 <header>
                     <span data-anima="left">
@@ -97,7 +97,7 @@
             </section>
         </div>
         <section class="homeBlogSection bg-light">
-            <header class="homeBlog d-flex flex-wrap justify-content-center align-items-center flex-column">
+            <header class="imgBackgroundArea homeBlog d-flex flex-wrap justify-content-center align-items-center flex-column">
                 <span>
                     <h2 class="text-left">Conheça nosso blog</h2>
                     <h3 class="text-left">ùltimas noticias</h3>

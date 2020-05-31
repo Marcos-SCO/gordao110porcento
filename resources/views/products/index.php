@@ -1,4 +1,4 @@
-<header class="productHeader">
+<header class="imgBackgroundArea productHeader">
     <h1>Todos nossos Produtos</h1>
 </header>
 <?php
