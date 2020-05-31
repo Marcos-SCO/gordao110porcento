@@ -4,6 +4,9 @@
     box-sizing: border-box !important
 }
 
+.font-swashCaps {
+    font-family: 'Oleo Script Swash Caps', cursive
+}
 
 :root {
     --primary: #d95f1b;
@@ -461,10 +464,6 @@ main figure {
 }
 
 /* End Animations */
-
-.font-swashCaps {
-    font-family: 'Oleo Script Swash Caps', cursive
-}
 
 /* Products */
 .productHeader {
