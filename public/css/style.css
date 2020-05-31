@@ -164,7 +164,14 @@ img {
 
 /* nav */
 .navbar {
-    padding: 0 1rem !important
+    padding: 0 1rem !important;
+    min-height: 75px
+}
+
+@media screen and (min-width:991.99px) {
+    .navbar {
+        height: 75px
+    }
 }
 
 .navbar button {
@@ -240,8 +247,10 @@ nav img {
 }
 
 .imgBackgroundArea::before {
-    position: absolute;
     content: '';
+    position: absolute;
+    top:0;
+    left: 0;
     height: 100%;
     width: 100%;
     background-image: url(../img/template/logoFaixa.png);
@@ -260,10 +269,18 @@ nav img {
 }
 
 .homeHeaderAbout.imgBackgroundArea::before {
-    background-image: none !important
+    background-image: none !important;
+    background-color: #333;
+    opacity: .8
+}
+@media screen and (min-width:650px) {
+    .homeHeaderAbout.imgBackgroundArea::before {
+        opacity: .5
+    }
 }
 
 .homeHeaderAbout span {
+    margin-top: -.7rem;
     padding: 1rem;
     width: 100%;
     z-index: 1
@@ -351,21 +368,6 @@ nav img {
     content: '';
     height: 3px;
     background-color: var(--primary)
-}
-
-.homeHeaderAbout::before {
-    content: '';
-    position: absolute;
-    height: 100%;
-    width: 100%;
-    background-color: #333;
-    opacity: .8
-}
-
-@media screen and (min-width:650px) {
-    .homeHeaderAbout::before {
-        opacity: .5
-    }
 }
 
 /* Home Sections */
