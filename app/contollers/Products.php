@@ -95,6 +95,7 @@ class Products extends Controller
         $categories = $this->model->getCategories();
         $user = $this->model->getAllFrom('users', $data->user_id);
         return View::render('products/show.php', [
+            'title' => $data->product_name,
             'product_name' => $data->product_name,
             'data' => $data,
             'user' => $user,

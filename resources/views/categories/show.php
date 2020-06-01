@@ -1,7 +1,7 @@
 <header class="categoryHeader productHeader imgBackgroundArea">
     <h1><?= $data->category_name ?></h1>
     <p><?= $data->category_description ?></p>
-    <small class="smallInfo">Categoria adicionada por <a href="<?= $BASE ?>/users/show/<?= $user->id ?>"><?= $user->name ?></a> em <?= $data->created_at ?></small>
+    <?= ($_SESSION['user_status'] && $_SESSION['user_status'] == 1) ? "<small class='smallInfo'>Categoria adicionada por <a href='$BASE/users/show/$user->id'>$user->name</a> em $data->created_at</small>" : ''; ?>
 </header>
 <?php
 if ($_SESSION['user_status'] && $_SESSION['user_status'] == 1) {
@@ -24,7 +24,6 @@ if ($_SESSION['user_status'] && $_SESSION['user_status'] == 1) {
         </div>
     </section>
 <?php } ?>
-
 
 <article class="products flex-wrap flex-column">
     <aside class="productDropdown">
@@ -53,7 +52,7 @@ if ($_SESSION['user_status'] && $_SESSION['user_status'] == 1) {
                     endforeach;
                     echo "<p class='card-text'>$data->product_description</p><p class='card-text'>Preço: $data->price</p><small class='text-muted'>Categoria: <a href='$BASE/categories/show/$data->id_category'> $categoryName</a></small><br>";
                     ?>
-                    <a href="<?= $BASE ?>/products/show/<?= $data->id ?>">Ver detalhes</a>
+                    <?= ($_SESSION['user_status'] && $_SESSION['user_status'] == 1) ? "<a href='$BASE/products/show/$data->id'>Ver detalhes</a>" : ''; ?>
                 </figcaption>
                 <?php
                 Core\Controller::editDelete($BASE, 'products', $data, 'Quer mesmo deletar esse produto?');

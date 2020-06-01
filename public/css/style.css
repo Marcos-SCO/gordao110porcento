@@ -211,12 +211,13 @@ nav img {
     left: 0;
     bottom: 0;
     background-color: #000;
+    background: #333333b5;
     color: #fff;
     padding: .3rem .5rem;
     z-index: 2
 }
 .editDelete {
-    margin-top: 1.2rem;
+    margin-top: 1.4rem;
     position: relative
 }
 
@@ -569,14 +570,23 @@ nav img {
 .products {
     display: flex;
     justify-content: center;
-    padding: 1rem;
     max-width: 1300px;
+    padding: 1rem 0;
     margin: auto
+}
+@media screen and (min-width: 357px) {
+    .products {
+        padding: 1rem;
+    }
 }
 
 .products img {
     /* height: 100%; */
-    max-height: 225px
+    max-height: 225px;
+    transition: all ease-in-out .5s
+}
+.products img:hover {
+    transform: scale(1.12)
 }
 
 .products figure {
@@ -594,10 +604,6 @@ nav img {
 
 .card-group>.card {
     flex: none !important
-}
-
-.card-body {
-    min-height: 252px !important
 }
 
 /* -------- Products End -------- */

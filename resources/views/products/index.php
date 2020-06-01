@@ -34,15 +34,13 @@
                 <img src="<?= $BASE ?>/public/img/products/category_<?= $data->id_category ?>/id_<?= $data->id ?>/<?= $data->img ?>" alt="<?= $data->img ?>" title="<?= $data->product_name ?>">
                 <figcaption class="card-body">
                     <h5 class="card-title"><?= $data->product_name ?></h5>
-                    <!-- <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-                <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p> -->
                     <?php
                     // Get category name from categories table
                     foreach ($categoryElements as $element) : ($element->id == $data->id_category) ? $categoryName = $element->category_name : '';
                     endforeach;
                     echo "<p class='card-text'>$data->product_description</p><p class='card-text'>Preço: $data->price</p><small class='text-muted'>Categoria: <a href='$BASE/categories/show/$data->id_category'> $categoryName</a></small><br>";
                     ?>
-                    <a href="<?= $BASE ?>/products/show/<?= $data->id ?>">Ver detalhes</a>
+                    <?=($_SESSION['user_status'] && $_SESSION['user_status'] == 1) ? "<a href='$BASE/products/show/$data->id'>Ver detalhes</a>" : '';?>
                 </figcaption>
                 <?php
                 Core\Controller::editDelete($BASE, 'products', $data, 'Quer mesmo deletar esse produto?');

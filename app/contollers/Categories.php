@@ -21,7 +21,7 @@ class Categories extends Controller
     public function index($id = 1, $flash = false)
     {
         $table = 'categories';
-        $results = $this->pagination($table, $id, $limit = 2, '', $orderOption = 'DESC');
+        $results = $this->pagination($table, $id, $limit = 3, '', $orderOption = 'DESC');
         // Category elements from table categories
         $categoryElements = $this->model->customQuery('SELECT id, category_name FROM categories', null, 1);
         View::render('categories/index.php', [
