@@ -1,27 +1,30 @@
 <header class="categoryHeader productHeader imgBackgroundArea">
     <h1><?= $data->category_name ?></h1>
     <p><?= $data->category_description ?></p>
+    <small class="smallInfo">Categoria adicionada por <a href="<?= $BASE ?>/users/show/<?= $user->id ?>"><?= $user->name ?></a> em <?= $data->created_at ?></small>
 </header>
 <?php
 if ($_SESSION['user_status'] && $_SESSION['user_status'] == 1) {
 ?>
-    <small class="bg-light p-2 mb-3">Categoria adicionada por <a href="<?= $BASE ?>/users/show/<?= $user->id ?>"><?= $user->name ?></a> em <?= $data->created_at ?></small>
-    <section class="adm d-flex flex-column align-content-start align-items-center">
-        <?php
-        Core\Controller::editDelete($BASE, 'categories', $data, "Quer deletar a categoria de $data->category_name?");
-        ?>
-        <div class="add d-flex flex-wrap flex-column p-2">
+    <section>
+        <header class="d-flex flex-column headerEdit imgBackgroundArea">
             <?php
-            Core\Controller::createMore($BASE, 'products', 'Adicionar mais produtos');
+            Core\Controller::editDelete($BASE, 'categories', $data, "CUIDADO!, você está prestes a deletar a categoria de $data->category_name. Essa ação será ireversivel, quer mesmo continuar?");
             ?>
-            <?php
-            Core\Controller::createMore($BASE, 'categories', 'Adicionar mais categorias');
-            ?>
+        </header>
+        <div class="adm">
+            <div class="add d-flex flex-wrap p-2 justify-content-center">
+                <?php
+                Core\Controller::createMore($BASE, 'products', 'Adicionar mais produtos');
+                ?>
+                <?php
+                Core\Controller::createMore($BASE, 'categories', 'Adicionar mais categorias');
+                ?>
+            </div>
         </div>
     </section>
 <?php } ?>
 
-<h4>Produtos com a categoria <?= $data->category_name ?></h4>
 
 <article class="products flex-wrap flex-column">
     <aside class="productDropdown">
@@ -41,11 +44,9 @@ if ($_SESSION['user_status'] && $_SESSION['user_status'] == 1) {
     <section class="products flex-wrap card-group">
         <?php foreach ($products as $data) { ?>
             <figure class="card">
-                <img src="<?= $BASE ?>/public/img/products/category_<?=$data->id_category?>/id_<?= $data->id ?>/<?= $data->img ?>" alt="<?= $data->img ?>" title="<?= $data->product_name ?>">
+                <img src="<?= $BASE ?>/public/img/products/category_<?= $data->id_category ?>/id_<?= $data->id ?>/<?= $data->img ?>" alt="<?= $data->img ?>" title="<?= $data->product_name ?>">
                 <figcaption class="card-body">
                     <h5 class="card-title"><?= $data->product_name ?></h5>
-                    <!-- <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-                <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p> -->
                     <?php
                     // Get category name from categories table
                     foreach ($categoryElements as $element) : ($element->id == $data->id_category) ? $categoryName = $element->category_name : '';

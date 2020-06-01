@@ -1,12 +1,19 @@
 <header class="imgBackgroundArea productHeader">
     <h1>Todos nossos Produtos</h1>
 </header>
-<?php
+<?php if ($_SESSION['user_status'] && $_SESSION['user_status'] == 1) { ?>
+    <section class="adm">
+        <div class="add d-flex flex-wrap p-2 justify-content-center">
+            <?php
+            Core\Controller::createMore($BASE, 'products', 'Adicionar mais produtos');
+            ?>
+            <?php
+            Core\Controller::createMore($BASE, 'categories', 'Adicionar mais categorias');
+            ?>
+        </div>
+    </section>
+<?php } ?>
 
-use App\Models\Category;
-
-Core\Controller::createMore($BASE, 'products', 'Adicionar mais produtos');
-?>
 <article class="products flex-wrap">
     <aside class="productDropdown">
         <p>Apresentar por categorias</p>
@@ -24,7 +31,7 @@ Core\Controller::createMore($BASE, 'products', 'Adicionar mais produtos');
     <section class="products flex-wrap card-group">
         <?php foreach ($products as $data) { ?>
             <figure class="card">
-                <img src="<?= $BASE ?>/public/img/products/category_<?=$data->id_category?>/id_<?= $data->id ?>/<?= $data->img ?>" alt="<?= $data->img ?>" title="<?= $data->product_name ?>">
+                <img src="<?= $BASE ?>/public/img/products/category_<?= $data->id_category ?>/id_<?= $data->id ?>/<?= $data->img ?>" alt="<?= $data->img ?>" title="<?= $data->product_name ?>">
                 <figcaption class="card-body">
                     <h5 class="card-title"><?= $data->product_name ?></h5>
                     <!-- <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>

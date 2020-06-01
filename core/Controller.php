@@ -33,7 +33,7 @@ class Controller
     public static function createMore($BASE, $table, $text = 'Quer adicionar mais?')
     {
         if ($_SESSION['user_status'] == 1) {
-            echo "<a href='$BASE/$table/create'>$text</a>";
+            echo "<a class='createBtn btn' href='$BASE/$table/create'>$text</a>";
         }
     }
 
@@ -48,7 +48,7 @@ class Controller
                 $idCategory = '/' . $data->id;
             }
 ?>
-            <div class="editDelete d-flex p-1">
+            <div class="editDelete d-flex p-1 flex-wrap">
                 <a href="<?= "{$BASE}/{$table}/edit/{$data->id}" ?>" class="btn btn-warning m-1">Editar</a>
                 <form action="<?= "{$BASE}/{$table}/$verb/{$data->id}{$idCategory}" ?>" method="post">
                     <button onclick="return confirm('<?= $text ?>')" class="btn btn-danger m-1">Deletar</button>

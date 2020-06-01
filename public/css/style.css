@@ -46,6 +46,11 @@ a:hover {
     text-decoration: none
 }
 
+.btn:hover {
+    color: #ff5b00 !important;
+    background-color: #fff !important
+}
+
 @media screen and (max-width:299.9px) {
 
     html,
@@ -201,18 +206,75 @@ nav img {
 /* end nav */
 
 /* Edit delete start */
+.smallInfo {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    background-color: #000;
+    color: #fff;
+    padding: .3rem .5rem;
+    z-index: 2
+}
 .editDelete {
     margin-top: 1.2rem;
-    position: relative;
+    position: relative
 }
+
+.editDelete a {
+    color: var(--primary) !important
+}
+
 .editDelete::before {
-    content: 'Modificar';
+    content: 'Proceda com cautela!';
     position: absolute;
     position: absolute;
     top: -21px;
     left: 9px
 }
+
+.headerEdit {
+    position: relative;
+    background-image: url(../img/template/stop.jpg);
+    background-position: top right!important
+}
+
+.headerEdit::before {
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: #4b1504;
+    opacity: .5
+}
+.headerEdit.imgBackgroundArea::before {
+    background-image:none
+}
+
+.headerEdit::after {
+    content: 'ATENÇÂO! Caso aperte em deletar, todas os registros desta categoria serão apagados, inclusive as imagens.' !important;
+    position: relative;
+    max-width: 400px
+}
+
 /* Edit delete end */
+
+/* Create btn start */
+.createBtn {
+    background-color: #fff !important;
+    color: var(--primary) !important;
+    border: #ccc 1px solid;
+    margin: .1rem;
+    width: 207px
+}
+
+/* Create btn end */
+
+/* Dropdown toggle start */
+.dropdown-toggle {
+    background-color: #fff !important;
+    color: var(--primary)
+}
+
+/* Dropdown toggle end */
 
 /* Animatins */
 @media screen and (min-width:600px) and (min-height:600px) and (orientation:landscape) {
@@ -263,7 +325,7 @@ nav img {
 .imgBackgroundArea::before {
     content: '';
     position: absolute;
-    top:0;
+    top: 0;
     left: 0;
     height: 100%;
     width: 100%;
@@ -287,6 +349,7 @@ nav img {
     background-color: #333;
     opacity: .8
 }
+
 @media screen and (min-width:650px) {
     .homeHeaderAbout.imgBackgroundArea::before {
         opacity: .5
@@ -545,4 +608,5 @@ nav img {
     align-items: center;
     flex-direction: column
 }
+
 /* -------- Catecories End -------- */
