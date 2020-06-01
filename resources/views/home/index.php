@@ -43,7 +43,7 @@
                             </span>
                             <!--<a href="<?//= $BASE ?>/products/show/<?//= $h->id ?>"> -->
                             <figure class="item">
-                                <img class="mx-auto" src="<?= $BASE ?>/public/img/products/id_<?= $h->id ?>/<?= $h->img ?>" alt="<?= $h->img ?>" title="<?= $h->product_name ?>">
+                                <img class="mx-auto" src="<?= $BASE ?>/public/img/products/category_<?=$h->id_category?>/id_<?= $h->id ?>/<?= $h->img ?>" alt="<?= $h->img ?>" title="<?= $h->product_name ?>">
                                 <figcaption><?= $h->product_name ?></figcaption>
                             </figure>
                             <!-- </a> -->
@@ -71,7 +71,7 @@
                                 <input type="hidden" name="price" value="<?= $data->price ?>">
                             </span>
                             <!-- <a href="<?//= $BASE ?>/products/show/<?//= $data->id ?>"> -->
-                            <figure class="item"><img class="mx-auto" src="<?= $BASE ?>/public/img/products/id_<?= $data->id ?>/<?= $data->img ?>" alt="<?= $data->img ?>" title="<?= $data->product_name ?>">
+                            <figure class="item"><img class="mx-auto" src="<?= $BASE ?>/public/img/products/category_<?=$data->id_category?>/id_<?= $data->id ?>/<?= $data->img ?>" alt="<?= $data->img ?>" title="<?= $data->product_name ?>">
                                 <figcaption><?= $data->product_name ?></figcaption>
                             </figure>
                         </a>
@@ -155,7 +155,7 @@
                     </header>
                     <div class="modal-body">
                     <figure>
-                    <img src="${url}/public/img/products/id_${id}/${img}" alt="${img}" title="${product_name}">
+                    <img src="${url}/public/img/products/category_${id_category}/id_${id}/${img}" alt="${img}" title="${product_name}">
                         <figcaption>
                             <p>Categoria: ${category_name}</p>
                             <p>${product_description = values[4]}</>

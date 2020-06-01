@@ -157,6 +157,31 @@ class Categories extends Controller
         }
     }
 
+    // Delete functoin for controllers
+    public function destroy($id)
+    {
+        $url = explode('/', $_SERVER['QUERY_STRING']);
+        // Get table with url
+        $table = $url[0];
+        $idCategory = $url[3] ?? null;
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            $this->model->deleteQuery('products', ['id_category' => $id]);
+            $this->model->deleteQuery($table, ['id' => $id]);
+            if ($this->model->rowCount() > 0) {
+                $this->deleteFolder('products', $id, $idCategory, true);
+                $this->deleteFolder($table, $id);
+                // Delete everything img with this category
+                $flash = flash('register_seccess', 'Deletado com sucesso');
+                return $this->index(1, $flash);
+            } else {
+                $flash = flash('register_seccess', 'Ocorreu um erro');
+                redirect($table);
+            }
+        } else {
+            redirect($table);
+        }
+    }
+
     public function getPostData()
     {
         // Sanitize data

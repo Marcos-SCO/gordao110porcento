@@ -39,10 +39,18 @@ class Controller
 
     public static function editDelete($BASE, $table, $data, $text = 'Quer Mesmo deletar?')
     {
-        if (($data->user_id == $_SESSION['user_id']) or ($_SESSION['adm_id'] == 1)) { ?>
+        if (($data->user_id == $_SESSION['user_id']) or ($_SESSION['adm_id'] == 1)) {
+            $verb = ($table == 'categories') ? 'destroy' : 'delete';
+            $idCategory = '';
+            if ($table == 'products') {
+                $idCategory = '/' . $data->id_category;
+            } else if ($table == 'categories') {
+                $idCategory = '/' . $data->id;
+            }
+?>
             <div class="editDelete d-flex p-1">
                 <a href="<?= "{$BASE}/{$table}/edit/{$data->id}" ?>" class="btn btn-warning m-1">Editar</a>
-                <form action="<?= "{$BASE}/{$table}/delete/{$data->id}" ?>" method="post">
+                <form action="<?= "{$BASE}/{$table}/$verb/{$data->id}{$idCategory}" ?>" method="post">
                     <button onclick="return confirm('<?= $text ?>')" class="btn btn-danger m-1">Deletar</button>
                 </form>
             </div>
@@ -56,14 +64,15 @@ class Controller
         $url = explode('/', $_SERVER['QUERY_STRING']);
         // Get table with url
         $table = $url[0];
+        $idCategory = $url[3] ?? null;
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $this->model->deleteQuery($table, ['id' => $id]);
             if ($this->model->rowCount() > 0) {
-                $this->deleteFolder($table, $id);
+                $this->deleteFolder($table, $id, $idCategory);
                 $flash = flash('register_seccess', 'Deletado com sucesso');
                 return $this->index(1, $flash);
             } else {
-                $flash = flash('register_seccess', 'Occorreu um erro');
+                $flash = flash('register_seccess', 'Ocorreu um erro');
                 redirect($table);
             }
         } else {
@@ -95,7 +104,7 @@ class Controller
         }
     }
 
-    public function imgCreateHandler($table)
+    public function imgCreateHandler($table, $folderName = null)
     {
         $tableId = $this->model->customQuery("SELECT AUTO_INCREMENT
         FROM information_schema.TABLES
@@ -105,32 +114,65 @@ class Controller
             'table' => $table
         ]);
         $tableId = strval($tableId->AUTO_INCREMENT);
-        return $this->imgFullPath($table, $tableId, $_FILES['img']['name']);
+        return $this->imgFullPath($table, $tableId, $_FILES['img']['name'], $folderName);
     }
 
-    public function deleteFolder($table, $id)
+    public function imgFullPath($table, $id, $imgName, $category_id = null)
     {
-        if (file_exists("../public/img/{$table}/id_$id")) {
-            array_map('unlink', glob("../public/img/{$table}/id_{$id}/*.*"));
-            rmdir("../public/img/{$table}/id_$id");
-        }
-    }
-
-    public function imgFullPath($table, $id, $imgName)
-    {
-        // delete the folder
-        $this->deleteFolder($table, $id);
-        // Create post folder
-        if (!file_exists("../public/img/{$table}/id_$id")) {
-            mkdir("../public/img/{$table}/id_$id");
+        if ($category_id != null) {
+            $this->deleteFolder($table, $id, $category_id);
+            // Create folder
+            if (!file_exists("../public/img/{$table}/category_{$category_id}/id_$id")) {
+                mkdir("../public/img/{$table}/category_{$category_id}/id_$id", 0755, true);
+            }
+            $upload_dir = "img/{$table}/category_$category_id/id_$id/";
+        } else {
+            // delete the folder
+            $this->deleteFolder($table, $id);
+            if (!file_exists("../public/img/{$table}/id_$id")) {
+                mkdir("../public/img/{$table}/id_$id");
+            }
+            $upload_dir = "img/{$table}/id_$id/";
         }
         $picProfile = $imgName;
 
-        $upload_dir = "img/{$table}/id_$id/";
         $imgFullPath = $upload_dir . $picProfile;
 
         return $imgFullPath;
     }
+
+    public function deleteFolder($table, $id, $idCategory = null, $massDel = null)
+    {
+        // Delete all imgs with id category and products
+        if ($idCategory != null && $massDel != null) {
+            if (file_exists("../public/img/{$table}/category_{$idCategory}")) {
+                $dir = "../public/img/{$table}/category_{$idCategory}";
+                function rrmdir($dir)
+                {
+                    foreach (glob($dir . '/*') as $file) {
+                        (is_dir($file)) ? rrmdir($file) : unlink($file);
+                    }
+                    rmdir($dir);
+                }
+                rrmdir($dir);
+            }
+        } else if ($idCategory != null) {
+            // Delete imgs products
+            if (file_exists("../public/img/{$table}/category_{$idCategory}/id_{$id}")) {
+                array_map('unlink', glob("../public/img/{$table}/category_{$idCategory}/id_{$id}/*.*"));
+                rmdir("../public/img/{$table}/category_{$idCategory}/id_{$id}");
+            }
+        } else {
+            // Delete imgs with id named folder
+            if (file_exists("../public/img/{$table}/id_$id")) {
+                array_map('unlink', glob("../public/img/{$table}/id_{$id}/*.*"));
+                rmdir("../public/img/{$table}/id_$id");
+            }
+        }
+    }
+
+
+
     /* Img methods End  */
 
     /* Pagination start */

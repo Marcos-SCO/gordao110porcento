@@ -21,6 +21,17 @@ class Product extends \Core\Model
         $result = $this->customQuery("SELECT id, category_name FROM categories ORDER BY id DESC", null, 1);
         return $result;
     }
+    
+    public function getProduct($id, $idCategory) 
+    {
+        $result = $this->customQuery("SELECT id, id_category FROM products WHERE id = :id AND id_category = :id_category", ['id' => $id, 'id_category' => $idCategory]);
+        return $result;
+    }
+    public function getProductId($id) 
+    {
+        $result = $this->customQuery("SELECT id, id_category FROM products WHERE id = :id", ['id' => $id]);
+        return $result;
+    }
 
 
     public function getImg($id)

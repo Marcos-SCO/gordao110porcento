@@ -68,7 +68,9 @@ class Products extends Controller
 
             // Validate data
             if ($error['error'] != true) {
-                $fullPath = $this->imgCreateHandler('products');
+                // Create a folder in products
+                $fullPath = $this->imgCreateHandler('products', $data['id_category']);
+
                 $this->moveUpload($fullPath);
 
                 if ($this->model->addproduct($data)) {
@@ -124,17 +126,44 @@ class Products extends Controller
             $data = $this->getPostData();
             $error = $data[1];
             $id = $data[0]['id'];
+            $postIdCategory = $data[0]['id_category'];
             $img = $data[0]['img'];
             $postImg = $data[0]['post_img'];
 
             if ($error['error'] != true) {
-                if ($img !== "") {
-                    $fullPath = $this->imgFullPath('products', $id, $img);
+                $result = $this->model->getProduct($id, $postIdCategory);
+                $resultId = $this->model->getProductId($id);
+
+                if ($result) {
+                    if ($img !== "") {
+                        $fullPath = $this->imgFullPath('products', $id, $img, $postIdCategory);
+                        $this->moveUpload($fullPath);
+                        $data['img'] = explode('/', $fullPath);
+                    } else {
+                        $data[0]['img'] = $postImg;
+                    }
+                } else {
+                    // if ($img !== "") {
+                    $fullPath = $this->imgFullPath('products', $id, $img, $postIdCategory);
                     $this->moveUpload($fullPath);
                     $data['img'] = explode('/', $fullPath);
-                } else {
-                    $data[0]['img'] = $postImg;
+                    // }
+
+                    dump($img);
+                    $img = ($img !== '') ? $data['img'][4] : $postImg;
+                    //dump($data['img']);
+
+                    // Copy from the older to new one
+                    if (file_exists("../public/img/products/category_{$resultId->id_category}/id_$id/$img")) {
+                        copy("../public/img/products/category_{$resultId->id_category}/id_$id/$img", "../public/img/products/category_{$postIdCategory}/id_$id/$img");
+                    }
+
+                    // Delete the image in the current folder
+                    $this->deleteFolder('products', $id, $resultId->id_category);
+
+                    $data[0]['img'] = $img;
                 }
+                
                 $this->model->updateproduct($data[0]);
                 $flash = flash('post_message', 'Produto foi atualizado com sucesso!');
 
@@ -150,7 +179,7 @@ class Products extends Controller
         // Sanitize data
         $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
         $id = isset($_POST['id']) ? trim($_POST['id']) : '';
-        $idCategory = isset($_POST['id_category']) ? trim($_POST['id_category']) : 1;
+        $postIdCategory = isset($_POST['id_category']) ? trim($_POST['id_category']) : 1;
         $productName = isset($_POST['product_name']) ? (trim($_POST['product_name'])) : '';
         $productDescription = isset($_POST['product_description']) ? trim($_POST['product_description']) : '';
         $price = isset($_POST['price']) ? trim(preg_replace("/[^0-9,.]+/i", "", $_POST["price"])) : '';
@@ -158,7 +187,7 @@ class Products extends Controller
         $img = isset($_FILES['img']) ? $_FILES['img'] : null;
         $postImg = isset($_POST['img']) ? $_POST['img'] : '';
         $userId = isset($_SESSION['user_id']) ? $_SESSION['user_id'] : '';
-        $idCategoryError = isset($_POST['id_category_error']) ? trim($_POST['id_category_error']) : '';
+        $postIdCategoryError = isset($_POST['id_category_error']) ? trim($_POST['id_category_error']) : '';
         $productNameError = isset($_POST['product_name_error']) ? trim($_POST['product_name_error']) : '';
         $productDescriptionError = isset($_POST['product_description_error']) ? trim($_POST['product_description_error']) : '';
         $priceError = isset($_POST['price_error']) ? trim($_POST['price_error']) : '';
@@ -167,7 +196,7 @@ class Products extends Controller
         // Add data to array
         $data = [
             'id' => $id,
-            'id_category' => $idCategory,
+            'id_category' => $postIdCategory,
             'product_name' => $productName,
             'product_description' => $productDescription,
             'price' => $price,
@@ -177,7 +206,7 @@ class Products extends Controller
         ];
 
         $error = [
-            'id_category_error' => $idCategoryError,
+            'id_category_error' => $postIdCategoryError,
             'product_name_error' => $productNameError,
             'product_description_error' => $productDescriptionError,
             'price_error' => $priceError,

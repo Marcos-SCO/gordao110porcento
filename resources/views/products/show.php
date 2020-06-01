@@ -9,7 +9,7 @@ Core\Controller::createMore($BASE, 'products', 'Adicionar mais produtos');
         <?php } ?>
     </small>
     <figure>
-        <img src="<?= $BASE ?>/public/img/products/id_<?= $data->id ?>/<?= $data->img ?>" alt="<?= $data->img ?>" title="<?= $data->product_name ?>">
+        <img src="<?= $BASE ?>/public/img/products/category_<?=$data->id_category?>/id_<?= $data->id ?>/<?= $data->img ?>" alt="<?= $data->img ?>" title="<?= $data->product_name ?>">
         <figcaption>
             <p><?= $data->product_description ?></p>
         </figcaption>

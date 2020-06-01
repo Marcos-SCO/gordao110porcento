@@ -5,10 +5,8 @@
 <?php
 if ($_SESSION['user_status'] && $_SESSION['user_status'] == 1) {
 ?>
-    <section class="adm d-flex flex-column align-content-start">
-        <small class="bg-light p-2 mb-3">
-            Categoria adicionada por <a href="<?= $BASE ?>/users/show/<?= $user->id ?>"><?= $user->name ?></a> em <?= $data->created_at ?>
-        </small>
+    <small class="bg-light p-2 mb-3">Categoria adicionada por <a href="<?= $BASE ?>/users/show/<?= $user->id ?>"><?= $user->name ?></a> em <?= $data->created_at ?></small>
+    <section class="adm d-flex flex-column align-content-start align-items-center">
         <?php
         Core\Controller::editDelete($BASE, 'categories', $data, "Quer deletar a categoria de $data->category_name?");
         ?>
@@ -24,20 +22,6 @@ if ($_SESSION['user_status'] && $_SESSION['user_status'] == 1) {
 <?php } ?>
 
 <h4>Produtos com a categoria <?= $data->category_name ?></h4>
-<!-- <?php //foreach ($products as $data) { 
-        ?>
-    <figure>
-        <a href="<?//= $BASE ?>/products/show/<?//= $data->id ?>">
-            <img src="<?//= $BASE ?>/public/img/products/id_<?//= $data->id ?>/<?//= $data->img ?>" alt="<?//= $data->img ?>" title="<?//= $data->product_name ?>">
-        </a>
-        <figcaption>
-            <h3><?//= $data->product_name ?></h3>
-            <h5>Preço <?//= $data->price ?></h5>
-            <p><?//= $data->product_description ?></p>
-        </figcaption>
-    </figure>
-<?php //} 
-?> -->
 
 <article class="products flex-wrap flex-column">
     <aside class="productDropdown">
@@ -57,7 +41,7 @@ if ($_SESSION['user_status'] && $_SESSION['user_status'] == 1) {
     <section class="products flex-wrap card-group">
         <?php foreach ($products as $data) { ?>
             <figure class="card">
-                <img src="<?= $BASE ?>/public/img/products/id_<?= $data->id ?>/<?= $data->img ?>" alt="<?= $data->img ?>" title="<?= $data->product_name ?>">
+                <img src="<?= $BASE ?>/public/img/products/category_<?=$data->id_category?>/id_<?= $data->id ?>/<?= $data->img ?>" alt="<?= $data->img ?>" title="<?= $data->product_name ?>">
                 <figcaption class="card-body">
                     <h5 class="card-title"><?= $data->product_name ?></h5>
                     <!-- <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
