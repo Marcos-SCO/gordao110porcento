@@ -205,6 +205,20 @@ nav img {
 
 /* end nav */
 
+/* Pagination */
+.page-link {
+    color: var(--primary)!important
+}
+.page-link:focus {
+    box-shadow: 0 0 0 0.2rem rgba(255, 87, 34, 0.44)!important;
+}
+.page-item.active .page-link {
+    color: #fff!important;
+    background-color: var(--primary)!important;
+    border-color: var(--primary)!important
+}
+/* End Pagination */
+
 /* Edit delete start */
 .smallInfo {
     position: absolute;
