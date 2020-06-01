@@ -143,15 +143,13 @@ class Products extends Controller
                         $data[0]['img'] = $postImg;
                     }
                 } else {
-                    // if ($img !== "") {
+                    // Create a new path
                     $fullPath = $this->imgFullPath('products', $id, $img, $postIdCategory);
                     $this->moveUpload($fullPath);
                     $data['img'] = explode('/', $fullPath);
-                    // }
 
-                    dump($img);
+                    // Get img data
                     $img = ($img !== '') ? $data['img'][4] : $postImg;
-                    //dump($data['img']);
 
                     // Copy from the older to new one
                     if (file_exists("../public/img/products/category_{$resultId->id_category}/id_$id/$img")) {
