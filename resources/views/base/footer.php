@@ -1,52 +1,63 @@
 </main>
 <?php if (isset($totalPages) && ($totalPages) > 1) { ?>
     <!-- Pagination -->
-    <ul>
-        <?php if (isset($method) && $method == 'show') { ?>
-            <?php if ($page != 1) { ?>
-                <li><a href="<?= $BASE ?>/<?= $table ?>/<?= $method ?>/<?= $pageId ?>/1">Inicio</a></li>
-                <li><a href="<?= $BASE ?>/<?= $table ?>/<?= $method ?>/<?= $pageId ?>/<?= $prev ?>">Anterior</a></li>
-            <?php }
+    <nav class="d-flex justify-content-center flex-wrap p-2">
+        <ul class="pagination">
+            <?php if (isset($method) && $method == 'show') {
+                $disabled = ($page != 1) ? '' : 'disabled';
 
-            if ($page != $totalPages) {
-                $elements = 0;
-                for ($i = $page; $i <= $totalPages; $i++) {
-                    $elements += 1;
-                    if ($elements < 5) {
-                        echo "<li><a href='$BASE/$table/$method/$pageId/$i'>$i</a></li>";
+                echo "<li class='page-item $disabled'><span class='page-link'><a href='$BASE/$table/$method/$pageId/1'><<</a></span></li>";
+
+                echo "<li class='page-item $disabled'><span class='page-link'><a href='$BASE/$table/$method/$pageId/$prev'><</a></span></li>";
+
+                if ($page <= $totalPages) {
+                    $elements = 0;
+                    for ($i = $page; $i <= $totalPages; $i++) {
+                        $elements += 1;
+                        if ($elements <= 5) {
+                            $active = ($page == $i) ? 'active' : '';
+                            echo "<li class='page-item $active'><a href=' $BASE/$table/$method/$pageId/$i'><span class='page-link'>$i</span></a></li>";
+                        }
                     }
                 }
-            }
-
-            if ($page != $totalPages) { ?>
-                <li><a href="<?= $BASE ?>/<?= $table ?>/<?= $method ?>/<?= $pageId ?>/<?= $next ?>">Próxima</a></li>
-                <li><a href="<?= $BASE ?>/<?= $table ?>/<?= $method ?>/<?= $pageId ?>/<?= $totalPages ?>">Final</a></li>
-            <?php } ?>
-        <?php } ?>
-
-        <?php if (!isset($method) && isset($pageId)) { ?>
-            <?php if ($pageId != 1) { ?>
-                <li><a href="<?= $BASE ?>/<?= $table ?>/index/1">Inicio</a></li>
-                <li><a href="<?= $BASE ?>/<?= $table ?>/index/<?= $prev ?>">Anterior</a></li>
-            <?php } ?>
-
-            <?php if ($pageId != $totalPages) {
-                $elements = 0;
-                for ($i = $pageId; $i <= $totalPages; $i++) {
-                    $elements += 1;
-                    if ($elements < 5) {
-                        echo "<li><a href='$BASE/$table/index/$i'>$i</a></li>";
-                    }
-                }
-            }
+                $totalDisable = ($page != $totalPages) ? '' : 'disabled';
             ?>
-
-            <?php if ($pageId != $totalPages) { ?>
-                <li><a href="<?= $BASE ?>/<?= $table ?>/index/<?= $next ?>">Próxima</a></li>
-                <li><a href="<?= $BASE ?>/<?= $table ?>/index/<?= $totalPages ?>">Final</a></li>
+                <li class="page-item <?= $totalDisable ?>">
+                    <a class="page-link" href="<?= $BASE ?>/<?= $table ?>/<?= $method ?>/<?= $pageId ?>/<?= $next ?>">></a>
+                </li>
+                <li class="page-item <?= $totalDisable ?>">
+                    <span class="page-link"><a href="<?= $BASE ?>/<?= $table ?>/<?= $method ?>/<?= $pageId ?>/<?= $totalPages ?>">Última</a></span>
+                </li>
             <?php } ?>
-        <?php } ?>
-    </ul>
+
+            <?php if (!isset($method) && isset($pageId)) {
+                $disabled = ($pageId != 1) ? '' : 'disabled';
+
+                echo "<li class='page-item $disabled'><span class='page-link'><a href='$BASE/$table/index/1'>Primeira</a></span></li>";
+
+                echo "<li class='page-item $disabled'><span class='page-link'><a href='$BASE/$table/index/$prev'><</a></span></li>";
+
+                if ($pageId <= $totalPages) {
+                    $elements = 0;
+                    for ($i = $pageId; $i <= $totalPages; $i++) {
+                        $elements += 1;
+                        if ($elements < 5) {
+                            $active = ($pageId == $i) ? 'active' : '';
+                            echo "<li class='page-item $active'><a href='$BASE/$table/index/$i'><span class='page-link'>$i</span></a></li></a></li>";
+                        }
+                    }
+                }
+                $totalDisable = ($pageId != $totalPages) ? '' : 'disabled';
+            ?>
+                <li class="page-item <?= $totalDisable ?>">
+                    <a class="page-link" href="<?= $BASE ?>/<?= $table ?>/index/<?= $next ?>">></a>
+                </li>
+                <li class="page-item <?= $totalDisable ?>">
+                    <span class="page-link"><a href="<?= $BASE ?>/<?= $table ?>/index/<?= $totalPages ?>">Última</a></span>
+                </li>
+            <?php } ?>
+        </ul>
+    </nav>
 <?php } ?>
 
 <!-- Footer -->
