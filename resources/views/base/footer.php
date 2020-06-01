@@ -6,7 +6,7 @@
             <?php if (isset($method) && $method == 'show') {
                 $disabled = ($page != 1) ? '' : 'disabled';
 
-                echo "<li class='page-item $disabled'><span class='page-link'><a href='$BASE/$table/$method/$pageId/1'><<</a></span></li>";
+                echo "<li class='page-item $disabled'><span class='page-link'><a href='$BASE/$table/$method/$pageId/1'>Primeira</a></span></li>";
 
                 echo "<li class='page-item $disabled'><span class='page-link'><a href='$BASE/$table/$method/$pageId/$prev'><</a></span></li>";
 
