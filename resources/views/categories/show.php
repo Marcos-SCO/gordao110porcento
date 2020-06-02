@@ -1,7 +1,7 @@
 <header class="categoryHeader productHeader imgBackgroundArea">
     <h1><?= $data->category_name ?></h1>
     <p><?= $data->category_description ?></p>
-    <?= ($_SESSION['user_status'] && $_SESSION['user_status'] == 1) ? "<small class='smallInfo'>Categoria adicionada por <a href='$BASE/users/show/$user->id'>$user->name</a> em $data->created_at</small>" : ''; ?>
+    <?= ($_SESSION['user_status'] && $_SESSION['user_status'] == 1) ? "<small class='smallInfo'>Categoria adicionada por <a href='$BASE/users/show/$user->id'>$user->name</a> em ". dateFormat($data->created_at)."</small>" : ''; ?>
 </header>
 <?php
 if ($_SESSION['user_status'] && $_SESSION['user_status'] == 1) {

@@ -14,7 +14,7 @@
                         <figcaption class="blogBody card-body">
                             <h5 class="blogTitle card-title"><?= $data->title ?></h5>
                             <span class="blogSpan card-text"><?= $data->body ?></span>
-                            <small class="updated card-text">Atualizado em <?php $date=date_create($data->updated_at); echo date_format($date,"d/m/Y \\a\s H:i:s");?></small>
+                            <small class="updated card-text">Atualizado em <?= dateFormat($data->updated_at) ?></small>
                         </figcaption>
                     </a>
                     <?php
