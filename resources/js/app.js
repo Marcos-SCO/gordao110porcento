@@ -16,15 +16,19 @@ let activeYears = document.getElementById('activeYears');
 let years = currentYear - 1997;
 (activeYears != null) ? activeYears.innerText = years : '';
 // on load spinner
-document.onreadystatechange = function () {
-    if (document.readyState !== "complete") {
-        document.querySelector("body").style.visibility = "hidden";
-        document.querySelector("#loader").style.visibility = "visible";
-    } else {
-        setTimeout(() => {
-            document.querySelector("#loader").style.display = "none";
-            document.querySelector("body").style.visibility = "visible";
-        }, 100);
+let spinnerUlr = window.location.href.split('/');
+if (spinnerUlr[5] !== '' && spinnerUlr[5] !== 'home') {
+    // console.log(split);
+    document.onreadystatechange = function () {
+        if (document.readyState !== "complete") {
+            document.querySelector("body").style.visibility = "hidden";
+            document.querySelector("#loader").style.visibility = "visible";
+        } else {
+            setTimeout(() => {
+                document.querySelector("#loader").style.display = "none";
+                document.querySelector("body").style.visibility = "visible";
+            }, 100);
+        }
     }
 };
 
