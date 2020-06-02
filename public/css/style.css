@@ -211,16 +211,19 @@ nav img {
 
 /* Pagination */
 .page-link {
-    color: var(--primary)!important
+    color: var(--primary) !important
 }
+
 .page-link:focus {
-    box-shadow: 0 0 0 0.2rem rgba(255, 87, 34, 0.44)!important;
+    box-shadow: 0 0 0 0.2rem rgba(255, 87, 34, 0.44) !important;
 }
+
 .page-item.active .page-link {
-    color: #fff!important;
-    background-color: var(--primary)!important;
-    border-color: var(--primary)!important
+    color: #fff !important;
+    background-color: var(--primary) !important;
+    border-color: var(--primary) !important
 }
+
 /* End Pagination */
 
 /* Edit delete start */
@@ -234,6 +237,7 @@ nav img {
     padding: .3rem .5rem;
     z-index: 2
 }
+
 .editDelete {
     margin-top: 1.4rem;
     position: relative
@@ -254,7 +258,7 @@ nav img {
 .headerEdit {
     position: relative;
     background-image: url(../img/template/stop.jpg);
-    background-position: top right!important
+    background-position: top right !important
 }
 
 .headerEdit::before {
@@ -264,8 +268,9 @@ nav img {
     background-color: #4b1504;
     opacity: .5
 }
+
 .headerEdit.imgBackgroundArea::before {
-    background-image:none
+    background-image: none
 }
 
 .headerEdit::after {
@@ -592,6 +597,7 @@ nav img {
     padding: 1rem 0;
     margin: auto
 }
+
 @media screen and (min-width: 357px) {
     .products {
         padding: 1rem;
@@ -603,6 +609,7 @@ nav img {
     max-height: 225px;
     transition: all ease-in-out .5s
 }
+
 .products img:hover {
     transform: scale(1.12)
 }
@@ -634,3 +641,72 @@ nav img {
 }
 
 /* -------- Catecories End -------- */
+
+/* Blog */
+.blog {
+    max-width: 1300px;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin: auto
+}
+
+.blogFig img {
+    /* height: 100%; */
+    height: 225px;
+    max-height: 225px;
+    overflow: hidden;
+    transition: all ease-in-out .5s
+}
+.blogFig .imgMax {
+    position: relative;
+    height: 225px;
+    max-height: 225px;
+    overflow: hidden
+}
+.imgMax::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1;
+    height: 100%;
+    width: 100%;
+    background-color:#333;
+    opacity: .01;
+    transition: all ease-in-out .2s;
+}
+.blogFig:hover .imgMax::before {
+    opacity: .14!important;
+}
+
+.blogFig:hover img {
+    transform: scale(1.12)
+}
+
+.blogFig {
+    max-width: 300px;
+    overflow: hidden
+}
+
+.blogTitle {
+    white-space: nowrap;
+    max-width: 259px;
+    text-overflow: ellipsis;
+    overflow: hidden
+}
+
+.blog .blogBody {
+    color: #333 !important
+}
+
+.blog .blogSpan {
+    align-self: flex-end;
+    display: block;
+    overflow: hidden;
+    height: 150px
+}
+.blog .updated {
+    margin-top: 1rem
+}
+/* Blog end */

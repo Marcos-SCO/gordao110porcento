@@ -49,7 +49,8 @@ class Post extends \Core\Model
         $this->updateQuery('posts', [
             'title' => $data['title'],
             'body' => $data['body'],
-            'img' => $data['img']
+            'img' => $data['img'],
+            'updated_at' => date("Y-m-d H:i:s")
         ], ['id', $data['id']]);
 
         // Execute

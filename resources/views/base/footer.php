@@ -1,7 +1,7 @@
 </main>
 <?php if (isset($totalPages) && ($totalPages) > 1) { ?>
     <!-- Pagination -->
-    <nav class="d-flex justify-content-center flex-wrap p-2">
+    <nav class="d-flex justify-content-center flex-wrap p-2 mt-4">
         <ul class="pagination">
             <?php if (isset($method) && $method == 'show') {
                 $disabled = ($page != 1) ? '' : 'disabled';
