@@ -43,7 +43,7 @@
                             </span>
                             <!--<a href="<?//= $BASE ?>/products/show/<?//= $h->id ?>"> -->
                             <figure class="item">
-                                <img class="mx-auto" src="<?= $BASE ?>/public/img/products/category_<?=$h->id_category?>/id_<?= $h->id ?>/<?= $h->img ?>" alt="<?= $h->img ?>" title="<?= $h->product_name ?>">
+                                <img class="mx-auto" src="<?= $BASE ?>/public/img/products/category_<?= $h->id_category ?>/id_<?= $h->id ?>/<?= $h->img ?>" alt="<?= $h->img ?>" title="<?= $h->product_name ?>">
                                 <figcaption><?= $h->product_name ?></figcaption>
                             </figure>
                             <!-- </a> -->
@@ -71,7 +71,7 @@
                                 <input type="hidden" name="price" value="<?= $data->price ?>">
                             </span>
                             <!-- <a href="<?//= $BASE ?>/products/show/<?//= $data->id ?>"> -->
-                            <figure class="item"><img class="mx-auto" src="<?= $BASE ?>/public/img/products/category_<?=$data->id_category?>/id_<?= $data->id ?>/<?= $data->img ?>" alt="<?= $data->img ?>" title="<?= $data->product_name ?>">
+                            <figure class="item"><img class="mx-auto" src="<?= $BASE ?>/public/img/products/category_<?= $data->id_category ?>/id_<?= $data->id ?>/<?= $data->img ?>" alt="<?= $data->img ?>" title="<?= $data->product_name ?>">
                                 <figcaption><?= $data->product_name ?></figcaption>
                             </figure>
                         </a>
@@ -99,8 +99,10 @@
         <section class="homeBlogSection bg-light">
             <header class="imgBackgroundArea homeBlog d-flex flex-wrap justify-content-center align-items-center flex-column">
                 <span style="z-index: 9999999;">
-                    <h2 class="text-left">Conheça nosso blog</h2>
-                    <h3 class="text-left"><a href="<?=$BASE?>/posts" style="color:#fff!important">ùltimas noticias</a></h3>
+                    <a href="<?= $BASE ?>/posts" style="color:#fff!important">
+                        <h2 class="text-left">Conheça nosso blog</h2>
+                        <h3 class="text-left">ùltimas noticias</h3>
+                    </a>
                 </span>
             </header>
             <div class="owl-carousel owl-theme">

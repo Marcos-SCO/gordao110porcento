@@ -214,7 +214,7 @@ nav img {
 }
 
 .page-link:focus {
-    box-shadow: 0 0 0 0.2rem rgba(255, 87, 34, 0.44) !important;
+    box-shadow: 0 0 0 0.2rem rgba(255, 87, 34, 0.44) !important
 }
 
 .page-item.active .page-link {
