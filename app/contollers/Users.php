@@ -109,7 +109,9 @@ class Users extends Controller
         $results = $this->pagination($table, $page, $limit = 4, ['user_id', $user->id], $orderOption = 'DESC');
 
         // Display results
+        $pageInfo = ($page > 1) ? " | Página $page" : '';
         return View::render('users/show.php', [
+            'title' => 'Funcionário '. $user->name . $pageInfo,
             'pageId' => $id,
             'user' => $user,
             'flash' => $flash,

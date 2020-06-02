@@ -25,7 +25,7 @@ class Categories extends Controller
         // Category elements from table categories
         $categoryElements = $this->model->customQuery('SELECT id, category_name FROM categories', null, 1);
         View::render('categories/index.php', [
-            'title' => 'Galeria de imagens',
+            'title' => 'Todas Categorias',
             'categoryElements' => $categoryElements,
             'categories' => $results[4],
             'flash' => $flash,
@@ -96,6 +96,7 @@ class Categories extends Controller
         $categoryElements = $this->model->customQuery('SELECT id, category_name FROM categories', null, 1);
         // Display results
         return View::render('categories/show.php', [
+            'title' => $data->category_name.' | Página '. $page,
             'category_description' => $data->category_description,
             'categoryElements' => $categoryElements,
             'pageId' => $id,

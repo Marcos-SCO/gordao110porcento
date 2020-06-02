@@ -24,6 +24,10 @@
     background: #ec8044
 }
 
+.lightText {
+    color: #d95f1b
+}
+
 .btn:focus {
     color: #d95f1b;
     box-shadow: 0 0 0 0.2rem #eaa782

@@ -140,7 +140,7 @@
         product_description = values[4];
         img = values[5];
         price = values[6];
-        console.log(id, product_name, category_name, product_description, img, price);
+        // console.log(id, product_name, category_name, product_description, img, price);
         let itemModal = document.getElementById('itemModal');
         // console.log(itemModal[1]);
         let url = window.location.href;
@@ -157,15 +157,14 @@
                     <figure>
                     <img src="${url}/public/img/products/category_${id_category}/id_${id}/${img}" alt="${img}" title="${product_name}">
                         <figcaption>
-                            <p>Categoria: ${category_name}</p>
+                            <p>Categoria: <a href='${url}/categories/show/${id_category}'>${category_name}</a></p>
                             <p>${product_description = values[4]}</>
-                            <p>Valor: R$ ${price}</p>
+                            <p>Valor: <a href='${url}/categories/show/${id_category}'>R$ ${price}</a></p>
                         </figcaption>
                     </figure>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
-                        <!-- <button type="button" class="btn btn-primary">Save changes</button> -->
+                        <button type="button" class="btn" style="background:#fff;color:#676767;border:1px solid #ccc" data-dismiss="modal">Fechar</button>
                     </div>
                 </div>
             </div>`;

@@ -36,9 +36,7 @@
 </head>
 
 <body>
-    <!-- Spinner -->
-    <div id="loader" class="center"></div>
-
+    <!-- <?//= ($getQuery[0] == '' || $getQuery[0] == 'home') ? "<script> document.addEventListener('scroll', () => { (window.pageYOffset >= 300) ? window.addEventListener('scroll', document.getElementById('NavHeader').classList.add('fixed-top')) : window.addEventListener('scroll', document.getElementById('NavHeader').classList.remove('fixed-top')); })</script>" : '' ?> -->
     <header class="<?= ($getQuery[0] == '' || $getQuery[0] == 'home') ? 'fixed-top' : '' ?> z-index bg-light">
         <!-- Nav -->
         <nav class="navbar navbar-expand-lg navbar-light bg-light" style="background-color:#f8f9fa;">
@@ -50,17 +48,24 @@
             </button>
 
             <div class="collapse navbar-collapse justify-content-between" id="navbarToggle" style="padding-right: 4.4rem;">
+                <?php
+                function activePage($getQuery, $op)
+                {
+                    $active = ($getQuery[0] == $op) ? 'active' : '';
+                    return $active;
+                }
+                ?>
                 <ul class="navbar-nav">
-                    <li class="nav-item active">
+                    <li class="nav-item <?= activePage($getQuery, '') ?>">
                         <a class="nav-link" href="<?= $BASE ?>">Home<span class="sr-only">(current)</span></a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="<?= $BASE ?>/">Produtos</a>
+                    <li class="nav-item <?= activePage($getQuery, 'products') ?>">
+                        <a class="nav-link" href="<?= $BASE ?>/products">Produtos</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="<?= $BASE ?>/posts">Postagens</a>
+                    <li class="nav-item <?= activePage($getQuery, 'posts') ?>">
+                        <a class="nav-link" href="<?= $BASE ?>/posts">Blog</a>
                     </li>
-                    <li class="nav-item">
+                    <li class="nav-item <?= activePage($getQuery, 'gallery') ?>">
                         <a class="nav-link" href="<?= $BASE ?>/gallery">Galeria</a>
                     </li>
                 </ul>
@@ -69,7 +74,7 @@
 
                 <ul class="navbar-nav">
                     <li class="nav-item"><a class="nav-link" href="<?= $BASE ?>">Sobre</a></li>
-                    <li class="nav-item dropdown">
+                    <li class="nav-item dropdown <?= activePage($getQuery, 'contact') ?>">
                         <a class="nav-link dropdown-toggle" style="background:#f8f9fa!important" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Contato</a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                             <a class="dropdown-item" href="<?= $BASE ?>/contact/message">Enviar Messagem</a>
@@ -77,7 +82,7 @@
                         </div>
                     </li>
                     <?php if (isset($_SESSION['user_name']) && isset($_SESSION['user_id'])) { ?>
-                        <li class="nav-item dropdown">
+                        <li class="nav-item dropdown <?= activePage($getQuery, 'users') ?>">
                             <a class="nav-link dropdown-toggle" style="background:#f8f9fa!important" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><?= $_SESSION['user_name'] ?? "" ?></a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                                 <a class="dropdown-item" href="<?= $BASE ?>/users/edit/<?= $_SESSION['user_id'] ?>">Meu perfil</a>
@@ -112,3 +117,5 @@
     echo (isset($flash) && $flash != false && $flash != null) ? "<div class='" . $flash['class'] . "' id='msg-flash' style='transition: transform .18s, opacity .18s, visibility 0s .18s;position:absolute;width: 100%;text-align: center;z-index:999999999;'>" . $flash['message'] . "</div><script> /*flash message*/ let flash = document.querySelector('#msg-flash'); if (flash != null) {setTimeout(() => { flash.style = 'display:none;transition: transform .18s, opacity .18s, visibility 0s .18s;'; }, 4000); }</script>" : ''
     ?>
     <main>
+        <!-- Spinner -->
+        <div id="loader" class="center"></div>
