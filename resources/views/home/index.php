@@ -3,7 +3,7 @@
         <section class="homeAbout">
             <header class="homeHeaderAbout imgBackgroundArea d-flex flex-wrap justify-content-center flex-row">
                 <span>
-                    <img src="<?= $BASE ?>/public/img/template/gordao110_logo_300px.png" alt="gordao110_logo.png" title="Gordão 110% logo">
+                    <img src="<?= $BASE ?>/public/img/template/gordao110_logo_300px.png" class="img-prevent-drag" alt="gordao110_logo.png" title="Gordão 110% logo">
                     <h3 class="text-left">Sobre nós</h3>
                 </span>
             </header>
@@ -98,9 +98,9 @@
         </div>
         <section class="homeBlogSection bg-light">
             <header class="imgBackgroundArea homeBlog d-flex flex-wrap justify-content-center align-items-center flex-column">
-                <span>
+                <span style="z-index: 9999999;">
                     <h2 class="text-left">Conheça nosso blog</h2>
-                    <h3 class="text-left">ùltimas noticias</h3>
+                    <h3 class="text-left"><a href="<?=$BASE?>/posts" style="color:#fff!important">ùltimas noticias</a></h3>
                 </span>
             </header>
             <div class="owl-carousel owl-theme">

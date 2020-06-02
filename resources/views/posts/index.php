@@ -1,5 +1,10 @@
+<header class="imgBackgroundArea homeBlog d-flex flex-wrap justify-content-center align-items-center flex-column mb-3">
+    <span>
+        <h1 class="text-left">Blog</h1>
+        <h2 class="text-left">ùltimas noticias</h2>
+    </span>
+</header>
 <article>
-    <header>Últimas postagens</header>
     <?php
     Core\Controller::createMore($BASE, 'posts', 'Adicionar mais postagens');
     ?>

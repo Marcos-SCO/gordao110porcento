@@ -136,17 +136,16 @@ img {
 /* end Spinner */
 
 .img-objFitCover {
-    /* substitution of object-fit */
-    /* object-fit: cover; */
+    /* transform: translate(50%, 0);
+    object-fit: cover; */
+    /* min-width: 100%; */
+    /* min-height: 100%; */
     width: auto;
     height: auto;
-    min-width: 100%;
-    min-height: 100%;
-    position: absolute;
-    right: 50%;
+    position: relative;
+    right: 20%;
     -webkit-transform: translate(50%, 0);
     -ms-transform: translate(50%, 0);
-    transform: translate(50%, 0)
 }
 
 .img-prevent-drag {
@@ -642,7 +641,80 @@ nav img {
 
 /* -------- Catecories End -------- */
 
-/* Blog */
+/* -------- User Start  -------- */
+.userShow {
+    background-image: url(../img/template/restaurante_imagem_interna.png)
+}
+
+.user {
+    position: relative;
+    margin: 0 auto 2rem !important
+}
+
+.user header {
+    display: flex;
+}
+
+.user header::before {
+    content: '';
+    border-left: 8px solid var(--primary);
+    background: var(--primary);
+}
+
+.user figure {
+    margin: auto !important;
+    max-width: 800px
+}
+
+.user img {
+    margin-top: 1rem !important;
+    box-shadow: 15px 15px 0px #d65106;
+    max-width: 250px;
+    overflow: hidden
+}
+
+@media screen and (min-width:712px) {
+    .user img {
+        width: auto;
+        height: auto;
+        position: relative;
+        right: 20%;
+        -webkit-transform: translate(50%, 0);
+        -ms-transform: translate(50%, 0);
+    }
+    .user figcaption {
+        min-width: 406px;
+    }
+}
+
+.user img,
+.user figcaption {}
+
+.user figcaption {
+    padding: 1rem;
+    margin-left: 1rem;
+    word-break: break-word
+}
+
+.user figcaption h5,
+.user figcaption p {
+    max-width: 370px;
+    margin: auto;
+}
+
+.userPosts header h3::after {
+    content: '';
+    border-bottom: .16rem solid var(--primary);
+    padding-bottom: .5rem;
+    display: block;
+    width: 80%;
+    margin: auto
+}
+
+
+/* -------- User End -------- */
+
+/* -------- Blog Start -------- */
 .blog {
     max-width: 1300px;
     display: flex;
@@ -658,12 +730,14 @@ nav img {
     overflow: hidden;
     transition: all ease-in-out .5s
 }
+
 .blogFig .imgMax {
     position: relative;
     height: 225px;
     max-height: 225px;
     overflow: hidden
 }
+
 .imgMax::before {
     content: '';
     position: absolute;
@@ -672,12 +746,13 @@ nav img {
     z-index: 1;
     height: 100%;
     width: 100%;
-    background-color:#333;
+    background-color: #333;
     opacity: .01;
     transition: all ease-in-out .2s;
 }
+
 .blogFig:hover .imgMax::before {
-    opacity: .14!important;
+    opacity: .14 !important;
 }
 
 .blogFig:hover img {
@@ -706,7 +781,9 @@ nav img {
     overflow: hidden;
     height: 150px
 }
+
 .blog .updated {
     margin-top: 1rem
 }
-/* Blog end */
+
+/* -------- Blog End -------- */

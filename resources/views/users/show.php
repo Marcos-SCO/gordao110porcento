@@ -1,18 +1,23 @@
-<section>
-    <header>
+<header class="imgBackgroundArea userShow d-flex flex-wrap justify-content-center align-items-center flex-column">
+    <span>
+        <h2>Funcionário</h2>
         <h1><?= $user->name ?> <?= $user->last_name ?></h1>
-    </header>
-    <figure>
-        <img src="<?= $BASE ?>/public/img/users/id_<?= $user->id ?>/<?= $user->img ?>" alt="<?= $user->img ?>" title="<?= $user->name ?>">
-        <figcaption>Sobre <?= $user->name ?><p><?= $user->bio ?></p>
+    </span>
+</header>
+<section class="user d-flex flex-wrap align-items-center justify-items-center m-auto">
+    <figure class="d-flex flex-wrap m-auto justify-content-center">
+        <img class="img-prevent-drag " src="<?= $BASE ?>/public/img/users/id_<?= $user->id ?>/<?= $user->img ?>" alt="<?= $user->img ?>" title="<?= $user->name ?>">
+        <figcaption class="bg-light mt-5">
+            <h5>Sobre <?= $user->name ?></h5>
+            <p><?=$user->bio?></p>
         </figcaption>
     </figure>
 </section>
 
-<?= ($_SESSION['user_status'] != null) ? "<ul><li><a href='$BASE/users'>id $user->id - $user->name - $user->email</a></li></ul>" : ''; ?>
+<?= ($_SESSION['user_status'] != null) ? "<ul class='text-center'><li><a href='$BASE/users/edit/$user->id'>Id de usuário $user->id | Nome: $user->name | E-mail: $user->email</a></li></ul>" : ''; ?>
 
 <?php if (count($posts) > 0) { ?>
-    <article class="flex flex-column justify-content-center">
+    <article class="userPosts flex flex-column justify-content-center">
         <header class="text-center m-auto p-3">
             <h3>Postagens feitas por <?= $user->name ?></h3>
         </header>
