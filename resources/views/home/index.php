@@ -43,7 +43,7 @@
                             </span>
                             <!--<a href="<?//= $BASE ?>/products/show/<?//= $h->id ?>"> -->
                             <figure class="item">
-                                <img class="mx-auto" src="<?= $BASE ?>/public/img/products/category_<?= $h->id_category ?>/id_<?= $h->id ?>/<?= $h->img ?>" alt="<?= $h->img ?>" title="<?= $h->product_name ?>">
+                                <img class="mx-auto" src="<?= $BASE ?>/<?= imgOrDefault('products', $h->img, $h->id, "/category_$h->id_category") ?>" alt="<?= $h->img ?>" title="<?= $h->product_name ?>">
                                 <figcaption><?= $h->product_name ?></figcaption>
                             </figure>
                             <!-- </a> -->
@@ -71,7 +71,8 @@
                                 <input type="hidden" name="price" value="<?= $data->price ?>">
                             </span>
                             <!-- <a href="<?//= $BASE ?>/products/show/<?//= $data->id ?>"> -->
-                            <figure class="item"><img class="mx-auto" src="<?= $BASE ?>/public/img/products/category_<?= $data->id_category ?>/id_<?= $data->id ?>/<?= $data->img ?>" alt="<?= $data->img ?>" title="<?= $data->product_name ?>">
+                            <figure class="item">
+                                <img class="mx-auto" src="<?= $BASE ?>/<?= imgOrDefault('products', $data->img, $data->id, "/category_$data->id_category") ?>" alt="<?= $data->img ?>" title="<?= $data->product_name ?>">
                                 <figcaption><?= $data->product_name ?></figcaption>
                             </figure>
                         </a>
@@ -88,7 +89,7 @@
                 <div class="owl-carousel owl-theme">
                     <?php foreach ($categories as $data) { ?>
                         <a href="<?= $BASE ?>/categories/show/<?= $data->id ?>">
-                            <figure class="item"><img class="mx-auto" src="<?= $BASE ?>/public/img/categories/id_<?= $data->id ?>/<?= $data->img ?>" alt="<?= $data->img ?>" title="<?= $data->category_name ?>">
+                            <figure class="item"><img class="mx-auto" src="<?= $BASE ?>/<?= imgOrDefault('categories', $data->img, $data->id) ?>" alt="<?= $data->img ?>" title="<?= $data->category_name ?>">
                                 <figcaption><?= $data->category_name ?></figcaption>
                             </figure>
                         </a>
