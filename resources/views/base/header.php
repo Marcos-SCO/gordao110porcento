@@ -60,7 +60,7 @@
                         <a class="nav-link" href="<?= $BASE ?>">Home<span class="sr-only">(current)</span></a>
                     </li>
                     <li class="nav-item <?= activePage($getQuery, 'products') ?>">
-                        <a class="nav-link" href="<?= $BASE ?>/products">Produtos</a>
+                        <a class="nav-link" href="<?= $BASE ?>/products">Ofertas</a>
                     </li>
                     <li class="nav-item <?= activePage($getQuery, 'posts') ?>">
                         <a class="nav-link" href="<?= $BASE ?>/posts">Blog</a>

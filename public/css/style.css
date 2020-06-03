@@ -648,14 +648,18 @@ nav img {
     align-items: center;
     flex-direction: column
 }
-.activeList::before, .inactiveList::before {
+
+.activeList::before,
+.inactiveList::before {
     padding: .5rem 1rem;
     color: #fff
 }
+
 .activeList::before {
     content: 'Usuário Ativos';
     background: #0a942b
 }
+
 .inactiveList::before {
     content: 'Usuário Inativos';
     background: #c70e0e
@@ -667,14 +671,42 @@ nav img {
 .usersAdmBackground {
     background-image: url(../img/template/users.png)
 }
+
 .usersAdm li {
- min-width: 300px;
+    min-width: 300px;
 }
+.usersAdm .userPic {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    border: 1px solid #ccc;
+    overflow: hidden;
+}
+
+.usersAdm img {
+    max-width: 40px;
+}
+
+.usersAdm button {
+    margin-left: .5rem;
+    border: none;
+    color: var(--primary);
+    background: none;
+    padding:0 .2rem;
+}
+.usersAdm button:hover {
+    color:#ff5b00
+}
+.usersAdm button:focus {
+    border:none
+}
+
 @media screen and (min-width:468px) {
     .usersAdm li {
-     min-width: 468px;
+        min-width: 468px
     }
-} 
+}
+
 
 /* -------- Users adm End  -------- */
 

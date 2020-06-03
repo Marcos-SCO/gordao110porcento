@@ -49,9 +49,8 @@
             <span class="invalid-feedback">
                 <?= $error['img_error'] ?? '' ?>
             </span>
-            <?php if($data->img) { ?>
-            <img src="<?= $BASE ?>/public/img/products/category_<?=$data->id_category?>/id_<?= $data->id ?>/<?= $data->img ?>" alt="<?= $data->img ?>" title="<?= $data->product_name ?>">
-            <?php } ?>
+            
+            <img src="<?= $BASE ?>/<?=imgOrDefault('products', $data->img, $data->id, "/category_$data->id_category")?>" title="<?= $data->product_name ?>">
         </div>
 
         <input type="submit" class="btn btn-success" value="Enviar">

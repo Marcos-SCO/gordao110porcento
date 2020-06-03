@@ -11,15 +11,17 @@
                 <li class="list-group-item">Quantidade <?= $activeNumber->active ?></li>
                 <?php foreach ($users as $user) {
                     if ($user->status == 1) { ?>
-                        <li class="list-group-item">
-                            id <?= $user->id ?> - <a href="<?= $BASE ?>/users/edit/<?= $user->id ?>"><?= $user->name ?></a> - <?= $user->email ?>
+                        <li class="d-flex flex-wrap list-group-item">
+                            <figure class="userPic mr-2"><img src="<?= $BASE ?>/<?= imgOrDefault('users', $user->img, $user->id) ?>" class="userImg"></figure> id <?= $user->id ?> - <a href="<?= $BASE ?>/users/edit/<?= $user->id ?>"><?= $user->name ?></a> - <?= $user->email ?>
                             <?php if ($_SESSION['adm_id'] == 1 && $user->id != 1) {
-                            ?>
-                                <?php if ($user->status == 1) {
+                                if ($user->status == 1) {
                                     $active = [0, 'Desativar', 'Quer Mesmo desativar esse usuario?'];
                                 }
-                                ?>
-                                <a href="<?= $BASE ?>/users/status/<?= $user->id ?>/<?= $active[0] ?>" method="post" name="delete" onclick="return confirm('<?= $active[2] ?>')"><?= $active[1] ?></a>
+                            ?>
+                                <form action="<?= $BASE ?>/users/status/<?= $user->id ?>/<?= $active[0] ?>" method="post" name="delete">
+                                    <input type="hidden" value="123" />
+                                    <button onclick="return confirm('<?= $active[2] ?>')"><?= $active[1] ?></button>
+                                </form>
                             <?php } ?>
                         </li>
                 <?php }
@@ -32,14 +34,15 @@
                 <li class="list-group-item">Quantidade <?= $inactiveNumber->inactive ?></li>
                 <?php foreach ($users as $user) {
                     if ($user->status == 0) { ?>
-                        <li class="list-group-item">
-                            id <?= $user->id ?> - <a href="<?= $BASE ?>/users/edit/<?= $user->id ?>"><?= $user->name ?></a> - <?= $user->email ?>
+                        <li class="d-flex flex-wrap list-group-item">
+                            <figure class="userPic mr-2"><img src="<?= $BASE ?>/<?= imgOrDefault('users', $user->img, $user->id) ?>" class="userImg">
+                            </figure> id <?= $user->id ?> - <a href="<?= $BASE ?>/users/edit/<?= $user->id ?>"><?= $user->name ?></a> - <?= $user->email ?>
                             <?php if ($_SESSION['adm_id'] == 1 && $user->id != 1) {
-                            ?>
-                                <?php if ($user->status == 0) {
-                                    $active = [1, 'Ativar', 'Quer Mesmo Ativar esse usuario?'];
-                                } ?>
-                                <a href="<?= $BASE ?>/users/status/<?= $user->id ?>/<?= $active[0] ?>" method="post" name="delete" onclick="return confirm('<?= $active[2] ?>')"><?= $active[1] ?></a>
+                                ($user->status == 0) ? $active = [1, 'Ativar', 'Quer Mesmo Ativar esse usuario?'] : ''; ?>
+                                <form action="<?= $BASE ?>/users/status/<?= $user->id ?>/<?= $active[0] ?>" method="post" name="delete">
+                                    <input type="hidden" value="123" />
+                                    <button onclick="return confirm('<?= $active[2] ?>')"><?= $active[1] ?></button>
+                                </form>
                             <?php } ?>
                         </li>
                 <?php }

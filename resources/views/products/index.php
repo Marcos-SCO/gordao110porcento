@@ -1,5 +1,5 @@
 <header class="imgBackgroundArea productHeader">
-    <h1>Todos nossos Produtos</h1>
+    <h1>Todas as nossas Ofertas</h1>
 </header>
 <?php if ($_SESSION['user_status'] && $_SESSION['user_status'] == 1) { ?>
     <section class="adm">
@@ -31,7 +31,8 @@
     <section class="products flex-wrap card-group">
         <?php foreach ($products as $data) { ?>
             <figure class="card">
-                <img src="<?= $BASE ?>/public/img/products/category_<?= $data->id_category ?>/id_<?= $data->id ?>/<?= $data->img ?>" alt="<?= $data->img ?>" title="<?= $data->product_name ?>">
+                <img src="<?= $BASE ?>/<?=imgOrDefault('products', $data->img, $data->id, "/category_$data->id_category")?>" title="<?= $data->product_name ?>">
+
                 <figcaption class="card-body">
                     <h5 class="card-title"><?= $data->product_name ?></h5>
                     <?php

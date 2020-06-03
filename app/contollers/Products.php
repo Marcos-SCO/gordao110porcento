@@ -28,7 +28,7 @@ class Products extends Controller
         // Category elements from table categories
         $categoryElements = $this->model->customQuery('SELECT id, category_name FROM categories', null, 1);
         View::render('products/index.php', [
-            'title' => "Produtos | Página $id",
+            'title' => "Ofertas | Página $id",
             'categoryElements' => $categoryElements,
             'products' => $results[4],
             'flash' => $flash,

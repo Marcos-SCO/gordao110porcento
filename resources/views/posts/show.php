@@ -6,7 +6,7 @@ Core\Controller::createMore($BASE, 'posts', 'Adicionar mais postagens');
     <small class="bg-secondary text-white p-2 mb-3"><?php $link = ($_SESSION['user_status'] == 1) ? $BASE . '/users/show/' . $user->id : ''; ?>Escrito por <a href="<?= $link ?>"><?= $user->name ?></a> em <?= $data->created_at ?>
     </small>
     <figure>
-        <img src="<?= $BASE ?>/public/img/posts/id_<?= $data->id ?>/<?= $data->img ?>" alt="<?= $data->img ?>" title="<?= $data->title ?>">
+        <img src="<?= $BASE ?>/<?=imgOrDefault('posts',$data->img,$data->id)?>" title="<?= $data->title ?>">
         <figcaption><?= $data->body ?></figcaption>
     </figure>
 </div>

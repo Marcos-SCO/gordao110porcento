@@ -19,14 +19,14 @@
             <span class="invalid-feedback">
                 <?= $error['img_error'] ?? '' ?>
             </span>
-            <?php if ($data->img) { ?>
-                <img src="<?= $BASE ?>/public/img/posts/id_<?= $data->id ?>/<?= $data->img ?>" alt="<?= $data->img ?>" title="<?= $data->title ?>">
-            <?php } ?>
+
+            <img src="<?= $BASE ?>/<?= imgOrDefault('posts', $data->img, $data->id) ?>" alt="<?= $data->img ?>" title="<?= $data->title ?>">
+
         </div>
 
         <div class="form-group">
             <label for="body">Digite o texto: <sup>*</sup></label>
-            <textarea name="body" id="tinyMCE" class="form-control form-control-lg <?= isset($error['body_error']) && $error['body_error'] != '' ? 'is-invalid' : '' ?>"><?=$data->body ?></textarea>
+            <textarea name="body" id="tinyMCE" class="form-control form-control-lg <?= isset($error['body_error']) && $error['body_error'] != '' ? 'is-invalid' : '' ?>"><?= $data->body ?></textarea>
             <span class="invalid-feedback">
                 <?= $error['body_error'] ?? '' ?>
             </span>

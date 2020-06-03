@@ -1,6 +1,9 @@
-<h1><?= $title ?? 'Editar usuário' ?></h1>
-
-<div class="row">
+<header class="imgBackgroundArea usersAdmBackground">
+    <span class="text-left">
+        <h1><?= $title ?? 'Editar usuário' ?></h1>
+    </span>
+</header>
+<section class="row m-3">
     <div class="col-md-6 mx-auto">
         <div class="card card-body bg-light mt5">
 
@@ -59,9 +62,7 @@
                     <span class="invalid-feedback">
                         <?= $error['img_error'] ?? '' ?>
                     </span>
-                    <?php if ($data->img) { ?>
-                        <img src="<?= $BASE ?>/public/img/users/id_<?= $data->id ?>/<?= $data->img ?>" alt="<?= $data->img ?>" title="<?= $data->name ?>">
-                    <?php } ?>
+                    <img src="<?= $BASE ?>/<?= imgOrDefault('users', $data->img, $data->id) ?>" title="<?= $data->name ?>">
                 </div>
 
                 <div class="row">
@@ -72,4 +73,4 @@
             </form>
         </div>
     </div>
-</div>
+</section>

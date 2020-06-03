@@ -48,7 +48,7 @@ class Users extends Controller
         }
 
         View::render('users/create.php', [
-            'title' => 'Cadastro',
+            'title' => 'Cadastro de usuários',
             'data' => $data,
             'error' => $error
         ]);
@@ -115,7 +115,7 @@ class Users extends Controller
         // Display results
         $pageInfo = ($page > 1) ? " | Página $page" : '';
         return View::render('users/show.php', [
-            'title' => 'Funcionário '. $user->name . $pageInfo,
+            'title' => 'Funcionário ' . $user->name . $pageInfo,
             'pageId' => $id,
             'user' => $user,
             'flash' => $flash,
@@ -135,16 +135,18 @@ class Users extends Controller
         $this->isLogin();
 
         $data = $this->model->getAllFrom('users', $id);
-        
+
         if ($id == 1 && $_SESSION['user_id'] == 1) {
             View::render('users/edit.php', [
+                'title' => 'Editar informações de ' . $data->name,
                 'data' => $data,
                 'flash' => $flash,
                 'error' => $error
             ]);
         } else {
-            if ($data->id != 1) {
+            if ($data->id != 1 && $_SESSION['user_id'] == $id || $_SESSION['adm_id'] == 1 && $id != 1) {
                 View::render('users/edit.php', [
+                    'title' => 'Editar informações de ' . $data->name,
                     'data' => $data,
                     'flash' => $flash,
                     'error' => $error
@@ -229,7 +231,7 @@ class Users extends Controller
                     // Create session
                     $this->model->createUserSession($loggedInUser);
                     $flash = flash('register_success', 'Logado com sucesso!');
-                    return $this->show($_SESSION['user_id'],1, $flash);
+                    return $this->show($_SESSION['user_id'], 1, $flash);
                 } else {
                     $error['password_error'] = "Email ou senha incorretos";
                     return View::render('users/login.php', [

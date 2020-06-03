@@ -1,4 +1,4 @@
-<header class="imgBackgroundArea userShow d-flex flex-wrap justify-content-center align-items-center flex-column">
+<header class="imgBackgroundArea usersAdmBackground d-flex flex-wrap justify-content-center align-items-center flex-column">
     <span>
         <h2>Funcionário</h2>
         <h1><?= $user->name ?> <?= $user->last_name ?></h1>
@@ -6,7 +6,7 @@
 </header>
 <section class="user d-flex flex-wrap align-items-center justify-items-center m-auto">
     <figure class="d-flex flex-wrap m-auto justify-content-center">
-        <img class="img-prevent-drag " src="<?= $BASE ?>/public/img/users/id_<?= $user->id ?>/<?= $user->img ?>" alt="<?= $user->img ?>" title="<?= $user->name ?>">
+        <img class="img-prevent-drag " src="<?= $BASE ?>/<?=imgOrDefault('users',$user->img, $user->id)?>" title="<?= $user->name ?>">
         <figcaption class="bg-light mt-5">
             <h5>Sobre <?= $user->name ?></h5>
             <p><?=$user->bio?></p>
@@ -26,7 +26,7 @@
                 <figure class="d-flex justify-content-center blogFig card">
                     <a href="<?= $BASE ?>/posts/show/<?= $data->id ?>">
                         <div class="imgMax">
-                            <img class="card-img-top" src="<?= $BASE ?>/public/img/posts/id_<?= $data->id ?>/<?= $data->img ?>" alt="<?= $data->img ?>" title="<?= $data->title ?>">
+                            <img class="card-img-top" src="<?=$BASE?>/<?=imgOrDefault('posts', $data->img, $data->id)?>" alt="<?= $data->img ?>" title="<?= $data->title ?>">
                         </div>
                         <figcaption class="blogBody card-body">
                             <h5 class="blogTitle card-title"><?= $data->title ?></h5>

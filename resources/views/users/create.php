@@ -1,8 +1,14 @@
-<h1><?=$title ?? ''?></h1>
-<div class="row">
+<header class="imgBackgroundArea usersAdmBackground">
+    <span class="text-left">
+        <h1><?= $title ?? 'Editar usuário' ?></h1>
+    </span>
+</header>
+<section class="row">
     <div class="col-md-6 mx-auto">
         <div class="card card-body bg-light mt5">
-            <h2>Crie uma Conta</h2>
+            <header>
+                <h2>Crie uma Conta</h2>
+            </header>
             <p>Preencha o formulário para se inscrever</p>
 
             <form action="<?=$BASE?>/users/store" method="post">
@@ -73,11 +79,8 @@
                     <div class="col">
                         <input type="submit" value="Registrar" class="btn btn-success btn-block">
                     </div>
-                    <div class="col">
-                        <a href="<?=$BASE?>/users/login" class="btn btn-light btn-block">Possui conta? Login</a>
-                    </div>
                 </div>
             </form>
         </div>
     </div>
-</div>
+</section>

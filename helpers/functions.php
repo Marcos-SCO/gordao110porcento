@@ -29,6 +29,15 @@ function dateFormat($data)
     return date_format($date, "d/m/Y \\a\s H:i:s");
 }
 
+function imgOrDefault($table, $img, $id, $tableOp = '') {
+    if ($img !== null) {
+        $path = "public/img/$table$tableOp/id_$id/$img";
+    } else {
+        $path = "public/img/$table/default/default.png";
+    }
+    return $path;
+}
+
 // Simple page redirect
 function redirect($page)
 {
