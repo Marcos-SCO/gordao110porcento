@@ -46,12 +46,15 @@ class Users extends Controller
         if (isset($_SESSION['submitted'])) {
             unset($_SESSION['submitted']);
         }
-
-        View::render('users/create.php', [
-            'title' => 'Cadastro de usuários',
-            'data' => $data,
-            'error' => $error
-        ]);
+        if ($_SESSION['adm_id'] == 1) {
+            View::render('users/create.php', [
+                'title' => 'Cadastro de usuários',
+                'data' => $data,
+                'error' => $error
+            ]);
+        } else {
+            redirect('users');
+        }
     }
 
     public function store()
@@ -152,7 +155,7 @@ class Users extends Controller
                     'error' => $error
                 ]);
             } else {
-                return $this->index(1, null);
+                return redirect('users');
             }
         }
     }

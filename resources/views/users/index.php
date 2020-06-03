@@ -12,14 +12,14 @@
                 <?php foreach ($users as $user) {
                     if ($user->status == 1) { ?>
                         <li class="d-flex flex-wrap list-group-item">
-                            <figure class="userPic mr-2"><img src="<?= $BASE ?>/<?= imgOrDefault('users', $user->img, $user->id) ?>" class="userImg"></figure> id <?= $user->id ?> - <a href="<?= $BASE ?>/users/edit/<?= $user->id ?>"><?= $user->name ?></a> - <?= $user->email ?>
+                            <figure class="userPic mr-2"><img src="<?= $BASE ?>/<?= imgOrDefault('users', $user->img, $user->id) ?>" class="userImg"></figure> id <?= $user->id ?> - <a href="<?= $BASE ?>/users/<?= ($_SESSION['adm_id'] == 1) ? 'edit' : 'show' ?>/<?= $user->id ?>" class="ml-1 mr-1"><?= $user->name ?></a> - <?= $user->email ?>
                             <?php if ($_SESSION['adm_id'] == 1 && $user->id != 1) {
                                 if ($user->status == 1) {
                                     $active = [0, 'Desativar', 'Quer Mesmo desativar esse usuario?'];
                                 }
                             ?>
                                 <form action="<?= $BASE ?>/users/status/<?= $user->id ?>/<?= $active[0] ?>" method="post" name="delete">
-                                    <input type="hidden" value="123" />
+                                    <input type="hidden" value="<?= $active[0] ?>" />
                                     <button onclick="return confirm('<?= $active[2] ?>')"><?= $active[1] ?></button>
                                 </form>
                             <?php } ?>
@@ -36,11 +36,11 @@
                     if ($user->status == 0) { ?>
                         <li class="d-flex flex-wrap list-group-item">
                             <figure class="userPic mr-2"><img src="<?= $BASE ?>/<?= imgOrDefault('users', $user->img, $user->id) ?>" class="userImg">
-                            </figure> id <?= $user->id ?> - <a href="<?= $BASE ?>/users/edit/<?= $user->id ?>"><?= $user->name ?></a> - <?= $user->email ?>
+                            </figure> id <?= $user->id ?> - <a href="<?= $BASE ?>/users/<?= ($_SESSION['adm_id'] == 1) ? 'edit' : 'show' ?>/<?= $user->id ?>" class="ml-1 mr-1"><?= $user->name ?></a> - <?= $user->email ?>
                             <?php if ($_SESSION['adm_id'] == 1 && $user->id != 1) {
                                 ($user->status == 0) ? $active = [1, 'Ativar', 'Quer Mesmo Ativar esse usuario?'] : ''; ?>
                                 <form action="<?= $BASE ?>/users/status/<?= $user->id ?>/<?= $active[0] ?>" method="post" name="delete">
-                                    <input type="hidden" value="123" />
+                                    <input type="hidden" value="<?= $active[0] ?>" />
                                     <button onclick="return confirm('<?= $active[2] ?>')"><?= $active[1] ?></button>
                                 </form>
                             <?php } ?>

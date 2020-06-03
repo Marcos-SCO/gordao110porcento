@@ -4,7 +4,6 @@
     <h2>Adicionar Produto</h2>
     <p>Crie um post com esse formulário</p>
     <form action="<?= $BASE ?>/products/store" method="post" enctype="multipart/form-data">
-
         <!-- Tipo de categoria -->
         <div class="form-group">
             <label for="id_category">Categoria</label>

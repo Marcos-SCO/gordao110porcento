@@ -23,6 +23,7 @@
             <span class="invalid-feedback">
                 <?= $error['img_error'] ?? '' ?>
             </span>
+            <img src="<?=$BASE?>/public/img/categories/default/default.png" alt="default.png" title="Imagem padrão">
         </div>
 
         <input type="submit" class="btn btn-success" value="Enviar">

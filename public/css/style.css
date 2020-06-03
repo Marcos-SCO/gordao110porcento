@@ -176,6 +176,10 @@ img {
     min-height: 75px
 }
 
+.navBar .dropdown-menu {
+    z-index: 9999999999999
+}
+
 @media screen and (min-width:991.99px) {
     .navbar {
         height: 75px
@@ -675,6 +679,7 @@ nav img {
 .usersAdm li {
     min-width: 300px;
 }
+
 .usersAdm .userPic {
     width: 30px;
     height: 30px;
@@ -692,13 +697,15 @@ nav img {
     border: none;
     color: var(--primary);
     background: none;
-    padding:0 .2rem;
+    padding: 0 .2rem;
 }
+
 .usersAdm button:hover {
-    color:#ff5b00
+    color: #ff5b00
 }
+
 .usersAdm button:focus {
-    border:none
+    border: none
 }
 
 @media screen and (min-width:468px) {
