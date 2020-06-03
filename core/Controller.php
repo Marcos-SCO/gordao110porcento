@@ -33,7 +33,7 @@ class Controller
     public static function createMore($BASE, $table, $text = 'Quer adicionar mais?')
     {
         if ($_SESSION['user_status'] == 1) {
-            echo "<a class='createBtn btn' href='$BASE/$table/create'>$text</a>";
+            echo "<a class='createBtn btn' href='$BASE/$table/create' style='width:100%;max-width:300px;display:block;margin:1rem auto;'>$text</a>";
         }
     }
 

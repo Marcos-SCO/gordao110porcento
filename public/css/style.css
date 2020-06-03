@@ -273,7 +273,7 @@ nav img {
 }
 
 .headerEdit::after {
-    content: 'ATENÇÂO! Caso aperte em deletar, todas os registros desta categoria serão apagados, inclusive as imagens.' !important;
+    content: 'ATENÇÂO! Caso aperte em deletar, todos os registros desta categoria serão apagados, inclusive as imagens.' !important;
     position: relative;
     max-width: 400px
 }
@@ -532,8 +532,13 @@ nav img {
 
 /* blog start */
 .homeBlogSection div {
-    margin: 0 !important;
     padding: 0 !important
+}
+
+@media screen and (min-width:479px) {
+    .homeBlogSection div {
+        margin: 0 !important
+    }
 }
 
 .homeBlogSection img {
@@ -630,6 +635,11 @@ nav img {
     flex: none !important
 }
 
+.add {
+    max-width: 670px;
+    margin: 0 auto -1rem
+}
+
 /* -------- Products End -------- */
 
 /* -------- Catecories Start -------- */
@@ -638,10 +648,37 @@ nav img {
     align-items: center;
     flex-direction: column
 }
+.activeList::before, .inactiveList::before {
+    padding: .5rem 1rem;
+    color: #fff
+}
+.activeList::before {
+    content: 'Usuário Ativos';
+    background: #0a942b
+}
+.inactiveList::before {
+    content: 'Usuário Inativos';
+    background: #c70e0e
+}
 
 /* -------- Catecories End -------- */
 
-/* -------- User Start  -------- */
+/* -------- Users adm Start  -------- */
+.usersAdmBackground {
+    background-image: url(../img/template/users.png)
+}
+.usersAdm li {
+ min-width: 300px;
+}
+@media screen and (min-width:468px) {
+    .usersAdm li {
+     min-width: 468px;
+    }
+} 
+
+/* -------- Users adm End  -------- */
+
+/* -------- User show Start  -------- */
 .userShow {
     background-image: url(../img/template/restaurante_imagem_interna.png)
 }
@@ -682,6 +719,7 @@ nav img {
         -webkit-transform: translate(50%, 0);
         -ms-transform: translate(50%, 0);
     }
+
     .user figcaption {
         min-width: 406px;
     }
@@ -711,8 +749,7 @@ nav img {
     margin: auto
 }
 
-
-/* -------- User End -------- */
+/* -------- User show End -------- */
 
 /* -------- Blog Start -------- */
 .blog {

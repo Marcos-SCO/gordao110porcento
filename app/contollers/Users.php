@@ -20,10 +20,14 @@ class Users extends Controller
     {
         $this->isLogin();
         $table = 'users';
-        $results = $this->pagination($table, $id, $limit = 10, '', $orderOption = 'AND `status` DESC');
+        $results = $this->pagination($table, $id, $limit = 10, '', $orderOption = '');
+        $activeNumber = $this->model->customQuery("SELECT COUNT(*) as active FROM users WHERE status = 1");
+        $inactiveNumber = $this->model->customQuery("SELECT COUNT(*) as inactive FROM users WHERE status = 0");
 
         View::render('users/index.php', [
             'title' => 'Users',
+            'activeNumber' => $activeNumber,
+            'inactiveNumber' => $inactiveNumber,
             'users' => $results[4],
             'flash' => $flash,
             'table' => $table,

@@ -3,11 +3,9 @@
         <h1 class="text-left">Blog</h1>
         <h2 class="text-left">ùltimas noticias</h2>
     </span>
-</header>
+</header class="blogArticle">
 <article>
-    <?php
-    Core\Controller::createMore($BASE, 'posts', 'Adicionar mais postagens');
-    ?>
+    <?php Core\Controller::createMore($BASE, 'posts', 'Adicionar mais postagens'); ?>
     <?php if (count($posts) > 0) { ?>
         <section class="blog flex-wrap card-group">
             <?php foreach ($posts as $data) { ?>
