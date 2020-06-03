@@ -141,7 +141,7 @@ class Users extends Controller
 
         if ($id == 1 && $_SESSION['user_id'] == 1) {
             View::render('users/edit.php', [
-                'title' => 'Editar informações de ' . $data->name,
+                'title' => 'Editar perfil de ' . $data->name,
                 'data' => $data,
                 'flash' => $flash,
                 'error' => $error
@@ -149,7 +149,7 @@ class Users extends Controller
         } else {
             if ($data->id != 1 && $_SESSION['user_id'] == $id || $_SESSION['adm_id'] == 1 && $id != 1) {
                 View::render('users/edit.php', [
-                    'title' => 'Editar informações de ' . $data->name,
+                    'title' => 'Editar perfil de ' . $data->name,
                     'data' => $data,
                     'flash' => $flash,
                     'error' => $error

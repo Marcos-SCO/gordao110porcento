@@ -1,16 +1,16 @@
 <header class="imgBackgroundArea usersAdmBackground">
     <span class="text-left">
-        <h1><?= $title ?? 'Editar usuário' ?></h1>
+        <h2>Editar perfil<h2>
+        <h1><?=$data->name?><h2>
     </span>
 </header>
-<section class="row m-3">
-    <div class="col-md-6 mx-auto">
-        <div class="card card-body bg-light mt5">
-
-            <p>Preencha o formulário</p>
-
-            <form action="<?= $BASE ?>/users/update" method="post" enctype="multipart/form-data">
-
+<section class="userEdit d-flex flex-column justify-content-center row m-3">
+    <header>
+        <h3 class="text-center lightText">Preencha o formulário</h3>
+    </header>
+    <form action="<?= $BASE ?>/users/update" method="post" enctype="multipart/form-data" class="m-auto mb-3">
+        <div class="d-flex flex-wrap">
+            <div class="w-100">
                 <input type="hidden" name="id" value="<?= $data->id ?>">
 
                 <?php if ($data->id == 1) { ?>
@@ -54,23 +54,20 @@
                     <label for="bio">Sobre: <sup>*</sup></label>
                     <textarea type="text" name="bio" id="bio" class="form-control form-control-lg"><?= $data->bio ?? '' ?></textarea>
                 </div>
-
-                <div class="form-group">
-                    <label for="img">Imagem de perfil</label>
-                    <input type="file" name="img" id="img" class="form-control form-control-lg <?= isset($error['img_error']) && $error['img_error'] != '' ? 'is-invalid' : '' ?>" value="<?= $data->img ?? '' ?>">
-                    <input type="hidden" name="img" id="img" value="<?= $data->img ?>">
-                    <span class="invalid-feedback">
-                        <?= $error['img_error'] ?? '' ?>
-                    </span>
-                    <img src="<?= $BASE ?>/<?= imgOrDefault('users', $data->img, $data->id) ?>" title="<?= $data->name ?>">
-                </div>
-
-                <div class="row">
-                    <div class="col">
-                        <input type="submit" value="Atualizar" class="btn btn-success btn-block">
-                    </div>
-                </div>
-            </form>
+            </div>
+            <div class="imgGroup form-group img">
+                <label for="img">Imagem de perfil</label>
+                <input type="file" name="img" id="img" class="form-control form-control-lg <?= isset($error['img_error']) && $error['img_error'] != '' ? 'is-invalid' : '' ?>" value="<?= $data->img ?? '' ?>">
+                <input type="hidden" name="img" id="img" value="<?= $data->img ?>">
+                <span class="invalid-feedback"><?= $error['img_error'] ?? '' ?></span>
+                <img src="<?= $BASE ?>/<?= imgOrDefault('users', $data->img, $data->id) ?>" title="<?= $data->name ?>">
+            </div>
         </div>
-    </div>
+
+        <div class="row">
+            <div class="col">
+                <input type="submit" value="Atualizar" class="btn btn-success btn-block">
+            </div>
+        </div>
+    </form>
 </section>

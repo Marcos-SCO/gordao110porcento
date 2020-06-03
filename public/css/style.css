@@ -24,13 +24,17 @@
     background: #ec8044
 }
 
-.lightText {
+.lightText, label {
     color: #d95f1b
 }
 
 .btn:focus {
     color: #d95f1b;
     box-shadow: 0 0 0 0.2rem #eaa782
+}
+
+.btn-success  {
+    max-width: 200px
 }
 
 a {
@@ -53,6 +57,17 @@ a:hover {
 .btn:hover {
     color: #ff5b00 !important;
     background-color: #fff !important
+}
+.form-control:focus {
+    border-color: #FF9800!important;
+    box-shadow: 0 0 0 0.2rem #FF9800!important
+}
+textarea {
+    min-height:194px!important
+}
+.imgGroup{
+    width: 100%;
+    max-width: 250px;
 }
 
 @media screen and (max-width:299.9px) {
@@ -744,7 +759,7 @@ nav img {
 
 .user img {
     margin-top: 1rem !important;
-    box-shadow: 15px 15px 0px #d65106;
+    box-shadow: 15px 15px 0px #ff833e;
     max-width: 250px;
     overflow: hidden
 }
@@ -763,9 +778,6 @@ nav img {
         min-width: 406px;
     }
 }
-
-.user img,
-.user figcaption {}
 
 .user figcaption {
     padding: 1rem;
@@ -789,6 +801,26 @@ nav img {
 }
 
 /* -------- User show End -------- */
+.userEdit form {
+    padding: 1rem
+}
+.userEdit::after {
+    content: '';
+    display: block;
+    width: 40%;
+    margin: 2rem auto
+}
+.userEdit img{
+    margin: 1rem 0!important;
+    max-width: 250px;
+    box-shadow: 15px 15px 0px #ff833e;
+    overflow: hidden
+}
+/* -------- User Edit Start -------- */
+
+/* -------- User Edit End -------- */
+
+
 
 /* -------- Blog Start -------- */
 .blog {
@@ -861,5 +893,31 @@ nav img {
 .blog .updated {
     margin-top: 1rem
 }
-
 /* -------- Blog End -------- */
+
+/* -------- Posts Show Start -------- */
+/* -------- Posts Show End -------- */
+
+/* Post Edit Start */
+.postEditHeader { 
+    position: relative
+}
+.postEditHeader.imgBackgroundArea::before {
+    background-image: none
+}
+.postEditHeader::before {
+    content: '';
+    position: absolute;
+    background-color: #333;
+    opacity: .5;
+}
+.postSection {
+    margin: auto;
+    max-width: 800px;
+}
+
+.postSection img {
+    max-width: 500px;
+    box-shadow: 15px 15px 0px #ff833e;
+}
+/* Post Edit End */

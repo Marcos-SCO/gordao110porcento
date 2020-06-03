@@ -1,5 +1,11 @@
-<div class="card card-body bg-light mt5">
-    <h2><?= $data->title ?></h2>
+<header class="postEditHeader imgBackgroundArea d-flex flex-wrap justify-content-center align-items-center flex-column mb-3" style="background-image:url('<?="$BASE/public/img/posts/id_$data->id/$data->img"?>');background-size:cover;background-position:top;">
+    <span style="z-index:1">
+        <h2><?= $data->title ?></h2>
+    </span>
+</header>
+<section class="postSection card card-body bg-light mt5">
+    <h3>Informaçoes da postagem <a href="<?=$BASE?>/posts/show/<?=$data->id?>"><?=$data->title?></a> </h3>
+
     <form action="<?= $BASE ?>/posts/update/<?= $data->id ?>" method="post" enctype="multipart/form-data">
 
         <input type="hidden" name="id" id="<?= $data->id ?>" value="<?= $data->id ?>">
@@ -12,8 +18,8 @@
             </span>
         </div>
 
-        <div class="form-group">
-            <label for="img">Imagem da postagem</label>
+        <div class="d-flex flex-column align-items-center form-group">
+            <label for="img" class="align-self-start">Imagem da postagem <?= $data->title ?></label>
             <input type="file" name="img" id="img" class="form-control form-control-lg <?= isset($error['img_error']) && $error['img_error'] != '' ? 'is-invalid' : '' ?>" value="<?= $data->img ?? '' ?>">
             <input type="hidden" name="img" id="img" value="<?= $data->img ?>">
             <span class="invalid-feedback">
@@ -23,7 +29,7 @@
         </div>
 
         <div class="form-group">
-            <label for="body">Digite o texto: <sup>*</sup></label>
+            <label for="tinyMCE">Digite o texto: <sup>*</sup></label>
             <textarea name="body" id="tinyMCE" class="form-control form-control-lg <?= isset($error['body_error']) && $error['body_error'] != '' ? 'is-invalid' : '' ?>"><?= $data->body ?></textarea>
             <span class="invalid-feedback">
                 <?= $error['body_error'] ?? '' ?>
@@ -32,4 +38,4 @@
 
         <input type="submit" class="btn btn-success" value="Enviar">
     </form>
-</div>
+</section>
