@@ -20,7 +20,7 @@ class Users extends Controller
     {
         $this->isLogin();
         $table = 'users';
-        $results = $this->pagination($table, $id, $limit = 10, '', $orderOption = '');
+        $results = $this->pagination($table, $id, $limit = 10, '', $orderOption = 'AND status');
         $activeNumber = $this->model->customQuery("SELECT COUNT(*) as active FROM users WHERE status = 1");
         $inactiveNumber = $this->model->customQuery("SELECT COUNT(*) as inactive FROM users WHERE status = 0");
 
