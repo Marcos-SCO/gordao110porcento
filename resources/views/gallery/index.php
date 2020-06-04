@@ -1,40 +1,30 @@
-<h1>Welcome</h1>
-
+<header class="galleryHeader imgBackgroundArea">
+    <span style="z-index:1">
+        <h2>Nossa</h2>
+        <h1>Galeria de imagens<h1>
+    </span>
+</header>
 <?php
 Core\Controller::createMore($BASE, 'gallery', 'Quer adicionar Mais imagens?');
 ?>
-<?php foreach ($gallery as $data) { ?>
-    <div>
-        <a href="<?= $BASE ?>/gallery/show/<?= $data->id ?>">
-            <h1><?= $data->img_title ?></h1>
-            <figure>
-                <img src="<?= $BASE ?>/<?= imgOrDefault('gallery', $data->img, $data->id) ?>" alt="<?= $data->img ?>" title="<?= $data->img_title ?>">
-                <figcaption style="white-space: nowrap;width: 450px;overflow: hidden;text-overflow: ellipsis;">
-                </figcaption>
+<article class="galleryArticle container">
+    <header>
+        <h2 class="font-weight-light text-center text-lg-left mt-4 mb-0">Galeria de imagens</h2>
+    </header>
+    <hr class="mt-2 mb-5" style="width:40%;">
+    <section class="row text-center text-lg-left">
+        <?php foreach ($gallery as $data) { ?>
+            <figure class="col-lg-3 col-md-4 col-6">
+                <a href="<?= $BASE ?>/<?= imgOrDefault('gallery', $data->img, $data->id) ?>" data-toggle="lightbox" data-lightbox="mygallery" data-title="<?= $data->img_title ?>">
+                    <img src="<?= $BASE ?>/<?= imgOrDefault('gallery', $data->img, $data->id) ?>" alt="<?= $data->img ?>" title="<?= $data->img_title ?>" class="img-fluid img-thumbnail">
+                    <figcaption style="white-space: nowrap;overflow: hidden;text-overflow: ellipsis;">
+                        <p class="text-center"><?= $data->img_title ?></p>
+                    </figcaption>
+                </a>
+                <?php
+                Core\Controller::editDelete($BASE, 'gallery', $data, 'Quer mesmo deletar essa foto?');
+                ?>
             </figure>
-        </a>
-
-        <?php
-        Core\Controller::editDelete($BASE, 'gallery', $data, 'Quer mesmo deletar essa foto?');
-        ?>
-    </div>
-<?php } ?>
-
-<!--GALERIA-->
-<div id="menu4">
-    <h4 class="semana">Galeria de imagens</h4>
-    <div class="galeria">
-        <a href="https://unsplash.it/1200/768.jpg?image=256" data-toggle="lightbox" data-lightbox="mygallery">
-            <img src="https://unsplash.it/600.jpg?image=256" class="img-fluid rounded">
-        </a>
-        <a href="https://unsplash.it/1200/768.jpg?image=256" data-toggle="lightbox" data-lightbox="mygallery">
-            <img src="https://unsplash.it/600.jpg?image=256" class="img-fluid rounded">
-        </a>
-        <a href="https://unsplash.it/1200/768.jpg?image=256" data-toggle="lightbox" data-lightbox="mygallery">
-            <img src="https://unsplash.it/600.jpg?image=256" class="img-fluid rounded">
-        </a>
-        <a href="https://unsplash.it/1200/768.jpg?image=256" data-toggle="lightbox" data-lightbox="mygallery">
-            <img src="https://unsplash.it/600.jpg?image=256" class="img-fluid rounded">
-        </a>
-    </div>
-</div>
+        <?php } ?>
+    </section>
+</article>

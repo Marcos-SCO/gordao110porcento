@@ -1117,7 +1117,7 @@ nav img {
 
 /* Post Edit End */
 
-/* Contact */
+/* -------- Contact Start -------- */
 .contactHeader {
     background-image: url(../img/template/contact.png)
 }
@@ -1133,4 +1133,26 @@ nav img {
         align-self: center!important
     }
 }
-/* Contact end */
+/* -------- Contact End -------- */
+
+/* -------- Gallery Start -------- */
+.galleryHeader {
+    background-image: url(../img/template/gallery.png)
+}
+.galleryArticle {
+    /* height: 200px;
+    width: 100px; */
+    overflow: hidden
+}
+.galleryArticle figure {
+    position: relative;
+}
+.galleryArticle figcaption p{
+    width: 100%;
+    color: #ff7a08;
+    background-color: #fff;
+    border: 1px solid #dee2e6;
+    border-radius: 44px;
+    border-top: none!important
+}
+/* -------- Gallery End -------- */

@@ -21,7 +21,7 @@ class Gallery extends Controller
     public function index($id = 1, $flash = false)
     {
         $table = 'gallery';
-        $results = $this->pagination($table, $id, $limit = 2, '', $orderOption = 'DESC');
+        $results = $this->pagination($table, $id, $limit = 10, '', $orderOption = 'DESC');
         View::render('gallery/index.php', [
             'title' => 'Galeria de imagens',
             'gallery' => $results[4],
