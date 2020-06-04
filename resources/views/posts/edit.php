@@ -1,4 +1,4 @@
-<header class="postEditHeader imgBackgroundArea d-flex flex-wrap justify-content-center align-items-center flex-column mb-3" style="background-image:url('<?="$BASE/public/img/posts/id_$data->id/$data->img"?>');background-size:cover;background-position:top;">
+<header class="postEditHeader imgBackgroundArea d-flex flex-wrap justify-content-center align-items-center flex-column mb-3" style="background-image:url('<?=$BASE.'/'.imgOrDefault('posts', $data->img, $data->id)?>');background-size:cover;background-position:top;">
     <span style="z-index:1">
         <h2><?= $data->title ?></h2>
     </span>

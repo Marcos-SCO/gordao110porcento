@@ -24,7 +24,8 @@
     background: #ec8044
 }
 
-.lightText, label {
+.lightText,
+label {
     color: #d95f1b
 }
 
@@ -33,7 +34,7 @@
     box-shadow: 0 0 0 0.2rem #eaa782
 }
 
-.btn-success  {
+.btn-success {
     max-width: 200px
 }
 
@@ -58,14 +59,26 @@ a:hover {
     color: #ff5b00 !important;
     background-color: #fff !important
 }
+
 .form-control:focus {
-    border-color: #FF9800!important;
-    box-shadow: 0 0 0 0.2rem #FF9800!important
+    border-color: #FF9800 !important;
+    box-shadow: 0 0 0 0.2rem #FF9800 !important
 }
+
 textarea {
-    min-height:194px!important
+    min-height: 194px !important
 }
-.imgGroup{
+
+#tinyMCE {
+    height: 300px;
+}
+
+#disqus_thread {
+    max-width: 800px;
+    margin: auto
+}
+
+.imgGroup {
     width: 100%;
     max-width: 250px;
 }
@@ -804,18 +817,21 @@ nav img {
 .userEdit form {
     padding: 1rem
 }
+
 .userEdit::after {
     content: '';
     display: block;
     width: 40%;
     margin: 2rem auto
 }
-.userEdit img{
-    margin: 1rem 0!important;
+
+.userEdit img {
+    margin: 1rem 0 !important;
     max-width: 250px;
     box-shadow: 15px 15px 0px #ff833e;
     overflow: hidden
 }
+
 /* -------- User Edit Start -------- */
 
 /* -------- User Edit End -------- */
@@ -893,31 +909,200 @@ nav img {
 .blog .updated {
     margin-top: 1rem
 }
+
 /* -------- Blog End -------- */
 
 /* -------- Posts Show Start -------- */
+.postShow {
+    position: relative;
+    height: calc(100vh - 75px) !important
+}
+
+.postShow h1 {
+    z-index: 1
+}
+
+.postShow::before {
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: #333;
+    opacity: .7
+}
+
+.postShow.imgBackgroundArea:before {
+    background-image: none
+}
+
+@media screen and (min-width:600px) {
+    .postShow h1 {
+        font-size: 4.5rem
+    }
+
+    .postShow::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 100%;
+        width: 100%;
+        background-image: url(../img/template/logoFaixa.png);
+        background-position: bottom right;
+        background-size: contain;
+        background-repeat: no-repeat
+    }
+}
+
+.postShowAdm {
+    max-width: 500px;
+    margin: auto
+}
+
+.postShowSection .postFigure {
+    max-width: 850px;
+    margin: auto;
+    padding: 1rem
+}
+
+.postShowSection figure img {
+    margin: auto;
+}
+
+@media screen and (min-width:430px) {
+    .postShowSection .postFigure img {
+        display: none !important
+    }
+}
+
+.postShowSection figcaption {
+    word-break: break-word
+}
+
+.postShowSection .postFigure img {
+    display: flex;
+    flex-direction: column;
+    box-shadow: 12px 15px 0px #ff833e;
+    margin: 0 auto 1.5rem
+}
+
+.postText p {
+    margin-bottom: 0 !important
+}
+
+.aboutUser {
+    max-width: 800px;
+    margin: 1rem auto 3rem !important
+}
+
+.aboutUser a {
+    position: relative;
+    display: block;
+    max-width: 600px;
+    padding: 1rem;
+    color: #fff;
+    background-color: #333;
+}
+.aboutUser a figure::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background-image: url(../img/template/gordao110_logo.png);
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: right;
+    opacity: .5;
+}
+
+.aboutUser a:hover {
+    background-color: #333 !important
+}
+.aboutUser:hover h5 {
+    color: #fff!important
+}
+
+.aboutUser figcaption, .aboutUser h5 {
+    z-index: 1;
+}
+
+.aboutUser p {
+    background: rgba(33, 33, 33, 0.75);
+    padding: .5rem;
+}
+
+@media screen and (max-width:594px) {
+    .aboutUser figure {
+        flex-wrap: wrap !important;
+        justify-content: center !important
+    }
+}
+
+.aboutUser p {
+    margin-bottom: 0 !important;
+    height: 136px;
+    min-width: 399px;
+    max-width: 399px;
+    word-break: break-word
+}
+
+/* .aboutUser img {
+    margin: 1rem;
+} */
+
+.imgFitUser {
+    min-width: 100%;
+    min-height: 100%;
+    width: auto;
+    height: auto;
+    position: relative;
+    right: 63%;
+    -webkit-transform: translate(-17%, -18%);
+    -ms-transform: translate(-17%, -18%);
+    left: 0
+}
+
+.imgUserBox {
+    height: 100px;
+    width: 100px;
+    overflow: hidden;
+    border-radius: 50%;
+    background-color: var(--primary)
+}
+
+.imgUserBox img {
+    position: relative;
+    margin:1rem;
+    max-width: 100px
+}
+
 /* -------- Posts Show End -------- */
 
 /* Post Edit Start */
-.postEditHeader { 
+.postEditHeader {
     position: relative
 }
+
 .postEditHeader.imgBackgroundArea::before {
     background-image: none
 }
+
 .postEditHeader::before {
     content: '';
     position: absolute;
     background-color: #333;
-    opacity: .5;
+    opacity: .5
 }
+
 .postSection {
     margin: auto;
-    max-width: 800px;
+    max-width: 800px
 }
 
 .postSection img {
     max-width: 500px;
-    box-shadow: 15px 15px 0px #ff833e;
+    box-shadow: 15px 15px 0px #ff833e
 }
+
 /* Post Edit End */
