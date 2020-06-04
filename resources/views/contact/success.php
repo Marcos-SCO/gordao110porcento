@@ -1,3 +1,10 @@
-<?=$title ?? 'Welcome'?>
+<header class="contactHeader imgBackgroundArea">
+    <span>
+        <h3>Obrigado</h3>
+    </span>
+</header>
 
-<h1>Obrigado, sua menssagem foi enviada com sucesso!</h1>
+<section class="d-flex flex-column justify-content-center align-items-center" style="height: 50vh;">
+    <h1>Obrigado, sua menssagem foi enviada com sucesso!</h1>
+    <a href="<?=$BASE?>" style="font-size:2rem">Retornar</a>
+</section>

@@ -42,7 +42,7 @@
 
     <!-- Disqus -->
     <input type="hidden" value="<?= $data->id ?>" id="pageId">
-    <div id="disqus_thread"></div>
+    <div id="disqus_thread" class="mb-5"></div>
     <script>
         /**
          *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.

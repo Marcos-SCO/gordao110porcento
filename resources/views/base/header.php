@@ -19,6 +19,8 @@
     // tiny MCE 
     echo ($getQuery[0] == 'posts' && $getQuery[1] == 'create' || $getQuery[1] == 'edit') ? "<!-- Tiny MCE -->
     <script src='https://cdn.tiny.cloud/1/no-api-key/tinymce/5/tinymce.min.js' referrerpolicy='origin'></script><script>tinymce.init({selector:'#tinyMCE'});</script>" : '';
+    // Light Box 
+    echo ($getQuery[0] == 'gallery' && $getQuery[1] == 'index' || $getQuery[1] == '') ? "<!-- LightBox --><link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.1/css/lightbox.min.css'><script src='https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.1/js/lightbox-plus-jquery.min.js' defer></script>" : '';
     ?>
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
@@ -102,7 +104,7 @@
             <header class="p-4 d-flex flex-column justify-content-center">
                 <div class="headerQuotes">
                     <h1 id="quoteTitle" class="text-left font-swashCaps" style="color:#fff;">Gordão a 110%</h1>
-                    <p id="quote" style="color:#fff;">lorem</p>
+                    <p id="quote" style="color:#fff;">O melhor restaurante e lanchonete da região</p>
                 </div>
                 <a href="">Pedir agora</a>
             </header>

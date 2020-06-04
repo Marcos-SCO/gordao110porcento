@@ -146,13 +146,13 @@ img {
 
 /* Spinner */
 #loader {
-    border: 12px solid #f3f3f3;
+    border: 12px solid #ffffff;
     border-radius: 50%;
-    border-top: 12px solid #444444;
+    border-top: 12px solid #FF9800;
     width: 70px;
     height: 70px;
     animation: spin 1s linear infinite;
-    z-index: 99999
+    z-index: 99999;
 }
 
 @keyframes spin {
@@ -519,7 +519,9 @@ nav img {
 /* Snacks start */
 .bestsSnacks {
     background-image: url(../img/section/comida-rapida-espacio-abajo.png);
-    background: url(../img/section/comida-rapida-espacio-abajo.png) scroll
+    background-position: top;
+    background-repeat: no-repeat;
+    background-size: cover
 }
 
 .bestsSnacks.imgBackgroundArea::before {
@@ -752,14 +754,9 @@ nav img {
     }
 }
 
-
 /* -------- Users adm End  -------- */
 
 /* -------- User show Start  -------- */
-.userShow {
-    background-image: url(../img/template/restaurante_imagem_interna.png)
-}
-
 .user {
     position: relative;
     margin: 0 auto 2rem !important
@@ -845,8 +842,6 @@ nav img {
 /* -------- User Edit Start -------- */
 
 /* -------- User Edit End -------- */
-
-
 
 /* -------- Blog Start -------- */
 .blog {
@@ -1121,3 +1116,21 @@ nav img {
 }
 
 /* Post Edit End */
+
+/* Contact */
+.contactHeader {
+    background-image: url(../img/template/contact.png)
+}
+.contactForm {
+    max-width: 1053px
+}
+@media screen and (max-width:1000px) {
+    .contactForm .contactRow {
+        flex-direction: column-reverse!important
+    }
+    .contactForm .contactInfo {
+        margin-bottom: 1rem;
+        align-self: center!important
+    }
+}
+/* Contact end */
