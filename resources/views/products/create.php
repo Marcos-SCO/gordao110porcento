@@ -1,8 +1,12 @@
-<?= $title ?? 'Criar Post' ?>
-
-<div class="card card-body bg-light mt5">
-    <h2>Adicionar Produto</h2>
-    <p>Crie um post com esse formulário</p>
+<header class="categoryHeader productHeader imgBackgroundArea">
+    <span>
+        <h1>Adionar um produto</h1>
+    </span>
+</header>
+<section class="formPageArea card card-body bg-light mt5">
+    <header>
+        <h2>Adicionar Produto</h2>
+    </header>
     <form action="<?= $BASE ?>/products/store" method="post" enctype="multipart/form-data">
         <!-- Tipo de categoria -->
         <div class="form-group">
@@ -51,4 +55,4 @@
 
         <input type="submit" class="btn btn-success" value="Enviar">
     </form>
-</div>
+</section>

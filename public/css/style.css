@@ -286,6 +286,18 @@ nav img {
     left: 9px
 }
 
+/* Edit pages */
+.formPageArea {
+    margin: auto;
+    max-width: 800px
+}
+
+.formPageArea img {
+    max-width: 300px
+}
+
+/* -------- Products End -------- */
+
 .headerEdit {
     position: relative;
     background-image: url(../img/template/stop.jpg);
@@ -672,8 +684,6 @@ nav img {
     margin: 0 auto -1rem
 }
 
-/* -------- Products End -------- */
-
 /* -------- Catecories Start -------- */
 .categoryHeader {
     display: flex;
@@ -1002,6 +1012,7 @@ nav img {
     color: #fff;
     background-color: #333;
 }
+
 .aboutUser a figure::before {
     content: '';
     position: absolute;
@@ -1019,11 +1030,13 @@ nav img {
 .aboutUser a:hover {
     background-color: #333 !important
 }
+
 .aboutUser:hover h5 {
-    color: #fff!important
+    color: #fff !important
 }
 
-.aboutUser figcaption, .aboutUser h5 {
+.aboutUser figcaption,
+.aboutUser h5 {
     z-index: 1;
 }
 
@@ -1038,18 +1051,20 @@ nav img {
         justify-content: center !important
     }
 }
-
 .aboutUser p {
     margin-bottom: 0 !important;
-    height: 136px;
-    min-width: 399px;
+    height: auto;
+    min-width: 136px;
     max-width: 399px;
     word-break: break-word
 }
 
-/* .aboutUser img {
-    margin: 1rem;
-} */
+@media screen and (min-width:600px) {
+    .aboutUser p {
+        height: 136px;
+        min-width: 399px !important
+    }
+}
 
 .imgFitUser {
     min-width: 100%;
@@ -1073,7 +1088,7 @@ nav img {
 
 .imgUserBox img {
     position: relative;
-    margin:1rem;
+    margin: 1rem;
     max-width: 100px
 }
 

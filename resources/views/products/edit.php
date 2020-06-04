@@ -1,6 +1,14 @@
-<?= $title ?? 'Criar Post' ?>
-<div class="card card-body bg-light mt5">
-    <h2><?= $data->product_name ?></h2>
+<header class="categoryHeader productHeader imgBackgroundArea">
+    <span>
+        <h2>Editar produto</h2>
+        <h1><?= $data->product_name ?></h1>
+    </span>
+    <?= ($_SESSION['user_status'] && $_SESSION['user_status'] == 1) ? "<small class='smallInfo'><a href='$BASE/users/show/$data->user_id'>$data->product_name</a> adicionado em " . dateFormat($data->created_at) . "</small>" : ''; ?>
+</header>
+<section class="formPageArea card card-body bg-light mt5">
+    <header>
+        <h2><?= $data->product_name ?></h2>
+    </header>
     <form action="<?= $BASE ?>/products/update/<?= $data->id ?>" method="post" enctype="multipart/form-data">
         <input type="hidden" name="id" id="<?= $data->id ?>" value="<?= $data->id ?>">
 
@@ -27,7 +35,7 @@
         <div class="form-group">
             <label for="product_description">Descrição do produto<sup>*</sup></label>
 
-            <input type="text" name="product_description" id="product_description" class="form-control form-control-lg <?= isset($error['product_description_error']) && $error['product_description_error'] != '' ? 'is-invalid' : '' ?>" value="<?=$data->product_description ?>">
+            <input type="text" name="product_description" id="product_description" class="form-control form-control-lg <?= isset($error['product_description_error']) && $error['product_description_error'] != '' ? 'is-invalid' : '' ?>" value="<?= $data->product_description ?>">
 
             <span class="invalid-feedback">
                 <?= $error['product_description_error'] ?? '' ?>
@@ -49,7 +57,7 @@
             <span class="invalid-feedback">
                 <?= $error['img_error'] ?? '' ?>
             </span>
-            <img src="<?= $BASE ?>/<?=imgOrDefault('products', $data->img, $data->id, "/category_$data->id_category")?>" title="<?= $data->product_name ?>">
+            <img src="<?= $BASE ?>/<?= imgOrDefault('products', $data->img, $data->id, "/category_$data->id_category") ?>" title="<?= $data->product_name ?>">
         </div>
 
         <input type="submit" class="btn btn-success" value="Enviar">

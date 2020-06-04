@@ -8,7 +8,7 @@
         <a href="<?= $BASE ?>/gallery/show/<?= $data->id ?>">
             <h1><?= $data->img_title ?></h1>
             <figure>
-                <img src="<?= $BASE ?>/public/img/gallery/id_<?= $data->id ?>/<?= $data->img ?>" alt="<?= $data->img ?>" title="<?= $data->img_title ?>">
+                <img src="<?= $BASE ?>/<?=imgOrDefault('gallery',$data->img, $data->id)?>" alt="<?= $data->img ?>" title="<?= $data->img_title ?>">
                 <figcaption style="white-space: nowrap;width: 450px;overflow: hidden;text-overflow: ellipsis;">
                 </figcaption>
             </figure>

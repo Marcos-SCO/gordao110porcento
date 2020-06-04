@@ -1,6 +1,13 @@
-<div class="card card-body bg-light mt5">
-    <h2>Add Post</h2>
-    <p>Crie um post com esse formulário</p>
+<header class="imgBackgroundArea homeBlog">
+    <span style="z-index:1">
+        <h1>Criar uma postagem<h1>
+    </span>
+</header>
+<section class="formPageArea postSection card card-body bg-light mt5">
+    <header>
+        <h2>Adicionar postagem</h2>
+        <p>Crie uma postagem com esse formulário</p>
+    </header>
     <form action="<?=$BASE?>/posts/store" method="post" enctype="multipart/form-data">
         <div class="form-group">
             <label for="title">Titulo<sup>*</sup></label>
@@ -32,4 +39,4 @@
 
         <input type="submit" class="btn btn-success" value="Enviar">
     </form>
-</div>
+</section>

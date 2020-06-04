@@ -10,7 +10,7 @@ Core\Controller::createMore($BASE, 'gallery', 'Quer adicionar Mais imagens?');
         <?php } ?>
     </small>
     <figure>
-        <img src="<?= $BASE ?>/public/img/gallery/id_<?= $data->id ?>/<?= $data->img ?>" alt="<?= $data->img ?>" title="<?= $data->img_title ?>">
+        <img src="<?= $BASE ?>/<?= imgOrDefault('gallery', $data->img, $data->id) ?>" alt="<?= $data->img ?>" title="<?= $data->img_title ?>">
     </figure>
 </div>
 

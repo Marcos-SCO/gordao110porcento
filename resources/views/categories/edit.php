@@ -1,6 +1,13 @@
-<div class="card card-body bg-light mt5">
-    <h2><?= $data->category_name ?></h2>
-
+<header class="categoryHeader productHeader imgBackgroundArea">
+    <span>
+        <h2>Editar categoria</h2>
+        <h1><?= $data->category_name ?></h1>
+    </span>
+</header>
+<section class="formPageArea card card-body bg-light mt5">
+    <header>
+        <h3><?= $data->category_name ?></h3>
+    </header>
     <form action="<?= $BASE ?>/categories/update/<?= $data->id ?>" method="post" enctype="multipart/form-data">
 
         <input type="hidden" name="id" id="<?= $data->id ?>" value="<?= $data->id ?>">
@@ -33,4 +40,4 @@
 
         <input type="submit" class="btn btn-success" value="Enviar">
     </form>
-</div>
+</section>

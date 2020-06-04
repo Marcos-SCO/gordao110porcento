@@ -4,11 +4,11 @@
         <h1><?=$data->name?><h2>
     </span>
 </header>
-<section class="userEdit d-flex flex-column justify-content-center row m-3">
+<section class="formPageArea card card-body bg-light mt5">
     <header>
-        <h3 class="text-center lightText">Preencha o formulário</h3>
+        <h3>Preencha o formulário</h3>
     </header>
-    <form action="<?= $BASE ?>/users/update" method="post" enctype="multipart/form-data" class="m-auto mb-3">
+    <form action="<?= $BASE ?>/users/update" method="post" enctype="multipart/form-data" class="mb-3">
         <div class="d-flex flex-wrap">
             <div class="w-100">
                 <input type="hidden" name="id" value="<?= $data->id ?>">

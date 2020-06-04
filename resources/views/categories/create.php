@@ -1,6 +1,12 @@
-<div class="card card-body bg-light mt5">
-    <h2>Add Post</h2>
-    <p>Crie um post com esse formulário</p>
+<header class="categoryHeader productHeader imgBackgroundArea">
+    <span>
+        <h1>Adicionar uma categoria<h1>
+    </span>
+</header>
+<section class="formPageArea card card-body bg-light mt5">
+    <header>
+        <h2>Adicionar uma categoria</h2>
+    </header>
     <form action="<?= $BASE ?>/categories/store" method="post" enctype="multipart/form-data">
         <div class="form-group">
             <label for="category_name">Nome da categoria<sup>*</sup></label>
@@ -28,4 +34,4 @@
 
         <input type="submit" class="btn btn-success" value="Enviar">
     </form>
-</div>
+</section>

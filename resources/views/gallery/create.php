@@ -1,12 +1,17 @@
-<div class="card card-body bg-light mt5">
-    <h2>Adicionar mais imagens</h2>
-    <p>Crie um post com esse formulário</p>
-    <form action="<?=$BASE?>/gallery/store" method="post" enctype="multipart/form-data">
+<header class="categoryHeader productHeader imgBackgroundArea">
+    <span>
+        <h1>Adicionar mais imagens<h1>
+    </span>
+</header>
+<section class="formPageArea card card-body bg-light mt5">
+    <header>
+        <h2>Adicionar mais imagens</h2>
+        <p>Crie um post com esse formulário</p>
+    </header>
+    <form action="<?= $BASE ?>/gallery/store" method="post" enctype="multipart/form-data">
         <div class="form-group">
             <label for="img_title">Descrição da imagem<sup>*</sup></label>
-            <input type="text" name="img_title" id="img_title"
-                class="form-control form-control-lg <?= isset($error['img_title_error']) && $error['img_title_error'] != '' ? 'is-invalid' : '' ?>"
-                value="<?= $data['img_title'] ?? '' ?>">
+            <input type="text" name="img_title" id="img_title" class="form-control form-control-lg <?= isset($error['img_title_error']) && $error['img_title_error'] != '' ? 'is-invalid' : '' ?>" value="<?= $data['img_title'] ?? '' ?>">
             <span class="invalid-feedback">
                 <?= $error['img_title_error'] ?? '' ?>
             </span>
@@ -18,8 +23,10 @@
             <span class="invalid-feedback">
                 <?= $error['img_error'] ?? '' ?>
             </span>
+
+            <img src="<?= $BASE ?>/public/img/gallery/default/default.png" alt="default.png" title="Imagem padrão">
         </div>
 
         <input type="submit" class="btn btn-success" value="Enviar">
     </form>
-</div>
+</section>
