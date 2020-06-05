@@ -25,13 +25,13 @@ class Users extends Controller
         $inactiveNumber = $this->model->customQuery("SELECT COUNT(*) as inactive FROM users WHERE status = 0");
 
         View::render('users/index.php', [
+            'pageId' => $id,
             'title' => 'Users',
             'activeNumber' => $activeNumber,
             'inactiveNumber' => $inactiveNumber,
+            'path' => "users/index",
             'users' => $results[4],
             'flash' => $flash,
-            'table' => $table,
-            'pageId' => $id,
             'prev' => $results[0],
             'next' => $results[1],
             'totalResults' => $results[2],
