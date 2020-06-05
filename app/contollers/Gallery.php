@@ -95,6 +95,7 @@ class Gallery extends Controller
                 'user' => $user,
                 'flash' => $flash,
                 'path' => 'gallery/show',
+                'page' => $id,
                 'prev' => $results[0],
                 'next' => $results[1],
                 'totalResults' => $results[2],
