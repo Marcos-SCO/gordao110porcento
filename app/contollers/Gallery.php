@@ -101,12 +101,6 @@ class Gallery extends Controller
                 'totalResults' => $results[2],
                 'totalPages' => $results[3],
             ]);
-            // return View::render('gallery/show.php', [
-            //     'img_title' => $data->img_title,
-            //     'data' => $data,
-            //     'user' => $user,
-            //     'flash' => $flash
-            // ]);
         } else {
             // if id is not encountered
             throw new \Exception("$id not found");
