@@ -1,6 +1,6 @@
 <header class="categoryHeader productHeader imgBackgroundArea">
     <span>
-        <h2>Galeria Editar Imagem</h2>
+        <h2>Editar Imagem</h2>
         <h1><?= $data->img_title ?></h1>
     </span>
 </header>
@@ -21,7 +21,7 @@
         </div>
 
         <div class="form-group">
-            <label for="img">Coloque a imagem</label>
+            <label for="img">Arquivo de imagem</label>
             <input type="file" name="img" id="img" class="form-control form-control-lg <?= isset($error['img_error']) && $error['img_error'] != '' ? 'is-invalid' : '' ?>" value="<?= $data->img ?? '' ?>">
             <input type="hidden" name="img" id="img" value="<?= $data->img ?>">
             <span class="invalid-feedback">

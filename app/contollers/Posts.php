@@ -26,7 +26,7 @@ class Posts extends Controller
             'title' => 'Posts - Açougue a 110%',
             'posts' => $results[4],
             'flash' => $flash,
-            'table' => $table,
+            'path' => "posts/index",
             'pageId' => $id,
             'prev' => $results[0],
             'next' => $results[1],

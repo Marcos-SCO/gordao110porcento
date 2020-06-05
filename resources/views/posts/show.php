@@ -1,6 +1,6 @@
 <header class="postShow imgBackgroundArea" style="background-image:url('<?= $BASE . '/' . imgOrDefault('posts', $data->img, $data->id) ?>');">
     <h1><?= $data->title ?></h1>
-    <small class='smallInfo'>Escrito por <a href='$BASE/users/show/$user->id'><?= $user->name ?></a> em <?= dateFormat($data->created_at) ?></small>
+    <small class='smallInfo'>Escrito por <a href='<?="$BASE/users/show/$user->id"?>'><?= $user->name ?></a> em <?= dateFormat($data->created_at) ?></small>
 </header>
 <?php if ($_SESSION['user_status'] == 1) { ?>
     <div class="d-flex flex-wrap justify-content-center align-items-center postShowAdm">

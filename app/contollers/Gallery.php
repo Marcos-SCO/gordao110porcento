@@ -21,12 +21,12 @@ class Gallery extends Controller
     public function index($id = 1, $flash = false)
     {
         $table = 'gallery';
-        $results = $this->pagination($table, $id, $limit = 10, '', $orderOption = 'DESC');
+        $results = $this->pagination($table, $id, $limit = 4, '', $orderOption = 'DESC');
         View::render('gallery/index.php', [
             'title' => 'Galeria de imagens',
             'gallery' => $results[4],
             'flash' => $flash,
-            'table' => $table,
+            'path' => 'gallery/index',
             'pageId' => $id,
             'prev' => $results[0],
             'next' => $results[1],
@@ -82,15 +82,30 @@ class Gallery extends Controller
 
     public function show($id, array $flash = null)
     {
-        $data = $this->model->getAllFrom('gallery', $id);
+        $table = 'gallery';
+        $results = $this->pagination($table, $id, $limit = 1, '', $orderOption = 'DESC');
         if ($this->model->rowCount() > 0) {
-            $user = $this->model->getAllFrom('users', $data->user_id);
+            $user = $this->model->getAllFrom('users', $results[4][0]->user_id);
+
             return View::render('gallery/show.php', [
-                'img_title' => $data->img_title,
-                'data' => $data,
+                'title' =>  $results[4][0]->img_title,
+                'pageId' => $id,
+                'data' => $results[4][0],
+                'img_title' =>  $results[4][0]->img_title,
                 'user' => $user,
-                'flash' => $flash
+                'flash' => $flash,
+                'path' => 'gallery/show',
+                'prev' => $results[0],
+                'next' => $results[1],
+                'totalResults' => $results[2],
+                'totalPages' => $results[3],
             ]);
+            // return View::render('gallery/show.php', [
+            //     'img_title' => $data->img_title,
+            //     'data' => $data,
+            //     'user' => $user,
+            //     'flash' => $flash
+            // ]);
         } else {
             // if id is not encountered
             throw new \Exception("$id not found");

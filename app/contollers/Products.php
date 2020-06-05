@@ -32,7 +32,7 @@ class Products extends Controller
             'categoryElements' => $categoryElements,
             'products' => $results[4],
             'flash' => $flash,
-            'table' => $table,
+            'path' => "products/index",
             'pageId' => $id,
             'prev' => $results[0],
             'next' => $results[1],
