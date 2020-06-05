@@ -1147,6 +1147,10 @@ nav img {
 .galleryArticle figure {
     position: relative;
 }
+.galleryArticle .galleryImgMax {
+    height: 170px;
+    overflow: hidden
+}
 .galleryArticle figcaption p{
     width: 100%;
     color: #ff7a08;
