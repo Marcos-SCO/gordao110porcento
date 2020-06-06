@@ -12,15 +12,11 @@
     <link rel="mask-icon" href="<?= $BASE ?>/public/img/favicon/safari-pinned-tab.svg" color="#5bbad5">
     <meta name="msapplication-TileColor" content="#da532c">
     <meta name="theme-color" content="#ffffff">
+    <?php $getQuery = getQueryString(); // get url ?>
     <?php
-    // getQueryString
-    $getQuery = getQueryString();
     // tiny MCE 
     echo ($getQuery[0] == 'posts' && $getQuery[1] == 'create' || $getQuery[1] == 'edit') ? "<!-- Tiny MCE -->
     <script src='https://cdn.tiny.cloud/1/no-api-key/tinymce/5/tinymce.min.js' referrerpolicy='origin'></script><script>tinymce.init({selector:'#tinyMCE'});</script>" : '';
-    // Light Box 
-    echo ($getQuery[0] == 'gallery' || $getQuery[0] == 'about') ? "<!-- LightBox -->
-    <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.1/css/lightbox.min.css'><script src='https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.1/js/lightbox-plus-jquery.min.js' defer></script>" : '';
     ?>
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
@@ -31,6 +27,11 @@
     <link rel="stylesheet" href="<?= $BASE ?>/public/css/owl.theme.default.css">
     <!-- Google fonts  -->
     <link href="https://fonts.googleapis.com/css2?family=Oleo+Script+Swash+Caps:wght@700&display=swap" rel="stylesheet">
+    <?php
+    // Light Box 
+    echo ($getQuery[0] == 'gallery') ? "<!-- LightBox -->
+    <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.1/css/lightbox.min.css'><script src='https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.1/js/lightbox-plus-jquery.min.js' defer></script>" : '';
+    ?>
     <!-- Css -->
     <link rel="stylesheet" href="<?= $BASE ?>/public/css/style.css">
     <link rel="stylesheet" href="<?= $BASE ?>/public/css/style.hero.css">
