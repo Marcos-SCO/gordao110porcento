@@ -12,7 +12,6 @@
     <link rel="mask-icon" href="<?= $BASE ?>/public/img/favicon/safari-pinned-tab.svg" color="#5bbad5">
     <meta name="msapplication-TileColor" content="#da532c">
     <meta name="theme-color" content="#ffffff">
-    <!-- end favicon -->
     <?php
     // getQueryString
     $getQuery = getQueryString();
@@ -20,7 +19,8 @@
     echo ($getQuery[0] == 'posts' && $getQuery[1] == 'create' || $getQuery[1] == 'edit') ? "<!-- Tiny MCE -->
     <script src='https://cdn.tiny.cloud/1/no-api-key/tinymce/5/tinymce.min.js' referrerpolicy='origin'></script><script>tinymce.init({selector:'#tinyMCE'});</script>" : '';
     // Light Box 
-    echo ($getQuery[0] == 'gallery' && $getQuery[1] == 'index' || $getQuery[1] == '' || $getQuery[1] == 'show') ? "<!-- LightBox --><link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.1/css/lightbox.min.css'><script src='https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.1/js/lightbox-plus-jquery.min.js' defer></script>" : '';
+    echo ($getQuery[0] == 'gallery' || $getQuery[0] == 'about') ? "<!-- LightBox -->
+    <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.1/css/lightbox.min.css'><script src='https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.1/js/lightbox-plus-jquery.min.js' defer></script>" : '';
     ?>
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
@@ -38,7 +38,6 @@
 </head>
 
 <body>
-    <!-- <?//= ($getQuery[0] == '' || $getQuery[0] == 'home') ? "<script> document.addEventListener('scroll', () => { (window.pageYOffset >= 300) ? window.addEventListener('scroll', document.getElementById('NavHeader').classList.add('fixed-top')) : window.addEventListener('scroll', document.getElementById('NavHeader').classList.remove('fixed-top')); })</script>" : '' ?> -->
     <header class="<?= ($getQuery[0] == '' || $getQuery[0] == 'home') ? 'fixed-top' : '' ?> z-index bg-light">
         <!-- Nav -->
         <nav class="navbar navbar-expand-lg navbar-light bg-light" style="background-color:#f8f9fa;">

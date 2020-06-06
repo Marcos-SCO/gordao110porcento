@@ -1,4 +1,4 @@
-<header class="categoryHeader productHeader imgBackgroundArea">
+<header class="galleryHeader productHeader imgBackgroundArea">
     <span>
         <h2>Editar Imagem</h2>
         <h1><?= $data->img_title ?></h1>

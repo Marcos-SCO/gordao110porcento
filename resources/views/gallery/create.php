@@ -1,4 +1,4 @@
-<header class="categoryHeader productHeader imgBackgroundArea">
+<header class="galleryHeader productHeader imgBackgroundArea">
     <span>
         <h1>Adicionar imagens<h1>
     </span>

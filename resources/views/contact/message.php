@@ -4,9 +4,9 @@
         <h1>Envie sua menssagem</h1>
     </span>
 </header>
-<section>
+<address>
     <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d58537.08625555666!2d-46.91708754613075!3d-23.512068734946492!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x94cf03dd6cef1295%3A0x746b94a987d123a3!2sBarueri%20-%20SP!5e0!3m2!1spt-BR!2sbr!4v1591283488037!5m2!1spt-BR!2sbr" width="100%" height="300" frameborder="0" style="border:0;" allowfullscreen="" aria-hidden="false" tabindex="0"></iframe>
-</section>
+</address>
 <section class="contactForm mb-4 m-auto pl-5 pr-5 pb-5">
     <header>
         <h2 class="h1-responsive font-weight-bold text-center my-4">Entre em contato</h2>
@@ -54,7 +54,7 @@
             </form>
         </div>
 
-        <div class="contactInfo text-center align-self-start">
+        <address class="contactInfo text-center align-self-start">
             <ul class="list-unstyled">
                 <li><i class="fa fa-map-marker fa-2x" style="color:#d22"></i>
                     <p>Barueri - SP</p>
@@ -70,6 +70,6 @@
                     <a href="mailto:marcos_sco@outlook.com" style="color:#333!important">gordão110%@outlook.com</a>
                 </li>
             </ul>
-        </div>
+        </address>
     </div>
 </section>

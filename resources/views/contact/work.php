@@ -62,7 +62,7 @@
             </form>
         </div>
 
-        <div class="contactInfo text-center align-self-start">
+        <address class="contactInfo text-center align-self-start">
             <ul class="list-unstyled">
                 <li><i class="fa fa-map-marker fa-2x" style="color:#d22"></i>
                     <p>Barueri - SP</p>
