@@ -9,8 +9,8 @@
             </header>
             <div class="about">
                 <div data-anima="center">
-                    <strong class="font-swashCaps">Gordão a 110%</strong>
-                    <p>Somos uma lanchonete e restaurante com mais de <span id="activeYears" class="link">vinte e três</span> anos de tradição.<br>Já servimos todo tipo de refeição com nosso extenso <span class="link" id="menu">menu</span>, peça já!<br>Te convidamos a se deliciar com nossas ofertas.<br>Você terá a satisfação a 110% e garantia de qualidade.<br>É gordão ou nada! <a href="">Saiba mais</a></p>
+                    <strong class="font-swashCaps lightText">Gordão a 110%</strong>
+                    <p class="mt-2">Somos uma lanchonete e restaurante com mais de <span id="activeYears" class="link">vinte e três</span> anos de tradição.<br>Já servimos todo tipo de refeição com nosso extenso <span class="link" id="menu">menu</span>, peça já!<br>Te convidamos a se deliciar com nossas ofertas.<br>Você terá a satisfação a 110% e garantia de qualidade.<br>É gordão ou nada! <a href="">Saiba mais</a></p>
                 </div>
             </div>
         </section>

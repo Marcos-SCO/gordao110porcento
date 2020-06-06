@@ -5,7 +5,7 @@
         <ul class="pagination">
 
             <?php if (isset($path)) {
-                $explodedPath = explode('/',$path);
+                $explodedPath = explode('/', $path);
 
                 $pageId = ($explodedPath[1] == 'show') ? $page : $pageId;
 
@@ -28,10 +28,10 @@
                 $totalDisable = ($pageId != $totalPages) ? '' : 'disabled';
             ?>
                 <li class="page-item <?= $totalDisable ?>">
-                    <a class="page-link" href="<?= $BASE ?>/<?= $path .'/'.$next ?>">></a>
+                    <a class="page-link" href="<?= $BASE ?>/<?= $path . '/' . $next ?>">></a>
                 </li>
                 <li class="page-item <?= $totalDisable ?>">
-                    <span class="page-link"><a href="<?= $BASE ?>/<?= $path .'/'.$totalPages ?>">Última</a></span>
+                    <span class="page-link"><a href="<?= $BASE ?>/<?= $path . '/' . $totalPages ?>">Última</a></span>
                 </li>
             <?php } ?>
         </ul>
@@ -40,70 +40,37 @@
 
 <!-- Footer -->
 <footer class="page-footer font-small blue pt-4">
-    <!-- Footer Links -->
-    <div class="container-fluid text-center text-md-left">
-        <!-- Grid row -->
-        <div class="row">
-            <!-- Grid column -->
-            <div class="col-md-6 mt-md-0 mt-3">
-                <!-- Content -->
-                <h5 class="text-uppercase">Footer Content</h5>
-                <p>Here you can use rows and columns to organize your footer content.</p>
+    <article style="position:relative">
+        <section class="container-fluid text-center text-md-left">
+            <div class="row">
+                <header class="col-md-6 mt-md-0 mt-3">
+                    <h5 class="text-uppercase">Footer Content</h5>
+                    <p>Here you can use rows and columns to organize your footer content.</p>
+                </header>
+                <hr class="clearfix w-100 d-md-none pb-3">
+                <div class="col-md-3 mb-md-0 mb-3">
+                    <h5 class="text-uppercase">Links</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="#!">Link 1</a></li>
+                        <li><a href="#!">Link 2</a></li>
+                        <li><a href="#!">Link 3</a></li>
+                        <li><a href="#!">Link 4</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-3 mb-md-0 mb-3">
+                    <h5 class="text-uppercase">Links</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="#!">Link 1</a></li>
+                        <li><a href="#!">Link 2</a></li>
+                        <li><a href="#!">Link 3</a></li>
+                        <li><a href="#!">Link 4</a></li>
+                    </ul>
+                </div>
             </div>
-            <!-- Grid column -->
-            <hr class="clearfix w-100 d-md-none pb-3">
-            <!-- Grid column -->
-            <div class="col-md-3 mb-md-0 mb-3">
-
-                <!-- Links -->
-                <h5 class="text-uppercase">Links</h5>
-
-                <ul class="list-unstyled">
-                    <li>
-                        <a href="#!">Link 1</a>
-                    </li>
-                    <li>
-                        <a href="#!">Link 2</a>
-                    </li>
-                    <li>
-                        <a href="#!">Link 3</a>
-                    </li>
-                    <li>
-                        <a href="#!">Link 4</a>
-                    </li>
-                </ul>
-            </div>
-            <!-- Grid column -->
-            <!-- Grid column -->
-            <div class="col-md-3 mb-md-0 mb-3">
-                <!-- Links -->
-                <h5 class="text-uppercase">Links</h5>
-
-                <ul class="list-unstyled">
-                    <li>
-                        <a href="#!">Link 1</a>
-                    </li>
-                    <li>
-                        <a href="#!">Link 2</a>
-                    </li>
-                    <li>
-                        <a href="#!">Link 3</a>
-                    </li>
-                    <li>
-                        <a href="#!">Link 4</a>
-                    </li>
-                </ul>
-            </div>
-            <!-- Grid column -->
-        </div>
-        <!-- Grid row -->
-    </div>
-    <!-- Footer Links -->
-    <!-- Copyright -->
-    <div class="footer-copyright text-center py-3">© 2020 Copyright:
-        <a href="https://mdbootstrap.com/"> MDBootstrap.com</a>
-    </div>
-    <!-- Copyright -->
+        </section>
+        <adress class="d-block footer-copyright text-center py-3">© 2020 Desenvolvido por <a href="https://www.linkedin.com/in/marcos-dos-santos-carvalho-67a51715a/" target="_blank" style="font-weight:bolder">Marcos dos Santos Carvalho</a>
+        </adress>
+    </article>
 </footer>
 <!-- Footer -->
 

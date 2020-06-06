@@ -22,7 +22,7 @@ class Home extends Controller
         $pizzas = $this->model->getProducts(2);
 
         View::render('home/index.php', [
-            'title' => 'Açougue a 110%',
+            'title' => 'Gordão a 110%',
             'hamburguers' => $hamburguers,
             'pizzas' => $pizzas,
             'categories' => $categories,

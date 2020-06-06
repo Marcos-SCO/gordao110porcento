@@ -75,7 +75,7 @@
                 <a class="navbar-brand d-none d-lg-block" style="position:absolute;top:0;margin:0!important;" href="<?= $BASE ?>"><img src="http://localhost/projetosCompletos/gordao110porcento/public/img/template/gordao110_logo_300px.png" class="img-prevent-drag" alt="gordao110_logo_300px.png" title="Grodão a 110%"></a>
 
                 <ul class="navbar-nav">
-                    <li class="nav-item"><a class="nav-link" href="<?= $BASE ?>">Sobre</a></li>
+                    <li class="nav-item"><a class="nav-link <?= activePage($getQuery, 'about') ?>" href="<?= $BASE ?>/about">Sobre</a></li>
                     <li class="nav-item dropdown <?= activePage($getQuery, 'contact') ?>">
                         <a class="nav-link dropdown-toggle" style="background:#f8f9fa!important" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Contato</a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
