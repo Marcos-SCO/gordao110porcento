@@ -1,4 +1,4 @@
-<header class="imgBackgroundArea homeBlog d-flex flex-wrap justify-content-center align-items-center flex-column mb-3">
+<header class="imgBackgroundArea homeBlog d-flex flex-wrap justify-content-center align-items-center flex-column">
     <span>
         <h1 class="text-left">Blog</h1>
         <h2 class="text-left">ùltimas noticias</h2>

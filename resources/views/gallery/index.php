@@ -1,3 +1,4 @@
+<Style>main{height:100%}</Style>
 <header class="galleryHeader imgBackgroundArea">
     <span style="z-index:1">
         <h2>Nossa</h2>

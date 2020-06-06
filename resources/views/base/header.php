@@ -12,7 +12,8 @@
     <link rel="mask-icon" href="<?= $BASE ?>/public/img/favicon/safari-pinned-tab.svg" color="#5bbad5">
     <meta name="msapplication-TileColor" content="#da532c">
     <meta name="theme-color" content="#ffffff">
-    <?php $getQuery = getQueryString(); // get url ?>
+    <?php $getQuery = getQueryString(); // get url 
+    ?>
     <?php
     // tiny MCE 
     echo ($getQuery[0] == 'posts' && $getQuery[1] == 'create' || $getQuery[1] == 'edit') ? "<!-- Tiny MCE -->
@@ -118,5 +119,51 @@
     // Display flash messages
     echo (isset($flash) && $flash != false && $flash != null) ? "<div class='" . $flash['class'] . "' id='msg-flash' style='transition: transform .18s, opacity .18s, visibility 0s .18s;position:absolute;left:5%;top:17%;text-align: center;z-index:9999999999;'>" . $flash['message'] . "</div><script>/*flash message*/ let flash = document.querySelector('#msg-flash'); if (flash != null) {setTimeout(() => { flash.style = 'display:none;transition: transform .18s, opacity .18s, visibility 0s .18s;'; }, 4000); }</script>" : ''
     ?>
-    <main>
-        <?= ($getQuery[0] !== '' && $getQuery[0] !== 'home') ? '<!-- Spinner --><div id="loader" class="center"></div>' : '' ?>
+    <main><?= ($getQuery[0] !== '' && $getQuery[0] !== 'home') ? '<!-- Spinner --><div id="loader" class="center"></div>' : '' ?>
+        <!-- To top btn -->
+        <button id="topBtn" data-anima="right"><i class="fa fa-arrow-up"></i></button>
+        <!-- Whatsapp btn -->
+        <a href="https://api.whatsapp.com/send?phone=5511930268294&text=Olá+tudo+bem?+Nós+do+Gordão+a+110%,+estamos+disponíveis+aguardando+seu+contato." class="float" target="_blank" id="whats"><i class="fa fa-whatsapp my-float"></i></a>
+        <script>
+            //Get the button:
+            let body = document.querySelector('body');
+            let whats = document.querySelector('#whats');
+            mybutton = document.getElementById("topBtn");
+            // When the user scrolls down 20px from the top of the document, show the button
+            window.onscroll = function() {
+                scrollFunction()
+            };
+            // on body click don't display btn
+            body.addEventListener('click', () => mybutton.style.display = 'none');
+            function scrollFunction() {
+                (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) ? mybutton.style = "display:block;opacity:1": mybutton.style = "display:block;opacity:0;transition:.5s";
+                (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) ? whats.style = 'display:none;opacity:0;transition:.5s': whats.style = 'display:block;opacity:1;transition:.5s';
+            }
+            // When the user clicks on the button, scroll to the top of the document
+            mybutton.addEventListener('click', function topFunction() {
+                currentYOffset = self.pageYOffset;
+                initYOffset = currentYOffset;
+                var intervalId = setInterval(function() {
+                    currentYOffset -= initYOffset * 0.05;
+                    document.body.scrollTop = currentYOffset;
+                    document.documentElement.scrollTop = currentYOffset;
+                    document.body.scrollTop = currentYOffset; // For Chrome, Firefox, IE and Opera
+                    if (self.pageYOffset == 0) {
+                        clearInterval(intervalId);
+                    }
+                }, 30);
+            });
+            // Scroll to specific values
+            // scrollTo is the same
+            window.scroll({
+                top: 2500,
+                left: 0,
+                behavior: 'smooth'
+            });
+            // Scroll certain amounts from current position 
+            window.scrollBy({
+                top: 100, // could be negative value
+                left: 0,
+                behavior: 'smooth'
+            });
+        </script>
