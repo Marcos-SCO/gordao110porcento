@@ -4,13 +4,14 @@
     width: 100%;
     color: #fff;
     background-color: #000;
-    background-image: url(../img/template/pizzasRefris_template.png);
+    background-image: url(../img/slider/pizzasRefris_template.jpg);
     background-blend-mode: multiply;
     background-position: right center;
-    background: url(../img/template/pizzasRefris_template.png) no-repeat fixed;
+    background: url(../img/slider/pizzasRefris_template.jpg) no-repeat fixed;
     background-size: cover;
     transition: all ease-in-out .5s;
     transition-delay: .3s;
+    opacity: 1
 }
 
 #hero header {
@@ -83,13 +84,13 @@
 
 .hero::after {
     content: '';
-    background: #333;
+    background: #2b180b;
     position: absolute;
     height: 100%;
     width: 100%;
     left: 0;
     top: 0;
-    opacity: 0.65;
+    opacity: 0.6
 }
 
 /* prev and next buttons */

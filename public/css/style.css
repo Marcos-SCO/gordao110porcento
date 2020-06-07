@@ -57,6 +57,7 @@ a:hover {
 
 .btn:hover {
     color: #ff5b00 !important;
+    border-color: #ff5b00 !important;
     background-color: #fff !important
 }
 
@@ -604,7 +605,7 @@ footer .contactSection .map {
 
 /* Home about */
 .homeHeaderAbout {
-    background-image: url(../img/section/gordao110.png)
+    background-image: url(../img/template/gordao110.png)
 }
 
 .homeHeaderAbout.imgBackgroundArea::before {
@@ -718,7 +719,7 @@ footer .contactSection .map {
 
 /* Snacks start */
 .bestsSnacks {
-    background-image: url(../img/section/comida-rapida-espacio-abajo.png);
+    background-image: url(../img/template/comida-rapida-espacio-abajo.png);
     background-position: top;
     background-repeat: no-repeat;
     background-size: cover

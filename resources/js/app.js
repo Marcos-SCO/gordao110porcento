@@ -100,8 +100,8 @@ owl.owlCarousel({
         i = 0;
         // slides content
         slide = [
-            ['pizzasRefris_template.png', 'Gordão a 110%', 'O melhor restaurante e lanchonete da região'],
-            ['lanchesTemplate.png', 'Os Melhores lanches', 'Aqui você encontra váriedade e lanches com o sabor imperdivél'],
+            ['pizzasRefris_template.jpg', 'Gordão a 110%', 'O melhor restaurante e lanchonete da região'],
+            ['batataGarfoHamburguer.jpg', 'Os Melhores lanches', 'Aqui você encontra váriedade e lanches com o sabor imperdivél'],
             ['hamburguerBatataTomate_template.png', 'Melhor menu', 'Vasto menu feito com igredientes frescos e de qualidade'],
             ['hamburguer_template.png', 'Experimente nossas ofertas', 'Mataremos sua fome com a porcentagem acima, satisfação em 110%']
         ];
@@ -130,7 +130,7 @@ owl.owlCarousel({
         hero = document.querySelector('#hero');
         quoteTitle = document.querySelector('#quoteTitle');
         quote = document.querySelector('#quote');
-        path = '/public/img/template/';
+        path = '/public/img/slider/';
         // initial elements with counter in 0
         quoteTitle.innerText = slide[i][1];
         quote.innerText = slide[i][2];

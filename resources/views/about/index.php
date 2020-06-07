@@ -1,6 +1,6 @@
 <style>
     body {
-        background-image: url('<?= $BASE ?>/public/img/template/aboutBackground.png');
+        background-image: url('<?= $BASE ?>/public/img/template/aboutBackgroundSection.png');
         background-size: cover;
         background-attachment: fixed;
         background-repeat: no-repeat;
