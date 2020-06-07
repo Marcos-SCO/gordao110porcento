@@ -149,7 +149,7 @@ textarea {
     margin-left: -5px;
     border-width: 8px;
     border-style: solid;
-    border-color: #fff transparent transparent transparent;
+    border-color: #fff transparent transparent transparent
 }
 
 .float:hover::before,
@@ -251,7 +251,7 @@ img {
     width: 70px;
     height: 70px;
     animation: spin 1s linear infinite;
-    z-index: 99999;
+    z-index: 99999
 }
 
 @keyframes spin {
@@ -272,10 +272,11 @@ img {
     position: relative;
     right: 20%;
     -webkit-transform: translate(50%, 0);
-    -ms-transform: translate(50%, 0);
+    -ms-transform: translate(50%, 0)
 }
 
-.img-prevent-drag, img {
+.img-prevent-drag,
+img {
     /* prevent User drag */
     /* user-drag: none; */
     user-select: none;
@@ -382,7 +383,7 @@ footer::before {
     background: #333;
     height: 100%;
     width: 100%;
-    opacity: .82;
+    opacity: .82
 }
 
 .footerInfo {
@@ -397,9 +398,8 @@ footer::before {
 }
 
 .footerMenus {
-    /* padding: 0 1rem; */
     width: 100%;
-    max-width: 502px;
+    max-width: 502px
 }
 
 .footerMenus section {
@@ -414,6 +414,7 @@ footer .contactSection address {
     display: flex;
     margin: 0 !important
 }
+
 footer .contactSection nav {
     margin-right: 1rem;
     width: 100%;
@@ -422,21 +423,26 @@ footer .contactSection nav {
 
 footer .contactSection i {
     margin-right: 1rem;
-    margin-top: .4rem;
+    margin-top: .4rem
 }
 
 footer .contactSection .map {
     width: 100%;
     max-width: 431px
 }
+
 @media screen and (max-width:558px) {
-    footer .contactSection address {flex-wrap:wrap}
+    footer .contactSection address {
+        flex-wrap: wrap
+    }
 }
+
 @media screen and (min-width:798px) {
     footer article {
         flex-direction: row
     }
 }
+
 @media screen and (min-width:938px) {
     .footerInfo {
         flex-wrap: nowrap !important;
@@ -849,7 +855,7 @@ footer .contactSection .map {
 
 @media screen and (min-width: 357px) {
     .products {
-        padding: 1rem;
+        padding: 1rem
     }
 }
 
@@ -916,7 +922,7 @@ footer .contactSection .map {
 }
 
 .usersAdm li {
-    min-width: 300px;
+    min-width: 300px
 }
 
 .usersAdm .userPic {
@@ -924,11 +930,11 @@ footer .contactSection .map {
     height: 30px;
     border-radius: 50%;
     border: 1px solid #ccc;
-    overflow: hidden;
+    overflow: hidden
 }
 
 .usersAdm img {
-    max-width: 40px;
+    max-width: 40px
 }
 
 .usersAdm button {
@@ -936,7 +942,7 @@ footer .contactSection .map {
     border: none;
     color: var(--primary);
     background: none;
-    padding: 0 .2rem;
+    padding: 0 .2rem
 }
 
 .usersAdm button:hover {
@@ -990,11 +996,11 @@ footer .contactSection .map {
         position: relative;
         right: 20%;
         -webkit-transform: translate(50%, 0);
-        -ms-transform: translate(50%, 0);
+        -ms-transform: translate(50%, 0)
     }
 
     .user figcaption {
-        min-width: 406px;
+        min-width: 406px
     }
 }
 
@@ -1007,7 +1013,7 @@ footer .contactSection .map {
 .user figcaption h5,
 .user figcaption p {
     max-width: 370px;
-    margin: auto;
+    margin: auto
 }
 
 .userPosts header h3::after {
@@ -1020,6 +1026,8 @@ footer .contactSection .map {
 }
 
 /* -------- User show End -------- */
+
+/* -------- User Edit Start -------- */
 .userEdit form {
     padding: 1rem
 }
@@ -1037,8 +1045,6 @@ footer .contactSection .map {
     box-shadow: 15px 15px 0px #ff833e;
     overflow: hidden
 }
-
-/* -------- User Edit Start -------- */
 
 /* -------- User Edit End -------- */
 
@@ -1076,11 +1082,11 @@ footer .contactSection .map {
     width: 100%;
     background-color: #333;
     opacity: .01;
-    transition: all ease-in-out .2s;
+    transition: all ease-in-out .2s
 }
 
 .blogFig:hover .imgMax::before {
-    opacity: .14 !important;
+    opacity: .14 !important
 }
 
 .blogFig:hover img {
@@ -1169,7 +1175,7 @@ footer .contactSection .map {
 }
 
 .postShowSection figure img {
-    margin: auto;
+    margin: auto
 }
 
 @media screen and (min-width:430px) {
@@ -1204,7 +1210,7 @@ footer .contactSection .map {
     max-width: 600px;
     padding: 1rem;
     color: #fff;
-    background-color: #333;
+    background-color: #333
 }
 
 .aboutUser a figure::before {
@@ -1218,7 +1224,7 @@ footer .contactSection .map {
     background-size: contain;
     background-repeat: no-repeat;
     background-position: right;
-    opacity: .5;
+    opacity: .5
 }
 
 .aboutUser a:hover {
@@ -1231,12 +1237,12 @@ footer .contactSection .map {
 
 .aboutUser figcaption,
 .aboutUser h5 {
-    z-index: 1;
+    z-index: 1
 }
 
 .aboutUser p {
     background: rgba(33, 33, 33, 0.75);
-    padding: .5rem;
+    padding: .5rem
 }
 
 @media screen and (max-width:594px) {
@@ -1394,7 +1400,7 @@ footer .contactSection .map {
     flex-wrap: wrap;
     justify-content: center;
     flex-direction: row;
-    max-width: 500px;
+    max-width: 500px
 }
 
 .about figure:nth-child(odd) {
@@ -1412,7 +1418,7 @@ footer .contactSection .map {
     height: 256px;
     min-height: 256px;
     max-width: 469px !important;
-    padding: 1rem;
+    padding: 1rem
 }
 
 @media screen and (min-width:590px) {
@@ -1445,13 +1451,13 @@ footer .contactSection .map {
     }
 
     .about figure img {
-        max-width: 500px;
+        max-width: 500px
     }
 
     .about figure,
     .about figcaption {
         flex-wrap: nowrap;
-        max-width: 100%;
+        max-width: 100%
     }
 }
 
