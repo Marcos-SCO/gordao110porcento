@@ -4,6 +4,39 @@
     box-sizing: border-box !important
 }
 
+/* html::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    display: block;
+    background: #fff;
+    z-index: 999999999;
+    overflow-y: hidden!important
+
+} */
+
+/* Spinner */
+#loader {
+    position: absolute;
+    top: 0;
+    border: 12px solid #ffffff;
+    border-radius: 50%;
+    border-top: 12px solid #FF9800;
+    width: 70px;
+    height: 70px;
+    animation: spin 1s linear infinite;
+    z-index: 999999999
+}
+@keyframes spin {
+    100% {
+        transform: rotate(360deg)
+    }
+}
+/* end Spinner */
+
 /* Google font */
 .font-swashCaps {
     font-family: 'Oleo Script Swash Caps', cursive
@@ -159,13 +192,9 @@ textarea {
     opacity: 1
 }
 
-.float:hover {
+.float:hover, .float:focus  {
     background-color: #fff !important;
     box-shadow: 1px -1px 12px 0px #ff5b00
-}
-
-.float:focus {
-    background-color: #fff !important
 }
 
 .my-float {
@@ -246,27 +275,6 @@ img {
     right: 0;
     margin: auto
 }
-
-/* Spinner */
-#loader {
-    position: absolute;
-    top: 0;
-    border: 12px solid #ffffff;
-    border-radius: 50%;
-    border-top: 12px solid #FF9800;
-    width: 70px;
-    height: 70px;
-    animation: spin 1s linear infinite;
-    z-index: 99999!important
-}
-
-@keyframes spin {
-    100% {
-        transform: rotate(360deg)
-    }
-}
-
-/* end Spinner */
 
 .img-objFitCover {
     /* transform: translate(50%, 0);

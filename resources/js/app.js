@@ -171,6 +171,38 @@ owl.owlCarousel({
 })();
 /* HERO SLIDER END */
 
+ //------------- Loading animation start ---------- //
+ (() => {
+    let loader, hero, header, footer, nav, main, items;
+    loader = document.querySelector("#loader");
+    hero = document.querySelector("#hero");
+    header = document.querySelector("#topNav");
+    footer = document.querySelector("footer");
+    nav = document.querySelector("nav");
+    main = document.querySelector("main");
+    items = [hero, header, footer, nav, main];
+    document.onreadystatechange = function() {
+        if (document.readyState !== "complete") {
+            for (let item of items) {
+                if (item == null) {
+                    continue;
+                }
+                item.style = "opacity:0;visibility:none;";
+            }
+            loader.style = "visibility:visible;display:block;opacity:1;z-index:999999999999;position:absolute";
+        } else {
+            for (let item of items) {
+                if (item == null) {
+                    continue;
+                }
+                item.style = "opacity:1;visibility:visible;";
+            }
+            loader.style.display = "none";
+        }
+    }
+})();
+//------------- Loading animation end ---------- //
+
 //------------- Top btns start ---------- //
 (() => {
     //Get the button:

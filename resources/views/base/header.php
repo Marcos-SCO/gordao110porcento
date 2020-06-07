@@ -40,6 +40,8 @@
 </head>
 
 <body>
+    <!-- Spinner -->
+    <div id="loader" class="center"></div>
     <header class="<?= ($getQuery[0] == '' || $getQuery[0] == 'home') ? 'fixed-top' : '' ?> z-index bg-light" id="topNav">
         <!-- Nav -->
         <nav class="navbar navbar-expand-lg navbar-light bg-light" style="background-color:#f8f9fa;">
@@ -93,8 +95,6 @@
         </nav>
         <!-- end nav -->
     </header>
-    <!-- Spinner -->
-    <div id="loader" class="center"></div>
     <?= (($getQuery[0] == 'home' || $getQuery[0] == '') && $getQuery[1] != 'index') ? '<!-- Hero --><div id="hero" class="hero d-flex justify-content-center align-items-center flex-column" style="height:100%">
             <header class="p-4 d-flex flex-column justify-content-center">
                 <div class="headerQuotes">
