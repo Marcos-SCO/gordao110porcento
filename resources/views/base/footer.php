@@ -46,7 +46,7 @@
                 <h5 class="font-swashCaps lightText f-4" style="font-size:2.5rem">Gordão a 110%</h5>
                 <p class="mt-2">Somos uma lanchonete e restaurante com mais de <a href="<?= $BASE ?>/about"><span class="activeYears" class="link">vinte e três</span></a> anos de tradição. Já servimos todo tipo de refeição com nosso extenso <span class="link" id="menu">menu</span>, peça já! Te convidamos a se deliciar com nossas ofertas. Você terá a satisfação a 110% e garantia de qualidade.<br>É gordão ou nada! <a href="<?= $BASE ?>/about">Saiba mais</a></p>
             </header>
-            <!-- <hr class="clearfix w-100 d-md-none pb-3" style="border-top:1px solid #d48369!important"> -->
+            <hr class="clearfix w-100 d-md-none pb-3" style="border-top:1px solid #d48369!important">
             <div class="footerMenus d-flex flex-wrap">
                 <section class="">
                     <h5 class="text-uppercase">Menu</h5>
@@ -60,9 +60,8 @@
                         </ul>
                     </nav>
                 </section>
-                <!-- <div class="col-md-3 mb-md-0 mb-3"> -->
                 <section class="">
-                    <h5 class="text-uppercase">Catgorias</h5>
+                    <h5 class="text-uppercase">Categorias</h5>
                     <nav>
                         <ul class="list-unstyled">
                             <li><a href="<?= $BASE ?>/gallery">Habúrgueres</a></li>
@@ -75,9 +74,9 @@
                 <address class="schedule">
                     <h5 class="text-uppercase">Horários</h5>
                     <ul class="list-unstyled">
-                        <li class="lightText">Ség a Qua: 9:00 as 20:00</li>
-                        <li class="lightText">Qui e Sex: 9:00 as 23:00</li>
-                        <li class="lightText">Sab e Dom: 9:00 as 21:00</li>
+                        <li class="lightText">Ség a Qua: 9h às 20h</li>
+                        <li class="lightText">Qui e Sex: 9h às 23h</li>
+                        <li class="lightText">Sab e Dom: 9h às 21h</li>
                     </ul>
                 </address>
             </div>

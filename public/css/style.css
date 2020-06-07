@@ -158,7 +158,8 @@ textarea {
 }
 
 .float:hover {
-    background-color: #fff !important
+    background-color: #fff !important;
+    box-shadow: 1px -1px 12px 0px #ff5b00
 }
 
 .float:focus {
@@ -1332,9 +1333,33 @@ footer .contactSection .map {
     max-width: 1053px
 }
 
+.contactRow {
+    display: flex;
+    justify-content: center
+}
+
+.contactAddress {
+    width: 100%;
+    max-width: 716px
+}
+
+.contactAddress div {
+    display: flex;
+}
+
+.contactAddress div ul {
+    padding: 1rem
+}
+
+@media screen and (max-width:615px) {
+    .contactAddress div {
+        flex-wrap: wrap-reverse
+    }
+}
+
 @media screen and (max-width:1000px) {
     .contactForm .contactRow {
-        flex-direction: column-reverse !important
+        /* flex-direction: column-reverse !important */
     }
 
     .contactForm .contactInfo {

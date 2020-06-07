@@ -126,7 +126,7 @@
                 scrollFunction()
             };
             // on body click don't display btn
-            body.addEventListener('click', () => mybutton.style.display = 'none');
+            body.addEventListener('click', () => mybutton.style = 'opacity:0;transition:.5s');
 
             function scrollFunction() {
                 (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) ? mybutton.style = "display:block;opacity:1": mybutton.style = "display:block;opacity:0;transition:.5s";
