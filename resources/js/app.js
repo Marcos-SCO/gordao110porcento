@@ -18,7 +18,7 @@ let footerDate = document.getElementById('footerDate');
 footerDate.innerText = currentYear;
 let years = currentYear - 1997;
 if (activeYears != null) {
-    for(let activeYear of activeYears) {
+    for (let activeYear of activeYears) {
         activeYear.innerText = years;
     }
 }
@@ -181,3 +181,50 @@ owl.owlCarousel({
     }
 })();
 /* HERO SLIDER END */
+
+//------------- Top btns start ---------- //
+(() => {
+    //Get the button:
+    let body = document.querySelector('body');
+    let whats = document.querySelector('#whats');
+    let mybutton = document.getElementById("topBtn");
+    // When the user scrolls down 20px from the top of the document, show the button
+    window.onscroll = function () {
+        scrollFunction()
+    };
+    // on body click don't display btn
+    body.addEventListener('click', () => mybutton.style = 'opacity:0;transition:.5s');
+
+    function scrollFunction() {
+        (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) ? mybutton.style = "display:block;opacity:1" : mybutton.style = "display:block;opacity:0;transition:.5s";
+        (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) ? whats.style = 'display:none;opacity:0;transition:.5s' : whats.style = 'display:block;opacity:1;transition:.5s';
+    }
+    // When the user clicks on the button, scroll to the top of the document
+    mybutton.addEventListener('click', function topFunction() {
+        currentYOffset = self.pageYOffset;
+        initYOffset = currentYOffset;
+        var intervalId = setInterval(function () {
+            currentYOffset -= initYOffset * 0.05;
+            document.body.scrollTop = currentYOffset;
+            document.documentElement.scrollTop = currentYOffset;
+            document.body.scrollTop = currentYOffset; // For Chrome, Firefox, IE and Opera
+            if (self.pageYOffset == 0) {
+                clearInterval(intervalId);
+            }
+        }, 30);
+    });
+    // Scroll to specific values
+    // scrollTo is the same
+    window.scroll({
+        top: 2500,
+        left: 0,
+        behavior: 'smooth'
+    });
+    // Scroll certain amounts from current position 
+    window.scrollBy({
+        top: 100, // could be negative value
+        left: 0,
+        behavior: 'smooth'
+    });
+})();
+//------------- Top btns end ---------- //

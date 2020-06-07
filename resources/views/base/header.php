@@ -44,7 +44,7 @@
         <!-- Nav -->
         <nav class="navbar navbar-expand-lg navbar-light bg-light" style="background-color:#f8f9fa;">
             <!--  Show this only on mobile to medium screens  -->
-            <a class="navbar-brand d-lg-none" href="<?= $BASE ?>"><img  src="http://localhost/projetosCompletos/gordao110porcento/public/img/template/gordao110_logo_300px.png" alt="gordao110_logo_300px.png" title="Grodão a 110%"></a>
+            <a class="navbar-brand d-lg-none" href="<?= $BASE ?>"><img src="http://localhost/projetosCompletos/gordao110porcento/public/img/template/gordao110_logo_300px.png" alt="gordao110_logo_300px.png" title="Grodão a 110%"></a>
 
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggle" aria-controls="navbarToggle" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -65,7 +65,7 @@
                     <li class="nav-item <?= activePage($getQuery, 'gallery') ?>"><a class="nav-link" href="<?= $BASE ?>/gallery">Galeria</a></li>
                 </ul>
                 <!--   Show this only lg screens and up   -->
-                <a class="navbar-brand d-none d-lg-block" style="position:absolute;top:0;margin:0!important;" href="<?= $BASE ?>"><img src="http://localhost/projetosCompletos/gordao110porcento/public/img/template/gordao110_logo_300px.png"  alt="gordao110_logo_300px.png" title="Grodão a 110%"></a>
+                <a class="navbar-brand d-none d-lg-block" style="position:absolute;top:0;margin:0!important;" href="<?= $BASE ?>"><img src="http://localhost/projetosCompletos/gordao110porcento/public/img/template/gordao110_logo_300px.png" alt="gordao110_logo_300px.png" title="Grodão a 110%"></a>
 
                 <ul class="navbar-nav">
                     <li class="nav-item"><a class="nav-link <?= activePage($getQuery, 'about') ?>" href="<?= $BASE ?>/about">Sobre</a></li>
@@ -116,7 +116,8 @@
         <button id="topBtn" data-anima="right"><i class="fa fa-arrow-up"></i></button>
         <!-- Whatsapp btn -->
         <a href="https://api.whatsapp.com/send?phone=5511930268294&text=Olá+tudo+bem?+Nós+do+Gordão+a+110%,+estamos+disponíveis+aguardando+seu+contato." class="float" target="_blank" id="whats"><i class="fa fa-whatsapp my-float"></i></a>
-        <script>
+        <!-- <script>
+            //------------- Top btns start ---------- //
             //Get the button:
             let body = document.querySelector('body');
             let whats = document.querySelector('#whats');
@@ -159,4 +160,5 @@
                 left: 0,
                 behavior: 'smooth'
             });
-        </script>
+            //------------- Top btns end ---------- //
+        </script> -->
