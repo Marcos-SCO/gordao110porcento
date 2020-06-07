@@ -85,6 +85,9 @@ textarea {
 }
 
 /* -------- Float btn Start -------- */
+.float, #topBtn {
+    z-index:9999999
+}
 /* To top btn */
 #topBtn {
     position: fixed;
@@ -98,8 +101,7 @@ textarea {
     border: none;
     cursor: pointer;
     outline: none;
-    display: none;
-    z-index: 99999
+    display: none
 }
 
 #topBtn:hover {
@@ -119,7 +121,6 @@ textarea {
     text-align: center;
     font-size: 30px;
     box-shadow: 1px -1px 12px 0px #6fbd72;
-    z-index: 100;
     transition: all ease-in-out .24s
 }
 
@@ -210,6 +211,7 @@ body {
 }
 
 body {
+    position: relative;
     overflow-x: hidden !important
 }
 
@@ -247,13 +249,15 @@ img {
 
 /* Spinner */
 #loader {
+    position: absolute;
+    top: 0;
     border: 12px solid #ffffff;
     border-radius: 50%;
     border-top: 12px solid #FF9800;
     width: 70px;
     height: 70px;
     animation: spin 1s linear infinite;
-    z-index: 99999
+    z-index: 99999!important
 }
 
 @keyframes spin {
@@ -451,7 +455,6 @@ footer .contactSection .map {
         justify-content: space-around
     }
 }
-
 /* -------- Footer End -------- */
 
 /* Edit delete start */

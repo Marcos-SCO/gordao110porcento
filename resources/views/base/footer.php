@@ -82,6 +82,7 @@
             </div>
         </section>
         <?php if ($getQuery[0] == '' || $getQuery[0] == 'home') { ?>
+            <style>@media screen and (min-width:1000px) {footer article {flex-direction: row!important;align-items: center}.footerInfo {flex-wrap: wrap!important;max-width: 436px;align-items: center}}</style>
             <section class="contactSection">
                 <address data-anima="right">
                     <nav>
@@ -120,6 +121,22 @@
 <script src='<?= $BASE ?>/public/js/owl.carousel.min.js'></script>
 <!-- App -->
 <script src="<?= $BASE ?>/public/js/app.js"></script>
+<script>
+    // console.log(split);
+    document.onreadystatechange = function() {
+        let hero = document.querySelector("#hero");
+        let topNav = document.querySelector("#topNav");
+        if (document.readyState !== "complete") {
+            (hero != null) ? hero.style = "visibility:hidden;opacity:0;": '';
+            document.querySelector("body").style = "visibility:hidden;overflow:hidden;";
+            document.querySelector("#loader").style = "visibility:visible;display:block;opacity:1;z-index:999999999999;position:absolute";
+        } else {
+            (hero != null) ? hero.style = "visibility:visible;opacity:1;": '';
+            document.querySelector("#loader").style.display = "none";
+            document.querySelector("body").style = "display:block;visibility:visible;opacity:1";
+        }
+    }
+</script>
 </body>
 
 </html>

@@ -41,12 +41,10 @@
                                 <input type="hidden" name="img" value="<?= $h->img ?>">
                                 <input type="hidden" name="price" value="<?= $h->price ?>">
                             </span>
-                            <!--<a href="<?//= $BASE ?>/products/show/<?//= $h->id ?>"> -->
                             <figure class="item">
                                 <img class="mx-auto" src="<?= $BASE ?>/<?= imgOrDefault('products', $h->img, $h->id, "/category_$h->id_category") ?>" alt="<?= $h->img ?>" title="<?= $h->product_name ?>">
                                 <figcaption><?= $h->product_name ?></figcaption>
                             </figure>
-                            <!-- </a> -->
                         </a>
                     <?php } ?>
                 </div>
@@ -70,7 +68,6 @@
                                 <input type="hidden" name="img" value="<?= $data->img ?>">
                                 <input type="hidden" name="price" value="<?= $data->price ?>">
                             </span>
-                            <!-- <a href="<?//= $BASE ?>/products/show/<?//= $data->id ?>"> -->
                             <figure class="item">
                                 <img class="mx-auto" src="<?= $BASE ?>/<?= imgOrDefault('products', $data->img, $data->id, "/category_$data->id_category") ?>" alt="<?= $data->img ?>" title="<?= $data->product_name ?>">
                                 <figcaption><?= $data->product_name ?></figcaption>
@@ -147,6 +144,7 @@
         let itemModal = document.getElementById('itemModal');
         // console.log(itemModal[1]);
         let url = window.location.href;
+        url = url.replace('/home', '/');
         let modalContent =
             `<div class="modal-dialog" role="document">
                 <div class="modal-content">

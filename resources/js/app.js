@@ -25,18 +25,6 @@ if (activeYears != null) {
 
 // on load spinner
 let spinnerUlr = window.location.href.split('/');
-if (spinnerUlr[5] !== '' && spinnerUlr[5] !== 'home') {
-    // console.log(split);
-    document.onreadystatechange = function () {
-        if (document.readyState !== "complete") {
-            document.querySelector("body").style.visibility = "hidden";
-            document.querySelector("#loader").style.visibility = "visible";
-        } else {
-            document.querySelector("#loader").style.display = "none";
-            document.querySelector("body").style.visibility = "visible";
-        }
-    }
-};
 
 // get elements with data-anima
 const elements = qSelectAll('[data-anima]');
@@ -93,7 +81,7 @@ owl.owlCarousel({
     url = window.location.href;
     // split url to get method
     split = window.location.href.split('/');
-    if (split[5] == '' || split[5] == 'home') {
+    if ((split[5] == '' || split[5] == 'home') && split[5] !== 'index') {
         // replace /home string
         url = url.replace('/home', '');
         // initial counter
@@ -128,6 +116,7 @@ owl.owlCarousel({
 
         // select slider elements
         hero = document.querySelector('#hero');
+        hero.style = 'display:block;opacity:1;';
         quoteTitle = document.querySelector('#quoteTitle');
         quote = document.querySelector('#quote');
         path = '/public/img/slider/';
@@ -186,23 +175,24 @@ owl.owlCarousel({
 (() => {
     //Get the button:
     let body = document.querySelector('body');
-    let whats = document.querySelector('#whats');
+    let whats = document.getElementById('whats');
     let mybutton = document.getElementById("topBtn");
     // When the user scrolls down 20px from the top of the document, show the button
     window.onscroll = function () {
-        scrollFunction()
+        scrollFunction();
+        console.log('io');
     };
     // on body click don't display btn
     body.addEventListener('click', () => mybutton.style = 'opacity:0;transition:.5s');
 
     function scrollFunction() {
         (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) ? mybutton.style = "display:block;opacity:1" : mybutton.style = "display:block;opacity:0;transition:.5s";
-        (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) ? whats.style = 'display:none;opacity:0;transition:.5s' : whats.style = 'display:block;opacity:1;transition:.5s';
+        (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) ? whats.style = 'display:none;opacity:0;transition:.5s;z-index:-1' : whats.style = 'display:block;opacity:1;transition:.5s';
     }
     // When the user clicks on the button, scroll to the top of the document
     mybutton.addEventListener('click', function topFunction() {
-        currentYOffset = self.pageYOffset;
-        initYOffset = currentYOffset;
+        let currentYOffset = self.pageYOffset;
+        let initYOffset = currentYOffset;
         var intervalId = setInterval(function () {
             currentYOffset -= initYOffset * 0.05;
             document.body.scrollTop = currentYOffset;
@@ -215,16 +205,16 @@ owl.owlCarousel({
     });
     // Scroll to specific values
     // scrollTo is the same
-    window.scroll({
-        top: 2500,
-        left: 0,
-        behavior: 'smooth'
-    });
+    // window.scroll({
+    //     top: 2500,
+    //     left: 0,
+    //     behavior: 'smooth'
+    // });
     // Scroll certain amounts from current position 
-    window.scrollBy({
-        top: 100, // could be negative value
-        left: 0,
-        behavior: 'smooth'
-    });
+    // window.scrollBy({
+    //     top: 100, // could be negative value
+    //     left: 0,
+    //     behavior: 'smooth'
+    // });
 })();
 //------------- Top btns end ---------- //
