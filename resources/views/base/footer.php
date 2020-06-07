@@ -82,7 +82,9 @@
             </div>
         </section>
         <?php if ($getQuery[0] == '' || $getQuery[0] == 'home') { ?>
-            <style>@media screen and (min-width:1000px) {footer article {flex-direction: row!important;align-items: center}.footerInfo {flex-wrap: wrap!important;max-width: 436px;align-items: center}}</style>
+            <style>
+                @media screen and (min-width:1000px) {footer article {flex-direction: row !important;align-items: center} .footerInfo {flex-wrap: wrap !important;max-width: 436px;align-items: center}}
+            </style>
             <section class="contactSection">
                 <address data-anima="right">
                     <nav>
@@ -106,7 +108,7 @@
             </section>
         <?php } ?>
     </article>
-    <adress class="d-block footer-copyright text-center py-3" style="position:relative;">© <span id="footerDate">2020</span> Desenvolvido por <a href="https://www.linkedin.com/in/marcos-dos-santos-carvalho-67a51715a/" target="_blank" style="font-weight:bolder">Marcos dos Santos Carvalho</a>
+    <adress class="copyRight d-block footer-copyright text-center py-3" style="position:relative;">© <span id="footerDate">2020</span> Desenvolvido por <a href="https://www.linkedin.com/in/marcos-dos-santos-carvalho-67a51715a/" target="_blank" style="font-weight:bolder">Marcos dos Santos Carvalho</a>
     </adress>
 </footer>
 <!-- Bootstrap -->

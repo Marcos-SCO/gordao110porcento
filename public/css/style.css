@@ -86,7 +86,7 @@ textarea {
 
 /* -------- Float btn Start -------- */
 .float, #topBtn {
-    z-index:9999999
+    z-index: 99999999
 }
 /* To top btn */
 #topBtn {
@@ -437,6 +437,12 @@ footer .contactSection .map {
     max-width: 431px
 }
 
+@media screen and (max-width:410px) {
+    .copyRight {
+        max-width: 235px;
+        margin: auto
+    }
+}
 @media screen and (max-width:558px) {
     footer .contactSection address {
         flex-wrap: wrap
