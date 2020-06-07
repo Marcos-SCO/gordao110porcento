@@ -39,38 +39,75 @@
 <?php } ?>
 
 <!-- Footer -->
-<footer class="page-footer font-small blue pt-4">
+<footer class="footerSection page-footer font-small blue pt-4">
     <article style="position:relative">
-        <section class="container-fluid text-center text-md-left">
-            <div class="row">
-                <header class="col-md-6 mt-md-0 mt-3">
-                    <h5 class="text-uppercase">Footer Content</h5>
-                    <p>Here you can use rows and columns to organize your footer content.</p>
-                </header>
-                <hr class="clearfix w-100 d-md-none pb-3">
-                <div class="col-md-3 mb-md-0 mb-3">
-                    <h5 class="text-uppercase">Links</h5>
+        <section class="footerInfo">
+            <header class="text-left" style="max-width:500px">
+                <h5 class="font-swashCaps lightText f-4" style="font-size:2.5rem">Gordão a 110%</h5>
+                <p class="mt-2">Somos uma lanchonete e restaurante com mais de <a href="<?= $BASE ?>/about"><span class="activeYears" class="link">vinte e três</span></a> anos de tradição. Já servimos todo tipo de refeição com nosso extenso <span class="link" id="menu">menu</span>, peça já! Te convidamos a se deliciar com nossas ofertas. Você terá a satisfação a 110% e garantia de qualidade.<br>É gordão ou nada! <a href="<?= $BASE ?>/about">Saiba mais</a></p>
+            </header>
+            <!-- <hr class="clearfix w-100 d-md-none pb-3" style="border-top:1px solid #d48369!important"> -->
+            <div class="footerMenus d-flex flex-wrap">
+                <section class="">
+                    <h5 class="text-uppercase">Menu</h5>
+                    <nav class="">
+                        <ul class="list-unstyled mr-4">
+                            <li><a href="<?= $BASE ?>">Home</a></li>
+                            <li><a href="<?= $BASE ?>/products">Ofertas</a></li>
+                            <li><a href="<?= $BASE ?>/posts">Blog</a></li>
+                            <li><a href="<?= $BASE ?>/gallery">Galeria</a></li>
+                            <li><a href="<?= $BASE ?>/gallery">Sobre</a></li>
+                        </ul>
+                    </nav>
+                </section>
+                <!-- <div class="col-md-3 mb-md-0 mb-3"> -->
+                <section class="">
+                    <h5 class="text-uppercase">Catgorias</h5>
+                    <nav>
+                        <ul class="list-unstyled">
+                            <li><a href="<?= $BASE ?>/gallery">Habúrgueres</a></li>
+                            <li><a href="#">Pizzas</a></li>
+                            <li><a href="#">Bebidas</a></li>
+                            <li><a href="#">Porções</a></li>
+                        </ul>
+                    </nav>
+                </section>
+                <address class="schedule">
+                    <h5 class="text-uppercase">Horários</h5>
                     <ul class="list-unstyled">
-                        <li><a href="#!">Link 1</a></li>
-                        <li><a href="#!">Link 2</a></li>
-                        <li><a href="#!">Link 3</a></li>
-                        <li><a href="#!">Link 4</a></li>
+                        <li class="lightText">Ség a Qua: 9:00 as 20:00</li>
+                        <li class="lightText">Qui e Sex: 9:00 as 23:00</li>
+                        <li class="lightText">Sab e Dom: 9:00 as 21:00</li>
                     </ul>
-                </div>
-                <div class="col-md-3 mb-md-0 mb-3">
-                    <h5 class="text-uppercase">Links</h5>
-                    <ul class="list-unstyled">
-                        <li><a href="#!">Link 1</a></li>
-                        <li><a href="#!">Link 2</a></li>
-                        <li><a href="#!">Link 3</a></li>
-                        <li><a href="#!">Link 4</a></li>
-                    </ul>
-                </div>
+                </address>
             </div>
         </section>
-        <adress class="d-block footer-copyright text-center py-3">© 2020 Desenvolvido por <a href="https://www.linkedin.com/in/marcos-dos-santos-carvalho-67a51715a/" target="_blank" style="font-weight:bolder">Marcos dos Santos Carvalho</a>
-        </adress>
+        <?php if ($getQuery[0] == '' || $getQuery[0] == 'home') { ?>
+            <section class="contactSection">
+                <address data-anima="right">
+                    <nav>
+                        <h5 class="text-uppercase">Entre em Contato</h5>
+                        <ul class="list-unstyled">
+                            <li><a href="<?= $BASE ?>/contact/message">Envie sua menssagem</a></li>
+                            <li><a href="<?= $BASE ?>/contact/work">Trabalhe conosco</a></li>
+                            <li><i class="fa fa-map-marker fa-2x" style="color:#d22"></i>Barueri - SP</li>
+                            <li><i class="fa fa-phone fa-2x" style="color:#ff9800"></i>(55) 43825357
+                            </li>
+                            <li><i class="fa fa-whatsapp fa-2x" style="color:#4AC959"></i></i>(55) 43825357</li>
+                            <li class=""><i class="fa fa-envelope fa-2x"></i>gordão110%@outlook.com
+                            </li>
+                        </ul>
+                    </nav>
+                    <div class="map">
+                        <h6 class="text-uppercase">Onde estamos</h6>
+                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d58537.08625555666!2d-46.91708754613075!3d-23.512068734946492!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x94cf03dd6cef1295%3A0x746b94a987d123a3!2sBarueri%20-%20SP!5e0!3m2!1spt-BR!2sbr!4v1591283488037!5m2!1spt-BR!2sbr" width="100%" height="220" frameborder="0" style="border:0;" allowfullscreen="" aria-hidden="false" tabindex="0"></iframe>
+                    </div>
+                </address>
+            </section>
+        <?php } ?>
     </article>
+    <adress class="d-block footer-copyright text-center py-3" style="position:relative;">© <span id="footerDate">2020</span> Desenvolvido por <a href="https://www.linkedin.com/in/marcos-dos-santos-carvalho-67a51715a/" target="_blank" style="font-weight:bolder">Marcos dos Santos Carvalho</a>
+    </adress>
 </footer>
 <!-- Bootstrap -->
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous">

@@ -3,14 +3,14 @@
         <section class="homeAbout">
             <header class="homeHeaderAbout imgBackgroundArea d-flex flex-wrap justify-content-center flex-row">
                 <span>
-                    <img src="<?= $BASE ?>/public/img/template/gordao110_logo_300px.png" class="img-prevent-drag" alt="gordao110_logo.png" title="Gordão 110% logo">
+                    <img src="<?= $BASE ?>/public/img/template/gordao110_logo_300px.png"  alt="gordao110_logo.png" title="Gordão 110% logo">
                     <h3 class="text-left">Sobre nós</h3>
                 </span>
             </header>
             <div class="about">
                 <div data-anima="center">
                     <strong class="font-swashCaps lightText">Gordão a 110%</strong>
-                    <p class="mt-2">Somos uma lanchonete e restaurante com mais de <a href="<?=$BASE?>/about"><span id="activeYears" class="link">vinte e três</span></a> anos de tradição.<br>Já servimos todo tipo de refeição com nosso extenso <span class="link" id="menu">menu</span>, peça já!<br>Te convidamos a se deliciar com nossas ofertas.<br>Você terá a satisfação a 110% e garantia de qualidade.<br>É gordão ou nada! <a href="<?=$BASE?>/about">Saiba mais</a></p>
+                    <p class="mt-2">Somos uma lanchonete e restaurante com mais de <a href="<?=$BASE?>/about"><span class="activeYears" class="link">vinte e três</span></a> anos de tradição.<br>Já servimos todo tipo de refeição com nosso extenso <span class="link" id="menu">menu</span>, peça já!<br>Te convidamos a se deliciar com nossas ofertas.<br>Você terá a satisfação a 110% e garantia de qualidade.<br>É gordão ou nada! <a href="<?=$BASE?>/about">Saiba mais</a></p>
                 </div>
             </div>
         </section>
@@ -158,7 +158,7 @@
                     </header>
                     <div class="modal-body">
                     <figure>
-                    <img src="${url}public/img/products/category_${id_category}/id_${id}/${img}" alt="${img}" title="${product_name}" class="img-prevent-drag">
+                    <img src="${url}public/img/products/category_${id_category}/id_${id}/${img}" alt="${img}" title="${product_name}" >
                         <figcaption>
                             <p>Categoria: <a href='${url}categories/show/${id_category}'>${category_name}</a></p>
                             <p>${product_description = values[4]}</>

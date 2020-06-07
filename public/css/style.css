@@ -275,7 +275,7 @@ img {
     -ms-transform: translate(50%, 0);
 }
 
-.img-prevent-drag {
+.img-prevent-drag, img {
     /* prevent User drag */
     /* user-drag: none; */
     user-select: none;
@@ -365,6 +365,15 @@ footer {
     background-position: center
 }
 
+footer article {
+    position: relative;
+    display: flex;
+    flex-direction: column !important;
+    justify-content: center;
+    margin: auto;
+    max-width: 1037px;
+}
+
 footer::before {
     content: '';
     position: absolute;
@@ -373,7 +382,66 @@ footer::before {
     background: #333;
     height: 100%;
     width: 100%;
-    opacity: .7;
+    opacity: .82;
+}
+
+.footerInfo {
+    padding: 0 1rem;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline
+}
+
+.footerInfo p {
+    padding-right: 2rem
+}
+
+.footerMenus {
+    /* padding: 0 1rem; */
+    width: 100%;
+    max-width: 502px;
+}
+
+.footerMenus section {
+    margin-right: 1rem
+}
+
+footer .contactSection {
+    padding: 0 1rem;
+}
+
+footer .contactSection address {
+    display: flex;
+    margin: 0 !important
+}
+footer .contactSection nav {
+    margin-right: 1rem;
+    width: 100%;
+    max-width: 342px
+}
+
+footer .contactSection i {
+    margin-right: 1rem;
+    margin-top: .4rem;
+}
+
+footer .contactSection .map {
+    width: 100%;
+    max-width: 431px
+}
+@media screen and (max-width:558px) {
+    footer .contactSection address {flex-wrap:wrap}
+}
+@media screen and (min-width:798px) {
+    footer article {
+        flex-direction: row
+    }
+}
+@media screen and (min-width:938px) {
+    .footerInfo {
+        flex-wrap: nowrap !important;
+        justify-content: space-around
+    }
 }
 
 /* -------- Footer End -------- */

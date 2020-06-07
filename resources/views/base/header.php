@@ -44,7 +44,7 @@
         <!-- Nav -->
         <nav class="navbar navbar-expand-lg navbar-light bg-light" style="background-color:#f8f9fa;">
             <!--  Show this only on mobile to medium screens  -->
-            <a class="navbar-brand d-lg-none" href="<?= $BASE ?>"><img class="img-prevent-drag" src="http://localhost/projetosCompletos/gordao110porcento/public/img/template/gordao110_logo_300px.png" alt="gordao110_logo_300px.png" title="Grodão a 110%"></a>
+            <a class="navbar-brand d-lg-none" href="<?= $BASE ?>"><img  src="http://localhost/projetosCompletos/gordao110porcento/public/img/template/gordao110_logo_300px.png" alt="gordao110_logo_300px.png" title="Grodão a 110%"></a>
 
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggle" aria-controls="navbarToggle" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -59,21 +59,13 @@
                 }
                 ?>
                 <ul class="navbar-nav">
-                    <li class="nav-item <?= activePage($getQuery, '') ?>">
-                        <a class="nav-link" href="<?= $BASE ?>">Home<span class="sr-only">(current)</span></a>
-                    </li>
-                    <li class="nav-item <?= activePage($getQuery, 'products') ?>">
-                        <a class="nav-link" href="<?= $BASE ?>/products">Ofertas</a>
-                    </li>
-                    <li class="nav-item <?= activePage($getQuery, 'posts') ?>">
-                        <a class="nav-link" href="<?= $BASE ?>/posts">Blog</a>
-                    </li>
-                    <li class="nav-item <?= activePage($getQuery, 'gallery') ?>">
-                        <a class="nav-link" href="<?= $BASE ?>/gallery">Galeria</a>
-                    </li>
+                    <li class="nav-item <?= activePage($getQuery, '') ?>"><a class="nav-link" href="<?= $BASE ?>">Home<span class="sr-only">(current)</span></a></li>
+                    <li class="nav-item <?= activePage($getQuery, 'products') ?>"><a class="nav-link" href="<?= $BASE ?>/products">Ofertas</a></li>
+                    <li class="nav-item <?= activePage($getQuery, 'posts') ?>"><a class="nav-link" href="<?= $BASE ?>/posts">Blog</a></li>
+                    <li class="nav-item <?= activePage($getQuery, 'gallery') ?>"><a class="nav-link" href="<?= $BASE ?>/gallery">Galeria</a></li>
                 </ul>
                 <!--   Show this only lg screens and up   -->
-                <a class="navbar-brand d-none d-lg-block" style="position:absolute;top:0;margin:0!important;" href="<?= $BASE ?>"><img src="http://localhost/projetosCompletos/gordao110porcento/public/img/template/gordao110_logo_300px.png" class="img-prevent-drag" alt="gordao110_logo_300px.png" title="Grodão a 110%"></a>
+                <a class="navbar-brand d-none d-lg-block" style="position:absolute;top:0;margin:0!important;" href="<?= $BASE ?>"><img src="http://localhost/projetosCompletos/gordao110porcento/public/img/template/gordao110_logo_300px.png"  alt="gordao110_logo_300px.png" title="Grodão a 110%"></a>
 
                 <ul class="navbar-nav">
                     <li class="nav-item"><a class="nav-link <?= activePage($getQuery, 'about') ?>" href="<?= $BASE ?>/about">Sobre</a></li>
@@ -135,6 +127,7 @@
             };
             // on body click don't display btn
             body.addEventListener('click', () => mybutton.style.display = 'none');
+
             function scrollFunction() {
                 (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) ? mybutton.style = "display:block;opacity:1": mybutton.style = "display:block;opacity:0;transition:.5s";
                 (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) ? whats.style = 'display:none;opacity:0;transition:.5s': whats.style = 'display:block;opacity:1;transition:.5s';

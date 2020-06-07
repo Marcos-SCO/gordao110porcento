@@ -9,7 +9,7 @@
 </style>
 <header class="homeHeaderAbout imgBackgroundArea d-flex flex-wrap justify-content-center flex-row">
     <span>
-        <img src="<?= $BASE ?>/public/img/template/gordao110_logo_300px.png" class="img-prevent-drag" alt="gordao110_logo.png" title="Gordão 110% logo">
+        <img src="<?= $BASE ?>/public/img/template/gordao110_logo_300px.png"  alt="gordao110_logo.png" title="Gordão 110% logo">
         <h3 class="text-left">Sobre nós</h3>
     </span>
 </header>
@@ -77,10 +77,7 @@
                     </li>
                     <li class="d-flex flex-column"> <i class="fa fa-envelope mt-4 fa-2x"></i> <a href="mailto:marcos_sco@outlook.com" style="color:#333!important">gordão110%@outlook.com</a> </li>
                 </ul>
-        </div>
+            </address>
         </div>
     </section>
-    <address style="display:block;margin-bottom:-.5rem">
-        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d58537.08625555666!2d-46.91708754613075!3d-23.512068734946492!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x94cf03dd6cef1295%3A0x746b94a987d123a3!2sBarueri%20-%20SP!5e0!3m2!1spt-BR!2sbr!4v1591283488037!5m2!1spt-BR!2sbr" width="100%" height="300" frameborder="0" style="border:0;" allowfullscreen="" aria-hidden="false" tabindex="0"></iframe>
-    </address>
 </article>

@@ -12,7 +12,10 @@ let url = window.location.href;
 let date = new Date();
 let currentYear = date.getFullYear();
 // Home active years
-let activeYears = document.getElementById('activeYears');
+let activeYears = document.querySelector('.activeYears');
+// Foter date 
+let footerDate = document.getElementById('footerDate');
+footerDate.innerText = currentYear;
 let years = currentYear - 1997;
 (activeYears != null) ? activeYears.innerText = years : '';
 // on load spinner
@@ -24,10 +27,8 @@ if (spinnerUlr[5] !== '' && spinnerUlr[5] !== 'home') {
             document.querySelector("body").style.visibility = "hidden";
             document.querySelector("#loader").style.visibility = "visible";
         } else {
-            setTimeout(() => {
-                document.querySelector("#loader").style.display = "none";
-                document.querySelector("body").style.visibility = "visible";
-            }, 100);
+            document.querySelector("#loader").style.display = "none";
+            document.querySelector("body").style.visibility = "visible";
         }
     }
 };
