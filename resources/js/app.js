@@ -12,12 +12,17 @@ let url = window.location.href;
 let date = new Date();
 let currentYear = date.getFullYear();
 // Home active years
-let activeYears = document.querySelector('.activeYears');
+let activeYears = document.querySelectorAll('.activeYears');
 // Foter date 
 let footerDate = document.getElementById('footerDate');
 footerDate.innerText = currentYear;
 let years = currentYear - 1997;
-(activeYears != null) ? activeYears.innerText = years : '';
+if (activeYears != null) {
+    for(let activeYear of activeYears) {
+        activeYear.innerText = years;
+    }
+}
+
 // on load spinner
 let spinnerUlr = window.location.href.split('/');
 if (spinnerUlr[5] !== '' && spinnerUlr[5] !== 'home') {
