@@ -72,7 +72,7 @@
                     <li><i class="fa fa-phone mt-4 fa-2x" style="color:#ff9800"></i>
                         <p>(55) 43825357</p>
                     </li>
-                    <li><i class="fa fa-whatsapp mt-4 fa-2x" style="color:#4AC959"></i></i>
+                    <li><i class="fa fa-whatsapp mt-4 fa-2x" style="color:#4AC959"></i>
                         <p>(55) 43825357</p>
                     </li>
                     <li class="d-flex flex-column"> <i class="fa fa-envelope mt-4 fa-2x"></i> <a href="mailto:marcos_sco@outlook.com" style="color:#333!important">gordão110%@outlook.com</a> </li>

@@ -40,8 +40,8 @@
 </head>
 
 <body>
-    <!-- Spinner -->
-    <div id="loader" class="center"></div>
+    <?= ($getQuery[0] !== '' && $getQuery[0] !== 'home') ? '<!-- Spinner -->
+    <div id="loader" class="center" style="display:none"></div>' : ''; ?>
     <header class="<?= ($getQuery[0] == '' || $getQuery[0] == 'home') ? 'fixed-top' : '' ?> z-index bg-light" id="topNav">
         <!-- Nav -->
         <nav class="navbar navbar-expand-lg navbar-light bg-light" style="background-color:#f8f9fa;">

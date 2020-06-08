@@ -106,7 +106,7 @@
                             <li><i class="fa fa-map-marker fa-2x" style="color:#d22"></i>Barueri - SP</li>
                             <li><i class="fa fa-phone fa-2x" style="color:#ff9800"></i>(55) 43825357
                             </li>
-                            <li><i class="fa fa-whatsapp fa-2x" style="color:#4AC959"></i></i>(55) 43825357</li>
+                            <li><i class="fa fa-whatsapp fa-2x" style="color:#4AC959"></i>(55) 43825357</li>
                             <li class=""><i class="fa fa-envelope fa-2x"></i>gordão110%@outlook.com
                             </li>
                         </ul>
@@ -133,9 +133,28 @@
 <!-- Owl -->
 <script src='<?= $BASE ?>/public/js/owl.carousel.min.js'></script>
 <!-- App -->
+<script>
+    /* Sample function that returns boolean in case the browser is Internet Explorer*/
+    function isIE() {
+        var ua = navigator.userAgent; /* MSIE used to detect old browsers and Trident used to newer ones*/
+        var is_ie = ua.indexOf("MSIE ") > -1 || ua.indexOf("Trident/") > -1;
+        return is_ie;
+    }
+    /* Create an alert to show if the browser is IE or not */
+    if (isIE()) {
+        var head = document.head || document.getElementsByTagName('head')[0],
+            style = document.createElement('link');
+        url = window.location.href;
+        head.appendChild(style);
+        style.rel = 'stylesheet';
+        style.href = url + '/public/css/ieStyle.css';
+
+        console.log('Internet Explorer...');
+    }
+</script>
 <script src="<?= $BASE ?>/public/js/app.js"></script>
 <script>
-   
+
 </script>
 </body>
 

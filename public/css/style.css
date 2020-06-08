@@ -4,20 +4,6 @@
     box-sizing: border-box !important
 }
 
-/* html::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    height: 100%;
-    width: 100%;
-    display: block;
-    background: #fff;
-    z-index: 999999999;
-    overflow-y: hidden!important
-
-} */
-
 /* Spinner */
 #loader {
     position: absolute;
@@ -72,13 +58,13 @@ label {
 }
 
 a {
-    color: var(--primary);
+    color: #d95f1b;;
     text-decoration: none;
     transition: ease-in-out .1s
 }
 
 a:focus {
-    color: var(--primary) !important;
+    color: #d95f1b; !important;
     background: none !important
 }
 
@@ -356,7 +342,7 @@ nav img {
 
 /* Pagination */
 .page-link {
-    color: var(--primary) !important
+    color: #d95f1b!important
 }
 
 .page-link:focus {
@@ -365,8 +351,8 @@ nav img {
 
 .page-item.active .page-link {
     color: #fff !important;
-    background-color: var(--primary) !important;
-    border-color: var(--primary) !important
+    background-color: #d95f1b !important;
+    border-color: #d95f1b !important
 }
 
 /* End Pagination */
@@ -489,7 +475,7 @@ footer .contactSection .map {
 }
 
 .editDelete a {
-    color: var(--primary) !important
+    color: #d95f1b !important
 }
 
 .editDelete::before {
@@ -541,7 +527,7 @@ footer .contactSection .map {
 /* Create btn start */
 .createBtn {
     background-color: #fff !important;
-    color: var(--primary) !important;
+    color: #d95f1b !important;
     border: #ccc 1px solid;
     margin: .1rem;
     width: 207px
@@ -552,7 +538,7 @@ footer .contactSection .map {
 /* Dropdown toggle start */
 .dropdown-toggle {
     background-color: #fff !important;
-    color: var(--primary)
+    color: #d95f1b
 }
 
 /* Dropdown toggle end */
@@ -729,7 +715,7 @@ footer .contactSection .map {
 .title::after {
     content: '';
     height: 3px;
-    background-color: var(--primary)
+    background-color: #d95f1b
 }
 
 /* Home Sections */
@@ -751,7 +737,7 @@ footer .contactSection .map {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    background: var(--primary);
+    background: #d95f1b;
     color: #fff;
     background-position: right;
     background-repeat: no-repeat;
@@ -824,7 +810,7 @@ footer .contactSection .map {
     position: absolute;
     bottom: 0;
     width: 100%;
-    background: var(--primary);
+    background: #d95f1b;
     text-align: left;
     padding: 0.2rem;
     padding-left: .5rem;
@@ -959,7 +945,7 @@ footer .contactSection .map {
 .usersAdm button {
     margin-left: .5rem;
     border: none;
-    color: var(--primary);
+    color: #d95f1b;
     background: none;
     padding: 0 .2rem
 }
@@ -992,8 +978,8 @@ footer .contactSection .map {
 
 .user header::before {
     content: '';
-    border-left: 8px solid var(--primary);
-    background: var(--primary);
+    border-left: 8px solid #d95f1b;
+    background: #d95f1b;
 }
 
 .user figure {
@@ -1037,7 +1023,7 @@ footer .contactSection .map {
 
 .userPosts header h3::after {
     content: '';
-    border-bottom: .16rem solid var(--primary);
+    border-bottom: .16rem solid #d95f1b;
     padding-bottom: .5rem;
     display: block;
     width: 80%;
@@ -1303,7 +1289,7 @@ footer .contactSection .map {
     width: 100px;
     overflow: hidden;
     border-radius: 50%;
-    background-color: var(--primary)
+    background-color: #d95f1b
 }
 
 .imgUserBox img {
