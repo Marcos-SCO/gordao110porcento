@@ -5,14 +5,27 @@ import { qSelect, qSelectAll, gID, log } from './helpers.js';
 if (window.NodeList && !NodeList.prototype.forEach) {
     NodeList.prototype.forEach = Array.prototype.forEach;
 }
+
+/* Sample function that returns boolean in case the browser is Internet Explorer*/
 function isIE() {
     var ua = navigator.userAgent; /* MSIE used to detect old browsers and Trident used to newer ones*/
     var is_ie = ua.indexOf("MSIE ") > -1 || ua.indexOf("Trident/") > -1;
     return is_ie;
 }
+/* Create an alert to show if the browser is IE or not */
+if (isIE()) {
+    var head = document.head || document.getElementsByTagName('head')[0],
+        style = document.createElement('link');
+    url = window.location.href;
+    head.appendChild(style);
+    style.rel = 'stylesheet';
+    style.href = url + '/public/css/ieStyle.css';
 
+    console.log('Internet Explorer...');
+}
+
+// url
 let url = window.location.href;
-
 // Dates
 let date = new Date();
 let currentYear = date.getFullYear();
@@ -29,7 +42,7 @@ if (activeYears != null) {
 }
 
 // get elements with data-anima
-const elements = qSelectAll('[data-anima]');
+const elements = document.querySelectorAll('[data-anima]');
 const animationClass = 'animation';
 function animaScroll() {
     const topPageWindow = window.pageYOffset + ((window.innerHeight * 3) / 4); // 3/4 da janela
@@ -46,34 +59,6 @@ if (elements.length) {
     window.addEventListener('scroll', animaScroll);
 }
 // end get elements data-anima
-
-// owl carousel
-var owl = $('.owl-carousel');
-owl.owlCarousel({
-    loop: true,
-    margin: 10,
-    autoplay: true,
-    autoplayTimeout: 3000,
-    autoplayHoverPause: true,
-    responsive: {
-        // breakpoint from 0 up
-        0: {
-            items: 1,
-        },
-        // breakpoint from 480 up
-        480: {
-            items: 2,
-        },
-        // breakpoint from 768 up
-        768: {
-            items: 4,
-        },
-        // breakpoint from 1000 up
-        1161: {
-            items: 5,
-        }
-    }
-});
 
 if (!isIE()) {
     // on load spinner
