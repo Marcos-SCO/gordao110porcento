@@ -29,8 +29,7 @@ class View
             // echo "$file not found";
             // throw new \Exception("$file not found");
             header($_SERVER["SERVER_PROTOCOL"] . " 404 Not Found", true, 404);
-            http_response_code(404);
-            require_once "../resources/views/errors/404.php";
+            // include("notFound.php");
         }
     }
 

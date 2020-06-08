@@ -47,7 +47,6 @@ class Error
             echo "<p>Stack trace:<pre>" . $exception->getTraceAsString() . "</pre></p>";
             echo "<p>Thrown in '" . $exception->getFile() . "' on line " .
                 $exception->getLine() . "</p>";
-            View::render("errors/$code.php");
         } else {
             // Set the error in the error log
             $log = dirname(__DIR__) . '/logs/' . date('Y-m-d') . '.txt';
@@ -65,7 +64,7 @@ class Error
             } else {
                 echo "<h1>An error occurred</h1>";
             }*/
-            View::render("errors/$code.php");
+            View::renderTemplate("errors/$code.html");
         }
     }
 }
