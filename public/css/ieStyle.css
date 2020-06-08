@@ -1,0 +1,22 @@
+/* Spinner */
+#prev,
+#next {
+    display: none
+}
+
+#hero {
+    background-attachment: scroll
+}
+
+#hero a {
+    background: #ee6d25
+}
+
+#loader {
+    display: none !important
+}
+body {
+    opacity: 1!important;
+    z-index: 1!important;
+    visibility: visible!important;
+}
