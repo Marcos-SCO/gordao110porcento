@@ -4,6 +4,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name=description content="Gordão a 110% melhor lanchonete e restaurante da região. É gordão ou nada!">
+    <meta name="keywords" content="Gordão, lanchonete, Gordo, Gordão, Gordo Lanchonete, Gordão a 110%, Gordo 110%, Lanchonete Gordão, 110% lanchonete, 110% Gordão Lanchonete, lanchonete a 110%, gordao a 110%, Lanchonete a 110%">
+    <meta name=author content='Marcos dos Santos Carvalho'>
     <!-- fav icons -->
     <link rel="apple-touch-icon" sizes="180x180" href="<?= $BASE ?>/public/img/favicon/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="<?= $BASE ?>/public/img/favicon/favicon-32x32.png">
