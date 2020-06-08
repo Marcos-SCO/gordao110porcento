@@ -2,7 +2,7 @@
     <header>
         <h1 class="text-center"><?= $data->product_name ?></h1>
     </header>
-    <figure class="d-flex flex-column justify-content-center align-items-center">
+    <figure class="productShow d-flex flex-column justify-content-center align-items-center">
         <img src="<?= $BASE ?>/<?=imgOrDefault('products', $data->img, $data->id, "/category_$data->id_category")?>" title="<?= $data->product_name ?>">
 
         <figcaption class="card-body bg-light" style="width:100%;min-height: auto!important;">

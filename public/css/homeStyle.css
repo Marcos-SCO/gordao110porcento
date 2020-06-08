@@ -78,7 +78,7 @@
     padding: .65rem 0 .5rem
 }
 
-.owl-carousel a {
+.owl-carousel a, .owl-carousel a:hover {
     text-decoration: none;
     color: #000 !important;
     text-align: center;

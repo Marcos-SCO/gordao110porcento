@@ -12,18 +12,6 @@ function isIE() {
     var is_ie = ua.indexOf("MSIE ") > -1 || ua.indexOf("Trident/") > -1;
     return is_ie;
 }
-/* Create an alert to show if the browser is IE or not */
-if (isIE()) {
-    var head = document.head || document.getElementsByTagName('head')[0],
-        style = document.createElement('link');
-    url = window.location.href;
-    head.appendChild(style);
-    style.rel = 'stylesheet';
-    style.href = url + '/public/css/ieStyle.css';
-
-    console.log('Internet Explorer...');
-}
-
 // url
 let url = window.location.href;
 // Dates

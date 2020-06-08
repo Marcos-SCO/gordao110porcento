@@ -1,4 +1,4 @@
-<style>main {display:flex;justify-content:center;height: 100%!important;background-image:url('<?=$BASE?>/public/img/template/aboutBackgroundSection.png');background-repeat:no-repeat;background-size:cover;}#whats{display:none!important}</style>
+<style><?= (detectIE() != true) ? 'main {display:flex;justify-content:center;}' : '' ?> main {height: 100%!important;background-image:url('<?=$BASE?>/public/img/template/aboutBackgroundSection.png');background-repeat:no-repeat;background-size:cover;}#whats{display:none!important}</style>
 <section class="d-flex flex-column justify-content-center align-items-center container">
     <header>
         <h1><?= $title ?? 'Logar no sistema' ?></h1>

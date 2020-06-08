@@ -56,6 +56,8 @@
     ?>
     <!-- Main Css -->
     <link rel="stylesheet" href="<?= $BASE ?>/public/css/style.css">
+    <?= (detectIE() != false) ? "<!-- Ie style -->
+    <link rel='stylesheet' href='$BASE/public/css/ieStyle.css'>" : '' ?>
     <title><?= $title ?? 'Olá mundo!' ?></title>
 </head>
 

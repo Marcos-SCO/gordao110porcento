@@ -23,3 +23,9 @@ body {
 .about figcaption {
     height:256px
 }
+.productShow img {
+    max-width: 200px!important
+}
+main {
+    display: block!important;
+}
