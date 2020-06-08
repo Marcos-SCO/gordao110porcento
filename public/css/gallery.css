@@ -1,0 +1,33 @@
+/* -------- Gallery Start -------- */
+main {
+    padding-bottom: 5rem
+}
+.galleryHeader {
+    background-image: url(../img/template/gallery.png)
+}
+
+.galleryArticle {
+    /* height: 200px;
+    width: 100px; */
+    overflow: hidden
+}
+
+.galleryArticle figure {
+    position: relative;
+}
+
+.galleryArticle .galleryImgMax {
+    height: 170px;
+    overflow: hidden
+}
+
+.galleryArticle figcaption p {
+    width: 100%;
+    color: #ff7a08;
+    background-color: #fff;
+    border: 1px solid #dee2e6;
+    border-radius: 44px;
+    border-top: none !important
+}
+
+/* -------- Gallery End -------- */

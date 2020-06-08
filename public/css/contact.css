@@ -1,0 +1,45 @@
+/* -------- Contact Start -------- */
+.contactHeader {
+    background-image: url(../img/template/contact.png)
+}
+
+.contactForm {
+    max-width: 1053px
+}
+
+.contactRow {
+    display: flex;
+    justify-content: center
+}
+
+.contactAddress {
+    width: 100%;
+    max-width: 716px
+}
+
+.contactAddress div {
+    display: flex;
+}
+
+.contactAddress div ul {
+    padding: 1rem
+}
+
+@media screen and (max-width:615px) {
+    .contactAddress div {
+        flex-wrap: wrap-reverse
+    }
+}
+
+@media screen and (max-width:1000px) {
+    .contactForm .contactRow {
+        /* flex-direction: column-reverse !important */
+    }
+
+    .contactForm .contactInfo {
+        margin-bottom: 1rem;
+        align-self: center !important
+    }
+}
+
+/* -------- Contact End -------- */

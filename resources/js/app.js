@@ -64,10 +64,9 @@ if (!isIE()) {
     // on load spinner
     //------------- Loading animation start ---------- //
     (() => {
-        let splitLoader = window.location.href.split('/');
-        if (splitLoader[5] !== '') {
-            let loader, hero, header, footer, nav, main, items;
-            loader = document.querySelector("#loader");
+        let loader, hero, header, footer, nav, main, items;
+        loader = document.querySelector("#loader");
+        if (loader != null) {
             hero = document.querySelector("#hero");
             header = document.querySelector("#topNav");
             footer = document.querySelector("footer");

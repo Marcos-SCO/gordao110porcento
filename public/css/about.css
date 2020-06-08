@@ -1,0 +1,162 @@
+/* -------- About Start -------- */
+/* Home about */
+.homeHeaderAbout {
+    background-image: url(../img/template/gordao110.png)
+}
+
+.homeHeaderAbout.imgBackgroundArea::before {
+    background-image: none !important;
+    background-color: #333;
+    opacity: .8
+}
+
+@media screen and (min-width:650px) {
+    .homeHeaderAbout.imgBackgroundArea::before {
+        opacity: .5
+    }
+}
+
+.homeHeaderAbout span {
+    margin-top: -.7rem;
+    padding: 1rem;
+    width: 100%;
+    z-index: 1
+}
+
+.homeHeaderAbout span,
+.homeHeaderAbout div {
+    max-width: 300px
+}
+
+.homeAbout {
+    background-image: url(../img/template/aboutBackgroundSection.png);
+    background-repeat: no-repeat;
+    background-position: bottom;
+    background-size: cover
+}
+
+.homeAbout .about {
+    display: flex;
+    flex-direction: row-reverse;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    align-items: center;
+    margin: auto;
+    white-space: pre-line
+}
+
+.homeAbout .about div {
+    padding: 0 2rem;
+    background-color: #fff;
+    box-shadow: -1px 3px 20px 1px #ccc
+}
+
+.homeAbout strong {
+    align-self: flex-start;
+    font-size: 2rem;
+    padding-bottom: 1rem
+}
+
+@media screen and (min-width:590px) {
+    .homeAbout .about {
+        justify-content: center;
+        padding: 2rem;
+        line-height: 1.85rem;
+        /* box-shadow: 20px 20px 0px #d65106; */
+    }
+
+    .homeAbout figcaption {
+        margin: 1rem !important
+    }
+}
+/* Home about end */
+
+@media screen and (min-width:650px) {
+    .homeHeaderAbout.imgBackgroundArea::before {
+        opacity: .5
+    }
+}
+.aboutArticle {
+    margin-top: -.0199rem
+}
+
+.about {
+    display: flex;
+    flex-wrap: wrap;
+    max-width: 1064px;
+    justify-content: center;
+    margin: auto
+}
+
+.about strong {
+    align-self: flex-start;
+    font-size: 2rem;
+    padding-bottom: 1rem
+}
+
+.about figure {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    flex-direction: row;
+    max-width: 500px
+}
+
+.about figure:nth-child(odd) {
+    flex-direction: row-reverse;
+    background: #fff;
+    color: #000
+}
+
+.about figure:nth-child(even) {
+    background: #333;
+    color: #fff
+}
+
+.about figcaption {
+    min-height: 256px;
+    max-width: 469px !important;
+    padding: 1rem
+}
+
+@media screen and (min-width:590px) {
+    .about {
+        padding: 0 2rem;
+        line-height: 1.85rem;
+        /* box-shadow: 20px 20px 0px #d65106; */
+    }
+
+    .about figure {
+        /* flex-wrap: nowrap; */
+        max-width: auto;
+    }
+
+    .about figcaption {
+        margin: 1rem !important
+    }
+}
+
+@media screen and (min-width:400px) and (max-width:1151px) {
+    .about figure {
+        max-width: 400px
+    }
+}
+
+@media screen and (min-width:1151px) {
+    .about {
+        flex-wrap: nowrap;
+        flex-direction: column
+    }
+
+    .about figure img {
+        max-width: 500px
+    }
+
+    .about figure,
+    .about figcaption {
+        flex-wrap: nowrap;
+        max-width: 100%
+    }
+}
+
+/* -------- About End -------- */

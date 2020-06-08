@@ -1,4 +1,3 @@
-<Style>main{height:100%}</Style>
 <header class="galleryHeader imgBackgroundArea">
     <span style="z-index:1">
         <h2>Nossa</h2>
@@ -6,7 +5,7 @@
     </span>
 </header>
 <?php
-Core\Controller::createMore($BASE, 'gallery', 'Quer adicionar Mais imagens?');
+Core\Controller::createMore($BASE, 'gallery', 'Adicionar mais imagens');
 ?>
 <article class="galleryArticle container">
     <header>

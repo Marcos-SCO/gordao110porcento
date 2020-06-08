@@ -82,20 +82,7 @@
             </div>
         </section>
         <?php if ($getQuery[0] == '' || $getQuery[0] == 'home') { ?>
-            <style>
-                @media screen and (min-width:1000px) {
-                    footer article {
-                        flex-direction: row !important;
-                        align-items: center
-                    }
-
-                    .footerInfo {
-                        flex-wrap: wrap !important;
-                        max-width: 436px;
-                        align-items: center
-                    }
-                }
-            </style>
+            <style>@media screen and (min-width:1000px) { footer article {flex-direction: row !important;align-items: center} .footerInfo {flex-wrap: wrap !important;max-width: 436px;align-items: center}}</style>
             <section class="contactSection">
                 <address data-anima="right">
                     <nav>
@@ -129,15 +116,11 @@
 </script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous">
 </script>
-<!-- <script src='<?//= $BASE ?>/public/js/jquery.min.js'></script> -->
-<!-- Owl -->
-<script src='<?= $BASE ?>/public/js/owl.carousel.min.js'></script>
-<script src="<?= $BASE ?>/public/js/owlFunctions.js"></script>
+<?= ($getQuery[0] == '' || $getQuery[0] == 'home') ? "<!-- Owl -->
+<script src='$BASE/public/js/owl.carousel.min.js'></script>
+<script src='$BASE/public/js/owlFunctions.js'></script>" : ''; ?>
 <!-- App -->
 <script src="<?= $BASE ?>/public/js/app.js"></script>
-<script>
-
-</script>
 </body>
 
 </html>
