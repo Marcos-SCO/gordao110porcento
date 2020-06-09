@@ -19,7 +19,7 @@
                     $elements = 0;
                     for ($i = $pageId; $i <= $totalPages; $i++) {
                         $elements += 1;
-                        if ($elements < 5) {
+                        if ($elements <= 3) {
                             $active = ($pageId == $i) ? 'active' : '';
                             echo "<li class='page-item $active'><a href='$BASE/$path/$i'><span class='page-link'>$i</span></a></li></a></li>";
                         }

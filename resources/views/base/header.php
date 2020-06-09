@@ -132,7 +132,7 @@
                     <h1 id="quoteTitle" class="text-left font-swashCaps" style="color:#fff;">Gordão a 110%</h1>
                     <p id="quote" style="color:#fff;">O melhor restaurante e lanchonete da região</p>
                 </div>
-                <a href="">Pedir agora</a>
+                <a href="https://api.whatsapp.com/send?phone=5511930268294&text=Olá+tudo+bem?+Gostaria+de+conversar.">Pedir agora</a>
             </header>
             <i id="prev" class="fa fa-angle-left"></i>
             <i id="next" class="fa fa-angle-right"></i>
@@ -148,4 +148,4 @@
         <!-- To top btn -->
         <button id="topBtn" data-anima="right"><i class="fa fa-arrow-up"></i></button>
         <!-- Whatsapp btn -->
-        <a href="https://api.whatsapp.com/send?phone=5511930268294&text=Olá+tudo+bem?+Nós+do+Gordão+a+110%,+estamos+disponíveis+aguardando+seu+contato." class="float" target="_blank" id="whats"><i class="fa fa-whatsapp my-float"></i></a>
+        <a href="https://api.whatsapp.com/send?phone=5511930268294&text=Olá+tudo+bem?+Gostaria+de+conversar." class="float" target="_blank" id="whats"><i class="fa fa-whatsapp my-float"></i></a>

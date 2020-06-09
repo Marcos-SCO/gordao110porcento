@@ -2,6 +2,7 @@
 .productHeader {
     background-image: url(../img/template/gordao_letreiros.png)
 }
+
 .productDropdown {
     display: flex;
     flex-wrap: wrap;
@@ -9,12 +10,28 @@
     align-content: center;
     align-self: center;
     width: 100%;
-    max-width: 320px
+    max-width: 320px;
+    margin: 0 .5rem
 }
 
-.productDropdown p {
-    margin: 0 !important;
-    align-self: center
+.productDropdown p {align-self: center}
+
+@media screen and (max-width:454px) {
+    .productDropdown {
+        align-content: center !important;
+        align-self: flex-start !important;
+        flex-direction: column !important
+    }
+
+    .productDropdown p {
+        margin-bottom: .55rem !important
+    }
+}
+@media screen and (min-width:454px) {
+    .productDropdown p {
+        margin: 0 !important
+       
+    }
 }
 
 .productDropdown button {
@@ -69,9 +86,10 @@
     align-items: center;
     flex-direction: column
 }
+
 /* -------- Catecories End -------- */
 @media screen and (max-width:600px) {
     .productHeader {
-        background-image: url(../img/template/gordao_letreiros_600.png)!important
+        background-image: url(../img/template/gordao_letreiros_600.png) !important
     }
 }

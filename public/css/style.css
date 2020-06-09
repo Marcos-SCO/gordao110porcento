@@ -4,6 +4,35 @@
     box-sizing: border-box !important
 }
 
+html,
+body {
+    height: 100%;
+    min-width: 100%;
+    width: 100%;
+    overflow-y: visible
+}
+
+body {
+    position: relative;
+    overflow-x: hidden
+}
+
+@media screen and (max-width:500px) {
+
+    html,
+    body,
+    main {
+        overflow-x: hidden !important
+    }
+
+    ::-webkit-scrollbar {
+        width: 0px !important;
+        /* Remove scrollbar space */
+        background: transparent !important;
+        /* Optional: just make scrollbar invisible */
+    }
+}
+
 /* Spinner */
 #loader {
     position: absolute;
@@ -16,11 +45,13 @@
     animation: spin 1s linear infinite;
     z-index: 999999999
 }
+
 @keyframes spin {
     100% {
         transform: rotate(360deg)
     }
 }
+
 /* end Spinner */
 
 /* Google font */
@@ -58,13 +89,14 @@ label {
 }
 
 a {
-    color: #d95f1b;;
+    color: #d95f1b;
+    ;
     text-decoration: none;
     transition: ease-in-out .1s
 }
 
 a:focus {
-    color: #d95f1b; !important;
+    color: #d95f1b !important;
     background: none !important
 }
 
@@ -104,9 +136,11 @@ textarea {
 }
 
 /* -------- Float btn Start -------- */
-.float, #topBtn {
+.float,
+#topBtn {
     z-index: 99999999
 }
+
 /* To top btn */
 #topBtn {
     position: fixed;
@@ -178,7 +212,8 @@ textarea {
     opacity: 1
 }
 
-.float:hover, .float:focus  {
+.float:hover,
+.float:focus {
     background-color: #fff !important;
     box-shadow: 1px -1px 12px 0px #ff5b00
 }
@@ -200,36 +235,6 @@ textarea {
 
 /* -------- Float btn end -------- */
 
-@media screen and (max-width:299.9px) {
-
-    html,
-    body {
-        overflow-x: hidden !important
-    }
-}
-
-@media screen and (max-width:500px) {
-    ::-webkit-scrollbar {
-        width: 0px !important;
-        /* Remove scrollbar space */
-        background: transparent !important;
-        /* Optional: just make scrollbar invisible */
-    }
-}
-
-html,
-body {
-    height: 100%;
-    min-width: 100%;
-    width: 100%;
-    overflow-y: visible
-}
-
-body {
-    position: relative;
-    overflow-x: hidden !important
-}
-
 /* main */
 main figure {
     margin-bottom: 0 !important
@@ -240,7 +245,7 @@ img {
 }
 
 .z-index {
-    z-index: 999999 !important
+    z-index: 99999999 !important
 }
 
 .flex {
@@ -300,11 +305,18 @@ img {
 
 /* nav */
 .navbar {
-    min-height: 75px
+    min-height: 75px;
+    padding: 0 .65rem
 }
 
 .navBar .dropdown-menu {
     z-index: 9999999999999
+}
+
+@media screen and (max-width:991px) {
+    .navbar-nav .dropdown-menu {
+        margin-bottom: 1rem
+    }
 }
 
 @media screen and (min-width:991.99px) {
@@ -370,8 +382,16 @@ nav img {
 /* img background areas end */
 
 /* Pagination */
+@media screen and (max-width:326px) {
+    .pagination {
+        display: flex;
+        flex-wrap: wrap;
+        font-size: 14.5px
+    }
+}
+
 .page-link {
-    color: #d95f1b!important
+    color: #d95f1b !important
 }
 
 .page-link:focus {
@@ -466,6 +486,7 @@ footer .contactSection .map {
         margin: auto
     }
 }
+
 @media screen and (max-width:558px) {
     footer .contactSection address {
         flex-wrap: wrap
@@ -484,6 +505,7 @@ footer .contactSection .map {
         justify-content: space-around
     }
 }
+
 /* -------- Footer End -------- */
 
 /* Edit delete start */
@@ -507,12 +529,14 @@ footer .contactSection .map {
     color: #d95f1b !important
 }
 
-.editDelete::before {
-    content: 'Proceda com cautela!';
-    position: absolute;
-    position: absolute;
-    top: -21px;
-    left: 9px
+@media screen and (min-width:381px) {
+    .editDelete::before {
+        content: 'Proceda com cautela!';
+        position: absolute;
+        position: absolute;
+        top: -21px;
+        left: 9px
+    }
 }
 
 /* Edit pages */
