@@ -1,6 +1,6 @@
 <header class="postShow imgBackgroundArea" style="background-image:url('<?= $BASE . '/' . imgOrDefault('posts', $data->img, $data->id) ?>');">
     <h1><?= $data->title ?></h1>
-    <small class='smallInfo'>Escrito por <a href='<?="$BASE/users/show/$user->id"?>'><?= $user->name ?></a> em <?= dateFormat($data->created_at) ?></small>
+    <small class='smallInfo'>Escrito por <a href='<?= "$BASE/users/show/$user->id" ?>'><?= $user->name ?></a> em <?= dateFormat($data->created_at) ?></small>
 </header>
 <?php if ($_SESSION['user_status'] == 1) { ?>
     <div class="d-flex flex-wrap justify-content-center align-items-center postShowAdm">
@@ -28,7 +28,36 @@
         <a href="<?= $BASE ?>/users/show/<?= $user->id ?>">
             <h5>Sobre o Autor</h5>
             <figure class="d-flex align-items-center justify-content-left">
-                <style>.imgUserBox::before{content:'<?= $user->name ?>';position:absolute;z-index:9999;word-break:break-all;bottom:30px;left:17px;font-size:1rem;background:#d95f1b;padding:.01rem;min-width:100px;max-width:100px;text-align:center;text-decoration:none;}a:hover .imgUserBox::before{background-color:#fff!important}@media screen and (max-width:600px){.imgUserBox::before{left:1rem;top:-15px;min-width: 149px!important;max-height: 25px;}}</style>
+                <style>
+                    .imgUserBox::before {
+                        content: '<?= $user->name ?>';
+                        position: absolute;
+                        z-index: 9999;
+                        word-break: break-all;
+                        bottom: 30px;
+                        left: 17px;
+                        font-size: 1rem;
+                        background: #d95f1b;
+                        padding: .01rem;
+                        min-width: 100px;
+                        max-width: 100px;
+                        text-align: center;
+                        text-decoration: none;
+                    }
+
+                    a:hover .imgUserBox::before {
+                        background-color: #fff !important
+                    }
+
+                    @media screen and (max-width:600px) {
+                        .imgUserBox::before {
+                            left: 1rem;
+                            top: -15px;
+                            min-width: 149px !important;
+                            max-height: 25px;
+                        }
+                    }
+                </style>
                 <div class="imgUserBox">
                     <img src="<?= $BASE ?>/<?= imgOrDefault('users', $user->img, $user->id) ?>" alt="<?= $user->img ?>" title="<?= $user->name ?>" class="imgFitUser">
                     <span><?= $user->name ?></span>
@@ -47,9 +76,9 @@
         /**
          *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
          *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
-        let pageUrl = window.location.href;
-        let pageId = document.getElementById('pageId').value;
-        var disqus_config = function(pageUrl, pageId) {
+        const PAGE_URL = window.location.href;
+        const PAGE_IDENTIFIER = document.getElementById('pageId').value;
+        var disqus_config = function(PAGE_URL, PAGE_IDENTIFIER) {
             this.page.url = PAGE_URL; // Replace PAGE_URL with your page's canonical URL variable
             this.page.identifier =
                 PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
@@ -58,11 +87,11 @@
         (function() { // DON'T EDIT BELOW THIS LINE
             var d = document,
                 s = d.createElement('script');
-            s.src = 'https://lanchao110porcento.disqus.com/embed.js';
+            s.src = 'https://gordao110porcento.disqus.com/embed.js';
             s.setAttribute('data-timestamp', +new Date());
             (d.head || d.body).appendChild(s);
         })();
     </script>
     <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-    <!-- <script id="dsq-count-scr" src="//lanchao110porcento.disqus.com/count.js" async></script> -->
-</article class="p-4
+</article>
+<div id="disqus_thread"></div>
