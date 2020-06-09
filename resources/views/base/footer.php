@@ -95,7 +95,7 @@
                             <li><i class="fa fa-phone fa-2x" style="color:#ff9800"></i>(55) 43825357
                             </li>
                             <li><i class="fa fa-whatsapp fa-2x" style="color:#4AC959"></i>(55) 43825357</li>
-                            <li class=""><i class="fa fa-envelope fa-2x"></i>gordão110%@outlook.com
+                            <li class=""><i class="fa fa-envelope fa-2x"></i><a href="mailto:marcos_sco@outlook.com">gordão110%@outlook.com</a>
                             </li>
                         </ul>
                     </nav>
