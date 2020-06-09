@@ -21,7 +21,7 @@ class Gallery extends Controller
     public function index($id = 1, $flash = false)
     {
         $table = 'gallery';
-        $results = $this->pagination($table, $id, $limit = 4, '', $orderOption = 'DESC');
+        $results = $this->pagination($table, $id, $limit = 8, '', $orderOption = 'DESC');
         View::render('gallery/index.php', [
             'title' => 'Galeria de imagens',
             'gallery' => $results[4],
@@ -68,7 +68,7 @@ class Gallery extends Controller
                     $_SESSION['submitted'] = true;
                     $flash = flash('post_message', 'Imagem adicionada com successo');
                     $id = $this->model->lastId();
-                    return $this->show($id, $flash);
+                    return $this->index(1, $flash);
                 } else {
                     die('Algo deu errado..');
                 }
@@ -142,7 +142,7 @@ class Gallery extends Controller
                 $this->model->updateImg($data[0]);
                 $flash = flash('post_message', 'Imagem foi atualizada com sucesso!');
 
-                return $this->show($id, $flash);
+                return $this->index(1, $flash);
             } else {
                 return $this->edit($id, $error);
             }
