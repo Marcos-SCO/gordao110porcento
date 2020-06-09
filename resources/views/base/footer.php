@@ -135,6 +135,9 @@ if ($getQuery[0] == '' || $getQuery[0] == 'home') {
     echo (detectIE() != true) ? "<!-- Hero Slider --><script src='$BASE/public/js/heroSlider.js'></script>" : '';
     echo "<!-- Owl --><script src='$BASE/public/js/owl.carousel.min.js'></script><script src='$BASE/public/js/owlFunctions.js'></script>";
 }
+// tiny MCE 
+echo ($getQuery[0] == 'posts' && $getQuery[1] == 'create' || $getQuery[1] == 'edit') ? "<!-- Tiny MCE --><script src='$BASE/public/js/tinyMCE.js'></script>
+" : '';
 ?>
 <!-- App -->
 <script src="<?= $BASE ?>/public/js/app.js"></script>
