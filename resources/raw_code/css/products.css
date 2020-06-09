@@ -1,0 +1,95 @@
+/* -------- Products Start -------- */
+.productHeader {
+    background-image: url(../img/template/gordao_letreiros.png)
+}
+
+.productDropdown {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    align-content: center;
+    align-self: center;
+    width: 100%;
+    max-width: 320px;
+    margin: 0 .5rem
+}
+
+.productDropdown p {align-self: center}
+
+@media screen and (max-width:454px) {
+    .productDropdown {
+        align-content: center !important;
+        align-self: flex-start !important;
+        flex-direction: column !important
+    }
+
+    .productDropdown p {
+        margin-bottom: .55rem !important
+    }
+}
+@media screen and (min-width:454px) {
+    .productDropdown p {
+        margin: 0 !important
+       
+    }
+}
+
+.productDropdown button {
+    background-color: #f8f8f8;
+    border: 1px solid #ccc
+}
+
+.products {
+    display: flex;
+    justify-content: center;
+    max-width: 1300px;
+    padding: 1rem 0;
+    margin: auto
+}
+
+@media screen and (min-width: 357px) {
+    .products {
+        padding: 1rem
+    }
+}
+
+.products img {
+    /* height: 100%; */
+    max-height: 225px;
+    transition: all ease-in-out .5s
+}
+
+.products img:hover {
+    transform: scale(1.12)
+}
+
+.products figure {
+    width: 300px
+}
+
+.products figcaption {
+    background-color: #f8f8f8;
+    border-top: 1px solid #ccc;
+}
+
+.products .card-text:first-child {
+    min-height: 96px
+}
+
+.add {
+    max-width: 670px;
+    margin: 0 auto -1rem
+}
+
+.categoryHeader {
+    display: flex;
+    align-items: center;
+    flex-direction: column
+}
+
+/* -------- Catecories End -------- */
+@media screen and (max-width:600px) {
+    .productHeader {
+        background-image: url(../img/template/gordao_letreiros_600.png) !important
+    }
+}
