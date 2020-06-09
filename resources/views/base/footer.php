@@ -64,10 +64,11 @@
                     <h5 class="text-uppercase">Categorias</h5>
                     <nav>
                         <ul class="list-unstyled">
-                            <li><a href="<?= $BASE ?>/gallery">Habúrgueres</a></li>
-                            <li><a href="#">Pizzas</a></li>
-                            <li><a href="#">Bebidas</a></li>
-                            <li><a href="#">Porções</a></li>
+                            <li><a href="<?= $BASE ?>/categories/show/1">Habúrgueres</a></li>
+                            <li><a href="<?= $BASE ?>/categories/show/2">Pizzas</a></li>
+                            <li><a href="<?= $BASE ?>/categories/show/3">Porções</a></li>
+                            <li><a href="<?= $BASE ?>/categories/show/4">Combos</a></li>
+                            <li><a href="<?= $BASE ?>/categories/show/5">Bebidas</a></li>
                         </ul>
                     </nav>
                 </section>
