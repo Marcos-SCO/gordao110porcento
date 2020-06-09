@@ -10,7 +10,7 @@
             <div class="about">
                 <div data-anima="center">
                     <strong class="font-swashCaps lightText">Gordão a 110%</strong>
-                    <p class="mt-2">Somos uma lanchonete e restaurante com mais de <a href="<?= $BASE ?>/about"><span class="activeYears" class="link">vinte e três</span></a> anos de tradição.<br>Já servimos todo tipo de refeição com nosso extenso <span class="link" id="menu">menu</span>, peça já!<br>Te convidamos a se deliciar com nossas ofertas.<br>Você terá a satisfação a 110% e garantia de qualidade.<br>É gordão ou nada! <a href="<?= $BASE ?>/about">Saiba mais</a></p>
+                    <p class="mt-2">Somos uma lanchonete e restaurante com mais de <a href="<?= $BASE ?>/about"><span class="activeYears link">vinte e três</span></a> anos de tradição. Já servimos todo tipo de refeição com nosso extenso <span class="link" id="menu">menu</span>, <a href="https://api.whatsapp.com/send?phone=5511930268294&text=Olá+tudo+bem?+Nós+do+Gordão+a+110%,+estamos+disponíveis+aguardando+seu+contato.">peça já!.</a> Te convidamos a se deliciar com nossas ofertas. Você terá a satisfação a 110% e garantia de qualidade.<br>É gordão ou nada! <a href="<?= $BASE ?>/about">Saiba mais</a></p>
                 </div>
             </div>
         </section>

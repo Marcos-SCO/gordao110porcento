@@ -2,7 +2,6 @@
 .usersAdmBackground {
     background-image: url(../img/template/users.png)
 }
-
 .usersAdm li {
     min-width: 300px
 }
@@ -142,4 +141,9 @@
 .inactiveList::before {
     content: 'Usuário Inativos';
     background: #c70e0e
+}
+@media screen and (max-width:600px) {
+    .usersAdmBackground {
+        background-image: url(../img/template/users_600.png)!important
+    }
 }

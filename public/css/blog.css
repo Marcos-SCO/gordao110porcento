@@ -1,7 +1,8 @@
 /* -------- Blog Start -------- */
 .homeBlog {
-    background-image: url(http://localhost/projetosCompletos/gordao110porcento/public/img/template/blog.png)
+    background-image: url(../img/template/blog.png)
 }
+
 .blog {
     max-width: 1300px;
     display: flex;
@@ -173,7 +174,7 @@
     left: 0;
     height: 100%;
     width: 100%;
-    background-image: url(../img/template/gordao110_logo.png);
+    background-image: url(../img/template/gordao110_logo_300px.png);
     background-size: contain;
     background-repeat: no-repeat;
     background-position: right;
@@ -275,3 +276,13 @@
 }
 
 /* Post Edit End */
+
+@media screen and (max-width:600px) {
+    .homeHeaderAbout {
+        background-image: url(../img/template/gordao110_600.png)!important
+    }
+
+    .homeBlog {
+        background-image: url(../img/template/blog_600.png)!important
+    }
+}

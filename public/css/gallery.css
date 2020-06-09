@@ -5,7 +5,6 @@ main {
 .galleryHeader {
     background-image: url(../img/template/gallery.png)
 }
-
 .galleryArticle {
     /* height: 200px;
     width: 100px; */
@@ -31,3 +30,8 @@ main {
 }
 
 /* -------- Gallery End -------- */
+@media screen and (max-width:600px) {
+    .galleryHeader {
+        background-image: url(../img/template/gallery_600.png)!important
+    }
+}

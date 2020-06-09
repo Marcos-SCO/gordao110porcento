@@ -21,7 +21,7 @@
                 <strong class="font-swashCaps">
                     <h1 class="lightText">Gordão a 110%</h1>
                 </strong>
-                <p>Somos uma lanchonete e restaurante com mais de <span id="activeYears" class="link">vinte e três</span> anos de tradição. Já servimos todo tipo de refeição com nosso extenso <span class="link" id="menu">menu</span>, peça já!. Te convidamos a se deliciar com nossas ofertas. Você terá a satisfação a 110% e garantia de qualidade. É gordão ou nada!
+                <p>Somos uma lanchonete e restaurante com mais de <span class="activeYears link">vinte e três</span> anos de tradição. Já servimos todo tipo de refeição com nosso extenso <span class="link" id="menu">menu</span>, <a href='https://api.whatsapp.com/send?phone=5511930268294&text=Olá+tudo+bem?+Nós+do+Gordão+a+110%,+estamos+disponíveis+aguardando+seu+contato.'>peça já!.</a> Te convidamos a se deliciar com nossas ofertas. Você terá a satisfação a 110% e garantia de qualidade. É gordão ou nada!
             </figcaption>
         </figure>
         <figure>
@@ -31,7 +31,7 @@
             </figcaption>
         </figure>
         <figure>
-            <img src="<?= $BASE ?>/public/img/template/gordao_letreiros_500.png" alt="gordao_letreiros_500.png" title="Gordão Letreiros" data-anima="right">
+            <img src="<?= $BASE ?>/public/img/template/gordao_letreiros_600.png" alt="gordao_letreiros_600.png" title="Gordão Letreiros" data-anima="right">
             <figcaption>
                 <p><strong class="lightText">VISÃO</strong><br>Ser a melhor lanchonete no seguimento, visando sempre o bem estar de nassos clientes. Comprometendo-se com a satisfação e valorizando nossas pessoas e visitantes.
                 </p>

@@ -3,7 +3,6 @@
 .homeHeaderAbout {
     background-image: url(../img/template/gordao110.png)
 }
-
 .homeHeaderAbout.imgBackgroundArea::before {
     background-image: none !important;
     background-color: #333;
@@ -163,3 +162,8 @@
     max-width: 1053px
 }
 /* -------- About End -------- */
+@media screen and (max-width:600px) {
+    .homeHeaderAbout {
+        background-image: url(../img/template/gordao110_600.png)!important
+    }
+}

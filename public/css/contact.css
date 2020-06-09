@@ -2,7 +2,6 @@
 .contactHeader {
     background-image: url(../img/template/contact.png)
 }
-
 .contactForm {
     max-width: 1053px
 }
@@ -43,3 +42,8 @@
 }
 
 /* -------- Contact End -------- */
+@media screen and (max-width:600px) {
+    .contactHeader {
+        background-image: url(../img/template/contact_600.png)!important
+    }
+}

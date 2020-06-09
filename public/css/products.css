@@ -2,7 +2,6 @@
 .productHeader {
     background-image: url(../img/template/gordao_letreiros.png)
 }
-
 .productDropdown {
     display: flex;
     flex-wrap: wrap;
@@ -71,3 +70,8 @@
     flex-direction: column
 }
 /* -------- Catecories End -------- */
+@media screen and (max-width:600px) {
+    .productHeader {
+        background-image: url(../img/template/gordao_letreiros_600.png)!important
+    }
+}

@@ -49,7 +49,8 @@
 .homeAbout .about div {
     padding: 0 2rem;
     background-color: #fff;
-    box-shadow: -1px 3px 20px 1px #ccc
+    box-shadow: -1px 3px 20px 1px #ccc;
+    max-width: 526px
 }
 
 .homeAbout strong {
@@ -78,7 +79,8 @@
     padding: .65rem 0 .5rem
 }
 
-.owl-carousel a, .owl-carousel a:hover {
+.owl-carousel a,
+.owl-carousel a:hover {
     text-decoration: none;
     color: #000 !important;
     text-align: center;
@@ -117,7 +119,7 @@
 /* Snacks start */
 .bestsSnacks {
     background-image: url(../img/template/comida-rapida-espacio-abajo.png);
-    background-position: top!important;
+    background-position: top !important;
     background-repeat: no-repeat;
     background-size: cover
 }
@@ -197,7 +199,7 @@
 }
 
 .homeBlog {
-    background-image: url(http://localhost/projetosCompletos/gordao110porcento/public/img/template/blog.png)
+    background-image: url(../img/template/blog.png)
 }
 
 .img-fig {
@@ -218,3 +220,14 @@
 /* blog end */
 
 /* -------- Home End -------- */
+@media screen and (max-width:600px) {
+    .bestsSnacks {
+        background-image: url(../img/template/comida-rapida-espacio-abajo_600.png)!important
+    }
+    .homeHeaderAbout {
+        background-image: url(../img/template/gordao110_600.png)!important
+    }
+    .homeBlog {
+        background-image: url(../img/template/blog_600.png) !important
+    }
+}
