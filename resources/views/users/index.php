@@ -1,3 +1,6 @@
+<style>
+    main {height:100%}
+</style>
 <header class="imgBackgroundArea usersAdmBackground">
     <span class="text-left">
         <h2>Usuários</h2>
