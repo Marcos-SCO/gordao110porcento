@@ -23,7 +23,7 @@
                 </span>
             </div>
 
-            <img src="<?= $BASE ?>/public/img/gallery/default/default.png" alt="default.png" title="Imagem padrão">
+            <img src="<?= $BASE ?>/public/img/default/default.png" alt="default.png" title="Imagem padrão" onerror="this.onerror=null;this.src='<?=$BASE?>/public/img/not_found/no_image.jpg';">
         </div>
 
         <input type="submit" class="btn btn-success" value="Enviar">

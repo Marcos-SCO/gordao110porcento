@@ -42,7 +42,7 @@
                                 <input type="hidden" name="price" value="<?= $h->price ?>">
                             </span>
                             <figure class="item">
-                                <img class="mx-auto" src="<?= $BASE ?>/<?= imgOrDefault('products', $h->img, $h->id, "/category_$h->id_category") ?>" alt="<?= $h->img ?>" title="<?= $h->product_name ?>">
+                                <img class="mx-auto" src="<?= $BASE ?>/<?= imgOrDefault('products', $h->img, $h->id, "/category_$h->id_category") ?>" alt="<?= $h->img ?>" title="<?= $h->product_name ?>" onerror="this.onerror=null;this.src='<?=$BASE?>/public/img/not_found/no_image.jpg';">
                                 <figcaption><?= $h->product_name ?></figcaption>
                             </figure>
                         </a>
@@ -69,7 +69,7 @@
                                 <input type="hidden" name="price" value="<?= $data->price ?>">
                             </span>
                             <figure class="item">
-                                <img class="mx-auto" src="<?= $BASE ?>/<?= imgOrDefault('products', $data->img, $data->id, "/category_$data->id_category") ?>" alt="<?= $data->img ?>" title="<?= $data->product_name ?>">
+                                <img class="mx-auto" src="<?= $BASE ?>/<?= imgOrDefault('products', $data->img, $data->id, "/category_$data->id_category") ?>" alt="<?= $data->img ?>" title="<?= $data->product_name ?>" onerror="this.onerror=null;this.src='<?=$BASE?>/public/img/not_found/no_image.jpg';">
                                 <figcaption><?= $data->product_name ?></figcaption>
                             </figure>
                         </a>
@@ -86,7 +86,7 @@
                 <div class="owl-carousel owl-theme">
                     <?php foreach ($categories as $data) { ?>
                         <a href="<?= $BASE ?>/categories/show/<?= $data->id ?>">
-                            <figure class="item"><img class="mx-auto" src="<?= $BASE ?>/<?= imgOrDefault('categories', $data->img, $data->id) ?>" alt="<?= $data->img ?>" title="<?= $data->category_name ?>">
+                            <figure class="item"><img class="mx-auto" src="<?= $BASE ?>/<?= imgOrDefault('categories', $data->img, $data->id) ?>" alt="<?= $data->img ?>" title="<?= $data->category_name ?>" onerror="this.onerror=null;this.src='<?=$BASE?>/public/img/not_found/no_image.jpg';">
                                 <figcaption><?= $data->category_name ?></figcaption>
                             </figure>
                         </a>
@@ -106,7 +106,7 @@
             <div class="owl-carousel owl-theme">
                 <?php foreach ($posts as $data) { ?>
                     <a href="<?= $BASE ?>/posts/show/<?= $data->id ?>">
-                        <figure class="item overflow-hidden img-section-max"><img class="object-fit" src="<?= $BASE ?>/public/img/posts/id_<?= $data->id ?>/<?= $data->img ?>" alt="<?= $data->title ?>" title="<?= $data->title ?>">
+                        <figure class="item overflow-hidden img-section-max"><img class="object-fit" src="<?= $BASE ?>/public/img/posts/id_<?= $data->id ?>/<?= $data->img ?>" alt="<?= $data->title ?>" title="<?= $data->title ?>" onerror="this.onerror=null;this.src='<?=$BASE?>/public/img/not_found/no_image.jpg';">
                             <figcaption class="img-fig"><?= $data->title ?></figcaption>
                         </figure>
                     </a>

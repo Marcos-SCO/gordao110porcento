@@ -16,7 +16,7 @@ Core\Controller::createMore($BASE, 'gallery', 'Adicionar mais imagens');
         <?php foreach ($gallery as $data) { ?>
             <figure class="col-lg-3 col-md-4 col-6">
                 <a href="<?= $BASE ?>/<?= imgOrDefault('gallery', $data->img, $data->id) ?>" data-toggle="lightbox" data-lightbox="mygallery" data-title="<?= $data->img_title ?>">
-                    <div class="galleryImgMax"><img src="<?= $BASE ?>/<?= imgOrDefault('gallery', $data->img, $data->id) ?>" alt="<?= $data->img ?>" title="<?= $data->img_title ?>" class="img-fluid img-thumbnail"></div>
+                    <div class="galleryImgMax"><img src="<?= $BASE ?>/<?= imgOrDefault('gallery', $data->img, $data->id) ?>" alt="<?= $data->img ?>" title="<?= $data->img_title ?>" class="img-fluid img-thumbnail" onerror="this.onerror=null;this.src='<?=$BASE?>/public/img/not_found/no_image.jpg';"></div>
                     <figcaption style="white-space: nowrap;overflow: hidden;text-overflow: ellipsis;"><p class="text-center"><?= $data->img_title ?></p>
                     </figcaption>
                 </a>

@@ -43,7 +43,7 @@ if ($_SESSION['user_status'] && $_SESSION['user_status'] == 1) {
     <section class="products flex-wrap card-group">
         <?php foreach ($products as $data) { ?>
             <figure class="card">
-                <img src="<?= $BASE ?>/<?=imgOrDefault('products',$data->img,$data->id, "/category_$data->id_category")?>" alt="<?= $data->img ?>" title="<?= $data->product_name ?>">
+                <img src="<?= $BASE ?>/<?=imgOrDefault('products',$data->img,$data->id, "/category_$data->id_category")?>" alt="<?= $data->img ?>" title="<?= $data->product_name ?>" onerror="this.onerror=null;this.src='<?=$BASE?>/public/img/not_found/no_image.jpg';">
 
                 <figcaption class="card-body">
                     <h5 class="card-title"><?= $data->product_name ?></h5>

@@ -60,7 +60,7 @@
                 <input type="file" name="img" id="img" class="form-control form-control-lg <?= isset($error['img_error']) && $error['img_error'] != '' ? 'is-invalid' : '' ?>" value="<?= $data->img ?? '' ?>">
                 <input type="hidden" name="img" id="img" value="<?= $data->img ?>">
                 <span class="invalid-feedback"><?= $error['img_error'] ?? '' ?></span>
-                <img src="<?= $BASE ?>/<?= imgOrDefault('users', $data->img, $data->id) ?>" title="<?= $data->name ?>">
+                <img src="<?= $BASE ?>/<?= imgOrDefault('users', $data->img, $data->id) ?>" title="<?= $data->name ?>" onerror="this.onerror=null;this.src='<?=$BASE?>/public/img/not_found/no_image.jpg';">
             </div>
         </div>
 

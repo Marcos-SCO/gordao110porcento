@@ -18,7 +18,7 @@
             <header>
                 <h3 class="text-left p-1 mb-2"><?= $data->title ?></h3>
             </header>
-            <img src="<?= $BASE ?>/<?= imgOrDefault('posts', $data->img, $data->id) ?>" title="<?= $data->title ?>">
+            <img src="<?= $BASE ?>/<?= imgOrDefault('posts', $data->img, $data->id) ?>" title="<?= $data->title ?>" onerror="this.onerror=null;this.src='<?=$BASE?>/public/img/not_found/no_image.jpg';">
 
             <figcaption class="postText"><?= $data->body ?></figcaption>
 
@@ -28,38 +28,11 @@
         <a href="<?= $BASE ?>/users/show/<?= $user->id ?>">
             <h5>Sobre o Autor</h5>
             <figure class="d-flex align-items-center justify-content-left">
-                <style>
-                    .imgUserBox::before {
-                        content: '<?= $user->name ?>';
-                        position: absolute;
-                        z-index: 9999;
-                        word-break: break-all;
-                        bottom: 30px;
-                        left: 17px;
-                        font-size: 1rem;
-                        background: #d95f1b;
-                        padding: .01rem;
-                        min-width: 100px;
-                        max-width: 100px;
-                        text-align: center;
-                        text-decoration: none;
-                    }
-
-                    a:hover .imgUserBox::before {
-                        background-color: #fff !important
-                    }
-
-                    @media screen and (max-width:600px) {
-                        .imgUserBox::before {
-                            left: 1rem;
-                            top: -15px;
-                            min-width: 149px !important;
-                            max-height: 25px;
-                        }
-                    }
+                <style>.imgUserBox::before {content: '<?= $user->name ?>';position: absolute;z-index: 9999;word-break: break-all;bottom: 30px;left: 17px;font-size: 1rem;background: #d95f1b;padding: .01rem;min-width: 100px;max-width: 100px;text-align: center;text-decoration: none;}
+                a:hover .imgUserBox::before {background-color: #fff !important} @media screen and (max-width:600px) {.imgUserBox::before { left: 1rem;top: -15px;min-width: 149px !important;max-height: 25px;}}
                 </style>
                 <div class="imgUserBox">
-                    <img src="<?= $BASE ?>/<?= imgOrDefault('users', $user->img, $user->id) ?>" alt="<?= $user->img ?>" title="<?= $user->name ?>" class="imgFitUser">
+                    <img src="<?= $BASE ?>/<?= imgOrDefault('users', $user->img, $user->id) ?>" alt="<?= $user->img ?>" title="<?= $user->name ?>" class="imgFitUser" onerror="this.onerror=null;this.src='<?=$BASE?>/public/img/not_found/no_image.jpg';">
                     <span><?= $user->name ?></span>
                 </div>
                 <figcaption class="p-2">

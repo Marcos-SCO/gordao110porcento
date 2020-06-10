@@ -25,7 +25,7 @@
             <span class="invalid-feedback">
                 <?= $error['img_error'] ?? '' ?>
             </span>
-            <img src="<?=$BASE?>/public/img/posts/default/default.png" alt="default.png" title="Imagem padrão">
+            <img src="<?=$BASE?>/public/img/default/default.png" alt="default.png" title="Imagem padrão">
         </div>
 
         <div class="form-group">

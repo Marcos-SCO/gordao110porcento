@@ -3,7 +3,7 @@
         <h1 class="text-center"><?= $data->product_name ?></h1>
     </header>
     <figure class="productShow d-flex flex-column justify-content-center align-items-center">
-        <img src="<?= $BASE ?>/<?=imgOrDefault('products', $data->img, $data->id, "/category_$data->id_category")?>" title="<?= $data->product_name ?>">
+        <img src="<?= $BASE ?>/<?=imgOrDefault('products', $data->img, $data->id, "/category_$data->id_category")?>" title="<?= $data->product_name ?>" onerror="this.onerror=null;this.src='<?=$BASE?>/public/img/not_found/no_image.jpg';">
 
         <figcaption class="card-body bg-light" style="width:100%;min-height: auto!important;">
             <p><?= $data->product_description ?><br>Preço: <?= $data->price ?><br>

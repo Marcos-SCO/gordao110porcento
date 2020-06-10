@@ -50,7 +50,7 @@
             <span class="invalid-feedback">
                 <?= $error['img_error'] ?? '' ?>
             </span>
-            <img src="<?= $BASE ?>/public/img/products/default/default.png" title="Imagem padrão">
+            <img src="<?= $BASE ?>/public/img/default/default.png" title="Imagem padrão">
         </div>
 
         <input type="submit" class="btn btn-success" value="Enviar">

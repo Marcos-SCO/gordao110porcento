@@ -16,7 +16,7 @@ Core\Controller::createMore($BASE, 'users', 'Adicionar mais Usuários');
                 <?php foreach ($users as $user) {
                     if ($user->status == 1) { ?>
                         <li class="d-flex flex-wrap list-group-item">
-                            <figure class="userPic mr-2"><img src="<?= $BASE ?>/<?= imgOrDefault('users', $user->img, $user->id) ?>" class="userImg"></figure> id <?= $user->id ?> - <a href="<?= $BASE ?>/users/<?= ($_SESSION['adm_id'] == 1) ? 'edit' : 'show' ?>/<?= $user->id ?>" class="ml-1 mr-1"><?= $user->name ?></a> - <?= $user->email ?>
+                            <figure class="userPic mr-2"><img src="<?= $BASE ?>/<?= imgOrDefault('users', $user->img, $user->id) ?>" class="userImg" onerror="this.onerror=null;this.src='<?=$BASE?>/public/img/not_found/no_image.jpg';"></figure> id <?= $user->id ?> - <a href="<?= $BASE ?>/users/<?= ($_SESSION['adm_id'] == 1) ? 'edit' : 'show' ?>/<?= $user->id ?>" class="ml-1 mr-1"><?= $user->name ?></a> - <?= $user->email ?>
                             <?php if ($_SESSION['adm_id'] == 1 && $user->id != 1) {
                                 if ($user->status == 1) {
                                     $active = [0, 'Desativar', 'Quer Mesmo desativar esse usuario?'];
@@ -39,7 +39,7 @@ Core\Controller::createMore($BASE, 'users', 'Adicionar mais Usuários');
                 <?php foreach ($users as $user) {
                     if ($user->status == 0) { ?>
                         <li class="d-flex flex-wrap list-group-item">
-                            <figure class="userPic mr-2"><img src="<?= $BASE ?>/<?= imgOrDefault('users', $user->img, $user->id) ?>" class="userImg">
+                            <figure class="userPic mr-2"><img src="<?= $BASE ?>/<?= imgOrDefault('users', $user->img, $user->id) ?>" class="userImg" onerror="this.onerror=null;this.src='<?=$BASE?>/public/img/not_found/no_image.jpg';">
                             </figure> id <?= $user->id ?> - <a href="<?= $BASE ?>/users/<?= ($_SESSION['adm_id'] == 1) ? 'edit' : 'show' ?>/<?= $user->id ?>" class="ml-1 mr-1"><?= $user->name ?></a> - <?= $user->email ?>
                             <?php if ($_SESSION['adm_id'] == 1 && $user->id != 1) {
                                 ($user->status == 0) ? $active = [1, 'Ativar', 'Quer Mesmo Ativar esse usuario?'] : ''; ?>

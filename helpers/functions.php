@@ -34,7 +34,11 @@ function imgOrDefault($table, $img, $id, $tableOp = '') {
     if ($img !== null) {
         $path = "public/img/$table$tableOp/id_$id/$img";
     } else {
-        $path = "public/img/$table/default/default.png";
+        if ($table == 'users') {
+            $path = "public/img/$table/default/default.png";
+        } else {
+            $path = "public/img/default/default.png";
+        }
     }
     return $path;
 }

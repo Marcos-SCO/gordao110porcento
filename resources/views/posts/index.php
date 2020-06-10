@@ -12,7 +12,7 @@
                 <figure class="d-flex justify-content-center blogFig card">
                     <a href="<?= $BASE ?>/posts/show/<?= $data->id ?>">
                         <div class="imgMax">
-                            <img class="card-img-top" src="<?= $BASE ?>/<?=imgOrDefault('posts',$data->img,$data->id)?>" alt="<?= $data->img ?>" title="<?= $data->title ?>">
+                            <img class="card-img-top" src="<?= $BASE ?>/<?=imgOrDefault('posts',$data->img,$data->id)?>" alt="<?= $data->img ?>" title="<?= $data->title ?>" onerror="this.onerror=null;this.src='<?=$BASE?>/public/img/not_found/no_image.jpg';">
                         </div>
                         <figcaption class="blogBody card-body">
                             <h5 class="blogTitle card-title"><?= $data->title ?></h5>
