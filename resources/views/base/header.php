@@ -133,7 +133,7 @@
                     <h1 id="quoteTitle" class="text-left font-swashCaps" style="color:#fff;">Gordão a 110%</h1>
                     <p id="quote" style="color:#fff;">O melhor restaurante e lanchonete da região</p>
                 </div>
-                <a href="https://api.whatsapp.com/send?phone=5511930268294&text=Olá+tudo+bem?+Gostaria+de+conversar.">Pedir agora</a>
+                <a href="https://api.whatsapp.com/send?phone=5511930268294&text=Olá+tudo+bem?+Gostaria+de+conversar." target="_blank">Pedir agora</a>
             </header>
             <i id="prev" class="fa fa-angle-left"></i>
             <i id="next" class="fa fa-angle-right"></i>

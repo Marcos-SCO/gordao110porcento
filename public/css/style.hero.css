@@ -64,6 +64,12 @@
     text-transform: uppercase
 }
 
+#hero a:focus {
+    color:#fff!important;
+    background-color: #de5c33!important;
+    outline: none
+}
+
 @media screen and (min-width:900px) {
     #hero header {
         min-width: 750px

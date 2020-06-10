@@ -1,12 +1,13 @@
-<style>
-    main {height:100%}
-</style>
+<style>main {min-height: 100%}</style>
 <header class="imgBackgroundArea usersAdmBackground">
     <span class="text-left">
         <h2>Usuários</h2>
         <h1>Ativos e Inativos</h1>
     </span>
 </header>
+<?php
+Core\Controller::createMore($BASE, 'users', 'Adicionar mais Usuários');
+?>
 <section>
     <div class="usersAdm flex justify-content-center align-content-center">
         <?php if ($activeNumber->active > 0) { ?>
