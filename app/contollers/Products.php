@@ -75,7 +75,7 @@ class Products extends Controller
 
                 if ($this->model->addproduct($data)) {
                     $_SESSION['submitted'] = true;
-                    $flash = flash('post_message', 'Produto adicionada com successo');
+                    $flash = flash('post_message', 'Produto adicionado com successo');
                     $id = $this->model->lastId();
                     return $this->show($id, $flash);
                 } else {

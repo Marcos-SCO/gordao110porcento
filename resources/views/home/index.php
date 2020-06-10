@@ -157,7 +157,7 @@
             </header>
             <div class="modal-body">
             <figure>
-            <img src="${url}public/img/products/category_${id_category}/id_${id}/${img}" alt="${img}" title="${product_name}" >
+            <img src="${url}public/img/products/category_${id_category}/id_${id}/${img}" alt="${img}" title="${product_name}"  onerror="this.onerror=null;this.src='<?=$BASE?>/public/img/not_found/no_image.jpg';">
             <figcaption>
             <p>Categoria: <a href='${url}categories/show/${id_category}'>${category_name}</a></p>
             <p>${product_description = values[4]}</>

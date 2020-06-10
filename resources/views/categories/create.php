@@ -1,11 +1,11 @@
 <header class="categoryHeader productHeader imgBackgroundArea">
     <span>
-        <h1>Adicionar uma categoria<h1>
+        <h1>Adicionar Categoria<h1>
     </span>
 </header>
 <section class="formPageArea card card-body bg-light mt5">
     <header>
-        <h2>Adicionar uma categoria</h2>
+        <h2>Adicionar Categoria</h2>
     </header>
     <form action="<?= $BASE ?>/categories/store" method="post" enctype="multipart/form-data">
         <div class="form-group">
@@ -29,7 +29,7 @@
             <span class="invalid-feedback">
                 <?= $error['img_error'] ?? '' ?>
             </span>
-            <img src="<?=$BASE?>/public/img/categories/default/default.png" alt="default.png" title="Imagem padrão" onerror="this.onerror=null;this.src='<?=$BASE?>/public/img/not_found/no_image.jpg';">
+            <img src="<?=$BASE?>/public/img/default/default.png" alt="default.png" title="Imagem padrão" onerror="this.onerror=null;this.src='<?=$BASE?>/public/img/not_found/no_image.jpg';">
         </div>
 
         <input type="submit" class="btn btn-success" value="Enviar">
