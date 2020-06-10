@@ -25,7 +25,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Oleo+Script+Swash+Caps:wght@700&display=swap" rel="stylesheet">
     <?php
     // tiny MCE 
-    echo ($getQuery[0] == 'posts' && $getQuery[1] == 'create' || $getQuery[1] == 'edit') ? "<!-- Tiny MCE -->
+    echo ($getQuery[0] == 'posts' && $getQuery[1] == 'create' || $getQuery[0] == 'posts' && $getQuery[1] == 'edit' || $getQuery[0] == 'posts' && $getQuery[1] == 'store') ? "<!-- Tiny MCE -->
     <script src='https://cdn.tiny.cloud/1/dksjdj5uue9ro7l3iyr2xu6basfnwgrqpkh8y5beu0m60kwl/tinymce/5/tinymce.min.js' referrerpolicy='origin'></script><script>tinymce.init({selector:'#tinyMCE'});</script>" : '';
     // Home
     if ($getQuery[0] == '' || $getQuery[0] == 'home') {
