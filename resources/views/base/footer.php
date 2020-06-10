@@ -142,5 +142,4 @@ echo ($getQuery[0] == 'posts' && $getQuery[1] == 'create' || $getQuery[1] == 'ed
 <!-- App -->
 <script src="<?= $BASE ?>/public/js/app.js"></script>
 </body>
-
 </html>

@@ -68,7 +68,7 @@
         <!-- Nav -->
         <nav class="navbar navbar-expand-lg navbar-light bg-light" style="background-color:#f8f9fa;">
             <!--  Show this only on mobile to medium screens  -->
-            <a class="navbar-brand d-lg-none" href="<?= $BASE ?>"><img src="<?=$BASE?>/public/img/template/gordao110Logo100.png" alt="gordao110Logo100.png" title="Grodão a 110%"></a>
+            <a class="navbar-brand d-lg-none" href="<?= $BASE ?>"><img src="<?= $BASE ?>/public/img/template/gordao110Logo100.png" alt="gordao110Logo100.png" title="Grodão a 110%"></a>
 
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggle" aria-controls="navbarToggle" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -89,7 +89,7 @@
                     <li class="nav-item <?= activePage($getQuery, 'gallery') ?>"><a class="nav-link" href="<?= $BASE ?>/gallery">Galeria</a></li>
                 </ul>
                 <!--   Show this only lg screens and up   -->
-                <a class="navbar-brand d-none d-lg-block" style="position:absolute;top:0;margin:0!important;" href="<?= $BASE ?>"><img src="<?=$BASE?>/public/img/template/gordao110Logo100.png" alt="gordao110Logo100.png" title="Grodão a 110%"></a>
+                <a class="navbar-brand d-none d-lg-block" style="position:absolute;top:0;margin:0!important;" href="<?= $BASE ?>"><img src="<?= $BASE ?>/public/img/template/gordao110Logo100.png" alt="gordao110Logo100.png" title="Grodão a 110%"></a>
 
                 <ul class="navbar-nav">
                     <li class="nav-item"><a class="nav-link <?= activePage($getQuery, 'about') ?>" href="<?= $BASE ?>/about">Sobre</a></li>
@@ -126,6 +126,7 @@
         </nav>
         <!-- end nav -->
     </header>
+
     <?= (($getQuery[0] == 'home' || $getQuery[0] == '') && $getQuery[1] != 'index') ? '<!-- Hero --><div id="hero" class="hero d-flex justify-content-center align-items-center flex-column" style="height:100%">
             <header class="p-4 d-flex flex-column justify-content-center">
                 <div class="headerQuotes">
@@ -144,8 +145,8 @@
     // Display flash messages
     echo (isset($flash) && $flash != false && $flash != null) ? "<div class='" . $flash['class'] . "' id='msg-flash' style='transition: transform .18s, opacity .18s, visibility 0s .18s;position:absolute;left:5%;top:17%;text-align: center;z-index:9999999999;'>" . $flash['message'] . "</div><script>/*flash message*/ let flash = document.querySelector('#msg-flash'); if (flash != null) {setTimeout(() => { flash.style = 'display:none;transition: transform .18s, opacity .18s, visibility 0s .18s;'; }, 4000); }</script>" : ''
     ?>
+    <!-- To top btn -->
+    <button id="topBtn" data-anima="right"><i class="fa fa-arrow-up"></i></button>
+    <!-- Whatsapp btn -->
+    <a href="https://api.whatsapp.com/send?phone=5511930268294&text=Olá+tudo+bem?+Gostaria+de+conversar." class="float" target="_blank" id="whats"><i class="fa fa-whatsapp my-float"></i></a>
     <main>
-        <!-- To top btn -->
-        <button id="topBtn" data-anima="right"><i class="fa fa-arrow-up"></i></button>
-        <!-- Whatsapp btn -->
-        <a href="https://api.whatsapp.com/send?phone=5511930268294&text=Olá+tudo+bem?+Gostaria+de+conversar." class="float" target="_blank" id="whats"><i class="fa fa-whatsapp my-float"></i></a>
