@@ -88,7 +88,8 @@ label {
 
 .btn:focus {
     color: #d95f1b;
-    box-shadow: 0 0 0 0.2rem #eaa782
+    box-shadow: 0 0 0 0.2rem #eaa782;
+    background-color: #fff
 }
 
 .btn-success {

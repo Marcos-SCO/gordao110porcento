@@ -93,7 +93,8 @@
 .user figcaption h5,
 .user figcaption p {
     max-width: 370px;
-    margin: auto
+    margin: auto;
+    word-break:break-word
 }
 
 .userPosts header h3::after {
@@ -124,6 +125,10 @@
     max-width: 250px;
     box-shadow: 15px 15px 0px #ff833e;
     overflow: hidden
+}
+
+.usersAdm {
+    margin-bottom: 1rem
 }
 
 /* -------- User Edit End -------- */
