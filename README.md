@@ -1,1 +1,40 @@
-# corte110porcento
+# Gordão a 110%
+
+“Gordão a 110%” é um site institucional com funcionalidades dinâmicas.
+
+Você pode acessa-lo agora mesmo, de qualquer dispositivo, através do link:
+https://gordao110porcento.000webhostapp.com
+
+Escolhi o ramo de lanchonetes como tema, e produzi a customização do começo ao fim.
+
+No site é possível adicionar categorias, produtos, imagens, publicações, usuários e mandar e-mails.
+
+Categorias possuem uma descrição e imagem ilustrativa.
+Ao enviar produtos, informações sobre preço e categoria são incluídas.
+
+Imagens na galeria podem ser editadas ou exclui-las.
+As postagens também possuem upload de imagem e edição de textos com o formulário do ‘TinyMCE’.
+
+Foi implementado nas publicações, o sistema de comentários do Discus. Visitando o site e tendo uma conta no Twitter ou Facebook, o usuário poderá comentar na plataforma.
+
+É possível controlar o conteúdo quando logado, dependendo do nível administrativo, terão opções para bloquear ou mudar informações de outros perfis.
+
+Na seção de contato, qualquer visitante pode enviar mensagens, pdfs e docs por e-mail.
+
+Projeto feito em PHP, MySQL, JS e CSS.
+
+Foram empregadas bibliotecas como: Boostrap, Owl.js e Light2Box.
+
+Para construção o padrão de arquitetura MVC foi adotado.
+O site está totalmente responsável, podendo ser acessado por qualquer dispositivo.
+
+A compatibilidade com os navegadores mais modernos também foi levada em conta e até mesmo o “Internet Explorer 11” recebeu uma adaptação.
+
+O projeto está atualmente online e você pode acessá-lo através desse link: https://gordao110porcento.000webhostapp.com
+
+Também fiz um vídeo demonstrado as funcionalidades do projeto, acesse esse link: https://www.facebook.com/sco97/videos/2596397030601311/
+
+Caso queira me contactar, acesse os links:
+Linkedin: https://www.linkedin.com/…/marcos-dos-santos-carvalho-67a5…/
+
+Site de contato: https://mscwps.000webhostapp.com
