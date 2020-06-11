@@ -152,3 +152,6 @@
         background-image: url(../img/template/users_600.png)!important
     }
 }
+main {
+    margin-bottom: 1rem
+}
