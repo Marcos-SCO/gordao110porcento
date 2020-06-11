@@ -3,7 +3,10 @@
 let quoteTitle, quote, hero, path, slide, prev, next, url, split, i;
 // page url
 url = window.location.href;
-// split url to get method
+
+// change with base path
+(url.includes('=')) ? url = 'http://localhost/projetosCompletos/pasta_gordao110porcento/gordao110porcento' : '';
+
 // replace /home string
 url = url.replace('/home', '');
 // initial counter

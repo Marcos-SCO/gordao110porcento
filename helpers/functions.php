@@ -15,6 +15,12 @@ function dump($item)
 function getQueryString()
 {
     $url = explode('/', $_SERVER['QUERY_STRING']);
+     // remove query strings
+    if (strpos($url[0],'=') == true) {
+        $url[0] = '';
+        $url[1] = '';
+    };
+
     // Get table with url
     $table = $url[0] ?? '';
     $method = $url[1] ?? '';
