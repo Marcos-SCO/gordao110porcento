@@ -36,6 +36,6 @@ Fiz um vídeo demonstrado as funcionalidades do projeto: https://www.facebook.co
 
 Caso queira me contactar, visite:
 
-Linkedin: https://www.linkedin.com/…/marcos-dos-santos-carvalho-67a5…/
+Linkedin: https://www.linkedin.com/in/marcos-dos-santos-carvalho-67a51715a/
 
 Site de contato: https://mscwps.000webhostapp.com
