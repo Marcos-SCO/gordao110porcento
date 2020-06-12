@@ -32,9 +32,10 @@ A compatibilidade com os navegadores mais modernos também foi levada em conta e
 
 O projeto está atualmente online e você pode acessá-lo aqui: https://gordao110porcento.000webhostapp.com
 
-Fiz um vídeo demonstrado as funcionalidades do projeto, acesse: https://www.facebook.com/sco97/videos/2596397030601311/
+Fiz um vídeo demonstrado as funcionalidades do projeto: https://www.facebook.com/sco97/videos/2596397030601311/
 
 Caso queira me contactar, visite:
+
 Linkedin: https://www.linkedin.com/…/marcos-dos-santos-carvalho-67a5…/
 
 Site de contato: https://mscwps.000webhostapp.com
