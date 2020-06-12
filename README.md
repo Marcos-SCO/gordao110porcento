@@ -12,7 +12,7 @@ No site é possível adicionar categorias, produtos, imagens, publicações, usu
 Categorias possuem uma descrição e imagem ilustrativa.
 Ao enviar produtos, informações sobre preço e categoria são incluídas.
 
-Imagens na galeria podem ser editadas ou exclui-las.
+Imagens na galeria podem ser editadas ou excluidas.
 As postagens também possuem upload de imagem e edição de textos com o formulário do ‘TinyMCE’.
 
 Foi implementado nas publicações, o sistema de comentários do Discus. Visitando o site e tendo uma conta no Twitter ou Facebook, o usuário poderá comentar na plataforma.
@@ -26,15 +26,15 @@ Projeto feito em PHP, MySQL, JS e CSS.
 Foram empregadas bibliotecas como: Boostrap, Owl.js e Light2Box.
 
 Para construção o padrão de arquitetura MVC foi adotado.
-O site está totalmente responsável, podendo ser acessado por qualquer dispositivo.
+O site está totalmente responsivo, podendo ser acessado por qualquer dispositivo.
 
 A compatibilidade com os navegadores mais modernos também foi levada em conta e até mesmo o “Internet Explorer 11” recebeu uma adaptação.
 
-O projeto está atualmente online e você pode acessá-lo através desse link: https://gordao110porcento.000webhostapp.com
+O projeto está atualmente online e você pode acessá-lo aqui: https://gordao110porcento.000webhostapp.com
 
-Também fiz um vídeo demonstrado as funcionalidades do projeto, acesse esse link: https://www.facebook.com/sco97/videos/2596397030601311/
+Fiz um vídeo demonstrado as funcionalidades do projeto, acesse: https://www.facebook.com/sco97/videos/2596397030601311/
 
-Caso queira me contactar, acesse os links:
+Caso queira me contactar, visite:
 Linkedin: https://www.linkedin.com/…/marcos-dos-santos-carvalho-67a5…/
 
 Site de contato: https://mscwps.000webhostapp.com
