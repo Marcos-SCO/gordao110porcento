@@ -60,10 +60,10 @@
                     <p>Barueri - SP</p>
                 </li>
                 <li><i class="fa fa-phone fa-2x" style="color:#ff9800"></i>
-                    <p>(55) 43825357</p>
+                    <p>(11) 944448798</p>
                 </li>
                 <li><i class="fa fa-whatsapp fa-2x" style="color:#4AC959"></i></i>
-                    <p>(55) 43825357</p>
+                    <p>(11) 944448798</p>
                 </li>
                 <li class="d-flex flex-column">
                     <i class="fa fa-envelope fa-2x"></i>
