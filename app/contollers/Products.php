@@ -23,7 +23,7 @@ class Products extends Controller
     public function index($id = 1, $flash = false)
     {
         $table = 'products';
-        $results = $this->pagination($table, $id, $limit = 12, '', $orderOption = 'DESC');
+        $results = $this->pagination($table, $id, $limit = 12, '', $orderOption = 'ORDER BY id DESC');
 
         // Category elements from table categories
         $categoryElements = $this->model->customQuery('SELECT id, category_name FROM categories', null, 1);

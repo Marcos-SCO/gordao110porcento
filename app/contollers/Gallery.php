@@ -21,7 +21,7 @@ class Gallery extends Controller
     public function index($id = 1, $flash = false)
     {
         $table = 'gallery';
-        $results = $this->pagination($table, $id, $limit = 8, '', $orderOption = 'DESC');
+        $results = $this->pagination($table, $id, $limit = 8, '', $orderOption = 'ORDER BY id DESC');
         View::render('gallery/index.php', [
             'title' => 'Galeria de imagens',
             'gallery' => $results[4],
@@ -83,7 +83,7 @@ class Gallery extends Controller
     public function show($id, array $flash = null)
     {
         $table = 'gallery';
-        $results = $this->pagination($table, $id, $limit = 1, '', $orderOption = 'DESC');
+        $results = $this->pagination($table, $id, $limit = 1, '', $orderOption = 'ORDER BY id DESC');
         if ($this->model->rowCount() > 0) {
             $user = $this->model->getAllFrom('users', $results[4][0]->user_id);
 

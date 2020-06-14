@@ -20,7 +20,7 @@ class Users extends Controller
     {
         $this->isLogin();
         $table = 'users';
-        $results = $this->pagination($table, $id, $limit = 10, '', $orderOption = '');
+        $results = $this->pagination($table, $id, $limit = 10, '', $orderOption = 'GROUP BY id');
         $activeNumber = $this->model->customQuery("SELECT COUNT(*) as active FROM users WHERE status = 1");
         $inactiveNumber = $this->model->customQuery("SELECT COUNT(*) as inactive FROM users WHERE status = 0");
 
@@ -113,7 +113,7 @@ class Users extends Controller
 
         // Pagination for posts with user id
         $table = 'posts';
-        $results = $this->pagination($table, $page, $limit = 4, ['user_id', $user->id], $orderOption = 'DESC');
+        $results = $this->pagination($table, $page, $limit = 4, ['user_id', $user->id], $orderOption = 'ORDER BY id DESC');
 
         // Display results
         $pageInfo = ($page > 1) ? " | Página $page" : '';

@@ -195,7 +195,9 @@ class Controller
 
         $totalPages = ceil($totalResults->total / $limit);
 
-        $orderBy = "$optionID ORDER BY id {$orderOption} LIMIT $limit OFFSET $offset";
+        $orderoption = ($orderOption != '') ? $orderOption : '';
+
+        $orderBy = "$optionID $orderOption LIMIT $limit OFFSET $offset";
         $resultTable = $this->model->selectQuery($table, $orderBy);
 
         return [$prev, $next, $totalResults, $totalPages, $resultTable];
