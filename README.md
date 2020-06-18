@@ -32,6 +32,8 @@ O site está totalmente responsivo, podendo ser acessado por qualquer dispositiv
 
 A compatibilidade com os navegadores mais modernos também foi levada em conta e até mesmo o “Internet Explorer 11” recebeu uma adaptação.
 
+![Gordão a 110%](https://raw.githubusercontent.com/Marcos-SCO/gordao110porcento/master/public/img/gallery/id_25/mockup_mobile-min.png)
+
 Fiz um vídeo demonstrado as funcionalidades do projeto:
 
 [![](http://img.youtube.com/vi/5iUX_1nDj3Q/0.jpg)](http://www.youtube.com/watch?v=5iUX_1nDj3Q "")
