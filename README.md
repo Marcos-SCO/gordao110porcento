@@ -35,6 +35,7 @@ A compatibilidade com os navegadores mais modernos também foi levada em conta e
 O projeto está atualmente online e você pode acessá-lo aqui: https://gordao110porcento.000webhostapp.com
 
 Fiz um vídeo demonstrado as funcionalidades do projeto:
+
 [![](http://img.youtube.com/vi/5iUX_1nDj3Q/0.jpg)](http://www.youtube.com/watch?v=5iUX_1nDj3Q "")
 
 Caso queira me contactar, visite:
