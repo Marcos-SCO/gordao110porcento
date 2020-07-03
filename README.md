@@ -1,5 +1,7 @@
 ![Gordão a 110%](https://raw.githubusercontent.com/Marcos-SCO/gordao110porcento/master/public/img/template/gordao110_logo_300px.png)
 
+[![HitCount](https://hits.dwyl.com/Marcos-SCO/gordao110porcento.svg)](https://hits.dwyl.com/Marcos-SCO/gordao110porcento.sgv)
+
 # Gordão a 110%
 
 “Gordão a 110%” é um site institucional com funcionalidades dinâmicas.
