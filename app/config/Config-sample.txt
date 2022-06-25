@@ -14,7 +14,7 @@ class Config
      * Database name
      * @var string
      */
-    const DB_NAME = 'db_corte_110porcento';
+    const DB_NAME = 'dbname';
 
     /**
      * Database user
@@ -44,7 +44,7 @@ class Config
      * URL_BASE
      * @var string
      */
-    const URL_BASE = 'http://localhost/projetosCompletos/pasta_gordao110porcento/gordao110porcento';
+    const URL_BASE = 'url_base_route';
 
     /**
      * Show or hide error messages on screen

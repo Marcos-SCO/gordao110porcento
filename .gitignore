@@ -1,3 +1,5 @@
 /vendor
 /node_modules
 /logs/*
+public/.htaccess
+app/config/config.php
