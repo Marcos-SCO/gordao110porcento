@@ -6,8 +6,7 @@
 
 “Gordão a 110%” é um site institucional com funcionalidades dinâmicas.
 
-Você pode acessa-lo agora mesmo, de qualquer dispositivo, através do link:
-https://gordao110porcento.000webhostapp.com
+Você pode acessa-lo agora mesmo, de qualquer dispositivo, através do link: https://gordaoa110.000webhostapp.com/
 
 Escolhi o ramo de lanchonetes como tema, e produzi a customização do começo ao fim.
 
