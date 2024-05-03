@@ -7,23 +7,23 @@ namespace App\Controllers;
 use Core\Controller;
 use Core\View;
 
-class About extends Controller
+class Home extends Controller
 {
     public function __construct()
     {
-        $this->model = $this->model('About');
+        $this->model = $this->model('Home');
     }
 
     public function index()
     {
         $posts = $this->model->getPosts();
         $categories = $this->model->getCategories();
-        $hamburguers = $this->model->getProducts(1);
+        $hamburgers = $this->model->getProducts(1);
         $pizzas = $this->model->getProducts(2);
 
-        View::render('about/index.php', [
-            'title' => 'Gordão a 110% - Sobre',
-            'hamburguers' => $hamburguers,
+        View::render('home/index.php', [
+            'title' => 'Gordão a 110%',
+            'hamburgers' => $hamburgers,
             'pizzas' => $pizzas,
             'categories' => $categories,
             'posts' => $posts,
