@@ -17,52 +17,26 @@ class View
     {
         $args['BASE'] = Config::URL_BASE;
         $BASE = Config::URL_BASE;
+
         extract($args, EXTR_SKIP);
 
         // $file = "$BASE/resources/views/$view"; // Relative to Core directory
         $file = "../resources/views/$view"; // Relative to Core directory
-        if (is_readable($file)) {
-            require_once "../resources/views/base/header.php";
-            require $file;
-            require_once "../resources/views/base/footer.php";
-        } else {
+
+        if (!is_readable($file)) {
             // echo "$file not found";
             // throw new \Exception("$file not found");
             header($_SERVER["SERVER_PROTOCOL"] . " 404 Not Found", true, 404);
             http_response_code(404);
+
             require_once "../resources/views/errors/404.php";
+
+            return;
         }
+
+        require_once "../resources/views/base/header.php";
+        require $file;
+        require_once "../resources/views/base/footer.php";
     }
-
-    /**
-     * Render a view template using Twig
-     * 
-     * @param string $template  The template file
-     * @param array $arg  Associtive array of data to display in the view (optional)
-     * 
-     * @return void 
-     */
-    public static function renderTemplate(string $template, array $args = []): void
-    {
-        $loader = new \Twig\Loader\FilesystemLoader('../resources/views');
-        // Twig options
-        $options = [
-            // Path to cache
-            'cache' => '../resources/views/cache',
-            // Disable cache in development
-            'cache' => false,
-            // Debug with Twig
-            'debug', true,
-        ];
-        $twig = new \Twig\Environment($loader, $options);
-
-        // Get global path
-        $twig->addGlobal('BASE', Config::URL_BASE);
-        $twig->addGlobal('USER_STATUS', $_SESSION['user_status'] ?? false);
-        $twig->addGlobal('SESSION_ID', $_SESSION['user_id'] ?? false);
-        $twig->addGlobal('ADM_ID', $_SESSION['adm_id'] ?? false);
-        $twig->addGlobal('SESSION_USER_NAME', $_SESSION['user_name'] ?? false);
-
-        echo $twig->render($template, $args);
-    }
+    
 }

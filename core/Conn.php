@@ -22,6 +22,7 @@ abstract class Conn
     {
         // Set dsn
         $dsn = 'mysql:host='.Config::DB_HOST.';port='.Config::DB_PORT.';dbname='.Config::DB_NAME.';charset='.Config::DB_CHARSET;
+
         $options = [
             PDO::ATTR_PERSISTENT => TRUE,
             PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
@@ -33,7 +34,9 @@ abstract class Conn
             $pdo = new PDO($dsn, Config::DB_USER, Config::DB_PASS, $options);
 
             return $pdo = $pdo;
+
         } catch (PDOException $e) {
+            
             echo $e->getMessage();
         }
     }

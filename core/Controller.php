@@ -14,22 +14,22 @@ class Controller
     // Load Model
     public function model($model)
     {
-        $intance = "App\Models\\" . $model;
+        $instance = "App\Models\\" . $model;
 
         // Instantiate model
-        return new $intance;
+        return new $instance;
     }
 
     // Verifies if a user is login, if not redirect
     public function isLogin()
     {
-        if (!isLoggedIn()) {
-            redirect('users/login');
-            return exit();
-        }
+        if (isLoggedIn()) return;
+
+        redirect('users/login');
+        return exit();
     }
 
-    /* Dinamic page links start */
+    /* Dynamic page links start */
     public static function createMore($BASE, $table, $text = 'Quer adicionar mais?')
     {
         if ($_SESSION['user_status'] == 1) {
@@ -41,7 +41,9 @@ class Controller
     {
         if (($data->user_id == $_SESSION['user_id']) or ($_SESSION['adm_id'] == 1)) {
             $verb = ($table == 'categories') ? 'destroy' : 'delete';
+
             $idCategory = '';
+
             if ($table == 'products') {
                 $idCategory = '/' . $data->id_category;
             } else if ($table == 'categories') {
@@ -266,8 +268,10 @@ class Controller
 
             $mail->send();
             // echo 'Message has been sent';
+            
         } catch (\Exception $e) {
             throw new \Exception("Message could not be sent. Mailer Error: $mail->ErrorInfo");
         }
+
     }
 }

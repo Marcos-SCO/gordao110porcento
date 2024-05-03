@@ -30,31 +30,40 @@ class Router
     public function getUrl()
     {
         $url = $_SERVER['QUERY_STRING'];
-        $url = rtrim($url,"/");
+        $url = str_replace('public/index.php', $url, '');
+
+        $url = rtrim($url, "/");
         $url = $this->removeQueryStringVariables($url);
-        if ($url) {
-            $url = filter_var($url, FILTER_SANITIZE_URL);
-            $url = explode('/', $url);
-            return $url;
-        }
+
+        if (!$url) return false;
+
+        $url = filter_var($url, FILTER_SANITIZE_URL);
+        $url = explode('/', $url);
+
+        return $url;
     }
 
     public function dispatch()
     {
         $url = $this->getUrl();
 
-        if (isset($url)) {
-            // Controller
-            if (isset($url[0])) {
-                $this->controller = $this->convertToUc($url[0]);
-                unset($url[0]);
-            }
-            // Method
-            if (isset($url[1])) {
-                $this->method = $this->convertToStudlyCaps($url[1]);
-                unset($url[1]);
-            }
-            // Param
+        // Controller
+        if (isset($url[0])) {
+            $this->controller = $this->convertToUc($url[0]);
+            unset($url[0]);
+        }
+
+        // Method
+        if (isset($url[1])) {
+            $this->method = $this->convertToStudlyCaps($url[1]);
+            unset($url[1]);
+        }
+
+        // Params
+        $urlHasParams = $url ? count($url) : false;
+
+        if ($urlHasParams) {
+
             foreach ($url as $params) {
                 $this->params[] = $params;
             }
@@ -63,17 +72,17 @@ class Router
 
         $controller = 'App\Controllers\\' . $this->controller;
 
-        if (class_exists($controller)) {
-            $controller_object = new $controller($this->params);
+        $classExists = class_exists($controller);
 
-            if (method_exists($controller_object, $this->method)) {
-                call_user_func_array([$controller_object, $this->method], $this->params);
-            } else {
-                throw new \Exception("Method {$this->method} not found");
-            }
-        } else {
-            throw new \Exception("Controller class $controller not found");
-        }
+        if (!$classExists) throw new \Exception("Controller: class <b>$controller</b> not found");
+
+        $controllerObject = new $controller($this->params);
+
+        $methodExists = method_exists($controllerObject, $this->method);
+
+        if (!$methodExists) throw new \Exception("Method: <b>{$this->method}</b> not found");
+
+        call_user_func_array([$controllerObject, $this->method], $this->params);
     }
 
     /**
@@ -95,14 +104,12 @@ class Router
     protected function removeQueryStringVariables($url)
     {
         if ($url != '') {
-            // explode(separator,string,limit)
+            // explode(separator, string, limit)
             $parts = explode('&', $url, 2);
 
-            if (strpos($parts[0], '=') === false) {
-                $url = $parts[0];
-            } else {
-                $url = '';
-            }
+            $isUrlParams = strpos($parts[0], '=') === false;
+
+            $url = $isUrlParams ? $parts[0] : '';
         }
 
         return $url;
