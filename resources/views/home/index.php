@@ -1,5 +1,6 @@
 <article>
     <div class="section">
+        
         <section class="homeAbout">
             <header class="homeHeaderAbout imgBackgroundArea d-flex flex-wrap justify-content-center flex-row">
                 <span>
@@ -14,24 +15,28 @@
                 </div>
             </div>
         </section>
+
         <section class="bestsSnacks imgBackgroundArea">
             <header>
                 <h2>Os melhores lanches</h2>
             </header>
         </section>
+
         <div class="snacks">
             <section class="bg-light">
                 <header>
                     <span data-anima="left">
                         <h2>Hambúrgueres</h2>
-                        <p>Deliciosos hamburgueres</p>
+                        <p>Deliciosos hambúrgueres</p>
                     </span>
                 </header>
+
                 <div class="owl-carousel owl-theme">
+
                     <!-- Button trigger modal -->
-                    <?php
-                    foreach ($hamburguers as $h) { ?>
+                    <?php foreach ($hamburgers as $h) : ?>
                         <a <?= (detectIE() != true) ? 'data-toggle="modal" data-target="#itemModal" onclick="callItem(this)"' : "href='$BASE/products/show/$h->id'" ?> id="product_<?= $h->id ?>">
+
                             <span style="display:none;" id="inputItens">
                                 <input type="hidden" name="id" value="<?= $h->id ?>">
                                 <input type="hidden" name="id_category" value="<?= $h->id_category ?>">
@@ -41,14 +46,18 @@
                                 <input type="hidden" name="img" value="<?= $h->img ?>">
                                 <input type="hidden" name="price" value="<?= $h->price ?>">
                             </span>
+
                             <figure class="item">
-                                <img class="mx-auto" src="<?= $BASE ?>/<?= imgOrDefault('products', $h->img, $h->id, "/category_$h->id_category") ?>" alt="<?= $h->img ?>" title="<?= $h->product_name ?>" onerror="this.onerror=null;this.src='<?=$BASE?>/public/img/not_found/no_image.jpg';">
+                                <img class="mx-auto" src="<?= $BASE ?>/<?= imgOrDefault('products', $h->img, $h->id, "/category_$h->id_category") ?>" alt="<?= $h->img ?>" title="<?= $h->product_name ?>" onerror="this.onerror=null;this.src='<?= $BASE ?>/public/img/not_found/no_image.jpg';">
                                 <figcaption><?= $h->product_name ?></figcaption>
                             </figure>
+
                         </a>
-                    <?php } ?>
+                    <?php endforeach; ?>
+
                 </div>
             </section>
+
             <section class="bg-light">
                 <header>
                     <span data-anima="left">
@@ -56,8 +65,10 @@
                         <p>Recheio rico e suculento</p>
                     </span>
                 </header>
+
                 <div class="owl-carousel owl-theme">
-                    <?php foreach ($pizzas as $data) { ?>
+
+                    <?php foreach ($pizzas as $data) : ?>
                         <a <?= (detectIE() != true) ? 'data-toggle="modal" data-target="#itemModal" onclick="callItem(this)"' : "href='$BASE/products/show/$data->id'" ?> id="product_<?= $data->id ?>">
                             <span style="display:none;" id="inputItens">
                                 <input type="hidden" name="id" value="<?= $data->id ?>">
@@ -68,14 +79,18 @@
                                 <input type="hidden" name="img" value="<?= $data->img ?>">
                                 <input type="hidden" name="price" value="<?= $data->price ?>">
                             </span>
+
                             <figure class="item">
-                                <img class="mx-auto" src="<?= $BASE ?>/<?= imgOrDefault('products', $data->img, $data->id, "/category_$data->id_category") ?>" alt="<?= $data->img ?>" title="<?= $data->product_name ?>" onerror="this.onerror=null;this.src='<?=$BASE?>/public/img/not_found/no_image.jpg';">
+                                <img class="mx-auto" src="<?= $BASE ?>/<?= imgOrDefault('products', $data->img, $data->id, "/category_$data->id_category") ?>" alt="<?= $data->img ?>" title="<?= $data->product_name ?>" onerror="this.onerror=null;this.src='<?= $BASE ?>/public/img/not_found/no_image.jpg';">
                                 <figcaption><?= $data->product_name ?></figcaption>
                             </figure>
+
                         </a>
-                    <?php } ?>
+                    <?php endforeach; ?>
+
                 </div>
             </section>
+
             <section class="bg-light">
                 <header>
                     <span data-anima="left">
@@ -83,17 +98,21 @@
                         <p>Todas as delicias</p>
                     </span>
                 </header>
+
                 <div class="owl-carousel owl-theme">
-                    <?php foreach ($categories as $data) { ?>
+                    <?php foreach ($categories as $data) : ?>
                         <a href="<?= $BASE ?>/categories/show/<?= $data->id ?>">
-                            <figure class="item"><img class="mx-auto" src="<?= $BASE ?>/<?= imgOrDefault('categories', $data->img, $data->id) ?>" alt="<?= $data->img ?>" title="<?= $data->category_name ?>" onerror="this.onerror=null;this.src='<?=$BASE?>/public/img/not_found/no_image.jpg';">
+                            <figure class="item"><img class="mx-auto" src="<?= $BASE ?>/<?= imgOrDefault('categories', $data->img, $data->id) ?>" alt="<?= $data->img ?>" title="<?= $data->category_name ?>" onerror="this.onerror=null;this.src='<?= $BASE ?>/public/img/not_found/no_image.jpg';">
                                 <figcaption><?= $data->category_name ?></figcaption>
                             </figure>
                         </a>
-                    <?php } ?>
+                    <?php endforeach; ?>
                 </div>
+
             </section>
+
         </div>
+
         <section class="homeBlogSection bg-light">
             <header class="imgBackgroundArea homeBlog d-flex flex-wrap justify-content-center align-items-center flex-column">
                 <span style="z-index: 9999999;">
@@ -103,20 +122,22 @@
                     </a>
                 </span>
             </header>
+
             <div class="owl-carousel owl-theme">
-                <?php foreach ($posts as $data) { ?>
+                <?php foreach ($posts as $data) : ?>
                     <a href="<?= $BASE ?>/posts/show/<?= $data->id ?>">
-                        <figure class="item overflow-hidden img-section-max"><img class="object-fit" src="<?= $BASE ?>/public/img/posts/id_<?= $data->id ?>/<?= $data->img ?>" alt="<?= $data->title ?>" title="<?= $data->title ?>" onerror="this.onerror=null;this.src='<?=$BASE?>/public/img/not_found/no_image.jpg';">
+                        <figure class="item overflow-hidden img-section-max"><img class="object-fit" src="<?= $BASE ?>/public/img/posts/id_<?= $data->id ?>/<?= $data->img ?>" alt="<?= $data->title ?>" title="<?= $data->title ?>" onerror="this.onerror=null;this.src='<?= $BASE ?>/public/img/not_found/no_image.jpg';">
                             <figcaption class="img-fig"><?= $data->title ?></figcaption>
                         </figure>
                     </a>
-                <?php } ?>
+                <?php endforeach; ?>
             </div>
+
         </section>
     </div>
 </article>
 
-<?php if (detectIE() != true) { ?>
+<?php if (detectIE() != true) : ?>
     <!-- Modal -->
     <script>
         function callItem(item) {
@@ -157,7 +178,7 @@
             </header>
             <div class="modal-body">
             <figure>
-            <img src="${url}public/img/products/category_${id_category}/id_${id}/${img}" alt="${img}" title="${product_name}"  onerror="this.onerror=null;this.src='<?=$BASE?>/public/img/not_found/no_image.jpg';">
+            <img src="${url}public/img/products/category_${id_category}/id_${id}/${img}" alt="${img}" title="${product_name}"  onerror="this.onerror=null;this.src='<?= $BASE ?>/public/img/not_found/no_image.jpg';">
             <figcaption>
             <p>Categoria: <a href='${url}categories/show/${id_category}'>${category_name}</a></p>
             <p>${product_description = values[4]}</>
@@ -176,4 +197,4 @@
     <section class="modal fade" style="top: -1%!important;z-index:999999999;" id="itemModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
     </section>
     <!-- End modal -->
-<?php } ?>
+<?php endif; ?>
