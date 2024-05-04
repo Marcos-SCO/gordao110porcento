@@ -21,13 +21,18 @@ class Gallery extends Controller
     public function index($id = 1, $flash = false)
     {
         $table = 'gallery';
-        $results = $this->pagination($table, $id, $limit = 8, '', $orderOption = 'ORDER BY id DESC');
+
+        $pageId = isset($id['gallery']) && !empty($id['gallery'])
+            ? $id['gallery'] : 1;
+
+        $results = $this->pagination($table, $pageId, $limit = 8, '', $orderOption = 'ORDER BY id DESC');
+
         View::render('gallery/index.php', [
             'title' => 'Galeria de imagens',
             'gallery' => $results[4],
             'flash' => $flash,
-            'path' => 'gallery/index',
-            'pageId' => $id,
+            'path' => $table,
+            'pageId' => $pageId,
             'prev' => $results[0],
             'next' => $results[1],
             'totalResults' => $results[2],

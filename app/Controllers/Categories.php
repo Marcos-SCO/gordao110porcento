@@ -21,16 +21,22 @@ class Categories extends Controller
     public function index($id = 1, $flash = false)
     {
         $table = 'categories';
-        $results = $this->pagination($table, $id, $limit = 3, '', $orderOption = 'ORDER BY id DESC');
+
+        $pageId = isset($id['categories']) && !empty($id['categories'])
+            ? $id['categories'] : 1;
+
+        $results = $this->pagination($table, $pageId, $limit = 3, '', $orderOption = 'ORDER BY id DESC');
+
         // Category elements from table categories
         $categoryElements = $this->model->customQuery('SELECT id, category_name FROM categories', null, 1);
+
         View::render('categories/index.php', [
             'title' => 'Todas Categorias',
             'categoryElements' => $categoryElements,
             'categories' => $results[4],
             'flash' => $flash,
-            'path' => 'categories/index',
-            'pageId' => $id,
+            'path' => 'categories',
+            'pageId' => $pageId,
             'prev' => $results[0],
             'next' => $results[1],
             'totalResults' => $results[2],
@@ -82,29 +88,37 @@ class Categories extends Controller
         }
     }
 
-    public function show($id, $page = 1, array $flash = null)
+    public function show($id, array $flash = null)
     {
+        $categoryId = isset($id['show']) && !empty($id['show'])
+            ? $id['show'] : 1;
+
+        $pageId = count($id) > 1 ? end($id) : 1;
+
+        $urlPath = "categories/show/$categoryId";
+
         // get category fata
-        $data = $this->model->getAllFrom('categories', $id);
+        $data = $this->model->getAllFrom('categories', $categoryId);
         // get user data
         $user = $this->model->getAllFrom('users', $data->user_id);
 
         // Pagination for products with id category
-        $table = 'products';
-        $results = $this->pagination($table, $page, $limit = 4, ['id_category', $id], $orderOption = 'ORDER BY id DESC');
-        
+        $productsTable = 'products';
+        $results = $this->pagination($productsTable, $pageId, $limit = 4, ['id_category', $categoryId], $orderOption = 'ORDER BY id DESC');
+
         $categoryElements = $this->model->customQuery('SELECT id, category_name FROM categories', null, 1);
+
         // Display results
         return View::render('categories/show.php', [
-            'title' => $data->category_name.' | Página '. $page,
+            'title' => $data->category_name . ' | Página ' . $pageId,
             'category_description' => $data->category_description,
             'categoryElements' => $categoryElements,
-            'pageId' => $id,
+            'pageId' => $pageId,
             'data' => $data,
             'user' => $user,
             'flash' => $flash,
-            'page' => $page,
-            'path' => "categories/show/$id",
+            'page' => $pageId,
+            'path' => $urlPath,
             'products' => $results[4],
             'prev' => $results[0],
             'next' => $results[1],

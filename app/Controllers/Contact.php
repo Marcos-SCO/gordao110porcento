@@ -20,14 +20,14 @@ class Contact extends Controller
 
     public function index($type = null)
     {
-        if ($type == 'message') {
-            return $this->message();
-        } else if ($type == 'work') {
-            return $this->work();
-        } else {
-            return redirect('home');
-        }
+        $contactType = !empty($type['contact']) && isset($type['contact']) ?  $type['contact'] : '';
+
+        if ($contactType == 'message') return $this->message();
+        if ($contactType == 'work') return $this->work();
+
+        if ($contactType == '') return redirect('home');
     }
+    
     public function success()
     {
         View::render('contact/success.php', [

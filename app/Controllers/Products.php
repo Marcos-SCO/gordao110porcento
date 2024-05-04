@@ -7,10 +7,6 @@ namespace App\Controllers;
 use Core\Controller;
 use Core\View;
 
-use App\Config\Config;
-
-use function PHPSTORM_META\type;
-
 class Products extends Controller
 {
     public $model;
@@ -23,17 +19,21 @@ class Products extends Controller
     public function index($id = 1, $flash = false)
     {
         $table = 'products';
-        $results = $this->pagination($table, $id, $limit = 12, '', $orderOption = 'ORDER BY id DESC');
+
+        $pageId = isset($id['products']) && !empty($id['products']) ? $id['products'] : 1;
+
+        $results = $this->pagination($table, $pageId, $limit = 12, '', $orderOption = 'ORDER BY id DESC');
 
         // Category elements from table categories
         $categoryElements = $this->model->customQuery('SELECT id, category_name FROM categories', null, 1);
+
         View::render('products/index.php', [
-            'title' => "Ofertas | Página $id",
+            'title' => "Ofertas | Página $pageId",
             'categoryElements' => $categoryElements,
             'products' => $results[4],
             'flash' => $flash,
-            'path' => "products/index",
-            'pageId' => $id,
+            'path' => "products",
+            'pageId' => $pageId,
             'prev' => $results[0],
             'next' => $results[1],
             'totalResults' => $results[2],
@@ -162,7 +162,7 @@ class Products extends Controller
 
                     $data[0]['img'] = $img;
                 }
-                
+
                 $this->model->updateproduct($data[0]);
                 $flash = flash('post_message', 'Produto foi atualizado com sucesso!');
 

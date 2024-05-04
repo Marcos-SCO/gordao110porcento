@@ -32,9 +32,9 @@ class Controller
     /* Dynamic page links start */
     public static function createMore($BASE, $table, $text = 'Quer adicionar mais?')
     {
-        if ($_SESSION['user_status'] == 1) {
-            echo "<a class='createBtn btn' href='$BASE/$table/create' style='width:100%;max-width:300px;display:block;margin:1rem auto;'>$text</a>";
-        }
+        if (!$_SESSION['user_status'] == 1) return;
+
+        echo "<a class='createBtn btn' href='$BASE/$table/create' style='width:100%;max-width:300px;display:block;margin:1rem auto;'>$text</a>";
     }
 
     public static function editDelete($BASE, $table, $data, $text = 'Quer Mesmo deletar?')
@@ -67,19 +67,24 @@ class Controller
         // Get table with url
         $table = $url[0];
         $idCategory = $url[3] ?? null;
-        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-            $this->model->deleteQuery($table, ['id' => $id]);
-            if ($this->model->rowCount() > 0) {
-                $this->deleteFolder($table, $id, $idCategory);
-                $flash = flash('register_seccess', 'Deletado com sucesso');
-                return $this->index(1, $flash);
-            } else {
-                $flash = flash('register_seccess', 'Ocorreu um erro');
-                redirect($table);
-            }
-        } else {
+
+        $isPostMethod = $_SERVER['REQUEST_METHOD'] == 'POST';
+
+        if (!$isPostMethod) redirect($table);
+
+        $this->model->deleteQuery($table, ['id' => $id]);
+
+        $itemWasDeleted = $this->model->rowCount() > 0;
+
+        if (!$itemWasDeleted) {
+            $flash = flash('register_seccess', 'Ocorreu um erro');
             redirect($table);
         }
+
+        $this->deleteFolder($table, $id, $idCategory);
+        $flash = flash('register_seccess', 'Deletado com sucesso');
+
+        return $this->index(1, $flash);
     }
 
     /* Img methods Start */
@@ -88,22 +93,30 @@ class Controller
     {
         $valid_extensions = ['jpeg', 'jpg', 'png', 'gif'];
         $imgExt = strtolower(pathinfo($_FILES['img']['name'], PATHINFO_EXTENSION));
+
         $error = [0 => false, 1 => false];
+
         if (!in_array($imgExt, $valid_extensions)) {
             $valid_extensions = implode(', ', $valid_extensions);
             $error = [0 => true, 1 =>  "Enviei somente {$valid_extensions} "];
         }
+
         return $error;
     }
 
     public function moveUpload($imgFullPath)
     {
-        if ($_FILES["img"]["tmp_name"] != "") {
-            move_uploaded_file($_FILES['img']['tmp_name'], $imgFullPath);
-        } else {
+
+        $isEmptyImg = $_FILES["img"]["tmp_name"] == "";
+
+        if ($isEmptyImg) {
             $data['img_error'] = "Envie uma imagem";
             $error = true;
+
+            return $error;
         }
+
+        move_uploaded_file($_FILES['img']['tmp_name'], $imgFullPath);
     }
 
     public function imgCreateHandler($table, $folderName = null)
@@ -115,20 +128,19 @@ class Controller
             'schema' => 'db_corte_110porcento',
             'table' => $table
         ]);
+
         $tableId = strval($tableId->AUTO_INCREMENT);
+
         return $this->imgFullPath($table, $tableId, $_FILES['img']['name'], $folderName);
     }
 
-    public function imgFullPath($table, $id, $imgName, $category_id = null)
+    public function imgFullPath($table, $id, $imgName, $categoryId = null)
     {
-        if ($category_id != null) {
-            $this->deleteFolder($table, $id, $category_id);
-            // Create folder
-            if (!file_exists("../public/img/{$table}/category_{$category_id}/id_$id")) {
-                mkdir("../public/img/{$table}/category_{$category_id}/id_$id", 0755, true);
-            }
-            $upload_dir = "img/{$table}/category_$category_id/id_$id/";
-        } else {
+
+        $emptyCategoryId = $categoryId == null;
+
+        if ($emptyCategoryId) {
+
             // delete the folder
             $this->deleteFolder($table, $id);
             if (!file_exists("../public/img/{$table}/id_$id")) {
@@ -136,6 +148,19 @@ class Controller
             }
             $upload_dir = "img/{$table}/id_$id/";
         }
+
+        if (!$emptyCategoryId) {
+            $this->deleteFolder($table, $id, $categoryId);
+            // Create folder
+
+            if (!file_exists("../public/img/{$table}/category_{$categoryId}/id_$id")) {
+
+                mkdir("../public/img/{$table}/category_{$categoryId}/id_$id", 0755, true);
+            }
+
+            $upload_dir = "img/{$table}/category_$categoryId/id_$id/";
+        }
+
         $picProfile = $imgName;
 
         $imgFullPath = $upload_dir . $picProfile;
@@ -145,8 +170,21 @@ class Controller
 
     public function deleteFolder($table, $id, $idCategory = null, $massDel = null)
     {
+        $notEmptyCategoryAndMassDelete = $idCategory != null && $massDel != null;
+
+        if (!$notEmptyCategoryAndMassDelete) {
+            // Delete imgs with id named folder
+            if (file_exists("../public/img/{$table}/id_$id")) {
+                array_map('unlink', glob("../public/img/{$table}/id_{$id}/*.*"));
+                rmdir("../public/img/{$table}/id_$id");
+            }
+
+            return;
+        }
+
         // Delete all imgs with id category and products
-        if ($idCategory != null && $massDel != null) {
+        if ($notEmptyCategoryAndMassDelete) {
+
             if (file_exists("../public/img/{$table}/category_{$idCategory}")) {
                 $dir = "../public/img/{$table}/category_{$idCategory}";
                 function rrmdir($dir)
@@ -156,21 +194,19 @@ class Controller
                     }
                     rmdir($dir);
                 }
+
                 rrmdir($dir);
             }
-        } else if ($idCategory != null) {
+        } 
+        
+        if ($idCategory != null) {
             // Delete imgs products
             if (file_exists("../public/img/{$table}/category_{$idCategory}/id_{$id}")) {
                 array_map('unlink', glob("../public/img/{$table}/category_{$idCategory}/id_{$id}/*.*"));
                 rmdir("../public/img/{$table}/category_{$idCategory}/id_{$id}");
             }
-        } else {
-            // Delete imgs with id named folder
-            if (file_exists("../public/img/{$table}/id_$id")) {
-                array_map('unlink', glob("../public/img/{$table}/id_{$id}/*.*"));
-                rmdir("../public/img/{$table}/id_$id");
-            }
-        }
+        } 
+
     }
 
 
@@ -183,16 +219,19 @@ class Controller
         /* Set current, prev and next page */
         $prev = ($id) - 1;
         $next = ($id) + 1;
+
         /* Calculate the offset */
         $offset = (($id * $limit) - $limit);
 
         /* Query the db for total results.*/
         if ($optionID != '') {
             list($idKey, $idVal) = $optionID;
+            
             $key = strval($idKey);
             $val = strval($idVal);
             $optionID = " WHERE {$key} = {$val}";
         }
+
         $totalResults = $this->model->customQuery("SELECT COUNT(*) AS total FROM {$table} $optionID");
 
         $totalPages = ceil($totalResults->total / $limit);
@@ -213,8 +252,11 @@ class Controller
         $email = strip_tags($data['email']);
         $subject = strip_tags($data['subject']);
         $bodyStriped = strip_tags($data['body']);
+
         $body = "<b>{$name}</b> com email <b>{$email}</b><p>Enviou:</p><p>{$bodyStriped}</p>";
+
         $this->Mailer($email, 'marcos_sco@outlook.com', $name, $subject, $body, 1, $attachment);
+
         $this->Mailer('marcosXsco@gmail.com', $email, $name, "{$name} sua mensagem foi enviada", "<br>Olá {$name}, Obrigado por enviar sua menssagem.<p><b>Você enviou:</b><br>{$bodyStriped}</p>", null, $attachment);
     }
 
@@ -246,9 +288,11 @@ class Controller
             $mail->addAddress(utf8_decode($email), utf8_decode($name));     // Add a recipient
             // $mail->addAddress('marcosXsco@gmail.com');               // Name is optional
             $mail->addReplyTo(utf8_decode($sentFrom), "Responder {$sentFrom}");
+
             if ($cc != null) {
                 $mail->addCC('marcosXsco@gmail.com');
             }
+
             //$mail->addCC('cc@example.com');
             //$mail->addBCC('bcc@example.com');
 
@@ -257,6 +301,7 @@ class Controller
                 // $mail->addAttachment('/var/tmp/file.tar.gz');// Add attachments
                 $mail->addAttachment($attachment['tmp_name'], utf8_decode($attachment['name']), 'base64', $attachment['type']);
             }
+
             // $mail->addAttachment('/tmp/image.jpg', 'new.jpg');    // Optional name
 
             // Content
@@ -268,8 +313,9 @@ class Controller
 
             $mail->send();
             // echo 'Message has been sent';
-            
+
         } catch (\Exception $e) {
+
             throw new \Exception("Message could not be sent. Mailer Error: $mail->ErrorInfo");
         }
 

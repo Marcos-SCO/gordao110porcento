@@ -22,6 +22,7 @@ class Home extends Controller
         $pizzas = $this->model->getProducts(2);
 
         View::render('home/index.php', [
+            'controller' => 'Home',
             'title' => 'Gordão a 110%',
             'hamburgers' => $hamburgers,
             'pizzas' => $pizzas,

@@ -21,13 +21,18 @@ class Posts extends Controller
     public function index($id = 1, $flash = false)
     {
         $table = 'posts';
-        $results = $this->pagination($table, $id, $limit = 8, '', $oderOption = 'ORDER BY id DESC');
+
+        $pageId = isset($id['posts']) && !empty($id['posts'])
+            ? $id['posts'] : 1;
+
+        $results = $this->pagination($table, $pageId, $limit = 8, '', $orderOption = 'ORDER BY id DESC');
+
         View::render('posts/index.php', [
             'title' => 'Posts - Gordão a 110%',
             'posts' => $results[4],
             'flash' => $flash,
-            'path' => "posts/index",
-            'pageId' => $id,
+            'path' => 'posts',
+            'pageId' => $pageId,
             'prev' => $results[0],
             'next' => $results[1],
             'totalResults' => $results[2],
@@ -82,9 +87,13 @@ class Posts extends Controller
 
     public function show($id, array $flash = null)
     {
-        $data = $this->model->getAllFrom('posts', $id);
+        $pageId = isset($id['show']) && !empty($id['show'])
+            ? $id['show'] : 1;
+
+        $data = $this->model->getAllFrom('posts', $pageId);
 
         $user = $this->model->getAllFrom('users', $data->user_id);
+
         return View::render('posts/show.php', [
             'title' => $data->title,
             'data' => $data,

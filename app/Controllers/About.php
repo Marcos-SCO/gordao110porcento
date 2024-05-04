@@ -22,7 +22,8 @@ class About extends Controller
         $pizzas = $this->model->getProducts(2);
 
         View::render('about/index.php', [
-            'title' => 'Gordão a 110% - Sobre',
+            'controller' => 'About',
+            'title' => 'Sobre - Gordão a 110%',
             'hamburgers' => $hamburgers,
             'pizzas' => $pizzas,
             'categories' => $categories,

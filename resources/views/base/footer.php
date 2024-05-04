@@ -3,10 +3,10 @@
 <?php // Pagination component
 
 include_once __DIR__ . '/../components/pagination.php';
-
 //include_once '../resources/views/base/components/pagination.php';
 
-// resources\views\components
+$controller = isset($controller) ? $controller : false;
+
 ?>
 
 <!-- Footer -->
@@ -58,7 +58,7 @@ include_once __DIR__ . '/../components/pagination.php';
                         <li class="lightText">Sab e Dom: 9h às 21h</li>
                     </ul>
                 </address>
-                
+
             </div>
         </section>
 
@@ -99,7 +99,9 @@ include_once __DIR__ . '/../components/pagination.php';
                         <h6 class="text-uppercase">Onde estamos</h6>
                         <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d58537.08625555666!2d-46.91708754613075!3d-23.512068734946492!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x94cf03dd6cef1295%3A0x746b94a987d123a3!2sBarueri%20-%20SP!5e0!3m2!1spt-BR!2sbr!4v1591283488037!5m2!1spt-BR!2sbr" width="100%" height="220" frameborder="0" style="border:0;" allowfullscreen="" aria-hidden="false" tabindex="0"></iframe>
                     </div>
+
                 </address>
+
             </section>
         <?php endif; ?>
 
@@ -119,7 +121,9 @@ include_once __DIR__ . '/../components/pagination.php';
 
 <?php
 
-if ($getQuery[0] == '' || $getQuery[0] == 'home') {
+$isHomeController = $controller == 'Home';
+
+if ($isHomeController) {
     echo (detectIE() != true) ? "<!-- Hero Slider --><script src='$BASE/public/js/heroSlider.js'></script>" : '';
     echo "<!-- Owl --><script src='$BASE/public/js/owl.carousel.min.js'></script><script src='$BASE/public/js/owlFunctions.js'></script>";
 }

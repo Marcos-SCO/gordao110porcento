@@ -16,10 +16,6 @@ if (!isset($path)) return;
 
     <?php
     
-    $explodedPath = explode('/', $path);
-
-    $pageId = ($explodedPath[1] == 'show') ? $page : $pageId;
-
     $disabled = ($pageId != 1) ? '' : 'disabled';
 
     echo "<li class='page-item $disabled'><span class='page-link'><a href='$BASE/$path/1'>Primeira</a></span></li>";
@@ -36,7 +32,9 @@ if (!isset($path)) return;
           $active = ($pageId == $i) ? 'active' : '';
           echo "<li class='page-item $active'><a href='$BASE/$path/$i'><span class='page-link'>$i</span></a></li></a></li>";
         }
+        
       }
+
     }
 
     $totalDisable =

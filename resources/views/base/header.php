@@ -1,3 +1,9 @@
+<?php
+
+$controller = isset($controller) ? $controller : false;
+
+?>
+
 <!DOCTYPE html>
 <html lang="pt-br">
 
@@ -15,20 +21,26 @@
     <link rel="mask-icon" href="<?= $BASE ?>/public/img/favicon/safari-pinned-tab.svg" color="#5bbad5">
     <meta name="msapplication-TileColor" content="#da532c">
     <meta name="theme-color" content="#ffffff">
+
     <?php $getQuery = getQueryString(); // get url 
     ?>
+
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
     <!-- Font awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <!-- Google fonts  -->
     <link href="https://fonts.googleapis.com/css2?family=Oleo+Script+Swash+Caps:wght@700&display=swap" rel="stylesheet">
+
     <?php
     // tiny MCE 
     echo ($getQuery[0] == 'posts' && $getQuery[1] == 'create' || $getQuery[0] == 'posts' && $getQuery[1] == 'edit' || $getQuery[0] == 'posts' && $getQuery[1] == 'store') ? "<!-- Tiny MCE -->
     <script src='https://cdn.tiny.cloud/1/dksjdj5uue9ro7l3iyr2xu6basfnwgrqpkh8y5beu0m60kwl/tinymce/5/tinymce.min.js' referrerpolicy='origin'></script><script>tinymce.init({selector:'#tinyMCE'});</script>" : '';
+
+    $isHomeController = $controller == 'Home';
+
     // Home
-    if ($getQuery[0] == '' || $getQuery[0] == 'home') {
+    if ($isHomeController) {
         // slider
         echo "<!-- Slider --><link rel='stylesheet' href='$BASE/public/css/style.hero.css'>";
         // owl carousel
@@ -36,6 +48,7 @@
         // Home style
         echo "<!-- Home styles --><link rel='stylesheet' href='$BASE/public/css/homeStyle.css'>";
     }
+
     // Products and categories
     echo ($getQuery[0] == 'products' || $getQuery[0] == 'categories') ? "<!-- Products --><link rel='stylesheet' href='$BASE/public/css/products.css'>" : '';
     // Blog 
@@ -62,6 +75,7 @@
 </head>
 
 <body>
+
     <?= ($getQuery[0] !== '' && $getQuery[0] !== 'home' && $getQuery[0] !== 'users') ? '<!-- Spinner -->
     <div id="loader" class="center" style="display:none"></div>' : ''; ?>
     <header class="<?= ($getQuery[0] == '' || $getQuery[0] == 'home') ? 'fixed-top' : '' ?> z-index bg-light" id="topNav">
@@ -127,7 +141,9 @@
         <!-- end nav -->
     </header>
 
-    <?= (($getQuery[0] == 'home' || $getQuery[0] == '') && $getQuery[1] != 'index') ? '<!-- Hero --><div id="hero" class="hero d-flex justify-content-center align-items-center flex-column" style="height:100%">
+    <?php if ($isHomeController) {
+        
+        echo '<!-- Hero --><div id="hero" class="hero d-flex justify-content-center align-items-center flex-column" style="height:100%">
             <header class="p-4 d-flex flex-column justify-content-center">
                 <div class="headerQuotes">
                     <h1 id="quoteTitle" class="text-left font-swashCaps" style="color:#fff;">Gordão a 110%</h1>
@@ -138,15 +154,17 @@
             <i id="prev" class="fa fa-angle-left"></i>
             <i id="next" class="fa fa-angle-right"></i>
             <ul id="heroCounter"></ul>
-        </div>' : '';
+        </div>';
+    }
+
+    // Display flash messages
+    echo (isset($flash) && $flash != false && $flash != null) ? "<div class='" . $flash['class'] . "' id='msg-flash' style='transition: transform .18s, opacity .18s, visibility 0s .18s;position:absolute;left:5%;top:17%;text-align: center;z-index:9999999999;'>" . $flash['message'] . "</div><script>/*flash message*/ let flash = document.querySelector('#msg-flash'); if (flash != null) {setTimeout(() => { flash.style = 'display:none;transition: transform .18s, opacity .18s, visibility 0s .18s;'; }, 4000); }</script>" : '';
+
     ?>
 
-    <?php
-    // Display flash messages
-    echo (isset($flash) && $flash != false && $flash != null) ? "<div class='" . $flash['class'] . "' id='msg-flash' style='transition: transform .18s, opacity .18s, visibility 0s .18s;position:absolute;left:5%;top:17%;text-align: center;z-index:9999999999;'>" . $flash['message'] . "</div><script>/*flash message*/ let flash = document.querySelector('#msg-flash'); if (flash != null) {setTimeout(() => { flash.style = 'display:none;transition: transform .18s, opacity .18s, visibility 0s .18s;'; }, 4000); }</script>" : ''
-    ?>
     <!-- To top btn -->
     <button id="topBtn" data-anima="right"><i class="fa fa-arrow-up"></i></button>
     <!-- Whatsapp btn -->
     <a href="https://api.whatsapp.com/send?phone=5511930268294&text=Olá+tudo+bem?+Gostaria+de+conversar." class="float" target="_blank" id="whats"><i class="fa fa-whatsapp my-float"></i></a>
+
     <main>

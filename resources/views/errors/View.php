@@ -21,16 +21,17 @@ class View
 
         // $file = "$BASE/resources/views/$view"; // Relative to Core directory
         $file = "../resources/views/$view"; // Relative to Core directory
-        if (is_readable($file)) {
-            require_once "../resources/views/base/header.php";
-            require $file;
-            require_once "../resources/views/base/footer.php";
-        } else {
+
+        if (!is_readable($file)) {
             // echo "$file not found";
             // throw new \Exception("$file not found");
             header($_SERVER["SERVER_PROTOCOL"] . " 404 Not Found", true, 404);
             // include("notFound.php");
         }
+
+        require_once "../resources/views/base/header.php";
+        require $file;
+        require_once "../resources/views/base/footer.php";
     }
 
     /**

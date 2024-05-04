@@ -37,13 +37,13 @@ class Model extends Conn
     public function selectQuery($table, $option = '')
     {
         $query = "SELECT * FROM {$table}";
-        if ($option != '') {
-            $query .= " {$option}";
-        }
+        if ($option != '') $query .= " {$option}";
+
         $this->stmt = $this->conn->prepare($query);
         $this->stmt->execute();
         $result = $this->stmt->fetchAll();
         $this->stmt->closeCursor();
+
         return $result;
     }
 
@@ -55,11 +55,14 @@ class Model extends Conn
         $query = "INSERT INTO {$table} ({$fields}) VALUES ({$places})";
 
         $this->stmt = $this->conn->prepare($query);
+
         foreach ($data as $name => $value) {
             $this->bind(":{$name}", $value);
         }
+
         $this->stmt->execute();
         $this->stmt->closeCursor();
+
         return $this->conn->lastInsertId();
     }
 
@@ -109,18 +112,19 @@ class Model extends Conn
     public function customQuery($query, array $data = null, $fetch = null)
     {
         $this->stmt = $this->conn->prepare($query);
+        
         if ($data) {
             foreach ($data as $field => $value) {
                 $this->bind(":{$field}", $value);
             }
         }
+
         // dump($query);
         $this->stmt->execute();
-        if ($fetch != null) {
-            $result = $this->stmt->fetchAll();
-        } else {
-            $result = $this->stmt->fetch();
-        }
+
+        $result = ($fetch != null)
+            ? $this->stmt->fetchAll() : $this->stmt->fetch();
+
         $this->stmt->closeCursor();
         return $result;
     }
@@ -137,6 +141,7 @@ class Model extends Conn
     {
         return $this->stmt->rowCount();
     }
+
     public function lastId()
     {
         return $this->conn->lastInsertId();

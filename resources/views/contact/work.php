@@ -1,16 +1,20 @@
 <header class="contactHeader imgBackgroundArea">
     <span>
         <h2>Trabalhe conosco</h2>
-        <h1>Envie seu curriculo</h1>
+        <h1>Envie seu currículo</h1>
     </span>
 </header>
+
 <section class="contactForm mb-4 m-auto pl-5 pr-5 pb-5">
+
     <header>
         <h2 class="h1-responsive font-weight-bold text-center my-4">Enviei seu curriculo</h2>
         <p class="text-center w-responsive mx-auto mb-5">Envie seu curriculo, te avisaremos por e-mail assim que surgirem oportunidades</p>
     </header>
+
     <div class="contactRow row mb-4 align-items-center">
         <div class="col-md-9 mb-md-0 mb-5">
+
             <form action="<?= $BASE ?>/contact/workSend" method="post" enctype="multipart/form-data">
                 <div class="row">
                     <div class="form-group col-md-6">
@@ -58,6 +62,7 @@
                 <input type="submit" class="btn btn-success" value="Enviar" style="height:100%;width:100%;margin-bottom:1rem;">
             </form>
         </div>
+
         <address class="contactAddress m-auto">
             <h3>Onde Estamos</h3>
             <div>
@@ -79,4 +84,5 @@
                 </ul>
             </section>
         </address>
+
 </section>
