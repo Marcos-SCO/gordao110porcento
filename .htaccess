@@ -13,5 +13,5 @@ RewriteEngine On
 # ROUTER URL Rewrite
 RewriteCond %{SCRIPT_FILENAME} !-f
 RewriteCond %{SCRIPT_FILENAME} !-d
-RewriteRule ^(.*)$ public/index.php/$1 [L,QSA]
+RewriteRule ^(.*)$ public/index.php/$1/ [L,QSA]
 RewriteRule !^public/ public/%1

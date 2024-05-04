@@ -9,14 +9,15 @@ return [
     '/(?:$|home)/?' => 'Home@index',
     '/about/?' => 'About@index',
 
-    '/products/?($|[0-9])+' => 'Products@index',
-    '/gallery/?($|[0-9])+' => 'Gallery@index',
+    '/products/?($|[0-9])+/?' => 'Products@index',
+    '/gallery/?($|[0-9])+/?' => 'Gallery@index',
     
-    '/posts/?($|[0-9])+' => 'Posts@index',
-    '/posts/?show/($|[0-9])+' => 'Posts@show',
+    '/posts/?($|[0-9])+/?' => 'Posts@index',
+    '/posts/?show/($|[0-9])+/?' => 'Posts@show',
     
-    '/categories/?($|[0-9])+' => 'Categories@index',
-    '/categories/?show/($|[0-9]+)(?:/([0-9]+))?' => 'Categories@show',
+    '/categories/?($|[0-9])+/?' => 'Categories@index',
+
+    '/categories/?show/($|[0-9]+)(?:/([0-9]+))?/' => 'Categories@show',
 
     '/contact/?($|[\w]+)/?' => 'Contact@index',
 
