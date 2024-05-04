@@ -4,114 +4,99 @@ namespace Core;
 
 class Router
 {
-    protected $controller = 'Home';
-    protected $method = 'index';
-    protected $params = [];
-
-    public function __construct()
+    protected function exactMatchUriInArrayRoutes($uri, $routes)
     {
-        $this->dispatch();
+        return array_key_exists($uri, $routes) ? [$uri => $routes[$uri]] : [];
     }
 
-    /* Convert the string with hyphens to SturdlyCaps
-    e.g. post-author => PostAuthor */
-    protected function convertToStudlyCaps($string): string
+    protected  function regularExpressionMatchArrayRoutes($uri, $routes)
     {
-        return str_replace(' ', '', ucwords(str_replace('-', ' ', $string)));
+        return array_filter($routes, function ($value) use ($uri) {
+            $regex = str_replace('/', '\/', ltrim($value, '/'));
+            return preg_match("/^$regex$/", ltrim($uri, '/'));
+        }, ARRAY_FILTER_USE_KEY);
     }
 
-    /* Convert the string with hyphens to camelCase
-    e.g. add new => addNew */
-    protected function convertToUc($string): string
+    protected  function params($uri, $matchedUri)
     {
-        return ucfirst($this->convertToStudlyCaps($string));
-    }
+        if (!empty($matchedUri)) {
+            $matchedToGetParams = array_keys($matchedUri)[0];
 
-    public function getUrl()
-    {
-        $url = $_SERVER['QUERY_STRING'];
-        $url = str_replace('public/index.php', $url, '');
-
-        $url = rtrim($url, "/");
-        $url = $this->removeQueryStringVariables($url);
-
-        if (!$url) return false;
-
-        $url = filter_var($url, FILTER_SANITIZE_URL);
-        $url = explode('/', $url);
-
-        return $url;
-    }
-
-    public function dispatch()
-    {
-        $url = $this->getUrl();
-
-        // Controller
-        if (isset($url[0])) {
-            $this->controller = $this->convertToUc($url[0]);
-            unset($url[0]);
+            return array_diff(
+                // explode('/', ltrim($uri, '/')),
+                $uri,
+                explode('/', ltrim($matchedToGetParams, '/')),
+            );
         }
 
-        // Method
-        if (isset($url[1])) {
-            $this->method = $this->convertToStudlyCaps($url[1]);
-            unset($url[1]);
-        }
-
-        // Params
-        $urlHasParams = $url ? count($url) : false;
-
-        if ($urlHasParams) {
-
-            foreach ($url as $params) {
-                $this->params[] = $params;
-            }
-        }
-        //dump($this->params);
-
-        $controller = 'App\Controllers\\' . $this->controller;
-
-        $classExists = class_exists($controller);
-
-        if (!$classExists) throw new \Exception("Controller: class <b>$controller</b> not found");
-
-        $controllerObject = new $controller($this->params);
-
-        $methodExists = method_exists($controllerObject, $this->method);
-
-        if (!$methodExists) throw new \Exception("Method: <b>{$this->method}</b> not found");
-
-        call_user_func_array([$controllerObject, $this->method], $this->params);
+        return [];
     }
 
-    /**
-     * Remove the query string variables from the URL (if any). As the full query string is used for the route, any variables at the end will need to be removed before the route is matched to the routing table. For example:
-     *   URL $_SERVER['QUERY_STRING']  Route
-     *   localhost                     ''                        ''
-     *   localhost/?                   ''                        ''
-     *   localhost/?page=1             page=1                    ''
-     *localhost/posts?page=1 posts&page=1 posts
-     *localhost/posts/index  posts/index posts/index
-     *localhost/posts/index?page=1  posts/index&page=1 posts/index
-    
-     * A URL of the format localhost/?page (one variable name, no value) won't work however. (NB. The .htaccess file converts the first ? to a & when it's passed through to the $_SERVER variable).
-     *
-     * @param string $url The full URL
-     *
-     * @return string The URL with the query string variables removed
-     */
-    protected function removeQueryStringVariables($url)
+    protected  function paramsFormat($uri, $params)
     {
-        if ($url != '') {
-            // explode(separator, string, limit)
-            $parts = explode('&', $url, 2);
+        // $uri = explode('/', ltrim($uri, '/'));
+        
+        $paramsData = [];
+        foreach ($params as $index => $param) {
 
-            $isUrlParams = strpos($parts[0], '=') === false;
-
-            $url = $isUrlParams ? $parts[0] : '';
+            $index = $index > 0 ? $index : 1;
+            $paramsData[$uri[$index - 1]] = $param;
         }
 
-        return $url;
+        return $paramsData;
     }
+
+    function controller($matchedUri, $params)
+    {
+        [$controller, $method] = explode('@', array_values($matchedUri)[0]);
+        $controllerWithNamespace = 'App\Controllers\\' . $controller;
+
+        if (!class_exists($controllerWithNamespace)) {
+            throw new \Exception('Controller <b>' . $controller . '</b> don\'t exists');
+        }
+
+        $controllerInstance = new $controllerWithNamespace();
+
+        if (!method_exists($controllerInstance, $method)) {
+            throw new \Exception('Method <b>' . $method . '</b> don\'t exist in ' . $controller);
+        }
+
+        $controller = $controllerInstance->$method($params);
+
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            die();
+        }
+
+        return $controller;
+    }
+
+    public function dispatch($routes)
+    {
+        // $uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
+        $pathInfo = $_SERVER['PATH_INFO'] ?? '/';
+        $uri = parse_url($pathInfo, PHP_URL_PATH);
+
+        $requestMethod = $_SERVER['REQUEST_METHOD'];
+
+        $matchedUri = $this->exactMatchUriInArrayRoutes($uri, $routes[$requestMethod]);
+
+        $params = [];
+
+        if (empty($matchedUri)) {
+
+            $matchedUri = $this->regularExpressionMatchArrayRoutes($uri, $routes[$requestMethod]);
+
+            $uri = explode('/', ltrim($uri, '/'));
+
+            $params = $this->params($uri, $matchedUri);
+            $params = $this->paramsFormat($uri, $params);
+        }
+
+        if (!empty($matchedUri)) {
+            return $this->controller($matchedUri, $params);
+        }
+
+        throw new \Exception("Route not found ");
+    }
+
 }
