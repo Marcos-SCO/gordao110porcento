@@ -93,7 +93,9 @@ class Categories extends Controller
         $categoryId = isset($id['show']) && !empty($id['show'])
             ? $id['show'] : 1;
 
-        $pageId = count($id) > 1 ? end($id) : 1;
+        $lastKey = array_key_last($id);
+
+        $pageId = !($lastKey == 'show') ? end($id) : 1;
 
         $urlPath = "categories/show/$categoryId";
 
