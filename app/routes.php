@@ -21,10 +21,12 @@ return [
 
     '/contact/?($|[\w]+)/?' => 'Contact@index',
 
-    '/user/create' => 'User@create',
-    '/user/' => 'User@index',
-    '/user/($|[0-9])+' => 'User@show',
-    '/login' => 'Login@index',
-    '/logout' => 'Login@destroy',
+    // '/user/create' => 'User@create',
+    // '/user/' => 'User@index',
+    // '/user/($|[0-9])+' => 'User@show',
+    
+    // '/logout' => 'Login@destroy',
+
+    '/login/?' => 'Users@login',
   ],
 ];

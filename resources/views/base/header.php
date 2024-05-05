@@ -142,7 +142,7 @@ $controller = isset($controller) ? $controller : false;
     </header>
 
     <?php if ($isHomeController) {
-        
+
         echo '<!-- Hero --><div id="hero" class="hero d-flex justify-content-center align-items-center flex-column" style="height:100%">
             <header class="p-4 d-flex flex-column justify-content-center">
                 <div class="headerQuotes">
@@ -158,12 +158,19 @@ $controller = isset($controller) ? $controller : false;
     }
 
     // Display flash messages
-    echo (isset($flash) && $flash != false && $flash != null) ? "<div class='" . $flash['class'] . "' id='msg-flash' style='transition: transform .18s, opacity .18s, visibility 0s .18s;position:absolute;left:5%;top:17%;text-align: center;z-index:9999999999;'>" . $flash['message'] . "</div><script>/*flash message*/ let flash = document.querySelector('#msg-flash'); if (flash != null) {setTimeout(() => { flash.style = 'display:none;transition: transform .18s, opacity .18s, visibility 0s .18s;'; }, 4000); }</script>" : '';
+    if (isset($flash) && $flash != false && $flash != null) {
+
+        $flashClass = isset($flash['class']) ? $flash['class'] : '';
+        $flashMessage = isset($flash['message']) ? $flash['class'] : '';
+
+        echo "<div class='" . $flashClass . "' id='msg-flash' style='transition: transform .18s, opacity .18s, visibility 0s .18s;position:absolute;left:5%;top:17%;text-align: center;z-index:9999999999;'>" . $flashMessage . "</div><script>/*flash message*/ let flash = document.querySelector('#msg-flash'); if (flash != null) {setTimeout(() => { flash.style = 'display:none;transition: transform .18s, opacity .18s, visibility 0s .18s;'; }, 4000); }</script>";
+    }
 
     ?>
 
     <!-- To top btn -->
     <button id="topBtn" data-anima="right"><i class="fa fa-arrow-up"></i></button>
+    
     <!-- Whatsapp btn -->
     <a href="https://api.whatsapp.com/send?phone=5511930268294&text=Olá+tudo+bem?+Gostaria+de+conversar." class="float" target="_blank" id="whats"><i class="fa fa-whatsapp my-float"></i></a>
 

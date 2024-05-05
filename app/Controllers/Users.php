@@ -16,7 +16,7 @@ class Users extends Controller
         $this->model = $this->model('User');
     }
 
-    public function index($id = 1, $flash = null)
+    public function index($id, $flash = null)
     {
         $this->isLogin();
 
