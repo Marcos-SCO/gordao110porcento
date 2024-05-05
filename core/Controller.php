@@ -143,8 +143,8 @@ class Controller
 
             // delete the folder
             $this->deleteFolder($table, $id);
-            if (!file_exists("../public/img/{$table}/id_$id")) {
-                mkdir("../public/img/{$table}/id_$id");
+            if (!file_exists("../public/resources/img/{$table}/id_$id")) {
+                mkdir("../public/resources/img/{$table}/id_$id");
             }
             $upload_dir = "img/{$table}/id_$id/";
         }
@@ -153,9 +153,9 @@ class Controller
             $this->deleteFolder($table, $id, $categoryId);
             // Create folder
 
-            if (!file_exists("../public/img/{$table}/category_{$categoryId}/id_$id")) {
+            if (!file_exists("../public/resources/img/{$table}/category_{$categoryId}/id_$id")) {
 
-                mkdir("../public/img/{$table}/category_{$categoryId}/id_$id", 0755, true);
+                mkdir("../public/resources/img/{$table}/category_{$categoryId}/id_$id", 0755, true);
             }
 
             $upload_dir = "img/{$table}/category_$categoryId/id_$id/";
@@ -174,9 +174,9 @@ class Controller
 
         if (!$notEmptyCategoryAndMassDelete) {
             // Delete imgs with id named folder
-            if (file_exists("../public/img/{$table}/id_$id")) {
-                array_map('unlink', glob("../public/img/{$table}/id_{$id}/*.*"));
-                rmdir("../public/img/{$table}/id_$id");
+            if (file_exists("../public/resources/img/{$table}/id_$id")) {
+                array_map('unlink', glob("../public/resources/img/{$table}/id_{$id}/*.*"));
+                rmdir("../public/resources/img/{$table}/id_$id");
             }
 
             return;
@@ -185,8 +185,8 @@ class Controller
         // Delete all imgs with id category and products
         if ($notEmptyCategoryAndMassDelete) {
 
-            if (file_exists("../public/img/{$table}/category_{$idCategory}")) {
-                $dir = "../public/img/{$table}/category_{$idCategory}";
+            if (file_exists("../public/resources/img/{$table}/category_{$idCategory}")) {
+                $dir = "../public/resources/img/{$table}/category_{$idCategory}";
                 function rrmdir($dir)
                 {
                     foreach (glob($dir . '/*') as $file) {
@@ -201,9 +201,9 @@ class Controller
         
         if ($idCategory != null) {
             // Delete imgs products
-            if (file_exists("../public/img/{$table}/category_{$idCategory}/id_{$id}")) {
-                array_map('unlink', glob("../public/img/{$table}/category_{$idCategory}/id_{$id}/*.*"));
-                rmdir("../public/img/{$table}/category_{$idCategory}/id_{$id}");
+            if (file_exists("../public/resources/img/{$table}/category_{$idCategory}/id_{$id}")) {
+                array_map('unlink', glob("../public/resources/img/{$table}/category_{$idCategory}/id_{$id}/*.*"));
+                rmdir("../public/resources/img/{$table}/category_{$idCategory}/id_{$id}");
             }
         } 
 

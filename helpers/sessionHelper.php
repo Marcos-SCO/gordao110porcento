@@ -1,11 +1,16 @@
 <?php
 // Start Session
 session_start();
+
 // Session variables
 isset($_SESSION['user_status']) ? $_SESSION['user_status'] : $_SESSION['user_status'] = null;
+
 isset($_SESSION['user_id']) ? $_SESSION['user_id'] : $_SESSION['user_id'] = null;
+
 isset($_SESSION['adm_id']) ? $_SESSION['adm_id'] : $_SESSION['adm_id'] = null;
+
 isset($_SESSION['user_email']) ? $_SESSION['user_email'] : $_SESSION['user_email'] = null;
+
 isset($_SESSION['user_name']) ? $_SESSION['user_name'] : $_SESSION['user_name'] = null;
 
 /**
@@ -13,7 +18,7 @@ isset($_SESSION['user_name']) ? $_SESSION['user_name'] : $_SESSION['user_name'] 
  */
 date_default_timezone_set('America/Sao_Paulo');
 
-ini_set('default_charset','UTF-8');
+ini_set('default_charset', 'UTF-8');
 
 /**
  * Error and Exception handling
@@ -37,9 +42,7 @@ function flash($name = '', $message = '', $class = 'alert alert-success')
 
 function isLoggedIn()
 {
-    if (isset($_SESSION['user_id'])) {
-        return true;
-    } else {
-        return false;
-    }
+    if (!isset($_SESSION['user_id'])) false;
+
+    return true;
 }

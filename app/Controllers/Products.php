@@ -176,9 +176,9 @@ class Products extends Controller
             $img = ($img !== '') ? $data['img'][4] : $postImg;
 
             // Copy from the older to new one
-            if (file_exists("../public/img/products/category_{$resultId->id_category}/id_$id/$img")) {
+            if (file_exists("../public/resources/img/products/category_{$resultId->id_category}/id_$id/$img")) {
 
-                copy("../public/img/products/category_{$resultId->id_category}/id_$id/$img", "../public/img/products/category_{$postIdCategory}/id_$id/$img");
+                copy("../public/resources/img/products/category_{$resultId->id_category}/id_$id/$img", "../public/resources/img/products/category_{$postIdCategory}/id_$id/$img");
             }
 
             // Delete the image in the current folder

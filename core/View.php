@@ -20,8 +20,8 @@ class View
 
         extract($args, EXTR_SKIP);
 
-        // $file = "$BASE/resources/views/$view"; // Relative to Core directory
-        $file = "../resources/views/$view"; // Relative to Core directory
+        // $file = "$BASE/public/resources/views/$view"; // Relative to Core directory
+        $file = "../public/resources/views/$view"; // Relative to Core directory
 
         if (!is_readable($file)) {
             // echo "$file not found";
@@ -29,14 +29,14 @@ class View
             header($_SERVER["SERVER_PROTOCOL"] . " 404 Not Found", true, 404);
             http_response_code(404);
 
-            require_once "../resources/views/errors/404.php";
+            require_once "../public/resources/views/errors/404.php";
 
             return;
         }
 
-        require_once "../resources/views/base/header.php";
+        require_once "../public/resources/views/base/header.php";
         require $file;
-        require_once "../resources/views/base/footer.php";
+        require_once "../public/resources/views/base/footer.php";
     }
     
 }

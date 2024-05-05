@@ -1,4 +1,4 @@
-![Gordão a 110%](https://raw.githubusercontent.com/Marcos-SCO/gordao110porcento/master/public/img/template/gordao110_logo_300px.png)
+![Gordão a 110%](https://raw.githubusercontent.com/Marcos-SCO/gordao110porcento/master/public/resources/img/template/gordao110_logo_300px.png)
 
 [![HitCount](https://hits.dwyl.com/Marcos-SCO/gordao110porcento.svg)](https://hits.dwyl.com/Marcos-SCO/gordao110porcento.sgv)
 
@@ -33,7 +33,7 @@ O site está totalmente responsivo, podendo ser acessado por qualquer dispositiv
 
 A compatibilidade com os navegadores mais modernos também foi levada em conta e até mesmo o “Internet Explorer 11” recebeu uma adaptação.
 
-![Gordão a 110%](https://raw.githubusercontent.com/Marcos-SCO/gordao110porcento/master/public/img/gallery/id_25/mockup_mobile-min.png)
+![Gordão a 110%](https://raw.githubusercontent.com/Marcos-SCO/gordao110porcento/master/public/resources/img/gallery/id_25/mockup_mobile-min.png)
 
 Caso queira me contactar, visite:
 

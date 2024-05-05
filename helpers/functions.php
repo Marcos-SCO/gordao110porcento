@@ -11,12 +11,14 @@ function dump($item)
     echo '</pre>';
     return;
 }
+
 // Get query strings
 function getQueryString()
 {
     $url = explode('/', $_SERVER['QUERY_STRING']);
-     // remove query strings
-    if (strpos($url[0],'=') == true) {
+
+    // remove query strings
+    if (strpos($url[0], '=') == true) {
         $url[0] = '';
         $url[1] = '';
     };
@@ -25,6 +27,7 @@ function getQueryString()
     $table = $url[0] ?? '';
     $method = $url[1] ?? '';
     $id = $url[2] ?? '';
+
     return [$table, $method, $id];
 }
 
@@ -36,25 +39,27 @@ function dateFormat($data)
 }
 
 // Show a image or default in src
-function imgOrDefault($table, $img, $id, $tableOp = '') {
-    if ($img !== null) {
-        $path = "public/img/$table$tableOp/id_$id/$img";
-    } else {
-        if ($table == 'users') {
-            $path = "public/img/$table/default/default.png";
-        } else {
-            $path = "public/img/default/default.png";
-        }
-    }
-    return $path;
+function imgOrDefault($table, $img, $id, $tableOp = '')
+{
+    if ($img !== null) return "public/resources/img/$table$tableOp/id_$id/$img";
+
+    $isUserTable = $table == 'users';
+
+    if ($isUserTable) return "public/resources/img/$table/default/default.png";
+
+    if (!$isUserTable) return "public/resources/img/default/default.png";
 }
 
 // Detect if ua is IE
-function detectIE() {
-    $ua= htmlentities($_SERVER['HTTP_USER_AGENT'], ENT_QUOTES, 'UTF-8' ); 
-    if (preg_match('~MSIE|Internet Explorer~i', $ua) || (strpos($ua, 'Trident/7.0' ) !== false && strpos($ua, 'rv:11.0' ) !== false)) { 
+function detectIE()
+{
+    $ua = htmlentities($_SERVER['HTTP_USER_AGENT'], ENT_QUOTES, 'UTF-8');
+
+    if (preg_match('~MSIE|Internet Explorer~i', $ua) || (strpos($ua, 'Trident/7.0') !== false && strpos($ua, 'rv:11.0') !== false)) {
+
         return true;
     }
+
     return false;
 }
 
@@ -63,5 +68,6 @@ function redirect($page)
 {
     header('Status: 301 Moved Permanently', false, 301);
     header('Location: ' . Config::URL_BASE . '/' . $page);
+
     die();
 }
