@@ -1,0 +1,1 @@
+if "SHOW_ERRORS" in config.php are false, then the errors will be displayed in this folder
