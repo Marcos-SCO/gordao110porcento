@@ -13,42 +13,43 @@ class Router
     {
         return array_filter($routes, function ($value) use ($uri) {
             $regex = str_replace('/', '\/', ltrim($value, '/'));
+
             return preg_match("/^$regex$/", ltrim($uri, '/'));
         }, ARRAY_FILTER_USE_KEY);
     }
 
-    protected  function params($uri, $matchedUri)
+    protected function params($uri, $matchedUri)
     {
-        if (!empty($matchedUri)) {
-            $matchedToGetParams = array_keys($matchedUri)[0];
+        if (empty($matchedUri)) return [];
 
-            return array_diff(
-                // explode('/', ltrim($uri, '/')),
-                $uri,
-                explode('/', ltrim($matchedToGetParams, '/')),
-            );
-        }
+        $matchedToGetParams = array_keys($matchedUri)[0];
 
-        return [];
+        $uriArrayDifference = array_diff(
+            $uri,
+            explode('/', ltrim($matchedToGetParams, '/')),
+        );
+
+        return $uriArrayDifference;
     }
 
-    protected  function paramsFormat($uri, $params)
+    protected function paramsFormat($uri, $params)
     {
         // $uri = explode('/', ltrim($uri, '/'));
-        
+
         $paramsData = [];
         foreach ($params as $index => $param) {
-
+            
             $index = $index > 0 ? $index : 1;
             $paramsData[$uri[$index - 1]] = $param;
         }
-
+        
         return $paramsData;
     }
 
-    function controller($matchedUri, $params)
+    protected function controller($matchedUri, $params)
     {
         [$controller, $method] = explode('@', array_values($matchedUri)[0]);
+
         $controllerWithNamespace = 'App\Controllers\\' . $controller;
 
         if (!class_exists($controllerWithNamespace)) {
@@ -62,10 +63,6 @@ class Router
         }
 
         $controller = $controllerInstance->$method($params);
-
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            die();
-        }
 
         return $controller;
     }
@@ -96,7 +93,6 @@ class Router
             return $this->controller($matchedUri, $params);
         }
 
-        throw new \Exception("Route not found ");
+        throw new \Exception("Route not found: <b>{$pathInfo}</b> ");
     }
-
 }
