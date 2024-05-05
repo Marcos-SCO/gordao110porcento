@@ -18,12 +18,11 @@ class Posts extends Controller
         $this->model = $this->model('Post');
     }
 
-    public function index($id = 1, $flash = false)
+    public function index($paramsArray, $flash = false)
     {
         $table = 'posts';
 
-        $pageId = isset($id['posts']) && !empty($id['posts'])
-            ? $id['posts'] : 1;
+        $pageId = isset($paramsArray['posts']) && !empty($paramsArray['posts']) ? $paramsArray['posts'] : 1;
 
         $results = $this->pagination($table, $pageId, $limit = 8, '', $orderOption = 'ORDER BY id DESC');
 
@@ -59,36 +58,39 @@ class Posts extends Controller
     {
         $this->isLogin();
 
-        if ($_SERVER['REQUEST_METHOD'] == 'POST' && !isset($_SESSION['submitted'])) {
-            $result = $this->getPostData();
-            $data = $result[0];
-            $error = $result[1];
+        $submittedPostData =
+            isset($_SESSION['submitted']) &&
+            $_SERVER['REQUEST_METHOD'] == 'POST';
 
-            // Validate data
-            if ($error['error'] != true) {
-                $fullPath = $this->imgCreateHandler('posts');
-                $this->moveUpload($fullPath);
-
-                if ($this->model->addPost($data)) {
-                    $_SESSION['submitted'] = true;
-                    $flash = flash('post_message', 'Post adicionado');
-                    $id = $this->model->lastId();
-                    return $this->show($id, $flash);
-                } else {
-                    die('Algo deu errado..');
-                }
-            } else {
-                return $this->create($data, $error);
-            }
-        } else {
-            redirect('posts');
+        if ($submittedPostData) {
+            return redirect('posts');
         }
+
+        $result = $this->getPostData();
+        $data = $result[0];
+        $error = $result[1];
+
+        $isErrorResult = $error['error'] == true;
+
+        if ($isErrorResult) return $this->create($data, $error);
+
+        $fullPath = $this->imgCreateHandler('posts');
+        $this->moveUpload($fullPath);
+
+        $addedPost = $this->model->addPost($data);
+
+        if (!$addedPost) die('Something went wrong when adding the post...');
+
+        $_SESSION['submitted'] = true;
+        $flash = flash('post_message', 'Post adicionado');
+        $id = $this->model->lastId();
+
+        return $this->show($id, $flash);
     }
 
-    public function show($id, array $flash = null)
+    public function show($paramsArray, array $flash = null)
     {
-        $pageId = isset($id['show']) && !empty($id['show'])
-            ? $id['show'] : 1;
+        $pageId = isset($paramsArray['show']) && !empty($paramsArray['show']) ? $paramsArray['show'] : 1;
 
         $data = $this->model->getAllFrom('posts', $pageId);
 
@@ -106,6 +108,7 @@ class Posts extends Controller
     {
         $this->isLogin();
         $data = $this->model->getAllFrom('posts', $id);
+
         View::render('posts/edit.php', [
             'title' => "Editar - $data->title",
             'data' => $data,
@@ -117,49 +120,65 @@ class Posts extends Controller
     {
         $this->isLogin();
 
-        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-            $data = $this->getPostData();
-            $error = $data[1];
-            $id = $data[0]['id'];
+        $submittedPostData = $_SERVER['REQUEST_METHOD'] == 'POST';
 
-            if ($error['error'] != true) {
-                $img = $data[0]['img'];
-                $postImg = $data[0]['post_img'];
-                if ($img !== "") {
-                    $fullPath = $this->imgFullPath('posts', $id, $img);
-                    $this->moveUpload($fullPath);
-                    $data['img'] = explode('/', $fullPath);
-                } else {
-                    $data[0]['img'] = $postImg;
-                }
-
-                $this->model->updatePost($data[0]);
-                $flash = flash('post_message', 'Post Atualizado');
-
-                return $this->show($id, $flash);
-            } else {
-                return $this->edit($id, $error);
-            }
-        } else {
-            redirect('posts');
+        if (!$submittedPostData) {
+            return redirect('posts');
         }
+
+        $data = $this->getPostData();
+        $error = $data[1];
+        $id = $data[0]['id'];
+
+        $isErrorResult = $error['error'] == true;
+
+        if ($isErrorResult) {
+            return $this->edit($id, $error);
+        }
+
+        $img = $data[0]['img'];
+        $postImg = $data[0]['post_img'];
+
+        $isEmptyImg = $img == "";
+
+        if ($isEmptyImg) $data[0]['img'] = $postImg;
+
+        if (!$isEmptyImg) {
+            $fullPath = $this->imgFullPath('posts', $id, $img);
+            $this->moveUpload($fullPath);
+            $data['img'] = explode('/', $fullPath);
+        }
+
+        $this->model->updatePost($data[0]);
+        $flash = flash('post_message', 'Post Atualizado');
+
+        return $this->show($id, $flash);
     }
 
     public function getPostData()
     {
-        $notPermitedTags = array('<script>', '<a>');
+        $notAllowedTags = array('<script>', '<a>');
         $body = isset($_POST['body']) ? trim($_POST['body']) : '';
-        $body = trim(str_replace($notPermitedTags, '', $body));
+        $body = trim(str_replace($notAllowedTags, '', $body));
 
         // Sanitize data
         $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+
         $id = isset($_POST['id']) ? trim($_POST['id']) : '';
+
         $title = isset($_POST['title']) ? trim($_POST['title']) : '';
+
         $img = isset($_FILES['img']) ? $_FILES['img'] : null;
+
         $postImg = isset($_POST['img']) ? $_POST['img'] : '';
-        $userId = isset($_SESSION['user_id']) ? $_SESSION['user_id'] : '';
+
+        $userId = isset($_SESSION['user_id'])
+            ? $_SESSION['user_id'] : '';
+
         $titleError = isset($_POST['title_error']) ? trim($_POST['title_error']) : '';
+
         $bodyError = isset($_POST['body_error']) ? trim($_POST['body_error']) : '';
+
         $imgPathError = isset($_POST['img_error']) ? trim($_POST['img_error']) : '';
 
         // Add data to array
@@ -180,7 +199,9 @@ class Posts extends Controller
         ];
 
         $validate = $this->imgValidate();
+
         if (isset($_FILES['img']) && $postImg == '') {
+            
             if (empty($data['img'])) {
                 $error['img_error'] = "Insira uma imagem";
                 $error['error'] = true;
@@ -189,6 +210,7 @@ class Posts extends Controller
                 $error['img_error'] = $validate[1];
                 $error['error'] = $validate[0];
             }
+
         } else if ($postImg && !empty($data['img'])) {
             $error['img_error'] = $validate[1];
             $error['error'] = $validate[0];

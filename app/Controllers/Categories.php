@@ -18,12 +18,11 @@ class Categories extends Controller
         $this->model = $this->model('Category');
     }
 
-    public function index($id = 1, $flash = false)
+    public function index($paramsArray = 1, $flash = false)
     {
         $table = 'categories';
 
-        $pageId = isset($id['categories']) && !empty($id['categories'])
-            ? $id['categories'] : 1;
+        $pageId = isset($paramsArray['categories']) && !empty($paramsArray['categories']) ? $paramsArray['categories'] : 1;
 
         $results = $this->pagination($table, $pageId, $limit = 3, '', $orderOption = 'ORDER BY id DESC');
 
@@ -48,9 +47,7 @@ class Categories extends Controller
     {
         $this->isLogin();
 
-        if (isset($_SESSION['submitted'])) {
-            unset($_SESSION['submitted']);
-        }
+        if (isset($_SESSION['submitted'])) unset($_SESSION['submitted']);
 
         View::render('categories/create.php', [
             'title' => 'Adicione mais uma categoria',
@@ -63,39 +60,47 @@ class Categories extends Controller
     {
         $this->isLogin();
 
-        if ($_SERVER['REQUEST_METHOD'] == 'POST' && !isset($_SESSION['submitted'])) {
-            $result = $this->getPostData();
-            $data = $result[0];
-            $error = $result[1];
-            // Validate data
-            if ($error['error'] != true) {
-                $fullPath = $this->imgCreateHandler('categories');
-                $this->moveUpload($fullPath);
+        $submittedPostData =
+            isset($_SESSION['submitted']) &&
+            $_SERVER['REQUEST_METHOD'] == 'POST';
 
-                if ($this->model->addCategory($data)) {
-                    $_SESSION['submitted'] = true;
-                    $flash = flash('post_message', 'Imagem adicionada com successo');
-                    $id = $this->model->lastId();
-                    return $this->show($id, 1, $flash);
-                } else {
-                    die('Algo deu errado..');
-                }
-            } else {
-                return $this->create($data, $error);
-            }
-        } else {
-            redirect('categories');
+        if (!$submittedPostData) {
+            return redirect('categories');
         }
+
+        $result = $this->getPostData();
+        $data = $result[0];
+        $error = $result[1];
+
+        $isErrorResult = $error['error'] == true;
+
+        if ($isErrorResult) return $this->create($data, $error);
+
+        $fullPath = $this->imgCreateHandler('categories');
+
+        $this->moveUpload($fullPath);
+
+        $addedCategory = $this->model->addCategory($data);
+        if (!$addedCategory) {
+            die('Algo deu errado..');
+            return;
+        }
+
+        $_SESSION['submitted'] = true;
+        $flash = flash('post_message', 'Imagem adicionada com sucesso');
+
+        $id = $this->model->lastId();
+
+        return $this->show($id, 1, $flash);
     }
 
-    public function show($id, array $flash = null)
+    public function show($paramsArray)
     {
-        $categoryId = isset($id['show']) && !empty($id['show'])
-            ? $id['show'] : 1;
+        $categoryId = isset($paramsArray['show']) && !empty($paramsArray['show']) ? $paramsArray['show'] : 1;
 
-        $lastKey = array_key_last($id);
+        $lastKey = array_key_last($paramsArray);
 
-        $pageId = !($lastKey == 'show') ? end($id) : 1;
+        $pageId = !($lastKey == 'show') ? end($paramsArray) : 1;
 
         $urlPath = "categories/show/$categoryId";
 
@@ -118,7 +123,6 @@ class Categories extends Controller
             'pageId' => $pageId,
             'data' => $data,
             'user' => $user,
-            'flash' => $flash,
             'page' => $pageId,
             'path' => $urlPath,
             'products' => $results[4],
@@ -145,71 +149,104 @@ class Categories extends Controller
     {
         $this->isLogin();
 
-        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-            $data = $this->getPostData();
-            $error = $data[1];
-            $id = $data[0]['id'];
+        $isPostRequest = $_SERVER['REQUEST_METHOD'] == 'POST';
 
-            if ($error['error'] != true) {
-                $img = $data[0]['img'];
-                $postImg = $data[0]['post_img'];
-                if ($img !== "") {
-                    $fullPath = $this->imgFullPath('categories', $id, $img);
-                    $this->moveUpload($fullPath);
-                    $data['img'] = explode('/', $fullPath);
-                } else {
-                    $data[0]['img'] = $postImg;
-                }
-
-                $this->model->updateCategory($data[0]);
-                $flash = flash('post_message', 'Gategoria foi atualizada com sucesso!');
-
-                return $this->show($id, 1, $flash);
-            } else {
-                return $this->edit($id, $error);
-            }
-        } else {
+        if (!$isPostRequest) {
             redirect('categories');
+            return;
         }
+
+        $data = $this->getPostData();
+        $error = $data[1];
+        $id = $data[0]['id'];
+
+        $isErrorResult = $error['error'] == true;
+
+        if ($isErrorResult) return $this->edit($id, $error);
+
+        $img = $data[0]['img'];
+        $postImg = $data[0]['post_img'];
+
+        $isEmptyImg = $img == "";
+
+        if (!$isEmptyImg) {
+
+            $fullPath = $this->imgFullPath('categories', $id, $img);
+            $this->moveUpload($fullPath);
+
+            $data['img'] = explode('/', $fullPath);
+        }
+
+        if ($isEmptyImg) $data[0]['img'] = $postImg;
+
+        $this->model->updateCategory($data[0]);
+
+        $flash = flash('post_message', 'Categoria foi atualizada com sucesso!');
+
+        // return $this->show($id, 1, $flash);
     }
 
-    // Delete functoin for controllers
+    // Delete function for controllers
     public function destroy($id)
     {
         $url = explode('/', $_SERVER['QUERY_STRING']);
+
         // Get table with url
         $table = $url[0];
         $idCategory = $url[3] ?? null;
-        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-            $this->model->deleteQuery('products', ['id_category' => $id]);
-            $this->model->deleteQuery($table, ['id' => $id]);
-            if ($this->model->rowCount() > 0) {
-                $this->deleteFolder('products', $id, $idCategory, true);
-                $this->deleteFolder($table, $id);
-                // Delete everything img with this category
-                $flash = flash('register_seccess', 'Deletado com sucesso');
-                return $this->index(1, $flash);
-            } else {
-                $flash = flash('register_seccess', 'Ocorreu um erro');
-                redirect($table);
-            }
-        } else {
+
+        $isPostRequest = $_SERVER['REQUEST_METHOD'] == 'POST';
+
+        if (!$isPostRequest) {
             redirect($table);
+            return;
         }
+
+        $this->model->deleteQuery('products', ['id_category' => $id]);
+        $this->model->deleteQuery($table, ['id' => $id]);
+
+        $itemWasDeleted = $this->model->rowCount() > 0;
+
+        if (!$itemWasDeleted) {
+            $flash = flash('register_seccess', 'Ocorreu um erro');
+            redirect($table);
+
+            return;
+        }
+
+        $this->deleteFolder('products', $id, $idCategory, true);
+        $this->deleteFolder($table, $id);
+
+        // Delete everything img with this category
+        $flash = flash('register_seccess', 'Deletado com sucesso');
+
+        return $this->index(1, $flash);
     }
 
     public function getPostData()
     {
         // Sanitize data
         $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+
         $id = isset($_POST['id']) ? trim($_POST['id']) : '';
+
         $categoryName = isset($_POST['category_name']) ? (trim($_POST['category_name'])) : '';
+
         $categoryDescription = isset($_POST['category_description']) ? trim($_POST['category_description']) : '';
+
         $img = isset($_FILES['img']) ? $_FILES['img'] : null;
+
         $postImg = isset($_POST['img']) ? $_POST['img'] : '';
-        $userId = isset($_SESSION['user_id']) ? $_SESSION['user_id'] : '';
+
+        $userId =
+            isset($_SESSION['user_id']) ? $_SESSION['user_id'] : '';
+
         $categoryNameError = isset($_POST['category_name_error']) ? trim($_POST['category_name_error']) : '';
-        $categoryDescriptionError = isset($_POST['category_description_error']) ? trim($_POST['category_description_error']) : '';
+
+        $categoryDescriptionError =
+            isset($_POST['category_description_error'])
+            ? trim($_POST['category_description_error']) : '';
+
         $imgPathError = isset($_POST['img_error']) ? trim($_POST['img_error']) : '';
 
         // Add data to array
@@ -230,11 +267,17 @@ class Categories extends Controller
         ];
 
         $validate = $this->imgValidate();
-        if (isset($_FILES['img']) && $postImg == '') {
+
+        $isFilesAndEmptyPostImg =
+            isset($_FILES['img']) && $postImg == '';
+
+        if ($isFilesAndEmptyPostImg) {
+
             if (empty($data['img'])) {
                 $error['img_error'] = "Insira uma imagem";
                 $error['error'] = true;
             }
+
             if (!empty($data['img'])) {
                 $error['img_error'] = $validate[1];
                 $error['error'] = $validate[0];
@@ -248,6 +291,7 @@ class Categories extends Controller
             $error['category_name_error'] = "Coloque o nome da categoria";
             $error['error'] = true;
         }
+
         if (empty($data['category_description'])) {
             $error['category_description_error'] = "Coloque uma descrição para imagem";
             $error['error'] = true;
