@@ -16,25 +16,27 @@ class Users extends Controller
         $this->model = $this->model('User');
     }
 
-    public function index($id, $flash = null)
+    public function index($paramsArray)
     {
         $this->isLogin();
 
         $table = 'users';
-        $results = $this->pagination($table, $id, $limit = 10, '', $orderOption = 'GROUP BY id');
+
+        $pageId = isset($paramsArray['users']) && !empty($paramsArray['users']) ? $paramsArray['users'] : 1;
+
+        $results = $this->pagination($table, $pageId, $limit = 10, '', $orderOption = 'GROUP BY id');
 
         $activeNumber = $this->model->customQuery("SELECT COUNT(*) as active FROM users WHERE status = 1");
 
         $inactiveNumber = $this->model->customQuery("SELECT COUNT(*) as inactive FROM users WHERE status = 0");
 
         View::render('users/index.php', [
-            'pageId' => $id,
+            'pageId' => $pageId,
             'title' => 'Users',
             'activeNumber' => $activeNumber,
             'inactiveNumber' => $inactiveNumber,
-            'path' => "users/index",
+            'path' => "users",
             'users' => $results[4],
-            'flash' => $flash,
             'prev' => $results[0],
             'next' => $results[1],
             'totalResults' => $results[2],
@@ -123,23 +125,30 @@ class Users extends Controller
         return $this->index($id = 1, $flash);
     }
 
-    public function show($id, $page = 1, $flash = null)
+    public function show($paramsArray)
     {
-        $user = $this->model->getAllFrom('users', $id);
+        $userPageId = isset($paramsArray['show']) && !empty($paramsArray['show']) ? $paramsArray['show'] : 1;
+
+        $lastKey = array_key_last($paramsArray);
+
+        $pageId = !($lastKey == 'show') ? end($paramsArray) : 1;
+
+        $user = $this->model->getAllFrom('users', $userPageId);
 
         // Pagination for posts with user id
         $table = 'posts';
-        $results = $this->pagination($table, $page, $limit = 4, ['user_id', $user->id], $orderOption = 'ORDER BY id DESC');
+        
+        $results = $this->pagination($table, $pageId, $limit = 4, ['user_id', $user->id], $orderOption = 'ORDER BY id DESC');
 
         // Display results
-        $pageInfo = ($page > 1) ? " | Página $page" : '';
+        $pageInfo = ($userPageId > 1) ? " | Página $userPageId" : '';
+
         return View::render('users/show.php', [
             'title' => 'Funcionário ' . $user->name . $pageInfo,
-            'pageId' => $id,
+            'pageId' => $pageId,
             'user' => $user,
-            'flash' => $flash,
-            'page' => $page,
-            'path' => "users/show/$id",
+            'page' => $pageId,
+            'path' => "users/show/$userPageId",
             'posts' => $results[4],
             'prev' => $results[0],
             'next' => $results[1],

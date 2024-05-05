@@ -214,7 +214,7 @@ class Controller
     /* Img methods End  */
 
     /* Pagination start */
-    public function pagination($table, $id = 1, $limit = 5, $optionID = '', $orderOption = '')
+    public function pagination($table, $id = 1, $limit = 5, $optionId = '', $orderOption = '')
     {
         /* Set current, prev and next page */
         $prev = ($id) - 1;
@@ -224,21 +224,21 @@ class Controller
         $offset = (($id * $limit) - $limit);
 
         /* Query the db for total results.*/
-        if ($optionID != '') {
-            list($idKey, $idVal) = $optionID;
+        if ($optionId != '') {
+            list($idKey, $idVal) = $optionId;
             
             $key = strval($idKey);
             $val = strval($idVal);
-            $optionID = " WHERE {$key} = {$val}";
+            $optionId = " WHERE {$key} = {$val}";
         }
 
-        $totalResults = $this->model->customQuery("SELECT COUNT(*) AS total FROM {$table} $optionID");
+        $totalResults = $this->model->customQuery("SELECT COUNT(*) AS total FROM {$table} $optionId");
 
         $totalPages = ceil($totalResults->total / $limit);
 
-        $orderoption = ($orderOption != '') ? $orderOption : '';
+        $orderOption = ($orderOption != '') ? $orderOption : '';
 
-        $orderBy = "$optionID $orderOption LIMIT $limit OFFSET $offset";
+        $orderBy = "$optionId $orderOption LIMIT $limit OFFSET $offset";
         $resultTable = $this->model->selectQuery($table, $orderBy);
 
         return [$prev, $next, $totalResults, $totalPages, $resultTable];

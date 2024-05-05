@@ -28,5 +28,9 @@ return [
     // '/logout' => 'Login@destroy',
 
     '/login/?' => 'Users@login',
+
+    '/users/?($|[0-9])+/?' => 'Users@index',
+
+    '/users/?show/($|[0-9]+)(?:/([0-9]+))?/' => 'Users@show',
   ],
 ];
