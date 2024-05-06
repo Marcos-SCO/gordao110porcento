@@ -3,3 +3,4 @@
 /logs/*.txt
 public/.htaccess
 app/config/config.php
+dist

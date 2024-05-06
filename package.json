@@ -1,0 +1,18 @@
+{
+  "name": "gordao110porcento",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "\"Gordão a 110%\" is a inspired cafeteria shop, containing functionality for products catalog and post blog",
+  "scripts": {
+    "dev": "vite",
+    "watch": "vite build --minify false --watch --emptyOutDir",
+    "build": "vite build --emptyOutDir",
+    "preview": "vite preview"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "sass": "^1.76.0",
+    "vite": "^5.2.11"
+  }
+}
