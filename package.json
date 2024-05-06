@@ -9,7 +9,7 @@
     "build": "vite build --emptyOutDir",
     "preview": "vite preview"
   },
-  "author": "",
+  "author": "Marcos dos Santos Carvalho",
   "license": "ISC",
   "devDependencies": {
     "sass": "^1.76.0",
