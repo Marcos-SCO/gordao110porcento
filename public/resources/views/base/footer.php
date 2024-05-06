@@ -10,7 +10,7 @@ $controller = isset($controller) ? $controller : false;
 ?>
 
 <!-- Footer -->
-<footer class="footerSection page-footer font-small blue pt-4">
+<footer class="footerSection page-footer font-small blue pt-4" data-base-url="<?= $BASE; ?>">
 
     <article style="position:relative">
 
@@ -124,7 +124,7 @@ $controller = isset($controller) ? $controller : false;
 $isHomeController = $controller == 'Home';
 
 if ($isHomeController) {
-    echo (detectIE() != true) ? "<!-- Hero Slider --><script src='$BASE/public/resources/js/heroSlider.js'></script>" : '';
+    // echo (detectIE() != true) ? "<!-- Hero Slider --><script src='$BASE/public/resources/js/heroSlider.js'></script>" : '';
     echo "<!-- Owl --><script src='$BASE/public/resources/js/owl.carousel.min.js'></script><script src='$BASE/public/resources/js/owlFunctions.js'></script>";
 }
 
@@ -135,7 +135,7 @@ echo ($getQuery[0] == 'posts' && $getQuery[1] == 'create' || $getQuery[0] == 'po
 ?>
 
 <!-- App -->
-<script src="<?= $BASE ?>/public/resources/js/app.js"></script>
+<script src="<?= $BASE ?>/public/dist/js/index.js"></script>
 
 </body>
 

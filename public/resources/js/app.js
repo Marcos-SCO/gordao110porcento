@@ -1,1 +1,2 @@
-import './headerTop';
+// import './_headerTop';
+import './_heroSlider';

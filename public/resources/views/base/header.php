@@ -13,7 +13,7 @@ $controller = isset($controller) ? $controller : false;
     <meta name=description content="Gordão a 110% melhor lanchonete e restaurante da região. É gordão ou nada!">
     <meta name="keywords" content="Gordão, lanchonete, Gordo, Gordão, Gordo Lanchonete, Gordão a 110%, Gordo 110%, Lanchonete Gordão, 110% lanchonete, 110% Gordão Lanchonete, lanchonete a 110%, gordao a 110%, Lanchonete a 110%">
     <meta name=author content='Marcos dos Santos Carvalho'>
-    
+
     <!-- fav icons -->
     <link rel="apple-touch-icon" sizes="180x180" href="<?= $BASE ?>/public/resources/img/favicon/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="<?= $BASE ?>/public/resources/img/favicon/favicon-32x32.png">
@@ -70,7 +70,7 @@ $controller = isset($controller) ? $controller : false;
     echo ($getQuery[0] == 'contact') ? "<!-- Contact --><link rel='stylesheet' href='$BASE/public/resources/css/contact.css'>" : '';
     // Users 
     echo ($getQuery[0] == 'users') ? "<!-- Users --><link rel='stylesheet' href='$BASE/public/resources/css/users.css'>" : '';
-    
+
     ?>
 
     <!-- Main Css -->
@@ -85,7 +85,8 @@ $controller = isset($controller) ? $controller : false;
 
     <?= ($getQuery[0] !== '' && $getQuery[0] !== 'home' && $getQuery[0] !== 'users') ? '<!-- Spinner -->
     <div id="loader" class="center" style="display:none"></div>' : ''; ?>
-    <header class="<?= ($getQuery[0] == '' || $getQuery[0] == 'home') ? 'fixed-top' : '' ?> z-index bg-light" id="topNav">
+
+    <header class="<?= ($getQuery[0] == '' || $getQuery[0] == 'home') ? 'fixed-top' : '' ?> z-index bg-light" id="topNav" data-js="navHeader">
         <!-- Nav -->
         <nav class="navbar navbar-expand-lg navbar-light bg-light" style="background-color:#f8f9fa;">
             <!--  Show this only on mobile to medium screens  -->
@@ -155,20 +156,12 @@ $controller = isset($controller) ? $controller : false;
         <!-- end nav -->
     </header>
 
-    <?php if ($isHomeController) {
-
-        echo '<!-- Hero --><div id="hero" class="hero d-flex justify-content-center align-items-center flex-column" style="height:100%">
-            <header class="p-4 d-flex flex-column justify-content-center">
-                <div class="headerQuotes">
-                    <h1 id="quoteTitle" class="text-left font-swashCaps" style="color:#fff;">Gordão a 110%</h1>
-                    <p id="quote" style="color:#fff;">O melhor restaurante e lanchonete da região</p>
-                </div>
-                <a href="https://api.whatsapp.com/send?phone=5511930268294&text=Olá+tudo+bem?+Gostaria+de+conversar." target="_blank">Pedir agora</a>
-            </header>
-            <i id="prev" class="fa fa-angle-left"></i>
-            <i id="next" class="fa fa-angle-right"></i>
-            <ul id="heroCounter"></ul>
-        </div>';
+    <?php 
+    
+    if ($isHomeController) {
+        
+        // Hero Slider
+        include_once __DIR__ . '/../components/heroSlider.php';
     }
 
     // Display flash messages
@@ -184,7 +177,7 @@ $controller = isset($controller) ? $controller : false;
 
     <!-- To top btn -->
     <button id="topBtn" data-anima="right"><i class="fa fa-arrow-up"></i></button>
-    
+
     <!-- Whatsapp btn -->
     <a href="https://api.whatsapp.com/send?phone=5511930268294&text=Olá+tudo+bem?+Gostaria+de+conversar." class="float" target="_blank" id="whats"><i class="fa fa-whatsapp my-float"></i></a>
 
