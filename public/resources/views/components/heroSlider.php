@@ -1,4 +1,10 @@
-<div id="hero" data-js="heroSlider" class="hero d-flex justify-content-center align-items-center flex-column" style="height:100%">
+<?php
+
+$defaultImg =  $BASE . '/public/resources/img/slider/pizzasRefris_template_400.jpg';
+
+?>
+
+<div id="hero" data-js="heroSlider" class="hero d-flex justify-content-center align-items-center flex-column" style="transition: all .5s; background-image:url(<?= $defaultImg; ?>);">
 
   <header class="p-4 d-flex flex-column justify-content-center">
     <div class="headerQuotes">

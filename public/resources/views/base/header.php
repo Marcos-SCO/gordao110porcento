@@ -2,6 +2,8 @@
 
 $controller = isset($controller) ? $controller : false;
 
+$dataPage = $controller ? mb_strtolower($controller) : '';
+
 ?>
 
 <!DOCTYPE html>
@@ -54,12 +56,12 @@ $controller = isset($controller) ? $controller : false;
 
 </head>
 
-<body data-page="<?= mb_strtolower($controller); ?>">
+<body data-page="<?= $dataPage; ?>">
 
     <?= ($getQuery[0] !== '' && $getQuery[0] !== 'home' && $getQuery[0] !== 'users') ? '<!-- Spinner -->
     <div id="loader" class="center" style="display:none"></div>' : ''; ?>
 
-    <header class="<?= ($getQuery[0] == '' || $getQuery[0] == 'home') ? 'fixed-top' : '' ?> z-index bg-light" id="topNav" data-js="navHeader">
+    <header class="<?= $isHomeController ? 'fixed-top' : '' ?> z-index bg-light" id="topNav" data-js="navHeader">
         <!-- Nav -->
         <nav class="navbar navbar-expand-lg navbar-light bg-light" style="background-color:#f8f9fa;">
             <!--  Show this only on mobile to medium screens  -->
