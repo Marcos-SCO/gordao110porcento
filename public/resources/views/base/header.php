@@ -28,12 +28,12 @@ $controller = isset($controller) ? $controller : false;
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+
     <!-- Font awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
     <!-- Google fonts  -->
     <link href="https://fonts.googleapis.com/css2?family=Oleo+Script+Swash+Caps:wght@700&display=swap" rel="stylesheet">
-
-    <link rel="stylesheet" href="<?= $BASE . '/public/dist/css/index.css'; ?>">
 
     <?php
     // tiny MCE 
@@ -42,49 +42,19 @@ $controller = isset($controller) ? $controller : false;
 
     $isHomeController = $controller == 'Home';
 
-    // Home
-    if ($isHomeController) {
-        // slider
-        // echo "<!-- Slider --><link rel='stylesheet' href='$BASE/public/resources/css/style.hero.css'>";
-
-        // owl carousel
-        echo "<!-- Owl css --> <link rel='stylesheet' href='$BASE/public/resources/css/owl.carousel.min.css'> <link rel='stylesheet' href='$BASE/public/resources/css/owl.theme.default.css'>";
-        
-        // Home style
-        echo "<!-- Home styles --><link rel='stylesheet' href='$BASE/public/resources/css/homeStyle.css'>";
-    }
-
-    // Products and categories
-    echo ($getQuery[0] == 'products' || $getQuery[0] == 'categories') ? "<!-- Products --><link rel='stylesheet' href='$BASE/public/resources/css/products.css'>" : '';
-
-    // Blog 
-    echo ($getQuery[0] == 'posts' || $getQuery[0] == 'users') ? "<!-- Blog --><link rel='stylesheet' href='$BASE/public/resources/css/blog.css'>" : '';
-
-    // Gallery
-    if ($getQuery[0] == 'gallery') {
-        // Light Box 
-        echo "<!-- LightBox -->
+    // Light Box 
+    echo "<!-- LightBox -->
         <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.1/css/lightbox.min.css'><script src='https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.1/js/lightbox-plus-jquery.min.js' defer></script>";
-        echo "<!-- Gallery --><link rel='stylesheet' href='$BASE/public/resources/css/gallery.css'>";
-    }
-
-    // About 
-    echo ($getQuery[0] == 'about') ? "<!-- About --><link rel='stylesheet' href='$BASE/public/resources/css/about.css'>" : '';
-    // Contact 
-    echo ($getQuery[0] == 'contact') ? "<!-- Contact --><link rel='stylesheet' href='$BASE/public/resources/css/contact.css'>" : '';
-    // Users 
-    echo ($getQuery[0] == 'users') ? "<!-- Users --><link rel='stylesheet' href='$BASE/public/resources/css/users.css'>" : '';
 
     ?>
 
-    <!-- Main Css -->
-    <!-- <link rel="stylesheet" href="<?= $BASE ?>/public/resources/css/style.css"> -->
-    
+    <link rel="stylesheet" href="<?= $BASE . '/public/dist/css/index.css'; ?>">
+
     <title><?= $title ?? 'Olá mundo!' ?></title>
 
 </head>
 
-<body>
+<body data-page="<?= mb_strtolower($controller); ?>">
 
     <?= ($getQuery[0] !== '' && $getQuery[0] !== 'home' && $getQuery[0] !== 'users') ? '<!-- Spinner -->
     <div id="loader" class="center" style="display:none"></div>' : ''; ?>
@@ -159,10 +129,10 @@ $controller = isset($controller) ? $controller : false;
         <!-- end nav -->
     </header>
 
-    <?php 
-    
+    <?php
+
     if ($isHomeController) {
-        
+
         // Hero Slider
         include_once __DIR__ . '/../components/heroSlider.php';
     }

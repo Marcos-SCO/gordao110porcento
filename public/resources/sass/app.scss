@@ -1,8 +1,15 @@
 // Components
-@import './components/index.scss';
+@import './components';
 
 // Animations
-@import './animations/index.scss';
+@import './animations';
+
+// Pages
+@import './pages';
+
+// Libs
+@import '../libraries/owl/owl.carousel.min.css';
+@import '../libraries/owl/owl.theme.default.css';
 
 * {
   margin: 0;
