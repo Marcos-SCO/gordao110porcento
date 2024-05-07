@@ -1,0 +1,28 @@
+@media screen and (min-width:600px) and (min-height:600px) and (orientation:landscape) {
+  [data-anima] {
+    opacity: 0;
+    transition: .5s
+  }
+
+  [data-anima='left'] {
+    transform: translate3d(-50px, 0, 0)
+      /* X Y Z*/
+  }
+
+  [data-anima='right'] {
+    transform: translate3d(50px, 0, 0)
+      /* X Y Z*/
+  }
+
+  [data-anima='center'] {
+    transform: translate3d(0, 50px, 0)
+      /* X Y Z*/
+  }
+
+  [data-anima].animation {
+    opacity: 1;
+    ;
+    transform: translate3d(0, 0, 0);
+    position: inherit
+  }
+}

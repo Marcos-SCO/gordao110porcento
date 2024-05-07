@@ -45,9 +45,11 @@ $controller = isset($controller) ? $controller : false;
     // Home
     if ($isHomeController) {
         // slider
-        echo "<!-- Slider --><link rel='stylesheet' href='$BASE/public/resources/css/style.hero.css'>";
+        // echo "<!-- Slider --><link rel='stylesheet' href='$BASE/public/resources/css/style.hero.css'>";
+
         // owl carousel
         echo "<!-- Owl css --> <link rel='stylesheet' href='$BASE/public/resources/css/owl.carousel.min.css'> <link rel='stylesheet' href='$BASE/public/resources/css/owl.theme.default.css'>";
+        
         // Home style
         echo "<!-- Home styles --><link rel='stylesheet' href='$BASE/public/resources/css/homeStyle.css'>";
     }
@@ -76,9 +78,8 @@ $controller = isset($controller) ? $controller : false;
     ?>
 
     <!-- Main Css -->
-    <link rel="stylesheet" href="<?= $BASE ?>/public/resources/css/style.css">
-    <?= (detectIE() != false) ? "<!-- Ie style -->
-    <link rel='stylesheet' href='$BASE/public/resources/css/ieStyle.css'>" : '' ?>
+    <!-- <link rel="stylesheet" href="<?= $BASE ?>/public/resources/css/style.css"> -->
+    
     <title><?= $title ?? 'Olá mundo!' ?></title>
 
 </head>

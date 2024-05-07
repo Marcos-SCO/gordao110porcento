@@ -5,10 +5,10 @@
     width: 100%;
     color: #fff;
     background-color: #000;
-    background-image: url(../img/slider/pizzasRefris_template.jpg);
+    background-image: url(../../img/slider/pizzasRefris_template.jpg);
     background-blend-mode: multiply;
     background-position: right center;
-    background: url(../img/slider/pizzasRefris_template.jpg) no-repeat fixed;
+    background: url(../../img/slider/pizzasRefris_template.jpg) no-repeat fixed;
     background-size: cover;
     transition: all .5s;
     display: none;
@@ -16,8 +16,8 @@
 
 @media screen and (max-width:400px) {
     #hero {
-        background-image: url(../img/slider/pizzasRefris_template_400.jpg);
-        background: url(../img/slider/pizzasRefris_template_400.jpg) no-repeat fixed;
+        background-image: url(../../img/slider/pizzasRefris_template_400.jpg);
+        background: url(../../img/slider/pizzasRefris_template_400.jpg) no-repeat fixed;
         background-size: cover
     }
 }

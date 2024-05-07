@@ -1,6 +1,9 @@
 // Components
 @import './components/index.scss';
 
+// Animations
+@import './animations/index.scss';
+
 * {
   margin: 0;
   padding: 0;
@@ -614,38 +617,6 @@ footer .contactSection .map {
 }
 
 /* Dropdown toggle end */
-
-/* Animatins */
-@media screen and (min-width:600px) and (min-height:600px) and (orientation:landscape) {
-  [data-anima] {
-    opacity: 0;
-    transition: .5s
-  }
-
-  [data-anima='left'] {
-    transform: translate3d(-50px, 0, 0)
-      /* X Y Z*/
-  }
-
-  [data-anima='right'] {
-    transform: translate3d(50px, 0, 0)
-      /* X Y Z*/
-  }
-
-  [data-anima='center'] {
-    transform: translate3d(0, 50px, 0)
-      /* X Y Z*/
-  }
-
-  [data-anima].animation {
-    opacity: 1;
-    ;
-    transform: translate3d(0, 0, 0);
-    position: inherit
-  }
-}
-
-/* End Animations */
 
 .card-group>.card {
   flex: none !important
