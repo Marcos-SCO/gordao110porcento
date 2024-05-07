@@ -61,7 +61,7 @@ function heroSliderDomChangeElements(currentSlideItem) {
     hero.style = 'display:block;opacity:1;';
 
     hero.style =
-        "transition: all .5s; background-image:url(" + path + currentSlideItem['img'] + ")";
+        "transition: all .25s; background-image:url(" + path + currentSlideItem['img'] + ")";
 
     hero.backgroundImage = "url(" + path + currentSlideItem['img'] + ")";
 

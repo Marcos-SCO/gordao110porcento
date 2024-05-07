@@ -4,7 +4,7 @@ $defaultImg =  $BASE . '/public/resources/img/slider/pizzasRefris_template_400.j
 
 ?>
 
-<div id="hero" data-js="heroSlider" class="hero d-flex justify-content-center align-items-center flex-column" style="transition: all .5s; background-image:url(<?= $defaultImg; ?>);">
+<div id="hero" data-js="heroSlider" class="hero d-flex justify-content-center align-items-center flex-column" style="transition: all .25s; background-image:url(<?= $defaultImg; ?>);">
 
   <header class="p-4 d-flex flex-column justify-content-center">
     <div class="headerQuotes">
@@ -16,8 +16,8 @@ $defaultImg =  $BASE . '/public/resources/img/slider/pizzasRefris_template_400.j
     <a href="https://api.whatsapp.com/send?phone=5511916459334&text=Olá+Marcos+tudo+bem?+Vim+por+meio+do+link+no+site+%22Gordão+a+110%%22+e+gostaria+de+conversar+com+você." target="_blank">Pedir agora</a>
   </header>
 
-  <i id="prev" class="fa fa-angle-left"></i>
-  <i id="next" class="fa fa-angle-right"></i>
+  <i id="prev" class="prev fa fa-angle-left"></i>
+  <i id="next" class="next fa fa-angle-right"></i>
 
-  <ul id="heroCounter" data-js="heroCounter"></ul>
+  <ul id="heroCounter" class="heroCounter" data-js="heroCounter"></ul>
 </div>
