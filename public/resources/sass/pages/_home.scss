@@ -76,7 +76,18 @@
 
 /* Owl */
 .owl-carousel {
-    padding: .65rem 0 .5rem
+    padding: .65rem 0 .5rem;
+
+    .owl-dots {
+        display: flex;
+        justify-content: center;
+
+        padding: .5rem 0;
+
+        span {
+            margin: .5rem .25rem 0 .25rem!important;
+        }
+    }
 }
 
 .owl-carousel a,
@@ -222,11 +233,13 @@
 /* -------- Home End -------- */
 @media screen and (max-width:600px) {
     .bestsSnacks {
-        background-image: url(../img/template/comida-rapida-espacio-abajo_600.png)!important
+        background-image: url(../img/template/comida-rapida-espacio-abajo_600.png) !important
     }
+
     .homeHeaderAbout {
-        background-image: url(../img/template/gordao110_600.png)!important
+        background-image: url(../img/template/gordao110_600.png) !important
     }
+
     .homeBlog {
         background-image: url(../img/template/blog_600.png) !important
     }
