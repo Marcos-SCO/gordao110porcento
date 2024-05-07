@@ -1,73 +1,15 @@
 <?php
 
-// dump information
+include_once('_queryString.php');
+include_once('_debug.php');
 
-use App\Config\Config;
+// include_once('_baseUrl.php');
+// include_once('_youtube.php');
+// include_once('_svg.php');
+// include_once('_style.php');
 
-function dump($item)
-{
-    echo '<pre style="font-size:1.3rem;">';
-    var_dump($item);
-    echo '</pre>';
-    return;
-}
+include_once('_decision.php');
+include_once('_strings.php');
 
-// Get query strings
-function getQueryString()
-{
-    $url = explode('/', $_SERVER['QUERY_STRING']);
-
-    // remove query strings
-    if (strpos($url[0], '=') == true) {
-        $url[0] = '';
-        $url[1] = '';
-    };
-
-    // Get table with url
-    $table = $url[0] ?? '';
-    $method = $url[1] ?? '';
-    $id = $url[2] ?? '';
-
-    return [$table, $method, $id];
-}
-
-// Date format
-function dateFormat($data)
-{
-    $date = date_create($data);
-    return date_format($date, "d/m/Y \\a\s H:i:s");
-}
-
-// Show a image or default in src
-function imgOrDefault($table, $img, $id, $tableOp = '')
-{
-    if ($img !== null) return "public/resources/img/$table$tableOp/id_$id/$img";
-
-    $isUserTable = $table == 'users';
-
-    if ($isUserTable) return "public/resources/img/$table/default/default.png";
-
-    if (!$isUserTable) return "public/resources/img/default/default.png";
-}
-
-// Detect if ua is IE
-function detectIE()
-{
-    $ua = htmlentities($_SERVER['HTTP_USER_AGENT'], ENT_QUOTES, 'UTF-8');
-
-    if (preg_match('~MSIE|Internet Explorer~i', $ua) || (strpos($ua, 'Trident/7.0') !== false && strpos($ua, 'rv:11.0') !== false)) {
-
-        return true;
-    }
-
-    return false;
-}
-
-// Simple page redirect
-function redirect($page)
-{
-    header('Status: 301 Moved Permanently', false, 301);
-    header('Location: ' . Config::URL_BASE . '/' . $page);
-
-    die();
-}
+include_once('_dates.php');
+include_once('_images.php');
