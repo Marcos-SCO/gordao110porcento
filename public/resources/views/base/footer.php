@@ -88,9 +88,9 @@ $getQuery = getQueryString();
                             <li><a href="<?= $BASE ?>/contact/message">Envie sua menssagem</a></li>
                             <li><a href="<?= $BASE ?>/contact/work">Trabalhe conosco</a></li>
                             <li><i class="fa fa-map-marker fa-2x" style="color:#d22"></i>Barueri - SP</li>
-                            <li><i class="fa fa-phone fa-2x" style="color:#ff9800"></i>(11) 944448798
+                            <li><i class="fa fa-phone fa-2x" style="color:#ff9800"></i>+55 11 91645-9334
                             </li>
-                            <li><i class="fa fa-whatsapp fa-2x" style="color:#4AC959"></i>(11) 944448798</li>
+                            <li><i class="fa fa-whatsapp fa-2x" style="color:#4AC959"></i>+55 11 91645-9334</li>
                             <li><i class="fa fa-envelope fa-2x"></i><a href="mailto:marcos_sco@outlook.com">gordão110%@outlook.com</a>
                             </li>
                         </ul>

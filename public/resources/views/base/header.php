@@ -154,6 +154,6 @@ $dataPage = $controller ? mb_strtolower($controller) : '';
     <button id="topBtn" data-anima="right"><i class="fa fa-arrow-up"></i></button>
 
     <!-- Whatsapp btn -->
-    <a href="https://api.whatsapp.com/send?phone=5511930268294&text=Olá+tudo+bem?+Gostaria+de+conversar." class="float" target="_blank" id="whats"><i class="fa fa-whatsapp my-float"></i></a>
+    <a href="https://api.whatsapp.com/send?phone=5511916459334&text=Olá+Marcos+tudo+bem?+Vim+por+meio+do+link+no+site+%22Gordão+a+110%%22+e+gostaria+de+conversar+com+você." class="float" target="_blank" id="whats"><i class="fa fa-whatsapp my-float"></i></a>
 
     <main>
