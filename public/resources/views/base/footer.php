@@ -3,9 +3,10 @@
 <?php // Pagination component
 
 include_once __DIR__ . '/../components/pagination.php';
-//include_once '../public/resources/views/base/components/pagination.php';
 
 $controller = isset($controller) ? $controller : false;
+
+$getQuery = getQueryString();
 
 ?>
 

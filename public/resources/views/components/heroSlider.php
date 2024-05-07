@@ -1,4 +1,4 @@
-<div id="hero" data-js="hero-slider" class="hero d-flex justify-content-center align-items-center flex-column" style="height:100%">
+<div id="hero" data-js="heroSlider" class="hero d-flex justify-content-center align-items-center flex-column" style="height:100%">
 
   <header class="p-4 d-flex flex-column justify-content-center">
     <div class="headerQuotes">
@@ -7,7 +7,7 @@
       <p id="quote" data-js="quote" style="color:#fff;">O melhor restaurante e lanchonete da região</p>
     </div>
 
-    <a href="https://api.whatsapp.com/send?phone=5511930268294&text=Olá+tudo+bem?+Gostaria+de+conversar." target="_blank">Pedir agora</a>
+    <a href="https://api.whatsapp.com/send?phone=5511930268294&text=Olá.tudo.bem?.Gostaria.de.conversar." target="_blank">Pedir agora</a>
   </header>
 
   <i id="prev" class="fa fa-angle-left"></i>

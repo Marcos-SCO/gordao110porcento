@@ -23,7 +23,7 @@ export default defineConfig({
           }
 
           if (/\.css$/.test(name ?? '') || /\.s[ac]ss$/.test(name ?? '')) {
-            return 'css/[name].[extname]';
+            return 'css/[name].[ext]';
           }
 
           // default value

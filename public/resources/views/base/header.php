@@ -33,6 +33,8 @@ $controller = isset($controller) ? $controller : false;
     <!-- Google fonts  -->
     <link href="https://fonts.googleapis.com/css2?family=Oleo+Script+Swash+Caps:wght@700&display=swap" rel="stylesheet">
 
+    <link rel="stylesheet" href="<?= $BASE . '/public/dist/css/index.css'; ?>">
+
     <?php
     // tiny MCE 
     echo ($getQuery[0] == 'posts' && $getQuery[1] == 'create' || $getQuery[0] == 'posts' && $getQuery[1] == 'edit' || $getQuery[0] == 'posts' && $getQuery[1] == 'store') ? "<!-- Tiny MCE -->

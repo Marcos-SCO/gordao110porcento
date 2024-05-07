@@ -54,9 +54,18 @@ function getSliderItens() {
     ];
 }
 
+function preloadSliderImages(imageUrls, path = '') {
+    const pathUrl = path;
+
+    imageUrls.forEach(function (imgName) {
+        const img = new Image();
+        img.src = pathUrl.imgName;
+    });
+}
+
 function sliderDomChangeElements(hero, quoteTitle, quote, heroCounterItem, currentSlideItem) {
     const baseUrl = document.querySelector('[data-base-url]')?.getAttribute('data-base-url');
-    
+
     if (!baseUrl) return;
 
     const path = baseUrl + '/public/resources/img/slider/';
@@ -83,17 +92,16 @@ function moveSlide(index = null, incrementSliderCount = true) {
     const slide = getSliderItens();
     const sliderLength = slide.length;
 
-    const hero = document.querySelector('#hero');
+    const hero = document.querySelector('[data-js="heroSlider"]');
+    if (!hero) return;
+
     hero.style = 'display:block;opacity:1;';
 
-    const quoteTitle = document.querySelector('#quoteTitle');
+    const quoteTitle = hero.querySelector('[data-js="quoteTitle"]');
 
-    const quote = document.querySelector('#quote');
+    const quote = hero.querySelector('[data-js="quote"]');
 
-    const heroCounterItem = document.querySelectorAll('.heroCounterItem');
-
-    const baseUrl = document.querySelector('[data-base-url]')
-        ?.getAttribute('data-base-url');
+    const heroCounterItem = hero.querySelectorAll('[data-js="heroCounterItem"]');
 
     // if index is provided than i receive index
     if (index !== null) setCounter(index);
@@ -169,7 +177,12 @@ function heroSlider() {
 
     if (!baseUrl) return;
 
+    const path = baseUrl + '/public/resources/img/slider/';
+
     const slide = getSliderItens();
+
+    const sliderImgs = slide.filter(img => img);
+    preloadSliderImages(sliderImgs, path);
 
     const currentSlideItem = slide?.[getCounter()];
 
@@ -178,36 +191,29 @@ function heroSlider() {
     sliderClickControls();
 
     // select slider elements
-    const hero = document.querySelector('#hero');
+    const hero = document.querySelector('[data-js="heroSlider"]');
     hero.style = 'display:block;opacity:1;';
 
-    const quoteTitle = document.querySelector('#quoteTitle');
+    if (!hero) return;
 
-    const quote = document.querySelector('#quote');
+    const quoteTitle = hero.querySelector('[data-js="quoteTitle"]');
 
-    const path = baseUrl + '/public/resources/img/slider/';
-
-    // initial elements with counter in 0
-    // quoteTitle.innerText = currentSlideItem['title'];
-    // quote.innerText = currentSlideItem['quote'];
-
-    // hero.style = "transition: all ease-in-out .5s; background-image:url(" + path + currentSlideItem['img'] + ")";
-
-    // hero.backgroundImage = "url(" + path + currentSlideItem['img'] + ")";
+    const quote = hero.querySelector('[data-js="quote"]');
 
     // Hero ul slider selection
-    const heroCounter = document.querySelector('#heroCounter');
+    const heroCounter = hero.querySelector('[data-js="heroCounter"]');
 
     for (let item in slide) {
 
         const liItem = document.createElement('li');
         liItem.className = `heroCounterItem`;
+        liItem.setAttribute('data-js', 'heroCounterItem');
 
         heroCounter.appendChild(liItem);
         hero.appendChild(heroCounter);
     }
 
-    const heroCounterItem = document.querySelectorAll('.heroCounterItem');
+    const heroCounterItem = document.querySelectorAll('[data-js="heroCounterItem"]');
 
     sliderDomChangeElements(hero, quoteTitle, quote, heroCounterItem, currentSlideItem);
 
