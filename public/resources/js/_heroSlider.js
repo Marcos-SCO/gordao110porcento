@@ -1,28 +1,9 @@
-function iCounter() {
-    let i = 0;
+import iCounter from './helpers/counter';
+import centralizedInterval from './helpers/interval';
 
-    const decrementCounter = () => (i > 0) ? i -= 1 : 0;
-    const incrementCounter = () => i += 1;
-    const setCounter = (num) => i = num;
-    const getCounter = () => i;
+const { incrementCounter, decrementCounter, setCounter, getCounter } = iCounter();
 
-    return [incrementCounter, decrementCounter, setCounter, getCounter];
-}
-
-const [incrementCounter, decrementCounter, setCounter, getCounter] = iCounter();
-
-// intervals
-function sliderInterVal() {
-    let interval = setInterval(() => moveSlide(), 4800);
-
-    const getSliderInterval = () => interval;
-    const setSliderInterval = (intervalParam) => interval = intervalParam;
-    const clearSliderInterval = () => clearTimeout(interval);
-
-    return [getSliderInterval, setSliderInterval, clearSliderInterval];
-}
-
-const [getSliderInterval, setSliderInterval, clearSliderInterval] = sliderInterVal();
+const { getInterval, changeIntervalValue, clearInternalInterval } = centralizedInterval(() => moveHeroSlider(), 4800);
 
 // ---------------------------- ----------------------------
 
@@ -63,12 +44,21 @@ function preloadSliderImages(imageUrls, path = '') {
     });
 }
 
-function sliderDomChangeElements(hero, quoteTitle, quote, heroCounterItem, currentSlideItem) {
+function heroSliderDomChangeElements(currentSlideItem) {
     const baseUrl = document.querySelector('[data-base-url]')?.getAttribute('data-base-url');
 
     if (!baseUrl) return;
 
     const path = baseUrl + '/public/resources/img/slider/';
+
+    // select slider elements
+    const hero = document.querySelector('[data-js="heroSlider"]');
+    if (!hero) return;
+
+    const quoteTitle = hero.querySelector('[data-js="quoteTitle"]');
+    const quote = hero.querySelector('[data-js="quote"]');
+
+    hero.style = 'display:block;opacity:1;';
 
     hero.style =
         "transition: all .5s; background-image:url(" + path + currentSlideItem['img'] + ")";
@@ -80,28 +70,27 @@ function sliderDomChangeElements(hero, quoteTitle, quote, heroCounterItem, curre
     quote.style = 'transition:all ease-in-out .5s; transition-delay: .5s;';
     quote.innerText = currentSlideItem['quote'];
 
-    // remove previous active slider item
-    heroCounterItem.forEach(item => item.classList.remove('active'));
+    const heroCounterItens =
+        document.querySelectorAll('[data-js="heroCounterItem"]');
 
-    heroCounterItem[getCounter()].classList.add('active');
+    if (!heroCounterItens) return;
+
+    // remove previous active slider item
+    heroCounterItens.forEach(item => item.classList.remove('active'));
+
+    heroCounterItens[getCounter()]?.classList.add('active');
 }
 
 // function to move sliders
-function moveSlide(index = null, incrementSliderCount = true) {
+function moveHeroSlider(index = null, incrementSliderCount = true) {
 
-    const slide = getSliderItens();
-    const sliderLength = slide.length;
+    const sliderObj = getSliderItens();
+    const sliderLength = sliderObj.length;
 
     const hero = document.querySelector('[data-js="heroSlider"]');
     if (!hero) return;
 
     hero.style = 'display:block;opacity:1;';
-
-    const quoteTitle = hero.querySelector('[data-js="quoteTitle"]');
-
-    const quote = hero.querySelector('[data-js="quote"]');
-
-    const heroCounterItem = hero.querySelectorAll('[data-js="heroCounterItem"]');
 
     // if index is provided than i receive index
     if (index !== null) setCounter(index);
@@ -113,18 +102,18 @@ function moveSlide(index = null, incrementSliderCount = true) {
         setCounter(0);
     }
 
-    const currentSlideItem = slide[getCounter()];
+    const currentSlideItem = sliderObj[getCounter()];
 
     if (!currentSlideItem) return;
 
-    sliderDomChangeElements(hero, quoteTitle, quote, heroCounterItem, currentSlideItem);
+    heroSliderDomChangeElements(currentSlideItem);
 }
 
 function changeSliderInterval(index = null, incrementSliderCount = null) {
-    clearSliderInterval();
-    moveSlide(index, incrementSliderCount);
+    clearInternalInterval();
+    moveHeroSlider(index, incrementSliderCount);
 
-    setSliderInterval(setInterval(() => moveSlide(), 4800));
+    changeIntervalValue(setInterval(() => moveHeroSlider(), 4800));
 }
 
 function sliderClickControls() {
@@ -139,7 +128,7 @@ function sliderClickControls() {
 
     prev.addEventListener('click', () => {
 
-        clearSliderInterval();
+        clearInternalInterval();
 
         const isCounterZero = getCounter() == 0;
 
@@ -155,7 +144,7 @@ function sliderClickControls() {
 
     next.addEventListener('click', () => {
 
-        clearSliderInterval();
+        clearInternalInterval();
 
         setTimeout(() => {
 
@@ -170,6 +159,48 @@ function sliderClickControls() {
     });
 }
 
+function createSliderHeroBars(sliderObj) {
+    const hero = document.querySelector('[data-js="heroSlider"]');
+    if (!hero) return;
+
+    const heroCounter = hero.querySelector('[data-js="heroCounter"]');
+    if (!heroCounter) return;
+
+    if (!sliderObj) return;
+
+    Array.from(sliderObj).forEach(() => {
+        const liItem = document.createElement('li');
+        liItem.className = `heroCounterItem`;
+        liItem.setAttribute('data-js', 'heroCounterItem');
+
+        heroCounter.appendChild(liItem);
+        hero.appendChild(heroCounter);
+    });
+}
+
+function heroBarsClick() {
+    const hero = document.querySelector('[data-js="heroSlider"]');
+    if (!hero) return;
+
+    hero.addEventListener('click', (e) => {
+        const heroCounterItem = e.target.closest('[data-js="heroCounterItem"]');
+        if (!heroCounterItem) return;
+
+        const childElements = Array.from(heroCounterItem.parentElement?.querySelectorAll('[data-js="heroCounterItem"]'));
+
+        const elementIndex = childElements?.indexOf(heroCounterItem);
+
+        if (elementIndex == null) return;
+
+        clearInternalInterval();
+
+        moveHeroSlider(+elementIndex);
+
+        changeIntervalValue(setInterval(() => moveHeroSlider(), 4800));
+
+    });
+}
+
 function heroSlider() {
 
     const baseUrl = document.querySelector('[data-base-url]')
@@ -179,61 +210,21 @@ function heroSlider() {
 
     const path = baseUrl + '/public/resources/img/slider/';
 
-    const slide = getSliderItens();
+    const sliderObj = getSliderItens();
 
-    const sliderImgs = slide.filter(img => img);
+    const sliderImgs = sliderObj.filter(img => img);
     preloadSliderImages(sliderImgs, path);
 
-    const currentSlideItem = slide?.[getCounter()];
-
+    const currentSlideItem = sliderObj?.[getCounter()];
     if (!currentSlideItem) return;
 
     sliderClickControls();
 
-    // select slider elements
-    const hero = document.querySelector('[data-js="heroSlider"]');
-    hero.style = 'display:block;opacity:1;';
+    createSliderHeroBars(sliderObj);
 
-    if (!hero) return;
+    heroSliderDomChangeElements(currentSlideItem);
 
-    const quoteTitle = hero.querySelector('[data-js="quoteTitle"]');
-
-    const quote = hero.querySelector('[data-js="quote"]');
-
-    // Hero ul slider selection
-    const heroCounter = hero.querySelector('[data-js="heroCounter"]');
-
-    for (let item in slide) {
-
-        const liItem = document.createElement('li');
-        liItem.className = `heroCounterItem`;
-        liItem.setAttribute('data-js', 'heroCounterItem');
-
-        heroCounter.appendChild(liItem);
-        hero.appendChild(heroCounter);
-    }
-
-    const heroCounterItem = document.querySelectorAll('[data-js="heroCounterItem"]');
-
-    sliderDomChangeElements(hero, quoteTitle, quote, heroCounterItem, currentSlideItem);
-
-    heroCounterItem[getCounter()].classList.add('active');
-
-    for (let slideItem in slide) {
-
-        heroCounterItem[slideItem].addEventListener('click', function (slideItem) {
-
-            clearSliderInterval();
-
-            moveSlide(+slideItem);
-
-            setSliderInterval(setInterval(() => moveSlide(), 4800));
-
-        }.bind(null, slideItem));
-    }
-    // end ul slider selection
+    heroBarsClick();
 }
-
-
 
 addEventListener('DOMContentLoaded', heroSlider);
