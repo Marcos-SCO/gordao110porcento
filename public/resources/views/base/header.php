@@ -6,6 +6,8 @@ $dataPage = isset($dataPage) ? $dataPage : mb_strtolower($controller);
 
 $isHomeController = $controller == 'Home';
 
+$isGalleryPage = $dataPage == 'gallery';
+
 $tinyMceControllers = ['posts/show'];
 $isTinyMce = in_array($dataPage, $tinyMceControllers);
 
@@ -46,8 +48,6 @@ $isTinyMce = in_array($dataPage, $tinyMceControllers);
       // tiny MCE 
     if ($isTinyMce) echo "<!-- Tiny MCE -->
     <script src='https://cdn.tiny.cloud/1/dksjdj5uue9ro7l3iyr2xu6basfnwgrqpkh8y5beu0m60kwl/tinymce/5/tinymce.min.js' referrerpolicy='origin'></script><script>tinymce.init({selector:'#tinyMCE'});</script>";
-
-    $isGalleryPage = $dataPage == 'Gallery';
 
     // Light Box 
     if ($isGalleryPage) echo "<!-- LightBox -->
