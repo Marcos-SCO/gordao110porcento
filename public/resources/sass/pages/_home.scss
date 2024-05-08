@@ -1,246 +1,278 @@
-/* ------ Home Start ------- */
+[data-page="home"] {
 
-/* Home about */
-.homeHeaderAbout {
-    background-image: url(../img/template/gordao110.png)
-}
+    /* Owl */
+    .owl-carousel {
+        padding: .65rem 0 .5rem;
 
-.homeHeaderAbout.imgBackgroundArea::before {
-    background-image: none !important;
-    background-color: #333;
-    opacity: .8
-}
+        .owl-dots {
+            display: flex;
+            justify-content: center;
 
-@media screen and (min-width:650px) {
-    .homeHeaderAbout.imgBackgroundArea::before {
-        opacity: .5
-    }
-}
+            padding: .5rem 0;
 
-.homeHeaderAbout span {
-    margin-top: -.7rem;
-    padding: 1rem;
-    width: 100%;
-    z-index: 1
-}
+            span {
+                margin: .5rem .25rem 0 .25rem !important;
+            }
+        }
 
-.homeHeaderAbout span,
-.homeHeaderAbout div {
-    max-width: 300px
-}
+        a,
+        a:hover {
+            text-decoration: none;
+            color: #000 !important;
+            text-align: center;
+            cursor: pointer
+        }
 
-.homeAbout {
-    background-image: url(../img/template/aboutBackgroundSection.png);
-    background-repeat: no-repeat;
-    background-position: bottom;
-    background-size: cover
-}
+        .item {
+            margin-bottom: 0;
 
-.homeAbout .about {
-    display: flex;
-    flex-direction: row-reverse;
-    flex-wrap: wrap;
-    justify-content: space-evenly;
-    align-items: center;
-    margin: auto;
-    white-space: pre-line
-}
+            img {
+                // max-width: 260px !important;
+                max-width: 260px !important;
+                transition: all ease-in-out .5s;
 
-.homeAbout .about div {
-    padding: 0 2rem;
-    background-color: #fff;
-    box-shadow: -1px 3px 20px 1px #ccc;
-    max-width: 526px
-}
+            }
+            
+            &:hover {
+                img {
+                    transform: scale(1.12)
+                }
+            }
+        }
 
-.homeAbout strong {
-    align-self: flex-start;
-    font-size: 2rem;
-    padding-bottom: 1rem
-}
 
-@media screen and (min-width:590px) {
-    .homeAbout .about {
-        justify-content: center;
-        padding: 2rem;
-        line-height: 1.85rem;
-        /* box-shadow: 20px 20px 0px #d65106; */
     }
 
-    .homeAbout figcaption {
-        margin: 1rem !important
-    }
-}
+    /* end owl */
 
-/* Home about end */
+    /* Home about */
+    .homeHeaderAbout {
+        background-image: url(../img/template/gordao110.png);
 
-/* Owl */
-.owl-carousel {
-    padding: .65rem 0 .5rem;
+        &.imgBackgroundArea {
+            &::before {
+                background-image: none !important;
+                background-color: #333;
+                opacity: .8
+            }
+        }
 
-    .owl-dots {
-        display: flex;
-        justify-content: center;
+        @media screen and (max-width:600px) {
+            background-image: url(../img/template/gordao110_600.png) !important;
+        }
 
-        padding: .5rem 0;
+        @media screen and (min-width:650px) {
+            &.imgBackgroundArea::before {
+                opacity: .5
+            }
+        }
 
         span {
-            margin: .5rem .25rem 0 .25rem!important;
+            margin-top: -.7rem;
+            padding: 1rem;
+            width: 100%;
+            z-index: 1
+        }
+
+        span,
+        div {
+            max-width: 300px
         }
     }
-}
 
-.owl-carousel a,
-.owl-carousel a:hover {
-    text-decoration: none;
-    color: #000 !important;
-    text-align: center;
-    cursor: pointer
-}
+    .homeAbout {
+        background-image: url(../img/template/aboutBackgroundSection.png);
+        background-repeat: no-repeat;
+        background-position: bottom;
+        background-size: cover;
 
-.item {
-    margin-bottom: 0
-}
+        .about {
+            display: flex;
+            flex-direction: row-reverse;
+            flex-wrap: wrap;
+            justify-content: space-evenly;
+            align-items: center;
+            margin: auto;
+            white-space: pre-line
+        }
 
-.item img {
-    max-width: 260px !important;
-    transition: all ease-in-out .5s
-}
+        .about {
+            div {
+                padding: 0 2rem;
+                background-color: #fff;
+                box-shadow: -1px 3px 20px 1px #ccc;
+                max-width: 526px
+            }
+        }
 
-.item img:hover {
-    transform: scale(1.12)
-}
+        strong {
+            align-self: flex-start;
+            font-size: 2rem;
+            padding-bottom: 1rem
+        }
 
-/* end owl */
+        @media screen and (min-width:590px) {
+            .about {
+                justify-content: center;
+                padding: 2rem;
+                line-height: 1.85rem;
+                /* box-shadow: 20px 20px 0px #d65106; */
+            }
 
-.title {
-    color: var(--secondary);
-    padding: 1rem
-}
-
-.title::before,
-.title::after {
-    content: '';
-    height: 3px;
-    background-color: #d95f1b
-}
-
-/* Home Sections */
-
-/* Snacks start */
-.bestsSnacks {
-    background-image: url(../img/template/comida-rapida-espacio-abajo.png);
-    background-position: top !important;
-    background-repeat: no-repeat;
-    background-size: cover
-}
-
-.bestsSnacks.imgBackgroundArea::before {
-    background-image: none !important
-}
-
-.snacks section header {
-    padding: 1rem 0 .5rem;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    background: #d95f1b;
-    color: #fff;
-    background-position: right;
-    background-repeat: no-repeat;
-    background-size: 50%
-}
-
-.snacks section:nth-child(1) header {
-    background-color: #ffbf00
-}
-
-.snacks section:nth-child(2) header {
-    background-color: #F44336
-}
-
-.snacks section:nth-child(3) header {
-    background-color: #6fbc3f
-}
-
-.snacks header span {
-    margin-left: 2%
-}
-
-@media screen and (min-width:950px) {
-    .snacks header span {
-        margin-left: 20%
+            figcaption {
+                margin: 1rem !important
+            }
+        }
     }
-}
 
-.snacks section:nth-child(1) header {
-    background-image: url(../img/categories/id_1/hamburguers.png)
-}
+    /* Home about end */
 
-.snacks section:nth-child(2) header {
-    background-image: url(../img/categories/id_2/pizzas.png)
-}
-
-.snacks section:nth-child(3) header {
-    background-image: url(../img/template/categories.png)
-}
-
-/* Snacks end */
-
-/* blog start */
-.homeBlogSection div {
-    padding: 0 !important
-}
-
-@media screen and (min-width:600px) {
-    .homeBlogSection .owl-dot {
-        display: none !important
+    .title {
+        color: var(--secondary);
+        padding: 1rem
     }
-}
 
-@media screen and (min-width:479px) {
-    .homeBlogSection div {
-        margin: 0 !important
+    .title::before,
+    .title::after {
+        content: '';
+        height: 3px;
+        background-color: #d95f1b
     }
-}
 
-.homeBlogSection img {
-    width: 100% !important;
-    max-width: 100% !important
-}
+    /* Home Sections */
 
-.homeBlog {
-    background-image: url(../img/template/blog.png)
-}
-
-.img-fig {
-    position: absolute;
-    bottom: 0;
-    width: 100%;
-    background: #d95f1b;
-    text-align: left;
-    padding: 0.2rem;
-    padding-left: .5rem;
-    text-decoration: none;
-    color: #fff;
-    overflow: hidden;
-    white-space: pre;
-    text-overflow: ellipsis
-}
-
-/* blog end */
-
-/* -------- Home End -------- */
-@media screen and (max-width:600px) {
+    /* Snacks start */
     .bestsSnacks {
-        background-image: url(../img/template/comida-rapida-espacio-abajo_600.png) !important
+        background-image: url(../img/template/comida-rapida-espacio-abajo.png);
+        background-position: top !important;
+        background-repeat: no-repeat;
+        background-size: cover;
+
+        &.imgBackgroundArea::before {
+            background-image: none !important;
+        }
+
+        @media screen and (max-width:600px) {
+            background-image: url(../img/template/comida-rapida-espacio-abajo_600.png) !important
+        }
     }
 
-    .homeHeaderAbout {
-        background-image: url(../img/template/gordao110_600.png) !important
+    .snacks {
+
+        section {
+
+            header {
+                padding: 1rem 0 .5rem;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                background: #d95f1b;
+                color: #fff;
+                background-position: right;
+                background-repeat: no-repeat;
+                background-size: 50%;
+
+                span {
+                    margin-left: 2%;
+
+                    @media screen and (min-width:950px) {
+                        margin-left: 20%
+                    }
+                }
+
+            }
+
+            &:nth-child(1) header {
+                background-color: #ffbf00;
+                background-image: url(../img/categories/id_1/hamburguers.png);
+            }
+
+            &:nth-child(2) header {
+                background-color: #F44336;
+                background-image: url(../img/categories/id_2/pizzas.png);
+            }
+
+            &:nth-child(3) header {
+                background-color: #6fbc3f;
+                background-image: url(../img/template/categories.png);
+            }
+        }
+
+    }
+
+    /* Snacks end */
+
+    /* blog start */
+    .homeBlogSection {
+        
+        div {
+
+            padding: 0 !important;
+            
+            @media screen and (min-width:479px) {
+                div {
+                    margin: 0 !important
+                }
+            }
+        }
+
+        @media screen and (min-width:600px) {
+            .owl-dot {
+                display: none !important
+            }
+        }
+
+        img {
+            width: 100% !important;
+            max-width: 100% !important;
+        }
+
+        .item {
+            position: relative;
+            overflow: hidden;
+            width: 100%;
+
+            img {
+                max-width: 100% !important;
+
+            }
+
+            &::before {
+                content: "";
+                position: absolute;
+                top: 0;
+                left: 0;
+                background: #3333331a;
+                height: 100%;
+                width: 100%;
+                opacity: 0.82;
+            }
+        }
+
+        .img-fig {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            background: #d95f1b;
+            text-align: left;
+            padding: 0.2rem;
+            padding-left: .5rem;
+            text-decoration: none;
+            color: #fff;
+            overflow: hidden;
+            white-space: pre;
+            text-overflow: ellipsis;
+        }
+
+
+
     }
 
     .homeBlog {
-        background-image: url(../img/template/blog_600.png) !important
+        background-image: url(../img/template/blog.png);
+
+        @media screen and (max-width:600px) {
+            background-image: url(../img/template/blog_600.png) !important
+        }
     }
 }
