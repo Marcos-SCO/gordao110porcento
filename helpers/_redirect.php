@@ -1,5 +1,7 @@
 <?php
 
+use App\Config\Config;
+
 // Simple page redirect
 function redirect($page)
 {

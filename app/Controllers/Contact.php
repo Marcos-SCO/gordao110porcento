@@ -39,8 +39,8 @@ class Contact extends Controller
     {
         if (isset($_SESSION['submitted'])) unset($_SESSION['submitted']);
 
-        View::render('contact/message.php', [
-            'title' => 'Contato - envie sua menssagem',
+        return View::render('contact/message.php', [
+            'title' => 'Contato - envie sua mensagem',
             'data' => $data,
             'error' => $error,
             'flash' => $flash
@@ -61,7 +61,6 @@ class Contact extends Controller
 
     public function messageSend()
     {
-
         $submittedPostData =
             isset($_SESSION['submitted']) &&
             $_SERVER['REQUEST_METHOD'] == 'POST';
@@ -77,9 +76,14 @@ class Contact extends Controller
         $isErrorResult = $error['error'] == true;
 
         if ($isErrorResult) return $this->message($data, $error);
-
+        
         $_SESSION['submitted'] = true;
-        $this->sendEmailHandler($data);
+        
+        $emailSent = $this->sendEmailHandler($data);
+        
+        $emailError = indexParamExistsOrDefault($emailSent, 'error');
+
+        if ($emailError) return $this->message($data, ['body_error' => 'Infelizmente o e-mail não podê ser enviado, tente novamente mais tarde']);
 
         return redirect('contact/success');
     }
@@ -106,7 +110,7 @@ class Contact extends Controller
             return $this->work($data, $error);
         }
 
-        $flash = flash('post_message', 'Menssagem Enviada com sucesso');
+        $flash = flash('post_message', 'Mensagem Enviada com sucesso');
         $this->sendEmailHandler($data, $data['attachment']);
 
         return redirect('contact/success');

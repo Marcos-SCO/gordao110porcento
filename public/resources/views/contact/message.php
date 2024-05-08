@@ -4,14 +4,18 @@
         <h1>Envie sua menssagem</h1>
     </span>
 </header>
+
 <section class="contactForm mb-4 m-auto pl-5 pr-5 pb-5">
     <header>
         <h2 class="h1-responsive font-weight-bold text-center my-4">Entre em contato</h2>
         <p class="text-center w-responsive mx-auto mb-5">Existe algo que você queira discutir? Então, por favor, entre em contato.</p>
     </header>
+
     <div class="contactRow row mb-4 align-items-center">
+
         <div class="col-md-9 mb-md-0 mb-5">
-            <form action="<?= $BASE ?>/contact/messageSend" method="post">
+
+            <form action="<?= $BASE ?>/contact/message/send" method="post">
                 <div class="row">
                     <div class="form-group col-md-6">
                         <label for="name">Nome<sup>*</sup></label>
@@ -51,6 +55,7 @@
             </form>
         </div>
     </div>
+
     <address class="contactAddress m-auto">
         <h3>Onde Estamos</h3>
         <div>
@@ -71,4 +76,5 @@
                 </li>
             </ul>
     </address>
+
 </section>

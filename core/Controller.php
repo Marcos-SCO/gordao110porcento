@@ -197,16 +197,15 @@ class Controller
 
                 rrmdir($dir);
             }
-        } 
-        
+        }
+
         if ($idCategory != null) {
             // Delete imgs products
             if (file_exists("../public/resources/img/{$table}/category_{$idCategory}/id_{$id}")) {
                 array_map('unlink', glob("../public/resources/img/{$table}/category_{$idCategory}/id_{$id}/*.*"));
                 rmdir("../public/resources/img/{$table}/category_{$idCategory}/id_{$id}");
             }
-        } 
-
+        }
     }
 
 
@@ -226,7 +225,7 @@ class Controller
         /* Query the db for total results.*/
         if ($optionId != '') {
             list($idKey, $idVal) = $optionId;
-            
+
             $key = strval($idKey);
             $val = strval($idVal);
             $optionId = " WHERE {$key} = {$val}";
@@ -255,9 +254,7 @@ class Controller
 
         $body = "<b>{$name}</b> com email <b>{$email}</b><p>Enviou:</p><p>{$bodyStriped}</p>";
 
-        $this->Mailer($email, 'marcos_sco@outlook.com', $name, $subject, $body, 1, $attachment);
-
-        $this->Mailer('marcosXsco@gmail.com', $email, $name, "{$name} sua mensagem foi enviada", "<br>Olá {$name}, Obrigado por enviar sua menssagem.<p><b>Você enviou:</b><br>{$bodyStriped}</p>", null, $attachment);
+        return $this->Mailer($email, 'marcos_sco@outlook.com', $name, $subject, $body, 1, $attachment);
     }
 
     public function Mailer($sentFrom, $email, $name, $subject, $body, $cc = null, $attachment = null)
@@ -314,10 +311,14 @@ class Controller
             $mail->send();
             // echo 'Message has been sent';
 
+            $this->Mailer('marcosXsco@gmail.com', $email, $name, "{$name} sua mensagem foi enviada", "</br>Olá {$name}, Obrigado por enviar sua mensagem.<p>Em breve entraremos em contato!</p>", null, $attachment);
+
         } catch (\Exception $e) {
 
-            throw new \Exception("Message could not be sent. Mailer Error: $mail->ErrorInfo");
+            return [
+                'error' => true,
+                'message' => "Message could not be sent. Mailer Error: " . $mail->ErrorInfo
+            ];
         }
-
     }
 }

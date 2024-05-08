@@ -2,6 +2,7 @@
 
 include_once('_queryString.php');
 include_once('_debug.php');
+include_once('_redirect.php');
 
 // include_once('_baseUrl.php');
 // include_once('_youtube.php');

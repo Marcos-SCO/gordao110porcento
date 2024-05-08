@@ -1,10 +1,6 @@
 <?php
 
 return [
-  'POST' => [
-    '/login' => 'Login@store',
-    '/user/store' => 'User@store',
-  ],
   'GET' => [
     '/(?:$|home)/?' => 'Home@index',
     '/about/?' => 'About@index',
@@ -32,5 +28,14 @@ return [
     '/users/?($|[0-9])+/?' => 'Users@index',
 
     '/users/?show/($|[0-9]+)(?:/([0-9]+))?/' => 'Users@show',
+
+  ],
+
+  'POST' => [
+    '/login' => 'Login@store',
+    '/user/store' => 'User@store',
+
+    '/contact/message/send/?' => 'Contact@messageSend',
+    
   ],
 ];
