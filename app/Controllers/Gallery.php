@@ -27,6 +27,7 @@ class Gallery extends Controller
         $results = $this->pagination($table, $pageId, $limit = 8, '', $orderOption = 'ORDER BY id DESC');
 
         View::render('gallery/index.php', [
+            'dataPage' => 'gallery',
             'title' => 'Galeria de imagens',
             'gallery' => $results[4],
             'flash' => $flash,

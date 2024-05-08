@@ -6,6 +6,8 @@ include_once __DIR__ . '/../components/pagination.php';
 
 $controller = isset($controller) ? $controller : false;
 
+$dataPage = isset($dataPage) ? $dataPage : mb_strtolower($controller);
+
 $getQuery = getQueryString();
 
 ?>
@@ -125,13 +127,14 @@ $getQuery = getQueryString();
 $isHomeController = $controller == 'Home';
 
 if ($isHomeController) {
-    // echo (detectIE() != true) ? "<!-- Hero Slider --><script src='$BASE/public/resources/js/heroSlider.js'></script>" : '';
-    echo "<!-- Owl --><script src='$BASE/public/resources/js/owl.carousel.min.js'></script><script src='$BASE/public/resources/js/owlFunctions.js'></script>";
+    echo "<!-- Owl --><script src='$BASE/public/resources/js/owl.carousel.min.js'></script>";
 }
 
+$tinyMceControllers = ['posts/show'];
+$isTinyMce = in_array($dataPage, $tinyMceControllers);
+
 // tiny MCE 
-echo ($getQuery[0] == 'posts' && $getQuery[1] == 'create' || $getQuery[0] == 'posts' && $getQuery[1] == 'edit' || $getQuery[0] == 'posts' && $getQuery[1] == 'store') ? "<!-- Tiny MCE --><script src='$BASE/public/resources/js/tinyMCE.js'></script>
-" : '';
+if ($isTinyMce) echo "<!-- Tiny MCE --><script src='$BASE/public/resources/js/tinyMCE.js'></script>";
 
 ?>
 

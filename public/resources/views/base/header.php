@@ -2,7 +2,12 @@
 
 $controller = isset($controller) ? $controller : false;
 
-$dataPage = $controller ? mb_strtolower($controller) : '';
+$dataPage = isset($dataPage) ? $dataPage : mb_strtolower($controller);
+
+$isHomeController = $controller == 'Home';
+
+$tinyMceControllers = ['posts/show'];
+$isTinyMce = in_array($dataPage, $tinyMceControllers);
 
 ?>
 
@@ -38,14 +43,14 @@ $dataPage = $controller ? mb_strtolower($controller) : '';
     <link href="https://fonts.googleapis.com/css2?family=Oleo+Script+Swash+Caps:wght@700&display=swap" rel="stylesheet">
 
     <?php
-    // tiny MCE 
-    echo ($getQuery[0] == 'posts' && $getQuery[1] == 'create' || $getQuery[0] == 'posts' && $getQuery[1] == 'edit' || $getQuery[0] == 'posts' && $getQuery[1] == 'store') ? "<!-- Tiny MCE -->
-    <script src='https://cdn.tiny.cloud/1/dksjdj5uue9ro7l3iyr2xu6basfnwgrqpkh8y5beu0m60kwl/tinymce/5/tinymce.min.js' referrerpolicy='origin'></script><script>tinymce.init({selector:'#tinyMCE'});</script>" : '';
+      // tiny MCE 
+    if ($isTinyMce) echo "<!-- Tiny MCE -->
+    <script src='https://cdn.tiny.cloud/1/dksjdj5uue9ro7l3iyr2xu6basfnwgrqpkh8y5beu0m60kwl/tinymce/5/tinymce.min.js' referrerpolicy='origin'></script><script>tinymce.init({selector:'#tinyMCE'});</script>";
 
-    $isHomeController = $controller == 'Home';
+    $isGalleryPage = $dataPage == 'Gallery';
 
     // Light Box 
-    echo "<!-- LightBox -->
+    if ($isGalleryPage) echo "<!-- LightBox -->
         <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.1/css/lightbox.min.css'><script src='https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.1/js/lightbox-plus-jquery.min.js' defer></script>";
 
     ?>
@@ -58,8 +63,7 @@ $dataPage = $controller ? mb_strtolower($controller) : '';
 
 <body data-page="<?= $dataPage; ?>">
 
-    <?= ($getQuery[0] !== '' && $getQuery[0] !== 'home' && $getQuery[0] !== 'users') ? '<!-- Spinner -->
-    <div id="loader" class="center" style="display:none"></div>' : ''; ?>
+    <?php // if (!$isHomeController) echo '<!-- Spinner --><div id="loader" class="center" style="display:none"></div>'; ?>
 
     <header class="<?= $isHomeController ? 'fixed-top' : '' ?> z-index bg-light" id="topNav" data-js="navHeader">
         <!-- Nav -->

@@ -28,6 +28,7 @@ class Posts extends Controller
 
         View::render('posts/index.php', [
             'title' => 'Posts - Gordão a 110%',
+            'controller' => 'Posts',
             'posts' => $results[4],
             'flash' => $flash,
             'path' => 'posts',
@@ -48,6 +49,7 @@ class Posts extends Controller
         }
 
         View::render('posts/create.php', [
+            'controller' => 'Posts',
             'title' => 'Criar Post - Gordão a 110%',
             'data' => $data,
             'error' => $error,
@@ -97,6 +99,7 @@ class Posts extends Controller
         $user = $this->model->getAllFrom('users', $data->user_id);
 
         return View::render('posts/show.php', [
+            'dataPage' => 'posts/show',
             'title' => $data->title,
             'data' => $data,
             'user' => $user,
@@ -110,6 +113,7 @@ class Posts extends Controller
         $data = $this->model->getAllFrom('posts', $id);
 
         View::render('posts/edit.php', [
+            'controller' => 'Posts',
             'title' => "Editar - $data->title",
             'data' => $data,
             'error' => $error
