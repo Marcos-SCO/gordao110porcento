@@ -9,13 +9,13 @@
 
     <header>
         <h2 class="h1-responsive font-weight-bold text-center my-4">Enviei seu curriculo</h2>
-        <p class="text-center w-responsive mx-auto mb-5">Envie seu curriculo, te avisaremos por e-mail assim que surgirem oportunidades</p>
+        <p class="text-center w-responsive mx-auto mb-5">Envie seu currículo, te avisaremos por e-mail assim que surgirem oportunidades</p>
     </header>
 
     <div class="contactRow row mb-4 align-items-center">
         <div class="col-md-9 mb-md-0 mb-5">
 
-            <form action="<?= $BASE ?>/contact/workSend" method="post" enctype="multipart/form-data">
+            <form action="<?= $BASE ?>/contact/work/send/" method="post" enctype="multipart/form-data">
                 <div class="row">
                     <div class="form-group col-md-6">
                         <label for="name">Nome<sup>*</sup></label>
@@ -24,6 +24,7 @@
                             <?= $error['name_error'] ?? '' ?>
                         </span>
                     </div>
+
                     <div class="form-group col-md-6">
                         <label for="email">E-mail<sup>*</sup></label>
                         <input type="text" name="email" id="email" class="form-control form-control-lg <?= isset($error['email_error']) && $error['email_error'] != '' ? 'is-invalid' : '' ?>" value="<?= $data['email'] ?? '' ?>">
@@ -31,6 +32,7 @@
                             <?= $error['email_error'] ?? '' ?>
                         </span>
                     </div>
+
                 </div>
 
                 <div class="form-group row">
@@ -53,7 +55,9 @@
 
                 <div class="form-group">
                     <label for="attachment">Anexo: <sup>*</sup></label>
-                    <input type="file" name="attachment" id="attachment" class="form-control form-control-lg <?= isset($error['attachment_error']) && $error['attachment_error'] != '' ? 'is-invalid' : '' ?>" value="<?= $data['attachment'] ?? '' ?>">
+
+                    <input type="file" name="attachment" id="attachment" class="form-control form-control-lg <?= isset($error['attachment_error']) && $error['attachment_error'] != '' ? 'is-invalid' : '' ?>" value="<?= $data['attachment'] ?? '' ?>" accept=".pdf,.doc,.docx">
+
                     <span class="invalid-feedback">
                         <?= $error['attachment_error'] ?? '' ?>
                     </span>
@@ -82,7 +86,7 @@
                         <a href="mailto:marcos_sco@outlook.com" style="color:#333!important">gordão110%@outlook.com</a>
                     </li>
                 </ul>
-            </section>
-        </address>
+</section>
+</address>
 
 </section>

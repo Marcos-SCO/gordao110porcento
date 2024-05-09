@@ -7,15 +7,18 @@ namespace App\Controllers;
 use Core\Controller;
 use Core\View;
 
-use App\Config\Config;
+use App\Facade\Email;
 
 class Contact extends Controller
 {
     public $model;
+    public $emailFacade;
 
     public function __construct()
     {
         $this->model = $this->model('Contact');
+
+        $this->emailFacade = new Email;
     }
 
     public function index($paramsArray = null)
@@ -45,75 +48,6 @@ class Contact extends Controller
             'error' => $error,
             'flash' => $flash
         ]);
-    }
-
-    public function work($data = null, $error = null, $flash = null)
-    {
-        if (isset($_SESSION['submitted'])) unset($_SESSION['submitted']);
-
-        View::render('contact/work.php', [
-            'title' => 'Envie sua mensagem com um anexo',
-            'data' => $data,
-            'error' => $error,
-            'flash' => $flash
-        ]);
-    }
-
-    public function messageSend()
-    {
-        $submittedPostData =
-            isset($_SESSION['submitted']) &&
-            $_SERVER['REQUEST_METHOD'] == 'POST';
-
-        if ($submittedPostData) {
-            return redirect('contact/message');
-        }
-
-        $result = $this->getPostData();
-        $data = $result[0];
-        $error = $result[1];
-
-        $isErrorResult = $error['error'] == true;
-
-        if ($isErrorResult) return $this->message($data, $error);
-        
-        $_SESSION['submitted'] = true;
-        
-        $emailSent = $this->sendEmailHandler($data);
-        
-        $emailError = indexParamExistsOrDefault($emailSent, 'error');
-
-        if ($emailError) return $this->message($data, ['body_error' => 'Infelizmente o e-mail não podê ser enviado, tente novamente mais tarde']);
-
-        return redirect('contact/success');
-    }
-
-    public function workSend()
-    {
-        $submittedPostData =
-            isset($_SESSION['submitted']) &&
-            $_SERVER['REQUEST_METHOD'] == 'POST';
-
-        if ($submittedPostData) {
-            redirect('contact/work');
-        }
-
-        $result = $this->getPostData();
-        $data = $result[0];
-        $error = $result[1];
-
-        $isErrorResult = $error['error'] == true;
-
-        if ($isErrorResult) {
-            $data['attachment'] = $_FILES["attachment"]['tmp_name'];
-
-            return $this->work($data, $error);
-        }
-
-        $flash = flash('post_message', 'Mensagem Enviada com sucesso');
-        $this->sendEmailHandler($data, $data['attachment']);
-
-        return redirect('contact/success');
     }
 
     public function getPostData()
@@ -216,4 +150,81 @@ class Contact extends Controller
 
         return [$data, $error];
     }
+
+    public function work($data = null, $error = null, $flash = null)
+    {
+        if (isset($_SESSION['submitted'])) unset($_SESSION['submitted']);
+
+        View::render('contact/work.php', [
+            'title' => 'Envie sua mensagem com um anexo',
+            'data' => $data,
+            'error' => $error,
+            'flash' => $flash
+        ]);
+    }
+
+    public function messageSend()
+    {
+        $submittedPostData =
+            isset($_SESSION['submitted']) &&
+            $_SERVER['REQUEST_METHOD'] == 'POST';
+
+        if ($submittedPostData) {
+            return redirect('contact/message');
+        }
+
+        $result = $this->getPostData();
+        $data = $result[0];
+        $error = $result[1];
+
+        $isErrorResult = $error['error'] == true;
+
+        if ($isErrorResult) return $this->message($data, $error);
+
+        $_SESSION['submitted'] = true;
+
+        $emailSent = $this->emailFacade->sendEmailHandler($data);
+
+        $emailError = indexParamExistsOrDefault($emailSent, 'error');
+
+        if ($emailError) return $this->message($data, ['body_error' => 'Infelizmente o e-mail não podê ser enviado, tente novamente mais tarde']);
+
+        return redirect('contact/success');
+    }
+
+    public function workSend()
+    {
+        $submittedPostData =
+            isset($_SESSION['submitted']) &&
+            $_SERVER['REQUEST_METHOD'] == 'POST';
+
+        if ($submittedPostData) {
+            redirect('contact/work');
+        }
+
+        $result = $this->getPostData();
+        $data = $result[0];
+        $error = $result[1];
+
+        $isErrorResult = $error['error'] == true;
+
+        $_SESSION['submitted'] = true;
+
+        if ($isErrorResult) {
+            $data['attachment'] = $_FILES["attachment"]['tmp_name'];
+
+            return $this->work($data, $error);
+        }
+        
+        $emailSent =  $this->emailFacade->sendEmailHandler($data, $data['attachment']);
+        
+        $emailError = indexParamExistsOrDefault($emailSent, 'error');
+
+        if ($emailError) return $this->message($data, ['body_error' => 'Infelizmente o e-mail não podê ser enviado, tente novamente mais tarde']);
+
+        $flash = flash('post_message', 'Mensagem Enviada com sucesso');
+
+        return redirect('contact/success');
+    }
+
 }

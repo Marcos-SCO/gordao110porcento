@@ -36,6 +36,7 @@ return [
     '/user/store' => 'User@store',
 
     '/contact/message/send/?' => 'Contact@messageSend',
+    '/contact/work/send/?' => 'Contact@workSend',
     
   ],
 ];
