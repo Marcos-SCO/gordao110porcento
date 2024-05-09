@@ -35,8 +35,9 @@ return [
     '/login' => 'Login@store',
     '/user/store' => 'User@store',
 
-    '/contact/message/send/?' => 'Contact@messageSend',
-    '/contact/work/send/?' => 'Contact@workSend',
+    '/contact/?($|[\w]+)/send/?' => 'Contact@sendMessage',
+    // '/contact/message/send/?' => 'Contact@sendMessage',
+    // '/contact/work/send/?' => 'Contact@workSend',
     
   ],
 ];

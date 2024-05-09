@@ -21,60 +21,61 @@ class Contact extends Controller
         $this->emailFacade = new Email;
     }
 
-    public function index($paramsArray = null)
+    function processFileAttachmentData($attachment)
     {
-        $contactType = !empty($paramsArray['contact']) && isset($paramsArray['contact']) ?  $paramsArray['contact'] : '';
+        $fileAttachmentName = verifyValue($attachment, 'tmp_name');
 
-        if ($contactType == 'message') return $this->message();
-        if ($contactType == 'work') return $this->work();
+        if (!$fileAttachmentName) {
+            $error['attachment_error'] = "Coloque seu currículo como anexo.";
 
-        if ($contactType == '') return redirect('home');
-    }
+            $error['error'] = true;
 
-    public function success()
-    {
-        View::render('contact/success.php', [
-            'title' => 'Sua menssagem foi enviada com sucesso!',
-        ]);
-    }
+            return $error;
+        }
 
-    public function message($data = null, $error = null, $flash = null)
-    {
-        if (isset($_SESSION['submitted'])) unset($_SESSION['submitted']);
+        $validExtensions = ['pdf', 'doc', 'docx'];
+        $validExtensionsString = implode(', ', $validExtensions);
 
-        return View::render('contact/message.php', [
-            'title' => 'Contato - envie sua mensagem',
-            'data' => $data,
-            'error' => $error,
-            'flash' => $flash
-        ]);
+        $fileExt = strtolower(pathinfo($attachment['name'], PATHINFO_EXTENSION));
+
+        $isImgExtensionIsValid = in_array($fileExt, $validExtensions);
+
+        if (!$isImgExtensionIsValid) {
+            $error['attachment_error'] = "Enviei somente {$validExtensionsString} ";
+
+            $error['error'] = true;
+
+            return $error;
+        }
+
+        return [];
     }
 
     public function getPostData()
     {
         // Sanitize data
-        $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+        $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_SPECIAL_CHARS);
+        if (!$post) return;
 
-        $name = isset($_POST['name']) ? trim($_POST['name']) : '';
+        $name = indexParamExistsOrDefault($post, 'name');
 
-        $subject =
-            isset($_POST['subject']) ? trim($_POST['subject']) : '';
+        $subject = indexParamExistsOrDefault($post, 'subject');
 
-        $attachment = isset($_FILES['attachment']) ? $_FILES['attachment'] : '';
+        $attachment = indexParamExistsOrDefault($_FILES, 'attachment');
 
-        $email = isset($_POST['email']) ? trim($_POST['email']) : '';
+        $email = indexParamExistsOrDefault($post, 'email');
 
-        $body = isset($_POST['body']) ? trim($_POST['body']) : '';
+        $body = indexParamExistsOrDefault($post, 'body');
 
-        $nameError = isset($_POST['name_error']) ? trim($_POST['name_error']) : '';
+        $nameError = indexParamExistsOrDefault($post, 'name_error');
 
-        $emailError = isset($_POST['email_error']) ? trim($_POST['email_error']) : '';
+        $emailError = indexParamExistsOrDefault($post, 'email_error');
 
-        $subjectError = isset($_POST['subject_error']) ? trim($_POST['subject_error']) : '';
+        $subjectError = indexParamExistsOrDefault($post, 'subject_error');
 
-        $bodyError = isset($_POST['body_error']) ? trim($_POST['body_error']) : '';
+        $bodyError = indexParamExistsOrDefault($post, 'body_error');
 
-        $attachmentError = isset($_POST['attachment_error']) ? $_POST['attachment_error'] : '';
+        $attachmentError = indexParamExistsOrDefault($post, 'attachment_error');
 
         // Add data to array
         $data = [
@@ -119,105 +120,79 @@ class Contact extends Controller
             $error['error'] = true;
         }
 
-        if (isset($_FILES['attachment'])) {
 
-            $fileAttachTmpNameEmpty =
-                empty($data['attachment']['tmp_name']);
+       if ($attachment) $error = array_merge($error, $this->processFileAttachmentData($attachment));
 
-            if ($fileAttachTmpNameEmpty) {
-                $error['attachment_error'] = "Coloque seu currículo como anexo.";
-
-                $error['error'] = true;
-            }
-
-            if (!$fileAttachTmpNameEmpty) {
-
-                $validExtensions = ['pdf', 'doc', 'docx'];
-                $validExtensionsString = implode(', ', $validExtensions);
-
-                $imgExt = strtolower(pathinfo($_FILES['attachment']['name'], PATHINFO_EXTENSION));
-
-                $isImgExtensionIsValid =
-                    in_array($imgExt, $validExtensions);
-
-                if (!$isImgExtensionIsValid) {
-                    $error['attachment_error'] = "Enviei somente {$validExtensionsString} ";
-
-                    $error['error'] = true;
-                }
-            }
-        }
-
-        return [$data, $error];
+        return ['data' => $data, 'errorData' => $error];
     }
 
-    public function work($data = null, $error = null, $flash = null)
+    public function index($paramsArray = null)
+    {
+        $contactPage = indexParamExistsOrDefault($paramsArray, 'contact');
+
+        if ($contactPage == '') return redirect('home');
+
+        return $this->message(['contactPage' => $contactPage]);
+    }
+
+    public function success()
+    {
+        View::render('contact/success.php', [
+            'title' => 'Sua menssagem foi enviada com sucesso!',
+        ]);
+    }
+
+    public function message($data = null, $error = null, $flash = null)
     {
         if (isset($_SESSION['submitted'])) unset($_SESSION['submitted']);
 
-        View::render('contact/work.php', [
-            'title' => 'Envie sua mensagem com um anexo',
+        $contactPage = indexParamExistsOrDefault($data, 'contactPage');
+
+        $contaPageTitle = $contactPage == 'work' ? 'Envie sua mensagem com um anexo' : 'Contato - envie sua mensagem';
+
+        return View::render('contact/message.php', [
+            'title' => $contaPageTitle,
             'data' => $data,
             'error' => $error,
             'flash' => $flash
         ]);
     }
 
-    public function messageSend()
+    public function sendMessage($paramsArray = [])
     {
+        $contactPage = indexParamExistsOrDefault($paramsArray, 'contact');
+
         $submittedPostData =
             isset($_SESSION['submitted']) &&
             $_SERVER['REQUEST_METHOD'] == 'POST';
 
         if ($submittedPostData) {
-            return redirect('contact/message');
+            return redirect('contact/' . $contactPage);
         }
 
-        $result = $this->getPostData();
-        $data = $result[0];
-        $error = $result[1];
+        $postResultData = $this->getPostData($contactPage);
 
-        $isErrorResult = $error['error'] == true;
+        $data = indexParamExistsOrDefault($postResultData, 'data');
 
-        if ($isErrorResult) return $this->message($data, $error);
+        $errorData =
+            indexParamExistsOrDefault($postResultData, 'errorData');
+
+        $isErrorResult = $errorData['error'] == true;
+
+        $data['contactPage'] = $contactPage;
 
         $_SESSION['submitted'] = true;
 
-        $emailSent = $this->emailFacade->sendEmailHandler($data);
+        $emailAttachMent = verifyValue($_FILES, 'attachment');
 
-        $emailError = indexParamExistsOrDefault($emailSent, 'error');
-
-        if ($emailError) return $this->message($data, ['body_error' => 'Infelizmente o e-mail não podê ser enviado, tente novamente mais tarde']);
-
-        return redirect('contact/success');
-    }
-
-    public function workSend()
-    {
-        $submittedPostData =
-            isset($_SESSION['submitted']) &&
-            $_SERVER['REQUEST_METHOD'] == 'POST';
-
-        if ($submittedPostData) {
-            redirect('contact/work');
-        }
-
-        $result = $this->getPostData();
-        $data = $result[0];
-        $error = $result[1];
-
-        $isErrorResult = $error['error'] == true;
-
-        $_SESSION['submitted'] = true;
+        if ($emailAttachMent) $data['attachment'] = $emailAttachMent;
 
         if ($isErrorResult) {
-            $data['attachment'] = $_FILES["attachment"]['tmp_name'];
-
-            return $this->work($data, $error);
+            return $this->message($data, $errorData);
         }
-        
-        $emailSent =  $this->emailFacade->sendEmailHandler($data, $data['attachment']);
-        
+
+        $emailSent = $this->emailFacade->sendEmailHandler($data, $emailAttachMent);
+
         $emailError = indexParamExistsOrDefault($emailSent, 'error');
 
         if ($emailError) return $this->message($data, ['body_error' => 'Infelizmente o e-mail não podê ser enviado, tente novamente mais tarde']);
@@ -226,5 +201,4 @@ class Contact extends Controller
 
         return redirect('contact/success');
     }
-
 }

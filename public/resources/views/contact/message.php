@@ -1,21 +1,45 @@
+<?php
+$contactPage = indexParamExistsOrDefault($data, 'contactPage');
+
+$isWorkMessage = $contactPage == 'work';
+$isContactMessage = $contactPage == 'message';
+
+$attachment = indexParamExistsOrDefault($_FILES, 'attachment');
+
+?>
+
 <header class="contactHeader imgBackgroundArea">
     <span>
-        <h2>Escreva para nós</h2>
-        <h1>Envie sua menssagem</h1>
+        <?php if ($isContactMessage) : ?>
+            <h2>Escreva para nós</h2>
+            <h1>Envie sua mensagem</h1>
+        <?php endif; ?>
+
+        <?php if ($isWorkMessage) : ?>
+            <h2>Trabalhe conosco</h2>
+            <h1>Envie seu currículo</h1>
+        <?php endif; ?>
     </span>
 </header>
 
 <section class="contactForm mb-4 m-auto pl-5 pr-5 pb-5">
     <header>
-        <h2 class="h1-responsive font-weight-bold text-center my-4">Entre em contato</h2>
-        <p class="text-center w-responsive mx-auto mb-5">Existe algo que você queira discutir? Então, por favor, entre em contato.</p>
+        <?php if ($isContactMessage) : ?>
+            <h2 class="h1-responsive font-weight-bold text-center my-4">Entre em contato</h2>
+            <p class="text-center w-responsive mx-auto mb-5">Existe algo que você queira discutir? Então, por favor, entre em contato.</p>
+        <?php endif; ?>
+
+        <?php if ($isWorkMessage) : ?>
+            <h2 class="h1-responsive font-weight-bold text-center my-4">Enviei seu currículo</h2>
+            <p class="text-center w-responsive mx-auto mb-5">Envie seu currículo, te avisaremos por e-mail assim que surgirem oportunidades.</p>
+        <?php endif; ?>
     </header>
 
     <div class="contactRow row mb-4 align-items-center">
 
         <div class="col-md-9 mb-md-0 mb-5">
 
-            <form action="<?= $BASE ?>/contact/message/send" method="post">
+            <form action="<?= $BASE; ?>/contact/<?= $contactPage; ?>/send" method="post" enctype="multipart/form-data">
                 <div class="row">
                     <div class="form-group col-md-6">
                         <label for="name">Nome<sup>*</sup></label>
@@ -24,6 +48,7 @@
                             <?= $error['name_error'] ?? '' ?>
                         </span>
                     </div>
+
                     <div class="form-group col-md-6">
                         <label for="email">E-mail<sup>*</sup></label>
                         <input type="text" name="email" id="email" class="form-control form-control-lg <?= isset($error['email_error']) && $error['email_error'] != '' ? 'is-invalid' : '' ?>" value="<?= $data['email'] ?? '' ?>">
@@ -50,6 +75,18 @@
                         <?= $error['body_error'] ?? '' ?>
                     </span>
                 </div>
+
+                <?php if ($isWorkMessage) : ?>
+                    <div class="form-group">
+                        <label for="attachment">Anexo: <sup>*</sup></label>
+
+                        <input type="file" name="attachment" id="attachment" class="form-control form-control-lg <?= isset($error['attachment_error']) && $error['attachment_error'] != '' ? 'is-invalid' : '' ?>" accept=".pdf,.doc,.docx">
+
+                        <span class="invalid-feedback">
+                            <?= $error['attachment_error'] ?? '' ?>
+                        </span>
+                    </div>
+                <?php endif; ?>
 
                 <input type="submit" class="btn btn-success" value="Enviar" style="height:100%;width:100%;margin-bottom:1rem;">
             </form>
