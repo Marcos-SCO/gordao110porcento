@@ -22,7 +22,7 @@ foreach ($products as $data) : ?>
     </figcaption>
     <?php
 
-    Core\Controller::editDelete($BASE, 'products', $data, 'Quer mesmo deletar esse produto?');
+    Helpers\Classes\DynamicLinks::editDelete($BASE, 'products', $data, 'Quer mesmo deletar esse produto?');
     ?>
   </figure>
 

@@ -42,7 +42,10 @@ function flash($name = '', $message = '', $class = 'alert alert-success')
 
 function isLoggedIn()
 {
-    if (!isset($_SESSION['user_id'])) false;
+    $userSessionId = indexParamExistsOrDefault($_SESSION, 'user_id');
+    $haveUserSession = valueParamExistsOrDefault($userSessionId);
+
+    if (!$haveUserSession) return false;
 
     return true;
 }
