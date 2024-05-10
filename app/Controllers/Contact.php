@@ -65,17 +65,9 @@ class Contact extends Controller
 
         $email = indexParamExistsOrDefault($post, 'email');
 
+        $isValidEmail = filter_input(INPUT_POST, 'email', FILTER_VALIDATE_EMAIL);
+
         $body = indexParamExistsOrDefault($post, 'body');
-
-        $nameError = indexParamExistsOrDefault($post, 'name_error');
-
-        $emailError = indexParamExistsOrDefault($post, 'email_error');
-
-        $subjectError = indexParamExistsOrDefault($post, 'subject_error');
-
-        $bodyError = indexParamExistsOrDefault($post, 'body_error');
-
-        $attachmentError = indexParamExistsOrDefault($post, 'attachment_error');
 
         // Add data to array
         $data = [
@@ -86,21 +78,14 @@ class Contact extends Controller
             'attachment' => $attachment,
         ];
 
-        $error = [
-            'name_error' => $nameError,
-            'email_error' => $emailError,
-            'subject_error' => $subjectError,
-            'body_error' => $bodyError,
-            'attachment_error' => $attachmentError,
-            'error' => false
-        ];
+        $error = ['error' => false];
 
         if (empty($data['name'])) {
             $error['name_error'] = "Informe seu nome.";
             $error['error'] = true;
         }
 
-        if (!filter_input(INPUT_POST, 'email', FILTER_VALIDATE_EMAIL)) {
+        if (!$isValidEmail) {
             $error['email_error'] = "E-mail inválido";
             $error['error'] = true;
         }
@@ -116,12 +101,11 @@ class Contact extends Controller
         }
 
         if (empty($data['body'])) {
-            $error['body_error'] = "Preencha o campo de menssagem.";
+            $error['body_error'] = "Preencha o campo de mensagem.";
             $error['error'] = true;
         }
 
-
-       if ($attachment) $error = array_merge($error, $this->processFileAttachmentData($attachment));
+        if ($attachment) $error = array_merge($error, $this->processFileAttachmentData($attachment));
 
         return ['data' => $data, 'errorData' => $error];
     }
