@@ -2,12 +2,6 @@
 
 namespace Core;
 
-// Import PHPMailer classes into the global namespace
-// These must be at the top of your script, not inside a function
-use \PHPMailer\PHPMailer\PHPMailer;
-use \PHPMailer\PHPMailer\SMTP;
-use \PHPMailer\PHPMailer\Exception;
-
 // Base controller | Loads the models 
 class Controller
 {
@@ -25,40 +19,9 @@ class Controller
     {
         if (isLoggedIn()) return;
 
-        redirect('users/login');
+        redirect('login');
         return exit();
     }
-
-    /* Dynamic page links start */
-    public static function createMore($BASE, $table, $text = 'Quer adicionar mais?')
-    {
-        if (!$_SESSION['user_status'] == 1) return;
-
-        echo "<a class='createBtn btn' href='$BASE/$table/create' style='width:100%;max-width:300px;display:block;margin:1rem auto;'>$text</a>";
-    }
-
-    public static function editDelete($BASE, $table, $data, $text = 'Quer Mesmo deletar?')
-    {
-        if (($data->user_id == $_SESSION['user_id']) or ($_SESSION['adm_id'] == 1)) {
-            $verb = ($table == 'categories') ? 'destroy' : 'delete';
-
-            $idCategory = '';
-
-            if ($table == 'products') {
-                $idCategory = '/' . $data->id_category;
-            } else if ($table == 'categories') {
-                $idCategory = '/' . $data->id;
-            }
-?>
-            <div class="editDelete d-flex p-1 flex-wrap">
-                <a href="<?= "{$BASE}/{$table}/edit/{$data->id}" ?>" class="btn btn-warning m-1" style="height:38px">Editar</a>
-                <form action="<?= "{$BASE}/{$table}/$verb/{$data->id}{$idCategory}" ?>" method="post">
-                    <button onclick="return confirm('<?= $text ?>')" class="btn btn-danger m-1">Deletar</button>
-                </form>
-            </div>
-<?php }
-    }
-    /* Dinamic page links end */
 
     // Delete functoin for controllers
     public function delete($id)

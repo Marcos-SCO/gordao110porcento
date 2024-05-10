@@ -4,9 +4,8 @@ use App\Config\Config;
 use Core\Router;
 
 require_once '../vendor/autoload.php';
-require_once '../helpers/functions.php';
-require_once '../helpers/sessionHelper.php';
-
+require_once '../helpers/functions/functions.php';
+require_once '../helpers/functions/sessionHelper.php';
 
 $BASE = Config::URL_BASE;
 

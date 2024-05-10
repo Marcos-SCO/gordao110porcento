@@ -5,7 +5,7 @@
     </span>
 </header>
 
-<?php Core\Controller::createMore($BASE, 'gallery', 'Adicionar mais imagens');
+<?php Helpers\Classes\DynamicLinks::addLink($BASE, 'gallery', 'Adicionar mais imagens');
 
 ?>
 
@@ -23,7 +23,7 @@
                     </figcaption>
                 </a>
                 <?php
-                Core\Controller::editDelete($BASE, 'gallery', $data, 'Quer mesmo deletar essa foto?');
+                Helpers\Classes\DynamicLinks::editDelete($BASE, 'gallery', $data, 'Quer mesmo deletar essa foto?');
                 ?>
             </figure>
         <?php } ?>

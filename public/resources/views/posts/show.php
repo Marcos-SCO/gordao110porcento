@@ -2,16 +2,18 @@
     <h1><?= $data->title ?></h1>
     <small class='smallInfo'>Escrito por <a href='<?= "$BASE/users/show/$user->id" ?>'><?= $user->name ?></a> em <?= dateFormat($data->created_at) ?></small>
 </header>
+
 <?php if ($_SESSION['user_status'] == 1) { ?>
     <div class="d-flex flex-wrap justify-content-center align-items-center postShowAdm">
         <?php
-        Core\Controller::editDelete($BASE, 'posts', $data, 'Quer mesmo deletar essa postagem?');
-        ?>
-        <?php
-        Core\Controller::createMore($BASE, 'posts', 'Adicionar mais postagens');
+        
+        Helpers\Classes\DynamicLinks::editDelete($BASE, 'posts', $data, 'Quer mesmo deletar essa postagem?');
+        
+        Helpers\Classes\DynamicLinks::addLink($BASE, 'posts', 'Adicionar mais postagens');
         ?>
     </div>
 <?php } ?>
+
 <article class="pr-4 pl-4">
     <section class="postShowSection mb-3">
         <figure class="postFigure">

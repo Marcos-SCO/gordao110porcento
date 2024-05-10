@@ -1,14 +1,28 @@
+<?php
+
+$posts = valueParamExistsOrDefault($posts);
+$havePosts = count($posts) > 0;
+
+?>
+
 <header class="imgBackgroundArea homeBlog d-flex flex-wrap justify-content-center align-items-center flex-column">
     <span>
         <h1 class="text-left">Blog</h1>
-        <h2 class="text-left">ùltimas noticias</h2>
+        <h2 class="text-left">Últimas noticias</h2>
     </span>
 </header>
+
 <article class="blogArticle">
-    <?php Core\Controller::createMore($BASE, 'posts', 'Adicionar mais postagens'); ?>
-    <?php if (count($posts) > 0) { ?>
+    <?php
+
+    Helpers\Classes\DynamicLinks::addLink($BASE, 'posts', 'Adicionar mais postagens');
+
+    if ($havePosts) :
+
+    ?>
         <section class="blog flex-wrap card-group">
-            <?php foreach ($posts as $data) { ?>
+
+            <?php foreach ($posts as $data) : ?>
                 <figure class="d-flex justify-content-center blogFig card">
                     <a href="<?= $BASE ?>/posts/show/<?= $data->id ?>">
                         <div class="imgMax">
@@ -21,10 +35,12 @@
                     </a>
                     <small class="updated card-text">Atualizado em <?= dateFormat($data->updated_at) ?></small>
                     <?php
-                    Core\Controller::editDelete($BASE, 'posts', $data, 'Quer mesmo deletar essa postagem?');
+                    Helpers\Classes\DynamicLinks::editDelete($BASE, 'posts', $data, 'Quer mesmo deletar essa postagem?');
                     ?>
                 </figure>
-            <?php } ?>
+            <?php endforeach; ?>
+
         </section>
+    <?php endif; ?>
+
 </article>
-<?php } ?>

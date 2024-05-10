@@ -35,7 +35,7 @@
                         </figcaption>
                     </a>
                     <?php
-                    Core\Controller::editDelete($BASE, 'posts', $data, 'Quer mesmo deletar essa postagem?');
+                    Helpers\Classes\DynamicLinks::editDelete($BASE, 'posts', $data, 'Quer mesmo deletar essa postagem?');
                     ?>
                 </figure>
             <?php } ?>
