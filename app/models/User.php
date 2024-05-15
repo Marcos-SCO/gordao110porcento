@@ -18,12 +18,15 @@ class User extends Model
     public function login($email, $password)
     {
         $result = $this->customQuery("SELECT `status`, `id`, `adm`, `name`, `email`, `password` FROM users WHERE email = :email", ['email' => $email]);
-        $hashed_password = $result->password;
-        if (password_verify($password, $hashed_password)) {
-            return $result;
-        } else {
-            return false;
-        }
+
+        $hashedPassword = $result->password;
+
+        $isCorrectPassword =
+            password_verify($password, $hashedPassword);
+
+        if (!$isCorrectPassword) return false;
+
+        return $result;
     }
 
     // insert
@@ -47,6 +50,7 @@ class User extends Model
     {
         $data['email'] = $email;
         $status = $this->customQuery("SELECT `status` FROM users WHERE `email` = :email", ['email' => $email]);
+        
         if (isset($status->status)) {
             if ($status->status != 1) {
                 $error['email_error'] = 'Usuário está desativado do sistema';
@@ -78,6 +82,6 @@ class User extends Model
 
         session_destroy();
 
-        redirect('users/login');
+        redirect('login');
     }
 }

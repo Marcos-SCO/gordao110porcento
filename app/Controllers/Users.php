@@ -16,13 +16,155 @@ class Users extends Controller
         $this->model = $this->model('User');
     }
 
-    public function index($paramsArray)
+    public function getPostData()
+    {
+        // Sanitize data
+        $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_SPECIAL_CHARS);
+        if (!$post) return;
+
+        $id = indexParamExistsOrDefault($post, 'id');
+
+        $adm = indexParamExistsOrDefault($post, 'adm', 0);
+
+        $name = indexParamExistsOrDefault($post, 'name');
+
+        $lastName = indexParamExistsOrDefault($post, 'last_name');
+
+        $email = indexParamExistsOrDefault($post, 'email');
+
+        $password = verifyValue($post, 'password');
+
+        $imgFiles = indexParamExistsOrDefault($_FILES, 'img');
+
+        $imgName = indexParamExistsOrDefault($_FILES, 'name');
+
+        $postImg = indexParamExistsOrDefault($post, 'img');
+
+        $bio = indexParamExistsOrDefault($_FILES, 'bio');
+
+        $confirmPassword =
+            indexParamExistsOrDefault($_FILES, 'confirm_password', '');
+
+        $nameError = indexParamExistsOrDefault($_FILES, 'name_error');
+
+        $lastNameError = indexParamExistsOrDefault($_FILES, 'last_name_error');
+
+        $emailError = indexParamExistsOrDefault($_FILES, 'email_error');
+
+        $passwordError = indexParamExistsOrDefault($_FILES, 'password_error');
+
+        $confirmPasswordError = indexParamExistsOrDefault($_FILES, 'confirm_password_error');
+
+        // Add data to array
+        $data = [
+            'id' => $id,
+            'adm' => $adm,
+            'name' => $name,
+            'last_name' => $lastName,
+            'email' => $email,
+            'password' => $password ? trim($password) : false,
+            'confirm_password' => $confirmPassword,
+            'bio' => $bio,
+            'img' => $imgFiles,
+            'post_img' => $postImg,
+        ];
+
+        $error = [
+            'name_error' => $nameError,
+            'last_name_error' => $lastNameError,
+            'email_error' => $emailError,
+            'password_error' => $passwordError,
+            'confirm_password_error' => $confirmPasswordError,
+            'error' => false
+        ];
+
+        if ($imgFiles || $postImg) {
+            $validate = $this->imgValidate();
+
+            if (isset($_FILES['img']) && $postImg == '') {
+
+                if (empty($data['img'])) {
+                    $errorData['img_error'] = "Insira uma imagem";
+                    $errorData['error'] = true;
+                }
+
+                if (!empty($data['img'])) {
+                    $errorData['img_error'] = $validate[1];
+                    $errorData['error'] = $validate[0];
+                }
+
+            } else if ($postImg && !empty($data['img'])) {
+                $errorData['img_error'] = $validate[1];
+                $errorData['error'] = $validate[0];
+            }
+
+        }
+
+        if (isset($_POST['name']) || isset($_POST['last_name'])) {
+            // Name
+            if (empty($data['name'])) {
+                $errorData['name_error'] = "Digite o nome";
+                $errorData['error'] = true;
+            }
+
+            if (empty($data['last_name'])) {
+                $errorData['last_name_error'] = "Digite o sobrenome";
+                $errorData['error'] = true;
+            }
+        }
+
+        if (isset($_POST['email']) != '') {
+
+            // Validate Email
+            if (empty($data['email'])) {
+                $errorData['email_error'] = "Digite o E-mail";
+                $errorData['error'] = true;
+            }
+
+            if (!filter_input(INPUT_POST, 'email', FILTER_VALIDATE_EMAIL)) {
+                $errorData['email_error'] = "E-mail inválido";
+                $errorData['error'] = true;
+            }
+        }
+
+        if (isset($_POST['password'])) {
+
+            if (empty($data['password'])) {
+
+                $errorData['password_error'] = "Digite a senha";
+                $errorData['error'] = true;
+            } 
+            
+            if ($data['password'] && strlen($data['password']) < 6) {
+
+                $errorData['password_error'] = "Senha precisa no minimo de ser maior que 6 caracteres";
+                $errorData['error'] = true;
+            }
+        }
+
+        // Password validate
+        if (isset($_POST['confirm_password'])) {
+
+            // Password
+            if (empty($data['confirm_password'])) {
+                $errorData['confirm_password_error'] = "Confirme a senha";
+                $errorData['error'] = true;
+            } elseif ($data['password'] != $data['confirm_password']) {
+                $errorData['confirm_password_error'] = "Senhas estão diferentes";
+                $errorData['error'] = true;
+            }
+        }
+
+        return ['data' => $data, 'errorData' => $error];
+    }
+
+    public function index($requestData)
     {
         $this->isLogin();
 
         $table = 'users';
 
-        $pageId = isset($paramsArray['users']) && !empty($paramsArray['users']) ? $paramsArray['users'] : 1;
+        $pageId = isset($requestData['users']) && !empty($requestData['users']) ? $requestData['users'] : 1;
 
         $results = $this->pagination($table, $pageId, $limit = 10, '', $orderOption = 'GROUP BY id');
 
@@ -80,25 +222,25 @@ class Users extends Controller
         // Process Form
         $data = $this->getPostData();
         $error = $data[1];
-        $id = $data[0]['id'];
+        $id = $data['id'];
 
-        $this->model->customQuery("SELECT `email` FROM users WHERE email = :email", ['email' => $data[0]['email']]);
+        $this->model->customQuery("SELECT `email` FROM users WHERE email = :email", ['email' => $data['email']]);
 
         if ($this->model->rowCount() > 0) {
-            $error['email_error'] = "Já existe um úsuário com esse E-mail";
-            $error['error'] = true;
+            $errorData['email_error'] = "Já existe um úsuário com esse E-mail";
+            $errorData['error'] = true;
         }
 
 
-        $isErrorResult = $error['error'] == true;
+        $isErrorResult = $errorData['error'] == true;
 
-        if ($isErrorResult) return $this->create($data[0], $error);
+        if ($isErrorResult) return $this->create($data, $error);
 
         $_SESSION['submitted'] = true;
         // Hash password
-        $data[0]['password'] = password_hash($data[0]['password'], PASSWORD_DEFAULT);
+        $data['password'] = password_hash($data['password'], PASSWORD_DEFAULT);
 
-        $insertedUser = $this->model->insertUser($data[0]);
+        $insertedUser = $this->model->insertUser($data);
 
         if (!$insertedUser) {
             die('Something went wrong when inserting a user...');
@@ -125,13 +267,17 @@ class Users extends Controller
         return $this->index($id = 1, $flash);
     }
 
-    public function show($paramsArray)
+    public function show($requestData)
     {
-        $userPageId = isset($paramsArray['show']) && !empty($paramsArray['show']) ? $paramsArray['show'] : 1;
+        if (!is_array($requestData)) $requestData = [];
 
-        $lastKey = array_key_last($paramsArray);
+        $userPageId = isset($requestData['show']) && !empty($requestData['show']) ? $requestData['show'] : 1;
 
-        $pageId = !($lastKey == 'show') ? end($paramsArray) : 1;
+        $lastKey = array_key_last($requestData);
+
+        $pageId = !($lastKey == 'show') ? end($requestData) : 1;
+
+        if ($userPageId && !($lastKey == 'show')) $pageId = $userPageId;
 
         $user = $this->model->getAllFrom('users', $userPageId);
 
@@ -201,19 +347,19 @@ class Users extends Controller
         // Process Form
         $data = $this->getPostData();
         $error = $data[1];
-        $id = $data[0]['id'];
+        $id = $data['id'];
 
-        $isErrorResult = $error['error'] == true;
+        $isErrorResult = $errorData['error'] == true;
 
         if ($isErrorResult) return $this->edit($id, $error);
 
 
-        $img = $data[0]['img'];
-        $postImg = $data[0]['post_img'];
+        $img = $data['img'];
+        $postImg = $data['post_img'];
 
         $isEmptyImg = $img == "";
 
-        if ($isEmptyImg) $data[0]['img'] = $postImg;
+        if ($isEmptyImg) $data['img'] = $postImg;
 
         if (!$isEmptyImg) {
 
@@ -223,7 +369,7 @@ class Users extends Controller
             $data['img'] = explode('/', $fullPath);
         }
 
-        $this->model->updateUser($data[0]);
+        $this->model->updateUser($data);
 
         $updatedUser = $this->model->rowCount();
 
@@ -239,61 +385,70 @@ class Users extends Controller
     public function login($flash = null)
     {
         // if user is already logged redirect to profile
-        if ($_SESSION['user_id']) {
-            $userId = $_SESSION['user_id'];
+        $sessionUserId = indexParamExistsOrDefault($_SESSION, 'user_id');
 
-            redirect("users/show/$userId");
-        }
+        if ($sessionUserId) redirect("users/show/$sessionUserId");
 
         $isPostRequest = $_SERVER['REQUEST_METHOD'] == 'POST';
 
         if (!$isPostRequest) {
-            return View::render('users/login.php', 
-            [
-                'flash' => $flash,
-                'title' => 'Users login',
-            ]
-        );
+
+            return View::render(
+                'users/login.php',
+                [
+                    'flash' => $flash,
+                    'title' => 'Users login',
+                ]
+            );
         }
 
         // Process
-        $data = $this->getPostData();
-        $error = $data[1];
-        $id = $data[0]['id'];
+        $postResultData = $this->getPostData();
 
-        // Dont let users with status 0 login
-        if ($data[0]['email'] != '') {
-            $this->model->blockLogin($data[0]['email']);
+        $data = indexParamExistsOrDefault($postResultData, 'data');
+
+        $errorData =
+            indexParamExistsOrDefault($postResultData, 'errorData');
+
+        $id = $data['id'];
+
+        // Don't let users with status 0 login
+        if ($data['email'] != '') {
+
+            $this->model->blockLogin($data['email']);
         }
 
-        $this->model->customQuery("SELECT `email` FROM users WHERE `email` = :email", ['email' => $data[0]['email']]);
+       $this->model->customQuery("SELECT `email` FROM users WHERE `email` = :email", ['email' => $data['email']]);
 
         // Check for users/email
         if ($_POST['email'] != '' && $this->model->rowCount() <= 0) {
             // User not Found
-            $error['email_error'] = "Nenhum usuário encontrado";
-            $error['error'] = true;
+            $errorData['email_error'] = "Nenhum usuário encontrado";
+            $errorData['error'] = true;
         }
 
-        $isErrorResult = $error['error'] == true;
+        $isErrorResult = $errorData['error'] == true;
 
         if ($isErrorResult) {
+
             return View::render('users/login.php', [
-                'data' => $data[0],
-                'error' => $error
+                'data' => $data,
+                'error' => $errorData
             ]);
         }
 
         // Check an set logged in user
-        $loggedInUser = $this->model->login($data[0]['email'], $data[0]['password']);
+        $loggedInUser = $this->model->login($data['email'], $data['password']);
+
+        $userId = objParamExistsOrDefault($loggedInUser, 'id');
 
         if (!$loggedInUser) {
-            $error['password_error'] = "Email ou senha incorretos";
+            $errorData['password_error'] = "Email ou senha incorretos";
 
             return View::render('users/login.php', [
                 'title' => 'Users Login',
-                'data' => $data[0],
-                'error' => $error
+                'data' => $data,
+                'error' => $errorData
             ]);
         }
 
@@ -301,140 +456,14 @@ class Users extends Controller
         $this->model->createUserSession($loggedInUser);
 
         $flash = flash('register_success', 'Logado com sucesso!');
-        return $this->show($_SESSION['user_id'], 1, $flash);
-    }
 
-    public function getPostData()
-    {
-        // Sanitize data
-        $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
-
-        $id = isset($_POST['id']) ? trim($_POST['id']) : '';
-
-        $adm = isset($_POST['adm']) ? intval(trim($_POST['adm'])) : 0;
-
-        $name = isset($_POST['name']) ? trim($_POST['name']) : '';
-
-        $lastName = isset($_POST['last_name']) ? trim($_POST['last_name']) : '';
-
-        $email = isset($_POST['email']) ? trim($_POST['email']) : '';
-
-        $password = isset($_POST['password']) ? trim($_POST['password']) : '';
-
-        $img = isset($_FILES['img']) ? $_FILES['img']['name'] : null;
-
-        $postImg = isset($_POST['img']) ? $_POST['img'] : '';
-
-        $bio = isset($_POST['bio']) ? trim($_POST['bio']) : null;
-
-        $confirmPassword = isset($_POST['confirm_password']) ? trim($_POST['confirm_password']) : '';
-
-        $nameError = isset($_POST['name_error']) ? trim($_POST['name_error']) : '';
-
-        $lastNameError = isset($_POST['last_name_error']) ? trim($_POST['last_name_error']) : '';
-
-        $emailError = isset($_POST['email_error']) ? trim($_POST['email_error']) : '';
-
-        $passwordError = isset($_POST['password_error']) ? trim($_POST['password_error']) : '';
-
-        $confirmPasswordError =
-            isset($_POST['confirm_password_error']) ? trim($_POST['confirm_password_error']) : '';
-
-        // Add data to array
-        $data = [
-            'id' => $id,
-            'adm' => $adm,
-            'name' => $name,
-            'last_name' => $lastName,
-            'email' => $email,
-            'password' => $password,
-            'confirm_password' => $confirmPassword,
-            'bio' => $bio,
-            'img' => $img,
-            'post_img' => $postImg,
+        $requestData = [
+            'show' => $userId,
+            'data' => $data,
+            'flash' => $flash,
         ];
 
-        $error = [
-            'name_error' => $nameError,
-            'last_name_error' => $lastNameError,
-            'email_error' => $emailError,
-            'password_error' => $passwordError,
-            'confirm_password_error' => $confirmPasswordError,
-            'error' => false
-        ];
-
-        if (isset($_FILES['img']) || $postImg) {
-            $validate = $this->imgValidate();
-
-            if (isset($_FILES['img']) && $postImg == '') {
-
-                if (empty($data['img'])) {
-                    $error['img_error'] = "Insira uma imagem";
-                    $error['error'] = true;
-                }
-
-                if (!empty($data['img'])) {
-                    $error['img_error'] = $validate[1];
-                    $error['error'] = $validate[0];
-                }
-            } else if ($postImg && !empty($data['img'])) {
-                $error['img_error'] = $validate[1];
-                $error['error'] = $validate[0];
-            }
-        }
-
-        if (isset($_POST['name']) || isset($_POST['last_name'])) {
-            // Name
-            if (empty($data['name'])) {
-                $error['name_error'] = "Digite o nome";
-                $error['error'] = true;
-            }
-
-            if (empty($data['last_name'])) {
-                $error['last_name_error'] = "Digite o sobrenome";
-                $error['error'] = true;
-            }
-        }
-
-        if (isset($_POST['email']) != '') {
-
-            // Validate Email
-            if (empty($data['email'])) {
-                $error['email_error'] = "Digite o E-mail";
-                $error['error'] = true;
-            }
-
-            if (!filter_input(INPUT_POST, 'email', FILTER_VALIDATE_EMAIL)) {
-                $error['email_error'] = "E-mail inválido";
-                $error['error'] = true;
-            }
-        }
-
-        if (isset($_POST['password'])) {
-
-            if (empty($data['password'])) {
-                $error['password_error'] = "Digite a senha";
-                $error['error'] = true;
-            } elseif (strlen($data['password']) < 6) {
-                $error['password_error'] = "Senha precisa no minimo de ser maior que 6 caracteres";
-                $error['error'] = true;
-            }
-        }
-
-        // Password validate
-        if (isset($_POST['confirm_password'])) {
-
-            // Password
-            if (empty($data['confirm_password'])) {
-                $error['confirm_password_error'] = "Confirme a senha";
-                $error['error'] = true;
-            } elseif ($data['password'] != $data['confirm_password']) {
-                $error['confirm_password_error'] = "Senhas estão diferentes";
-                $error['error'] = true;
-            }
-        }
-
-        return [$data, $error];
+        return $this->show($requestData);
     }
 
     public function logout()
