@@ -9,6 +9,8 @@ use Core\View;
 
 class Home extends Controller
 {
+    public $model;
+
     public function __construct()
     {
         $this->model = $this->model('Home');
