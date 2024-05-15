@@ -11,6 +11,11 @@ $isGalleryPage = $dataPage == 'gallery';
 $tinyMceControllers = ['posts/show'];
 $isTinyMce = in_array($dataPage, $tinyMceControllers);
 
+$siteName = 'Gordão a 110%';
+
+$siteTitle = (!$isHomeController) && isset($title)
+    ? $title . ' - ' . $siteName : $siteName;
+
 ?>
 
 <!DOCTYPE html>
@@ -45,7 +50,7 @@ $isTinyMce = in_array($dataPage, $tinyMceControllers);
     <link href="https://fonts.googleapis.com/css2?family=Oleo+Script+Swash+Caps:wght@700&display=swap" rel="stylesheet">
 
     <?php
-      // tiny MCE 
+    // tiny MCE 
     if ($isTinyMce) echo "<!-- Tiny MCE -->
     <script src='https://cdn.tiny.cloud/1/dksjdj5uue9ro7l3iyr2xu6basfnwgrqpkh8y5beu0m60kwl/tinymce/5/tinymce.min.js' referrerpolicy='origin'></script><script>tinymce.init({selector:'#tinyMCE'});</script>";
 
@@ -57,13 +62,14 @@ $isTinyMce = in_array($dataPage, $tinyMceControllers);
 
     <link rel="stylesheet" href="<?= $BASE . '/public/dist/css/index.css'; ?>">
 
-    <title><?= $title ?? 'Olá mundo!' ?></title>
+    <title><?= $siteTitle; ?></title>
 
 </head>
 
 <body data-page="<?= $dataPage; ?>">
 
-    <?php // if (!$isHomeController) echo '<!-- Spinner --><div id="loader" class="center" style="display:none"></div>'; ?>
+    <?php // if (!$isHomeController) echo '<!-- Spinner --><div id="loader" class="center" style="display:none"></div>'; 
+    ?>
 
     <header class="<?= $isHomeController ? 'fixed-top' : '' ?> z-index bg-light" id="topNav" data-js="navHeader">
         <!-- Nav -->

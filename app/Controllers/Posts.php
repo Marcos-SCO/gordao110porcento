@@ -27,7 +27,7 @@ class Posts extends Controller
         $results = $this->pagination($table, $pageId, $limit = 8, '', $orderOption = 'ORDER BY id DESC');
 
         View::render('posts/index.php', [
-            'title' => 'Posts - Gordão a 110%',
+            'title' => 'Posts',
             'controller' => 'Posts',
             'posts' => $results[4],
             'flash' => $flash,
@@ -50,7 +50,7 @@ class Posts extends Controller
 
         View::render('posts/create.php', [
             'controller' => 'Posts',
-            'title' => 'Criar Post - Gordão a 110%',
+            'title' => 'Criar Post ',
             'data' => $data,
             'error' => $error,
         ]);

@@ -137,7 +137,7 @@ class Users extends Controller
 
         // Pagination for posts with user id
         $table = 'posts';
-        
+
         $results = $this->pagination($table, $pageId, $limit = 4, ['user_id', $user->id], $orderOption = 'ORDER BY id DESC');
 
         // Display results
@@ -247,7 +247,14 @@ class Users extends Controller
 
         $isPostRequest = $_SERVER['REQUEST_METHOD'] == 'POST';
 
-        if (!$isPostRequest) return View::render('users/login.php', ['flash' => $flash]);
+        if (!$isPostRequest) {
+            return View::render('users/login.php', 
+            [
+                'flash' => $flash,
+                'title' => 'Users login',
+            ]
+        );
+        }
 
         // Process
         $data = $this->getPostData();
@@ -284,6 +291,7 @@ class Users extends Controller
             $error['password_error'] = "Email ou senha incorretos";
 
             return View::render('users/login.php', [
+                'title' => 'Users Login',
                 'data' => $data[0],
                 'error' => $error
             ]);
@@ -369,7 +377,6 @@ class Users extends Controller
                     $error['img_error'] = $validate[1];
                     $error['error'] = $validate[0];
                 }
-
             } else if ($postImg && !empty($data['img'])) {
                 $error['img_error'] = $validate[1];
                 $error['error'] = $validate[0];
@@ -408,12 +415,10 @@ class Users extends Controller
             if (empty($data['password'])) {
                 $error['password_error'] = "Digite a senha";
                 $error['error'] = true;
-
             } elseif (strlen($data['password']) < 6) {
                 $error['password_error'] = "Senha precisa no minimo de ser maior que 6 caracteres";
                 $error['error'] = true;
             }
-
         }
 
         // Password validate
@@ -423,7 +428,6 @@ class Users extends Controller
             if (empty($data['confirm_password'])) {
                 $error['confirm_password_error'] = "Confirme a senha";
                 $error['error'] = true;
-
             } elseif ($data['password'] != $data['confirm_password']) {
                 $error['confirm_password_error'] = "Senhas estão diferentes";
                 $error['error'] = true;

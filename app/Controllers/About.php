@@ -10,7 +10,7 @@ use Core\View;
 class About extends Controller
 {
     public $model;
-    
+
     public function __construct()
     {
         $this->model = $this->model('About');
@@ -25,7 +25,7 @@ class About extends Controller
 
         View::render('about/index.php', [
             'controller' => 'About',
-            'title' => 'Sobre - Gordão a 110%',
+            'title' => 'Sobre',
             'hamburgers' => $hamburgers,
             'pizzas' => $pizzas,
             'categories' => $categories,
