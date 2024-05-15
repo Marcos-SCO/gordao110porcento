@@ -34,9 +34,13 @@ class View
             return;
         }
 
+        ob_start("htmlMinifier");
+        
         require_once "../public/resources/views/base/header.php";
         require $file;
         require_once "../public/resources/views/base/footer.php";
+
+        ob_end_flush();
     }
     
 }
