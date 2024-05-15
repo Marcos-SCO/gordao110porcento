@@ -23,24 +23,28 @@ class View
         // $file = "$BASE/public/resources/views/$view"; // Relative to Core directory
         $file = "../public/resources/views/$view"; // Relative to Core directory
 
+        
         if (!is_readable($file)) {
             // echo "$file not found";
             // throw new \Exception("$file not found");
             header($_SERVER["SERVER_PROTOCOL"] . " 404 Not Found", true, 404);
             http_response_code(404);
-
+            
             require_once "../public/resources/views/errors/404.php";
 
-            return;
+            exit();
         }
+        
+        $isErrorView = str_contains($file, 'errors/');
 
-        ob_start("htmlMinifier");
+        if (!$isErrorView) ob_start("htmlMinifier");
         
         require_once "../public/resources/views/base/header.php";
         require $file;
         require_once "../public/resources/views/base/footer.php";
-
-        ob_end_flush();
+        
+        if (!$isErrorView) ob_end_flush();
+        
     }
     
 }
