@@ -114,7 +114,12 @@ class Contact extends Controller
     {
         $contactPage = indexParamExistsOrDefault($paramsArray, 'contact');
 
-        if ($contactPage == '') return redirect('home');
+        $permittedContactPages = ['message', 'work'];
+
+        $isAValidContactPage =
+            in_array($contactPage, $permittedContactPages);
+
+        if (!$isAValidContactPage) return redirect('home');
 
         return $this->message(['contactPage' => $contactPage]);
     }
