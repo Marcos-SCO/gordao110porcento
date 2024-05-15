@@ -39,6 +39,8 @@ class Model extends Conn
         $query = "SELECT * FROM {$table}";
         if ($option != '') $query .= " {$option}";
 
+        var_dump($query);
+
         $this->stmt = $this->conn->prepare($query);
         $this->stmt->execute();
         $result = $this->stmt->fetchAll();

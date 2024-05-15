@@ -110,9 +110,9 @@ class Contact extends Controller
         return ['data' => $data, 'errorData' => $error];
     }
 
-    public function index($paramsArray = null)
+    public function index($requestData = null)
     {
-        $contactPage = indexParamExistsOrDefault($paramsArray, 'contact');
+        $contactPage = indexParamExistsOrDefault($requestData, 'contact');
 
         $permittedContactPages = ['message', 'work'];
 
@@ -147,9 +147,9 @@ class Contact extends Controller
         ]);
     }
 
-    public function sendMessage($paramsArray = [])
+    public function sendMessage($requestData = [])
     {
-        $contactPage = indexParamExistsOrDefault($paramsArray, 'contact');
+        $contactPage = indexParamExistsOrDefault($requestData, 'contact');
 
         $submittedPostData =
             isset($_SESSION['submitted']) &&

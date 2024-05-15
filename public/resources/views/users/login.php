@@ -1,12 +1,16 @@
 <style><?= (detectIE() != true) ? 'main {display:flex;justify-content:center;}' : '' ?> main {height: 100%!important;background-image:url('<?=$BASE?>/public/resources/img/template/aboutBackgroundSection.png');background-repeat:no-repeat;background-size:cover;}#whats{display:none!important}</style>
+
 <section class="d-flex flex-column justify-content-center align-items-center container">
+
     <header>
-        <h1><?= $title ?? 'Logar no sistema' ?></h1>
+        <h1>Logar no sistema</h1>
     </header>
+
     <div class="col-md-6 mx-auto">
         <div class="card card-body mt5">
             <p>Preencha os campos</p>
-            <form action="<?= $BASE ?>/users/login" method="post">
+            
+            <form action="<?= $BASE ?>/login" method="post">
                 <!-- Email -->
                 <div class="form-group">
                     <label for="email">E-mail: <sup>*</sup></label>
@@ -15,6 +19,7 @@
                         <?= $error['email_error'] ?? '' ?>
                     </span>
                 </div>
+
                 <!-- Password -->
                 <div class="form-group">
                     <label for="password">Senha: <sup>*</sup></label>
@@ -29,7 +34,9 @@
                         <input type="submit" value="Login" class="btn btn-success btn-block">
                     </div>
                 </div>
+
             </form>
         </div>
     </div>
+
 </section>

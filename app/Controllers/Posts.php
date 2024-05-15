@@ -18,11 +18,11 @@ class Posts extends Controller
         $this->model = $this->model('Post');
     }
 
-    public function index($paramsArray, $flash = false)
+    public function index($requestData, $flash = false)
     {
         $table = 'posts';
 
-        $pageId = isset($paramsArray['posts']) && !empty($paramsArray['posts']) ? $paramsArray['posts'] : 1;
+        $pageId = isset($requestData['posts']) && !empty($requestData['posts']) ? $requestData['posts'] : 1;
 
         $results = $this->pagination($table, $pageId, $limit = 8, '', $orderOption = 'ORDER BY id DESC');
 
@@ -90,9 +90,9 @@ class Posts extends Controller
         return $this->show($id, $flash);
     }
 
-    public function show($paramsArray, array $flash = null)
+    public function show($requestData, array $flash = null)
     {
-        $pageId = isset($paramsArray['show']) && !empty($paramsArray['show']) ? $paramsArray['show'] : 1;
+        $pageId = isset($requestData['show']) && !empty($requestData['show']) ? $requestData['show'] : 1;
 
         $data = $this->model->getAllFrom('posts', $pageId);
 

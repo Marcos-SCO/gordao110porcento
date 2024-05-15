@@ -18,11 +18,11 @@ class Gallery extends Controller
         $this->model = $this->model('Gallery');
     }
 
-    public function index($paramsArray = 1, $flash = false)
+    public function index($requestData = 1, $flash = false)
     {
         $table = 'gallery';
 
-        $pageId = isset($paramsArray['gallery']) && !empty($paramsArray['gallery']) ? $paramsArray['gallery'] : 1;
+        $pageId = isset($requestData['gallery']) && !empty($requestData['gallery']) ? $requestData['gallery'] : 1;
 
         $results = $this->pagination($table, $pageId, $limit = 8, '', $orderOption = 'ORDER BY id DESC');
 

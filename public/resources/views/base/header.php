@@ -130,7 +130,7 @@ $siteTitle = (!$isHomeController) && isset($title)
                                 <a class="dropdown-item" href="<?= $BASE ?>/users/edit/<?= $_SESSION['user_id'] ?>">Meu perfil</a>
                                 <a class="dropdown-item" href="<?= $BASE ?>/users/show/<?= $_SESSION['user_id'] ?>">Página</a>
                                 <a class="dropdown-item" href="<?= $BASE ?>/users/">Usuários</a>
-                                <a class="dropdown-item" href="<?= $BASE ?>/users/logout">Sair</a>
+                                <a class="dropdown-item" href="<?= $BASE ?>/logout">Sair</a>
                             </div>
                         </li>
                     <?php endif; ?>

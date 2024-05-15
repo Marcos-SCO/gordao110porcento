@@ -16,11 +16,11 @@ class Products extends Controller
         $this->model = $this->model('Product');
     }
 
-    public function index($paramsArray, $flash = false)
+    public function index($requestData, $flash = false)
     {
         $table = 'products';
 
-        $pageId = isset($paramsArray['products']) && !empty($paramsArray['products']) ? $paramsArray['products'] : 1;
+        $pageId = isset($requestData['products']) && !empty($requestData['products']) ? $requestData['products'] : 1;
 
         $results = $this->pagination($table, $pageId, $limit = 12, '', $orderOption = 'ORDER BY id DESC');
 

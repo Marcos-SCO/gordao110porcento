@@ -18,11 +18,11 @@ class Categories extends Controller
         $this->model = $this->model('Category');
     }
 
-    public function index($paramsArray = 1, $flash = false)
+    public function index($requestData = 1, $flash = false)
     {
         $table = 'categories';
 
-        $pageId = isset($paramsArray['categories']) && !empty($paramsArray['categories']) ? $paramsArray['categories'] : 1;
+        $pageId = isset($requestData['categories']) && !empty($requestData['categories']) ? $requestData['categories'] : 1;
 
         $results = $this->pagination($table, $pageId, $limit = 3, '', $orderOption = 'ORDER BY id DESC');
 
@@ -94,13 +94,13 @@ class Categories extends Controller
         return $this->show($id, 1, $flash);
     }
 
-    public function show($paramsArray)
+    public function show($requestData)
     {
-        $categoryId = isset($paramsArray['show']) && !empty($paramsArray['show']) ? $paramsArray['show'] : 1;
+        $categoryId = isset($requestData['show']) && !empty($requestData['show']) ? $requestData['show'] : 1;
 
-        $lastKey = array_key_last($paramsArray);
+        $lastKey = array_key_last($requestData);
 
-        $pageId = !($lastKey == 'show') ? end($paramsArray) : 1;
+        $pageId = !($lastKey == 'show') ? end($requestData) : 1;
 
         $urlPath = "categories/show/$categoryId";
 

@@ -24,6 +24,7 @@ return [
     // '/logout' => 'Login@destroy',
 
     '/login/?' => 'Users@login',
+    '/logout/?' => 'Users@logout',
 
     '/users/?($|[0-9])+/?' => 'Users@index',
 
@@ -32,7 +33,7 @@ return [
   ],
 
   'POST' => [
-    '/login' => 'Login@store',
+    'login/?' => 'Users@login',
     '/user/store' => 'User@store',
 
     '/contact/?($|[\w]+)/send/?' => 'Contact@sendMessage',
