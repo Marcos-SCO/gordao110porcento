@@ -61,7 +61,7 @@ if ($_SESSION['user_status'] && $_SESSION['user_status'] == 1) :
 
         if (!$products) echo "<p>Categoria <strong>{$categoryName}</strong> não possui produtos cadastrados...</p>";
 
-        if ($products) include_once __DIR__ . './_listProductItens.php';
+        if ($products) include_once __DIR__ . '/_listProductItens.php';
 
         ?>
     </section>
