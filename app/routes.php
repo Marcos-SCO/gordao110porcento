@@ -6,6 +6,9 @@ return [
     '/about/?' => 'About@index',
 
     '/products/?($|[0-9])+/?' => 'Products@index',
+    '/products/show/($|[0-9])+/?' => 'Products@show',
+    '/products/create/?' => 'Products@create',
+
     '/gallery/?($|[0-9])+/?' => 'Gallery@index',
     
     '/posts/?($|[0-9])+/?' => 'Posts@index',
@@ -35,7 +38,9 @@ return [
 
   'POST' => [
     'login/?' => 'Users@login',
-    '/user/store' => 'User@store',
+    '/user/store/?' => 'User@store',
+
+    '/products/store/?' => 'Products@store',
 
     '/users/update/?' => 'Users@update',
 

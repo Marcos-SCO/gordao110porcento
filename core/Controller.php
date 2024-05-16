@@ -133,7 +133,7 @@ class Controller
             $uploadDir = "public/resources/img/{$table}/category_$categoryId/id_$id/";
         }
 
-        $picProfile = $imgName['name'];
+        $picProfile = $imgName;
 
         $imgFullPath = $uploadDir . $picProfile;
 

@@ -375,6 +375,7 @@ class Users extends Controller
 
         $img = $data['img'];
         $imgName = indexParamExistsOrDefault($img, 'name');
+
         $postImg = $data['post_img'];
 
         $isEmptyImg = $imgName == "";
@@ -383,7 +384,7 @@ class Users extends Controller
 
         if (!$isEmptyImg) {
 
-            $fullPath = $this->imgFullPath('users', $id, $img);
+            $fullPath = $this->imgFullPath('users', $id, $imgName);
             $this->moveUpload($fullPath);
 
             $explodedPath = explode('/', $fullPath);

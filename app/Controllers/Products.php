@@ -62,21 +62,24 @@ class Products extends Controller
     {
         $this->isLogin();
 
-        $submittedPostData =
-            isset($_SESSION['submitted']) &&
-            $_SERVER['REQUEST_METHOD'] == 'POST';
+        // $submittedPostData =
+        //     isset($_SESSION['submitted']) &&
+        //     $_SERVER['REQUEST_METHOD'] == 'POST';
 
-        if (!$submittedPostData) {
-            return redirect('products');
-        }
+        // if (!$submittedPostData) {
+        //     return redirect('products');
+        // }
 
-        $result = $this->getPostData();
-        $data = $result[0];
-        $error = $result[1];
+        $postResultData = $this->getPostData();
 
-        $isErrorResult = $error['error'] == true;
+        $data = indexParamExistsOrDefault($postResultData, 'data');
 
-        if ($isErrorResult) return $this->create($data, $error);
+        $errorData =
+            indexParamExistsOrDefault($postResultData, 'errorData');
+
+        $isErrorResult = $errorData['error'] == true;
+
+        if ($isErrorResult) return $this->create($data, $errorData);
 
         // Create a folder in products
         $fullPath = $this->imgCreateHandler('products', $data['id_category']);
@@ -90,16 +93,24 @@ class Products extends Controller
         }
 
         $_SESSION['submitted'] = true;
+
         $flash = flash('post_message', 'Produto adicionado com successo');
+        
         $id = $this->model->lastId();
 
-        return $this->show($id, $flash);
+        return $this->show(['show' => $id, 'flash' => $flash]);
     }
 
-    public function show($id, array $flash = null)
+    public function show($requestData)
     {
-        $data = $this->model->getAllFrom('products', $id);
+        $productId = indexParamExistsOrDefault($requestData, 'show');
+
+        $flash = indexParamExistsOrDefault($requestData, 'flash');
+
+        $data = $this->model->getAllFrom('products', $productId);
+
         $categories = $this->model->getCategories();
+
         $user = $this->model->getAllFrom('users', $data->user_id);
 
         return View::render('products/show.php', [
@@ -197,21 +208,27 @@ class Products extends Controller
     public function getPostData()
     {
         // Sanitize data
-        $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+        $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_SPECIAL_CHARS);
+        if (!$post) return;
 
-        $id = isset($_POST['id']) ? trim($_POST['id']) : '';
+        $id = indexParamExistsOrDefault($post, 'id');
 
-        $postIdCategory = isset($_POST['id_category']) ? trim($_POST['id_category']) : 1;
+        $postIdCategory = indexParamExistsOrDefault($post, 'id_category');
 
-        $productName = isset($_POST['product_name']) ? (trim($_POST['product_name'])) : '';
+        $productName = indexParamExistsOrDefault($post, 'product_name');
 
-        $productDescription = isset($_POST['product_description']) ? trim($_POST['product_description']) : '';
+        $productDescription = indexParamExistsOrDefault($post, 'product_description');
 
-        $price = isset($_POST['price']) ? trim(preg_replace("/[^0-9,.]+/i", "", $_POST["price"])) : '';
+        $price = verifyValue($post, 'price');
+
+        if ($price) $price = trim(preg_replace("/[^0-9,.]+/i", "", $price));
 
         $price = str_replace(",", ".", $price);
 
-        $img = isset($_FILES['img']) ? $_FILES['img'] : null;
+
+        $imgFiles = indexParamExistsOrDefault($_FILES, 'img');
+
+        $imgName = indexParamExistsOrDefault($imgFiles, 'name');
 
         $postImg = isset($_POST['img']) ? $_POST['img'] : '';
 
@@ -236,7 +253,7 @@ class Products extends Controller
             'product_name' => $productName,
             'product_description' => $productDescription,
             'price' => $price,
-            'img' => $img['name'],
+            'img' => $imgName,
             'post_img' => $postImg,
             'user_id' => $userId,
         ];
@@ -263,7 +280,6 @@ class Products extends Controller
                 $error['img_error'] = $validate[1];
                 $error['error'] = $validate[0];
             }
-
         } else if ($postImg && !empty($data['img'])) {
 
             $error['img_error'] = $validate[1];
@@ -286,13 +302,13 @@ class Products extends Controller
         }
 
         if (isset($data['price'])) {
-            
+
             if (empty($data['price'])) {
                 $error['price_error'] = "Insira o preço do produto e somente valores monetários.";
                 $error['error'] = true;
             }
         }
 
-        return [$data, $error];
+        return ['data' => $data, 'errorData' => $error];
     }
 }
