@@ -38,7 +38,23 @@ class User extends Model
     // update
     public function updateUser($data)
     {
-        return $this->updateQuery('users', ['adm' => $data['adm'], 'name' => $data['name'], 'last_name' => $data['last_name'], 'img' => $data['img'], 'bio' => $data['bio'], 'updated_at' => date("Y-m-d H:i:s")], ['id', $data['id']]);
+
+        $userId = indexParamExistsOrDefault($data, 'id');
+
+        return $this->updateQuery(
+            'users',
+            [
+                'adm' => $data['adm'],
+                'name' => $data['name'],
+                'last_name' => $data['last_name'],
+                'img' => $data['img'],
+                'bio' => $data['bio'],
+                'updated_at' => date("Y-m-d H:i:s"),
+            ],
+            [
+                'id', intval($userId)
+            ]
+        );
     }
 
     public function updateStatus($id, $status)
@@ -50,7 +66,7 @@ class User extends Model
     {
         $data['email'] = $email;
         $status = $this->customQuery("SELECT `status` FROM users WHERE `email` = :email", ['email' => $email]);
-        
+
         if (isset($status->status)) {
             if ($status->status != 1) {
                 $error['email_error'] = 'Usuário está desativado do sistema';

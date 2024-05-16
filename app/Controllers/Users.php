@@ -5,7 +5,9 @@ declare(strict_types=1);
 namespace App\Controllers;
 
 use Core\Controller;
+use Core\Error as CoreError;
 use Core\View;
+use Error;
 
 class Users extends Controller
 {
@@ -40,20 +42,20 @@ class Users extends Controller
 
         $postImg = indexParamExistsOrDefault($post, 'img');
 
-        $bio = indexParamExistsOrDefault($_FILES, 'bio');
+        $bio = indexParamExistsOrDefault($post, 'bio');
 
         $confirmPassword =
-            indexParamExistsOrDefault($_FILES, 'confirm_password', '');
+            indexParamExistsOrDefault($post, 'confirm_password', '');
 
-        $nameError = indexParamExistsOrDefault($_FILES, 'name_error');
+        $nameError = indexParamExistsOrDefault($post, 'name_error');
 
-        $lastNameError = indexParamExistsOrDefault($_FILES, 'last_name_error');
+        $lastNameError = indexParamExistsOrDefault($post, 'last_name_error');
 
-        $emailError = indexParamExistsOrDefault($_FILES, 'email_error');
+        $emailError = indexParamExistsOrDefault($post, 'email_error');
 
-        $passwordError = indexParamExistsOrDefault($_FILES, 'password_error');
+        $passwordError = indexParamExistsOrDefault($post, 'password_error');
 
-        $confirmPasswordError = indexParamExistsOrDefault($_FILES, 'confirm_password_error');
+        $confirmPasswordError = indexParamExistsOrDefault($post, 'confirm_password_error');
 
         // Add data to array
         $data = [
@@ -92,12 +94,10 @@ class Users extends Controller
                     $errorData['img_error'] = $validate[1];
                     $errorData['error'] = $validate[0];
                 }
-
             } else if ($postImg && !empty($data['img'])) {
                 $errorData['img_error'] = $validate[1];
                 $errorData['error'] = $validate[0];
             }
-
         }
 
         if (isset($_POST['name']) || isset($_POST['last_name'])) {
@@ -133,8 +133,8 @@ class Users extends Controller
 
                 $errorData['password_error'] = "Digite a senha";
                 $errorData['error'] = true;
-            } 
-            
+            }
+
             if ($data['password'] && strlen($data['password']) < 6) {
 
                 $errorData['password_error'] = "Senha precisa no minimo de ser maior que 6 caracteres";
@@ -303,35 +303,40 @@ class Users extends Controller
         ]);
     }
 
-    public function edit($id, $error = null, $flash = null)
+    public function edit($requestData)
     {
         $this->isLogin();
 
-        $data = $this->model->getAllFrom('users', $id);
+        $userId = indexParamExistsOrDefault($requestData, 'edit');
 
-        $userAdminOne = $id == 1 && $_SESSION['user_id'] == 1;
+        if (!$userId) throw new \Exception('User id is missing...');
 
-        $isSameLoggedUser = $data->id != 1 && $_SESSION['user_id'] == $id || $_SESSION['adm_id'] == 1 && $id != 1;
+        $flashData = indexParamExistsOrDefault($requestData, 'flash');
 
+        $data = $this->model->getAllFrom('users', $userId);
 
-        if ($userAdminOne) {
+        $isUserAdminOne = $userId == 1 && $_SESSION['user_id'] == 1;
+
+        $isSameLoggedUser = $data->id != 1 && $_SESSION['user_id'] == $userId || $_SESSION['adm_id'] == 1 && $userId != 1;
+
+        if ($isUserAdminOne) {
             View::render('users/edit.php', [
                 'title' => 'Editar perfil de ' . $data->name,
                 'data' => $data,
-                'flash' => $flash,
-                'error' => $error
+                'flash' => $flashData,
+                // 'error' => $error
             ]);
         }
 
-        if (!$userAdminOne) {
+        if (!$isUserAdminOne) {
 
             if (!$isSameLoggedUser) return redirect('users');
 
             View::render('users/edit.php', [
                 'title' => 'Editar perfil de ' . $data->name,
                 'data' => $data,
-                'flash' => $flash,
-                'error' => $error
+                'flash' => $flashData,
+                // 'error' => $error
             ]);
         }
     }
@@ -345,19 +350,34 @@ class Users extends Controller
         if (!$submittedPostData) return;
 
         // Process Form
-        $data = $this->getPostData();
-        $error = $data[1];
+        $postResultData = $this->getPostData();
+
+        $data = indexParamExistsOrDefault($postResultData, 'data');
+
+        $errorData =
+            indexParamExistsOrDefault($postResultData, 'errorData');
+
         $id = $data['id'];
 
         $isErrorResult = $errorData['error'] == true;
 
-        if ($isErrorResult) return $this->edit($id, $error);
+        if ($isErrorResult) {
+
+            $errorArrayData = [
+                'edit' => $id,
+                'data' => $data,
+                'error' => $errorData
+            ];
+
+            return $this->edit($errorArrayData);
+        }
 
 
         $img = $data['img'];
+        $imgName = indexParamExistsOrDefault($img, 'name');
         $postImg = $data['post_img'];
 
-        $isEmptyImg = $img == "";
+        $isEmptyImg = $imgName == "";
 
         if ($isEmptyImg) $data['img'] = $postImg;
 
@@ -366,7 +386,9 @@ class Users extends Controller
             $fullPath = $this->imgFullPath('users', $id, $img);
             $this->moveUpload($fullPath);
 
-            $data['img'] = explode('/', $fullPath);
+            $explodedPath = explode('/', $fullPath);
+
+            $data['img'] = end($explodedPath);
         }
 
         $this->model->updateUser($data);
@@ -379,7 +401,15 @@ class Users extends Controller
 
         $flash = flash('register_success', 'Atualizado com sucesso!');
 
-        return $this->edit($id, $error = null, $flash);
+        $requestData = [
+            'edit' => $id,
+            'data' => $data,
+            'flash' => $flash,
+        ];
+
+        // return $this->edit($requestData);
+
+        return redirect("users/edit/$id/");
     }
 
     public function login($flash = null)
@@ -418,7 +448,7 @@ class Users extends Controller
             $this->model->blockLogin($data['email']);
         }
 
-       $this->model->customQuery("SELECT `email` FROM users WHERE `email` = :email", ['email' => $data['email']]);
+        $this->model->customQuery("SELECT `email` FROM users WHERE `email` = :email", ['email' => $data['email']]);
 
         // Check for users/email
         if ($_POST['email'] != '' && $this->model->rowCount() <= 0) {

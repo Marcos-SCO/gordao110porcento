@@ -2,6 +2,8 @@
 
 namespace Core;
 
+use App\Config\Config;
+
 // Base controller | Loads the models 
 class Controller
 {
@@ -69,8 +71,11 @@ class Controller
 
     public function moveUpload($imgFullPath)
     {
+        $imgFullPath = __DIR__ . '/../' . $imgFullPath;
 
-        $isEmptyImg = $_FILES["img"]["tmp_name"] == "";
+        $imageTempName = $_FILES['img']['tmp_name'];
+
+        $isEmptyImg = $imageTempName == "";
 
         if ($isEmptyImg) {
             $data['img_error'] = "Envie uma imagem";
@@ -79,7 +84,7 @@ class Controller
             return $error;
         }
 
-        move_uploaded_file($_FILES['img']['tmp_name'], $imgFullPath);
+        move_uploaded_file($imageTempName, $imgFullPath);
     }
 
     public function imgCreateHandler($table, $folderName = null)
@@ -106,13 +111,17 @@ class Controller
 
             // delete the folder
             $this->deleteFolder($table, $id);
+
             if (!file_exists("../public/resources/img/{$table}/id_$id")) {
+
                 mkdir("../public/resources/img/{$table}/id_$id");
             }
-            $upload_dir = "img/{$table}/id_$id/";
+
+            $uploadDir = "public/resources/img/{$table}/id_$id/";
         }
 
         if (!$emptyCategoryId) {
+
             $this->deleteFolder($table, $id, $categoryId);
             // Create folder
 
@@ -121,12 +130,12 @@ class Controller
                 mkdir("../public/resources/img/{$table}/category_{$categoryId}/id_$id", 0755, true);
             }
 
-            $upload_dir = "img/{$table}/category_$categoryId/id_$id/";
+            $uploadDir = "public/resources/img/{$table}/category_$categoryId/id_$id/";
         }
 
-        $picProfile = $imgName;
+        $picProfile = $imgName['name'];
 
-        $imgFullPath = $upload_dir . $picProfile;
+        $imgFullPath = $uploadDir . $picProfile;
 
         return $imgFullPath;
     }
@@ -138,6 +147,7 @@ class Controller
         if (!$notEmptyCategoryAndMassDelete) {
             // Delete imgs with id named folder
             if (file_exists("../public/resources/img/{$table}/id_$id")) {
+
                 array_map('unlink', glob("../public/resources/img/{$table}/id_{$id}/*.*"));
                 rmdir("../public/resources/img/{$table}/id_$id");
             }
@@ -149,7 +159,9 @@ class Controller
         if ($notEmptyCategoryAndMassDelete) {
 
             if (file_exists("../public/resources/img/{$table}/category_{$idCategory}")) {
+
                 $dir = "../public/resources/img/{$table}/category_{$idCategory}";
+
                 function rrmdir($dir)
                 {
                     foreach (glob($dir . '/*') as $file) {
@@ -163,14 +175,15 @@ class Controller
         }
 
         if ($idCategory != null) {
+
             // Delete imgs products
             if (file_exists("../public/resources/img/{$table}/category_{$idCategory}/id_{$id}")) {
+
                 array_map('unlink', glob("../public/resources/img/{$table}/category_{$idCategory}/id_{$id}/*.*"));
                 rmdir("../public/resources/img/{$table}/category_{$idCategory}/id_{$id}");
             }
         }
     }
-
 
 
     /* Img methods End  */

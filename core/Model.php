@@ -77,16 +77,24 @@ class Model extends Conn
         }
         $query = rtrim($query, ",");
         $query .= " WHERE {$idKey} = :{$idKey}";
+
         $this->stmt = $this->conn->prepare($query);
+
+        // var_dump($data);
+
         foreach ($data as $field => $value) {
             $this->bind(":{$field}", $value);
         }
+
         // dump($query);
         $this->bind(":{$idKey}", $idVal);
         // Bind id values
         $this->stmt->execute();
+
         $result = $this->stmt->fetch();
+
         $this->stmt->closeCursor();
+
         return $result;
     }
 
@@ -126,6 +134,7 @@ class Model extends Conn
             ? $this->stmt->fetchAll() : $this->stmt->fetch();
 
         $this->stmt->closeCursor();
+
         return $result;
     }
 

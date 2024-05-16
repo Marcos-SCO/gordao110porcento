@@ -27,6 +27,7 @@ return [
     '/logout/?' => 'Users@logout',
 
     '/users/?($|[0-9])+/?' => 'Users@index',
+    '/users/edit/($|[0-9])+/?' => 'Users@edit',
 
     '/users/?show/($|[0-9]+)(?:/([0-9]+))?/' => 'Users@show',
 
@@ -35,6 +36,8 @@ return [
   'POST' => [
     'login/?' => 'Users@login',
     '/user/store' => 'User@store',
+
+    '/users/update/?' => 'Users@update',
 
     '/contact/?($|[\w]+)/send/?' => 'Contact@sendMessage',
     // '/contact/message/send/?' => 'Contact@sendMessage',
