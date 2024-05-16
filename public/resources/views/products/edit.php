@@ -5,11 +5,13 @@
     </span>
     <?= ($_SESSION['user_status'] && $_SESSION['user_status'] == 1) ? "<small class='smallInfo'><a href='$BASE/users/show/$data->user_id'>$data->product_name</a> adicionado em " . dateFormat($data->created_at) . "</small>" : ''; ?>
 </header>
+
 <section class="formPageArea card card-body bg-light mt5">
     <header>
         <h2><?= $data->product_name ?></h2>
     </header>
-    <form action="<?= $BASE ?>/products/update/<?= $data->id ?>" method="post" enctype="multipart/form-data">
+
+    <form action="<?= $BASE ?>/products/update/" method="post" enctype="multipart/form-data">
         <input type="hidden" name="id" id="<?= $data->id ?>" value="<?= $data->id ?>">
 
         <!-- Tipo de categoria -->
@@ -18,9 +20,13 @@
             <select name="id_category" id="id_category">
                 <optgroup label="Tipo de usuário">
                     <?php foreach ($categories as $category) {
+
                         $selected = ($category->id == $id_category) ? 'selected' : '';
+
                         echo "<option value='{$category->id}' {$selected}>{$category->category_name}</option>";
-                    } ?>
+                    }
+
+                    ?>
                 </optgroup>
             </select>
         </div>
@@ -32,6 +38,7 @@
                 <?= $error['product_name_error'] ?? '' ?>
             </span>
         </div>
+        
         <div class="form-group">
             <label for="product_description">Descrição do produto<sup>*</sup></label>
 
@@ -57,9 +64,9 @@
             <span class="invalid-feedback">
                 <?= $error['img_error'] ?? '' ?>
             </span>
-            <img src="<?= $BASE ?>/<?= imgOrDefault('products', $data->img, $data->id, "/category_$data->id_category") ?>" title="<?= $data->product_name ?>" onerror="this.onerror=null;this.src='<?=$BASE?>/public/resources/img/not_found/no_image.jpg';">
+            <img src="<?= $BASE ?>/<?= imgOrDefault('products', $data->img, $data->id, "/category_$data->id_category") ?>" title="<?= $data->product_name ?>" onerror="this.onerror=null;this.src='<?= $BASE ?>/public/resources/img/not_found/no_image.jpg';">
         </div>
 
         <input type="submit" class="btn btn-success" value="Enviar">
     </form>
-</div>
+    </div>

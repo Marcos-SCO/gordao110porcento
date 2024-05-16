@@ -29,8 +29,10 @@ $isAdminUser = $userStatus && $userStatus == 1;
             <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Selecionar</button>
             <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                 <?php foreach ($categoryElements as $category) {
+
                     echo "<li><a href='$BASE/categories/show/$category->id' class='dropdown-item'>$category->category_name</a></li>";
                 }
+
                 ?>
             </ul>
         </div>
@@ -50,17 +52,22 @@ $isAdminUser = $userStatus && $userStatus == 1;
                     <figcaption class="card-body">
                         <h5 class="card-title"><?= $data->product_name ?></h5>
                         <?php
+
                         // Get category name from categories table
                         foreach ($categoryElements as $element) : ($element->id == $data->id_category) ? $categoryName = $element->category_name : '';
                         endforeach;
+
                         echo "<p class='card-text'>$data->product_description</p><p class='card-text'>Preço: $data->price</p><small class='text-muted'>Categoria: <a href='$BASE/categories/show/$data->id_category'> $categoryName</a></small><br>";
+
+                        echo ($_SESSION['user_status'] && $_SESSION['user_status'] == 1) ? "<a href='$BASE/products/show/$data->id'>Ver detalhes</a>" : ''; 
+                        
                         ?>
-                        <?= ($_SESSION['user_status'] && $_SESSION['user_status'] == 1) ? "<a href='$BASE/products/show/$data->id'>Ver detalhes</a>" : ''; ?>
                     </figcaption>
 
                     <?php
 
                     Helpers\Classes\DynamicLinks::editDelete($BASE, 'products', $data, 'Quer mesmo deletar esse produto?');
+                    
                     ?>
                 </figure>
 

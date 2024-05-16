@@ -14,23 +14,31 @@ class DynamicLinks
 
   public static function editDelete($BASE, $table, $data, $text = 'Quer Mesmo deletar?')
   {
-    if (($data->user_id == $_SESSION['user_id']) or ($_SESSION['adm_id'] == 1)) {
-      $verb = ($table == 'categories') ? 'destroy' : 'delete';
 
-      $idCategory = '';
+    $userId = objParamExistsOrDefault($data, 'user_id');
 
-      $isProductTable = $table == 'products';
+    $sessionUserId = indexParamExistsOrDefault($_SESSION, 'user_id');
+    $sessionAdmId = indexParamExistsOrDefault($_SESSION, 'adm_id');
 
-      $idCategory = $isProductTable
-        ?  '/' . $data->id_category
-        : '/' . $data->id;
+    $isValidUser = ($userId == $sessionUserId) or ($sessionAdmId == 1);
 
-      return "<div class='editDelete d-flex p-1 flex-wrap'>
+    if (!$isValidUser) return;
+
+    $verb = ($table == 'categories') ? 'destroy' : 'delete';
+
+    $idCategory = '';
+
+    $isProductTable = $table == 'products';
+
+    $idCategory = $isProductTable
+      ?  '/' . $data->id_category
+      : '/' . $data->id;
+
+    echo "<div class='editDelete d-flex p-1 flex-wrap'>
                <a href='{$BASE}/{$table}/edit/{$data->id}' class='btn btn-warning m-1' style='height:38px'>Editar</a>
                <form action='{$BASE}/{$table}/$verb/{$data->id}{$idCategory}' method='post'>
                    <button onclick='return confirm('$text')' class='btn btn-danger m-1'>Deletar</button>
                </form>
            </div>";
-    }
   }
 }

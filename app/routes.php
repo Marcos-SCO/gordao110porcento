@@ -7,6 +7,8 @@ return [
 
     '/products/?($|[0-9])+/?' => 'Products@index',
     '/products/show/($|[0-9])+/?' => 'Products@show',
+    '/products/edit/($|[0-9])+/?' => 'Products@edit',
+
     '/products/create/?' => 'Products@create',
 
     '/gallery/?($|[0-9])+/?' => 'Gallery@index',
@@ -41,6 +43,7 @@ return [
     '/user/store/?' => 'User@store',
 
     '/products/store/?' => 'Products@store',
+    '/products/update/?' => 'Products@update',
 
     '/users/update/?' => 'Users@update',
 

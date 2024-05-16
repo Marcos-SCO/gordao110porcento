@@ -15,19 +15,19 @@ class Product extends \Core\Model
         $result = $this->selectQuery('products', "ORDER BY id DESC");
         return $result;
     }
-    
+
     public function getCategories()
     {
         $result = $this->customQuery("SELECT id, category_name FROM categories ORDER BY id DESC", null, 1);
         return $result;
     }
-    
-    public function getProduct($id, $idCategory) 
+
+    public function getProduct($id, $idCategory)
     {
         $result = $this->customQuery("SELECT id, id_category FROM products WHERE id = :id AND id_category = :id_category", ['id' => $id, 'id_category' => $idCategory]);
         return $result;
     }
-    public function getProductId($id) 
+    public function getProductId($id)
     {
         $result = $this->customQuery("SELECT id, id_category FROM products WHERE id = :id", ['id' => $id]);
         return $result;
@@ -76,14 +76,12 @@ class Product extends \Core\Model
         ], ['id', $data['id']]);
 
         // Execute
-        if ($this->rowCount()) {
-            return true;
-        } else {
-            return false;
-        }
+        if (!$this->rowCount()) return false;
+
+        return true;
     }
 
-    public function deletePost($table, $id) 
+    public function deletePost($table, $id)
     {
         return $this->deleteQuery($table, $id);
     }
