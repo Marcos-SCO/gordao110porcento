@@ -51,7 +51,7 @@ class Product extends \Core\Model
             'id_category' => $data['id_category'],
             'product_name' => $data['product_name'],
             'product_description' => $data['product_description'],
-            'img' => $data['img'],
+            'img' => $data['img_name'],
             'price' => $data['price'],
             'created_at' => date("Y-m-d H:i:s")
         ]);
@@ -81,7 +81,7 @@ class Product extends \Core\Model
         return true;
     }
 
-    public function deletePost($table, $id)
+    public function deleteProduct($table, $id)
     {
         return $this->deleteQuery($table, $id);
     }

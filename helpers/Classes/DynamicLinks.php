@@ -31,14 +31,21 @@ class DynamicLinks
     $isProductTable = $table == 'products';
 
     $idCategory = $isProductTable
-      ?  '/' . $data->id_category
-      : '/' . $data->id;
+      ?  $data->id_category
+      :  $data->id;
 
     echo "<div class='editDelete d-flex p-1 flex-wrap'>
                <a href='{$BASE}/{$table}/edit/{$data->id}' class='btn btn-warning m-1' style='height:38px'>Editar</a>
-               <form action='{$BASE}/{$table}/$verb/{$data->id}{$idCategory}' method='post'>
-                   <button onclick='return confirm('$text')' class='btn btn-danger m-1'>Deletar</button>
+
+               <form action='{$BASE}/{$table}/$verb/' method='post'>
+
+                  <input type='hidden' name='id' value='{$data->id}'>
+
+                  <input type='hidden' name='id_category' value='{$idCategory}'>
+
+                  <button onclick=\"return confirm('$text');\" class='btn btn-danger m-1'>Deletar</button>
                </form>
+
            </div>";
   }
 }

@@ -29,7 +29,7 @@ set_exception_handler('Core\Error::exceptionHandler');
 // Flash message helper
 /*
 EXEMPLE - flash('register_sucess', 'You are now registered');
-DISPLAY IN VIEW - <?php echo flash('register_sucess');
+DISPLAY IN VIEW - <?php echo flash('register_success');
 */
 function flash($name = '', $message = '', $class = 'alert alert-success')
 {

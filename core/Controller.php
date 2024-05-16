@@ -56,13 +56,20 @@ class Controller
 
     public function imgValidate()
     {
+
+        $imgFiles = indexParamExistsOrDefault($_FILES, 'img');
+
+        $imgName = indexParamExistsOrDefault($imgFiles, 'name');
+
         $valid_extensions = ['jpeg', 'jpg', 'png', 'gif'];
-        $imgExt = strtolower(pathinfo($_FILES['img']['name'], PATHINFO_EXTENSION));
+
+        $imgExt = strtolower(pathinfo($imgName, PATHINFO_EXTENSION));
 
         $error = [0 => false, 1 => false];
 
         if (!in_array($imgExt, $valid_extensions)) {
             $valid_extensions = implode(', ', $valid_extensions);
+
             $error = [0 => true, 1 =>  "Enviei somente {$valid_extensions} "];
         }
 
@@ -142,23 +149,28 @@ class Controller
 
     public function deleteFolder($table, $id, $idCategory = null, $massDel = null)
     {
-        $notEmptyCategoryAndMassDelete = $idCategory != null && $massDel != null;
+        $categoryAndMassDelete = $idCategory != null && $massDel != null;
 
-        if (!$notEmptyCategoryAndMassDelete) {
+        if (!$categoryAndMassDelete) {
             // Delete imgs with id named folder
-            if (file_exists("../public/resources/img/{$table}/id_$id")) {
+            $itemFolderPathExists = file_exists("../public/resources/img/{$table}/id_$id");
+
+            if ($itemFolderPathExists) {
 
                 array_map('unlink', glob("../public/resources/img/{$table}/id_{$id}/*.*"));
-                rmdir("../public/resources/img/{$table}/id_$id");
-            }
 
-            return;
+                rmdir("../public/resources/img/{$table}/id_$id");
+
+                return;
+            }
         }
 
         // Delete all imgs with id category and products
-        if ($notEmptyCategoryAndMassDelete) {
+        if ($categoryAndMassDelete) {
 
-            if (file_exists("../public/resources/img/{$table}/category_{$idCategory}")) {
+            $itemCategoryFolderExists = file_exists("../public/resources/img/{$table}/category_{$idCategory}");
+
+            if ($itemCategoryFolderExists) {
 
                 $dir = "../public/resources/img/{$table}/category_{$idCategory}";
 
@@ -167,6 +179,7 @@ class Controller
                     foreach (glob($dir . '/*') as $file) {
                         (is_dir($file)) ? rrmdir($file) : unlink($file);
                     }
+
                     rmdir($dir);
                 }
 
@@ -176,10 +189,13 @@ class Controller
 
         if ($idCategory != null) {
 
+            $itemFromCategoryExists = file_exists("../public/resources/img/{$table}/category_{$idCategory}/id_{$id}");
+
             // Delete imgs products
-            if (file_exists("../public/resources/img/{$table}/category_{$idCategory}/id_{$id}")) {
+            if ($itemFromCategoryExists) {
 
                 array_map('unlink', glob("../public/resources/img/{$table}/category_{$idCategory}/id_{$id}/*.*"));
+
                 rmdir("../public/resources/img/{$table}/category_{$idCategory}/id_{$id}");
             }
         }

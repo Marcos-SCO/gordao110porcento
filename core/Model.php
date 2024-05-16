@@ -105,22 +105,27 @@ class Model extends Conn
         foreach ($data as $field => $value) {
             $query .= " {$field} = :{$field} AND";
         }
+
         $query = rtrim($query, "AND");
         // dump($query);
+
         $this->stmt = $this->conn->prepare($query);
         foreach ($data as $field => $value) {
             $this->bind(":{$field}", $value);
         }
+
         $this->stmt->execute();
+
         $result = $this->stmt->fetch();
         $this->stmt->closeCursor();
+
         return $result;
     }
 
     public function customQuery($query, array $data = null, $fetch = null)
     {
         $this->stmt = $this->conn->prepare($query);
-        
+
         if ($data) {
             foreach ($data as $field => $value) {
                 $this->bind(":{$field}", $value);

@@ -44,6 +44,7 @@ return [
 
     '/products/store/?' => 'Products@store',
     '/products/update/?' => 'Products@update',
+    '/products/delete/?' => 'Products@destroy',
 
     '/users/update/?' => 'Users@update',
 
