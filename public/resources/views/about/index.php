@@ -20,7 +20,7 @@
     <section class="about">
         <figure>
             <img src="<?= $BASE ?>/public/resources/img/template/gordao_faxada_500.png" alt="gordao_faxada.png" title="Gordão 110% Faxada">
-            <figcaption data-anima="center">
+            <figcaption>
                 <strong class="font-swashCaps">
                     <h1 class="lightText">Gordão a 110%</h1>
                 </strong>
