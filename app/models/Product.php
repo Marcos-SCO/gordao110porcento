@@ -27,6 +27,7 @@ class Product extends \Core\Model
         $result = $this->customQuery("SELECT id, id_category FROM products WHERE id = :id AND id_category = :id_category", ['id' => $id, 'id_category' => $idCategory]);
         return $result;
     }
+
     public function getProductId($id)
     {
         $result = $this->customQuery("SELECT id, id_category FROM products WHERE id = :id", ['id' => $id]);
@@ -70,7 +71,7 @@ class Product extends \Core\Model
             'id_category' => $data['id_category'],
             'product_name' => $data['product_name'],
             'product_description' => $data['product_description'],
-            'img' => $data['img'],
+            'img' => $data['img_name'],
             'price' => $data['price'],
             'updated_at' => date("Y-m-d H:i:s")
         ], ['id', $data['id']]);

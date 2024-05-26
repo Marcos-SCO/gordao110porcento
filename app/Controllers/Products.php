@@ -4,16 +4,19 @@ declare(strict_types=1);
 
 namespace App\Controllers;
 
+use App\Classes\ImagesHandler;
 use Core\Controller;
 use Core\View;
 
 class Products extends Controller
 {
     public $model;
+    public $imagesHandler;
 
     public function __construct()
     {
         $this->model = $this->model('Product');
+        $this->imagesHandler = new ImagesHandler();
     }
 
     public function getPostData()
@@ -80,9 +83,10 @@ class Products extends Controller
             'error' => false
         ];
 
-        $validate = $this->imgValidate();
+        $validate =
+            $this->imagesHandler->verifySubmittedImgExtension();
 
-        if (isset($_FILES['img']) && $postImg == '') {
+        if ($imgFiles && $postImg == '') {
 
             if (empty($data['img_files'])) {
                 $error['img_error'] = "Insira uma imagem";
@@ -93,10 +97,6 @@ class Products extends Controller
                 $error['img_error'] = $validate[1];
                 $error['error'] = $validate[0];
             }
-        } else if ($postImg && !empty($data['img_files'])) {
-
-            $error['img_error'] = $validate[1];
-            $error['error'] = $validate[0];
         }
 
         if (empty($data['id_category'])) {
@@ -185,11 +185,11 @@ class Products extends Controller
         if ($isErrorResult) return $this->create($data, $errorData);
 
         // Create a folder in products
-        $fullPath = $this->imgCreateHandler('products', $data['id_category']);
+        $imageDynamicPath = $this->imagesHandler->getNewImgDynamicPath('products', $data['id_category']);
 
-        $this->moveUpload($fullPath);
+        $this->imagesHandler->moveUpload($imageDynamicPath);
 
-        $addedProduct = $this->model->addproduct($data);
+        $addedProduct = $this->model->addProduct($data);
 
         if (!$addedProduct) {
             die('Something went wrong when adding the product...');
@@ -197,11 +197,11 @@ class Products extends Controller
 
         $_SESSION['submitted'] = true;
 
-        $flash = flash('post_message', 'Produto adicionado com successo');
+        // $flash = flash('post_message', 'Produto adicionado com sucesso');
 
-        $id = $this->model->lastId();
+        // $id = $this->model->lastId();
 
-        return $this->show(['show' => $id, 'flash' => $flash]);
+        return redirect('products');
     }
 
     public function show($requestData)
@@ -289,9 +289,9 @@ class Products extends Controller
 
             if (!$isEmptyImg) {
 
-                $fullPath = $this->imgFullPath('products', $id, $imgName, $postIdCategory);
+                $fullPath = $this->imagesHandler->imgFullPath('products', $id, $imgName, $postIdCategory);
 
-                $this->moveUpload($fullPath);
+                $this->imagesHandler->moveUpload($fullPath);
 
                 $data['img_name'] = $imgName;
             }
@@ -300,9 +300,10 @@ class Products extends Controller
         if (!$result) {
 
             // Create a new path
-            $fullPath = $this->imgFullPath('products', $id, $imgName, $postIdCategory);
+            $fullPath = $this->imagesHandler->imgFullPath('products', $id, $imgName, $postIdCategory);
 
-            $this->moveUpload($fullPath);
+            $this->imagesHandler->moveUpload($fullPath);
+
             $data['img'] = explode('/', $fullPath);
 
             // Get img data
@@ -315,7 +316,7 @@ class Products extends Controller
             }
 
             // Delete the image in the current folder
-            $this->deleteFolder('products', $id, $resultId->id_category);
+            $this->imagesHandler->deleteFolder('products', $id, $resultId->id_category);
 
             $data['img_name'] = $img;
         }
@@ -333,6 +334,7 @@ class Products extends Controller
         $isPostRequest = $_SERVER['REQUEST_METHOD'] == 'POST';
 
         if (!$isPostRequest) {
+
             redirect('products');
             return;
         }
@@ -350,11 +352,8 @@ class Products extends Controller
 
         $this->model->deleteProduct('products', ['id' => $id]);
 
-        $this->deleteFolder('products', $id, $idCategory);
+        $this->imagesHandler->deleteFolder('products', $id, $idCategory);
 
-        // Delete everything img with this category
-        $flash = flash('register_success', 'Deletado com sucesso!');
-
-        return $this->index(['products' => 1, 'flash' => $flash]);
+        redirect('products');
     }
 }
