@@ -2,6 +2,8 @@
 
 namespace Core;
 
+use App\Config\Config;
+
 class Model extends Conn
 {
     public $conn;
@@ -159,5 +161,23 @@ class Model extends Conn
     public function lastId()
     {
         return $this->conn->lastInsertId();
+    }
+
+    public function getTableAutoIncrementId($table)
+    {
+        $autoIncrementIdQuery = $this->customQuery("SELECT AUTO_INCREMENT
+            FROM information_schema.TABLES
+            WHERE TABLE_SCHEMA = :schema
+            AND TABLE_NAME = :table", [
+            'schema' => Config::DB_NAME,
+            'table' => $table
+        ]);
+
+        if (!$autoIncrementIdQuery) return false;
+
+        $tableAutoIncrementId =
+            strval($autoIncrementIdQuery->AUTO_INCREMENT);
+
+        return $tableAutoIncrementId;
     }
 }
