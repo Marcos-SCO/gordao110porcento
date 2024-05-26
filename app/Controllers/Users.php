@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Controllers;
 
+use App\Classes\Pagination;
 use Core\Controller;
 use Core\Error as CoreError;
 use Core\View;
@@ -166,7 +167,7 @@ class Users extends Controller
 
         $pageId = isset($requestData['users']) && !empty($requestData['users']) ? $requestData['users'] : 1;
 
-        $results = $this->pagination($table, $pageId, $limit = 10, '', $orderOption = 'GROUP BY id');
+        $results = Pagination::handler($table, $pageId, $limit = 10, '', $orderOption = 'GROUP BY id');
 
         $activeNumber = $this->model->customQuery("SELECT COUNT(*) as active FROM users WHERE status = 1");
 
@@ -178,11 +179,11 @@ class Users extends Controller
             'activeNumber' => $activeNumber,
             'inactiveNumber' => $inactiveNumber,
             'path' => "users",
-            'users' => $results[4],
-            'prev' => $results[0],
-            'next' => $results[1],
-            'totalResults' => $results[2],
-            'totalPages' => $results[3],
+            'users' => $results['tableResults'],
+            'prev' => $results['prev'],
+            'next' => $results['next'],
+            'totalResults' => $results['totalResults'],
+            'totalPages' => $results['totalPages'],
         ]);
     }
 
@@ -284,7 +285,7 @@ class Users extends Controller
         // Pagination for posts with user id
         $table = 'posts';
 
-        $results = $this->pagination($table, $pageId, $limit = 4, ['user_id', $user->id], $orderOption = 'ORDER BY id DESC');
+        $results = Pagination::handler($table, $pageId, $limit = 4, ['user_id', $user->id], $orderOption = 'ORDER BY id DESC');
 
         // Display results
         $pageInfo = ($userPageId > 1) ? " | Página $userPageId" : '';
@@ -295,11 +296,11 @@ class Users extends Controller
             'user' => $user,
             'page' => $pageId,
             'path' => "users/show/$userPageId",
-            'posts' => $results[4],
-            'prev' => $results[0],
-            'next' => $results[1],
-            'totalResults' => $results[2],
-            'totalPages' => $results[3],
+            'posts' => $results['tableResults'],
+            'prev' => $results['prev'],
+            'next' => $results['next'],
+            'totalResults' => $results['totalResults'],
+            'totalPages' => $results['totalPages'],
         ]);
     }
 

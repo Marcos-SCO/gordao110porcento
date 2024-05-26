@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Controllers;
 
+use App\Classes\Pagination;
 use Core\Controller;
 use Core\View;
 
@@ -24,19 +25,19 @@ class Posts extends Controller
 
         $pageId = isset($requestData['posts']) && !empty($requestData['posts']) ? $requestData['posts'] : 1;
 
-        $results = $this->pagination($table, $pageId, $limit = 8, '', $orderOption = 'ORDER BY id DESC');
+        $results = Pagination::handler($table, $pageId, $limit = 8, '', $orderOption = 'ORDER BY id DESC');
 
         View::render('posts/index.php', [
             'title' => 'Posts',
             'controller' => 'Posts',
-            'posts' => $results[4],
+            'posts' => $results['tableResults'],
             'flash' => $flash,
             'path' => 'posts',
             'pageId' => $pageId,
-            'prev' => $results[0],
-            'next' => $results[1],
-            'totalResults' => $results[2],
-            'totalPages' => $results[3],
+            'prev' => $results['prev'],
+            'next' => $results['next'],
+            'totalResults' => $results['totalResults'],
+            'totalPages' => $results['totalPages'],
         ]);
     }
 

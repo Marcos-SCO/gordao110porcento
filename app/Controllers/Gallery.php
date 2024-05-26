@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Controllers;
 
+use App\Classes\Pagination;
 use Core\Controller;
 use Core\View;
 
@@ -24,19 +25,19 @@ class Gallery extends Controller
 
         $pageId = isset($requestData['gallery']) && !empty($requestData['gallery']) ? $requestData['gallery'] : 1;
 
-        $results = $this->pagination($table, $pageId, $limit = 8, '', $orderOption = 'ORDER BY id DESC');
+        $results = Pagination::handler($table, $pageId, $limit = 8, '', $orderOption = 'ORDER BY id DESC');
 
         View::render('gallery/index.php', [
             'dataPage' => 'gallery',
             'title' => 'Galeria de imagens',
-            'gallery' => $results[4],
+            'gallery' => $results['tableResults'],
             'flash' => $flash,
             'path' => $table,
             'pageId' => $pageId,
-            'prev' => $results[0],
-            'next' => $results[1],
-            'totalResults' => $results[2],
-            'totalPages' => $results[3],
+            'prev' => $results['prev'],
+            'next' => $results['next'],
+            'totalResults' => $results['totalResults'],
+            'totalPages' => $results['totalPages'],
         ]);
     }
 
@@ -93,7 +94,7 @@ class Gallery extends Controller
     public function show($id, array $flash = null)
     {
         $table = 'gallery';
-        $results = $this->pagination($table, $id, $limit = 1, '', $orderOption = 'ORDER BY id DESC');
+        $results = Pagination::handler($table, $id, $limit = 1, '', $orderOption = 'ORDER BY id DESC');
 
         $haveResults = $this->model->rowCount() > 0;
 
@@ -104,19 +105,21 @@ class Gallery extends Controller
 
         $user = $this->model->getAllFrom('users', $results[4][0]->user_id);
 
+        $userImgTittle = $results['tableResults'][0]->img_title;
+
         return View::render('gallery/show.php', [
-            'title' =>  $results[4][0]->img_title,
+            'title' => $userImgTittle,
             'pageId' => $id,
-            'data' => $results[4][0],
-            'img_title' =>  $results[4][0]->img_title,
+            'data' => $results['tableResults'][0],
+            'img_title' => $userImgTittle,
             'user' => $user,
             'flash' => $flash,
             'path' => 'gallery/show',
             'page' => $id,
-            'prev' => $results[0],
-            'next' => $results[1],
-            'totalResults' => $results[2],
-            'totalPages' => $results[3],
+            'prev' => $results['prev'],
+            'next' => $results['next'],
+            'totalResults' => $results['totalResults'],
+            'totalPages' => $results['totalPages'],
         ]);
     }
 
@@ -210,7 +213,7 @@ class Gallery extends Controller
         ];
 
         $validate = $this->imgValidate();
-        
+
         if (isset($_FILES['img']) && $postImg == '') {
 
             if (empty($data['img'])) {
@@ -221,7 +224,6 @@ class Gallery extends Controller
                 $error['img_error'] = $validate[1];
                 $error['error'] = $validate[0];
             }
-
         } else if ($postImg && !empty($data['img'])) {
             $error['img_error'] = $validate[1];
             $error['error'] = $validate[0];

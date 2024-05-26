@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Controllers;
 
+use App\Classes\Pagination;
 use Core\Controller;
 use Core\View;
 
@@ -24,7 +25,7 @@ class Categories extends Controller
 
         $pageId = isset($requestData['categories']) && !empty($requestData['categories']) ? $requestData['categories'] : 1;
 
-        $results = $this->pagination($table, $pageId, $limit = 3, '', $orderOption = 'ORDER BY id DESC');
+        $results = Pagination::handler($table, $pageId, $limit = 3, '', $orderOption = 'ORDER BY id DESC');
 
         // Category elements from table categories
         $categoryElements = $this->model->customQuery('SELECT id, category_name FROM categories', null, 1);
@@ -32,14 +33,14 @@ class Categories extends Controller
         View::render('categories/index.php', [
             'title' => 'Todas Categorias',
             'categoryElements' => $categoryElements,
-            'categories' => $results[4],
+            'categories' => $results['tableResults'],
             'flash' => $flash,
             'path' => 'categories',
             'pageId' => $pageId,
-            'prev' => $results[0],
-            'next' => $results[1],
-            'totalResults' => $results[2],
-            'totalPages' => $results[3],
+            'prev' => $results['prev'],
+            'next' => $results['next'],
+            'totalResults' => $results['totalResults'],
+            'totalPages' => $results['totalPages'],
         ]);
     }
 
@@ -111,7 +112,7 @@ class Categories extends Controller
 
         // Pagination for products with id category
         $productsTable = 'products';
-        $results = $this->pagination($productsTable, $pageId, $limit = 4, ['id_category', $categoryId], $orderOption = 'ORDER BY id DESC');
+        $results = Pagination::handler($productsTable, $pageId, $limit = 4, ['id_category', $categoryId], $orderOption = 'ORDER BY id DESC');
 
         $categoryElements = $this->model->customQuery('SELECT id, category_name FROM categories', null, 1);
 
@@ -125,11 +126,11 @@ class Categories extends Controller
             'user' => $user,
             'page' => $pageId,
             'path' => $urlPath,
-            'products' => $results[4],
-            'prev' => $results[0],
-            'next' => $results[1],
-            'totalResults' => $results[2],
-            'totalPages' => $results[3],
+            'products' => $results['tableResults'],
+            'prev' => $results['prev'],
+            'next' => $results['next'],
+            'totalResults' => $results['totalResults'],
+            'totalPages' => $results['totalPages'],
         ]);
     }
 
