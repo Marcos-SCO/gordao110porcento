@@ -7,9 +7,9 @@
     <div class="d-flex flex-wrap justify-content-center align-items-center postShowAdm">
         <?php
         
-        Helpers\Classes\DynamicLinks::editDelete($BASE, 'posts', $data, 'Quer mesmo deletar essa postagem?');
+        App\Classes\DynamicLinks::editDelete($BASE, 'posts', $data, 'Quer mesmo deletar essa postagem?');
         
-        Helpers\Classes\DynamicLinks::addLink($BASE, 'posts', 'Adicionar mais postagens');
+        App\Classes\DynamicLinks::addLink($BASE, 'posts', 'Adicionar mais postagens');
         ?>
     </div>
 <?php } ?>

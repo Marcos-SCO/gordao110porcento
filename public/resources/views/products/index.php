@@ -14,9 +14,9 @@ $isAdminUser = $userStatus && $userStatus == 1;
         <div class="add d-flex flex-wrap p-2 justify-content-center">
             <?php
 
-            Helpers\Classes\DynamicLinks::addLink($BASE, 'products', 'Adicionar produtos');
+            App\Classes\DynamicLinks::addLink($BASE, 'products', 'Adicionar produtos');
 
-            Helpers\Classes\DynamicLinks::addLink($BASE, 'categories', 'Adicionar categorias');
+            App\Classes\DynamicLinks::addLink($BASE, 'categories', 'Adicionar categorias');
             ?>
         </div>
     </section>
@@ -66,7 +66,7 @@ $isAdminUser = $userStatus && $userStatus == 1;
 
                     <?php
 
-                    Helpers\Classes\DynamicLinks::editDelete($BASE, 'products', $data, 'Quer mesmo deletar esse produto?');
+                    App\Classes\DynamicLinks::editDelete($BASE, 'products', $data, 'Quer mesmo deletar esse produto?');
                     
                     ?>
                 </figure>

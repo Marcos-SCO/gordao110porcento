@@ -15,7 +15,7 @@ echo "<style>main {min-height:100%}</style>";
     </span>
 </header>
 
-<?php Helpers\Classes\DynamicLinks::addLink($BASE, 'users', 'Adicionar mais Usuários');
+<?php App\Classes\DynamicLinks::addLink($BASE, 'users', 'Adicionar mais Usuários');
 
 ?>
 <section>

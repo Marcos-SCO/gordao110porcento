@@ -8,7 +8,7 @@
 <?php if ($_SESSION['user_status'] == 1) {
 
     echo "<style>.createBtn{max-width:207px!important}</style><div style='display:flex;flex-wrap:wrap;justify-content:center;max-width:442px;align-items:center;margin:1rem auto'><a href='$BASE/gallery' class='createBtn btn'>Voltar para Galeria</a>";
-    Helpers\Classes\DynamicLinks::addLink($BASE, 'gallery', 'Adicionar mais imagens');
+    App\Classes\DynamicLinks::addLink($BASE, 'gallery', 'Adicionar mais imagens');
     echo "</div>";
 }
 
@@ -25,7 +25,7 @@
         </a>
 
         <?php
-        Helpers\Classes\DynamicLinks::editDelete($BASE, 'gallery', $data, 'Quer mesmo deletar essa foto?');
+        App\Classes\DynamicLinks::editDelete($BASE, 'gallery', $data, 'Quer mesmo deletar essa foto?');
 
         ?>
     </figure>

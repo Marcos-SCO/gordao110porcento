@@ -15,7 +15,7 @@ $havePosts = count($posts) > 0;
 <article class="blogArticle">
     <?php
 
-    Helpers\Classes\DynamicLinks::addLink($BASE, 'posts', 'Adicionar mais postagens');
+    App\Classes\DynamicLinks::addLink($BASE, 'posts', 'Adicionar mais postagens');
 
     if ($havePosts) :
 
@@ -35,7 +35,7 @@ $havePosts = count($posts) > 0;
                     </a>
                     <small class="updated card-text">Atualizado em <?= dateFormat($data->updated_at) ?></small>
                     <?php
-                    Helpers\Classes\DynamicLinks::editDelete($BASE, 'posts', $data, 'Quer mesmo deletar essa postagem?');
+                    App\Classes\DynamicLinks::editDelete($BASE, 'posts', $data, 'Quer mesmo deletar essa postagem?');
                     ?>
                 </figure>
             <?php endforeach; ?>

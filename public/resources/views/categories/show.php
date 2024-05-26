@@ -17,7 +17,7 @@ if ($_SESSION['user_status'] && $_SESSION['user_status'] == 1) :
 ?>
     <section>
         <header class="d-flex flex-column headerEdit imgBackgroundArea">
-            <?php Helpers\Classes\DynamicLinks::editDelete($BASE, 'categories', $data, "CUIDADO!, você está prestes a deletar a categoria de $categoryName;. Essa ação será ireversivel, quer mesmo continuar?");
+            <?php App\Classes\DynamicLinks::editDelete($BASE, 'categories', $data, "CUIDADO!, você está prestes a deletar a categoria de $categoryName;. Essa ação será ireversivel, quer mesmo continuar?");
 
             ?>
         </header>
@@ -26,9 +26,9 @@ if ($_SESSION['user_status'] && $_SESSION['user_status'] == 1) :
             <div class="add d-flex flex-wrap p-2 justify-content-center">
                 <?php
 
-                Helpers\Classes\DynamicLinks::addLink($BASE, 'products', 'Adicionar mais produtos');
+                App\Classes\DynamicLinks::addLink($BASE, 'products', 'Adicionar mais produtos');
 
-                Helpers\Classes\DynamicLinks::addLink($BASE, 'categories', 'Adicionar mais categorias');
+                App\Classes\DynamicLinks::addLink($BASE, 'categories', 'Adicionar mais categorias');
                 ?>
             </div>
         </div>

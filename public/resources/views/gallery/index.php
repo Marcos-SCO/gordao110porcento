@@ -5,7 +5,7 @@
     </span>
 </header>
 
-<?php Helpers\Classes\DynamicLinks::addLink($BASE, 'gallery', 'Adicionar mais imagens');
+<?php App\Classes\DynamicLinks::addLink($BASE, 'gallery', 'Adicionar mais imagens');
 
 ?>
 
@@ -23,7 +23,7 @@
                     </figcaption>
                 </a>
                 <?php
-                Helpers\Classes\DynamicLinks::editDelete($BASE, 'gallery', $data, 'Quer mesmo deletar essa foto?');
+                App\Classes\DynamicLinks::editDelete($BASE, 'gallery', $data, 'Quer mesmo deletar essa foto?');
                 ?>
             </figure>
         <?php } ?>

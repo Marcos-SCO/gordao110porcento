@@ -1,6 +1,6 @@
 <?php
 
-namespace Helpers\Classes;
+namespace App\Classes;
 
 class DynamicLinks
 {

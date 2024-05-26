@@ -15,9 +15,9 @@
         <div style="padding:1rem">
             <?php
 
-            Helpers\Classes\DynamicLinks::editDelete($BASE, 'products', $data, 'Quer mesmo deletar esse produto?');
+            App\Classes\DynamicLinks::editDelete($BASE, 'products', $data, 'Quer mesmo deletar esse produto?');
 
-            Helpers\Classes\DynamicLinks::addLink($BASE, 'products', 'Adicionar mais produtos');
+            App\Classes\DynamicLinks::addLink($BASE, 'products', 'Adicionar mais produtos');
             ?>
         </div>
     </figure>

@@ -22,7 +22,7 @@ foreach ($products as $data) : ?>
     </figcaption>
     <?php
 
-    Helpers\Classes\DynamicLinks::editDelete($BASE, 'products', $data, 'Quer mesmo deletar esse produto?');
+    App\Classes\DynamicLinks::editDelete($BASE, 'products', $data, 'Quer mesmo deletar esse produto?');
     ?>
   </figure>
 
