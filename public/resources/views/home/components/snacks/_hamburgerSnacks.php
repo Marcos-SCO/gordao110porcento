@@ -12,7 +12,7 @@ if (!$hamburgers) return;
     </span>
   </header>
 
-  <div class="owlDefaultItem owl-carousel owl-theme" data-js="owlDefaultItem">
+  <div class="owlDefaultItem owl-carousel owl-theme" data-js="owlDefaultItem" modal-item-container>
 
     <!-- Button trigger modal -->
     <?php foreach ($hamburgers as $hamburgerItem) :
@@ -32,7 +32,7 @@ if (!$hamburgers) return;
       $hamburgerPrice = objParamExistsOrDefault($hamburgerItem, 'price');
 
     ?>
-      <a <?= (detectIE() != true) ? 'data-toggle="modal" data-target="#itemModal" onclick="callItem(this)"' : "href='$BASE/products/show/$hamburgerItemId'" ?> id="product_<?= $hamburgerItemId ?>">
+      <a <?= (detectIE() != true) ? 'data-toggle="modal" data-target="#itemModal"' : "href='$BASE/products/show/$hamburgerItemId'" ?> id="product_<?= $hamburgerItemId ?>" modal-item>
 
         <span style="display:none;" id="inputItens">
           <input type="hidden" name="id" value="<?= $hamburgerItemId ?>">

@@ -11,7 +11,7 @@ if (!$pizzas) return;
     </span>
   </header>
 
-  <div class="owlDefaultItem owl-carousel owl-theme" data-js="owlDefaultItem">
+  <div class="owlDefaultItem owl-carousel owl-theme" data-js="owlDefaultItem" modal-item-container>
 
     <?php foreach ($pizzas as $pizzaItem) :
       $pizzaItemId =
@@ -30,7 +30,7 @@ if (!$pizzas) return;
       $pizzaItemPrice = objParamExistsOrDefault($pizzaItem, 'price');
 
     ?>
-      <a <?= (detectIE() != true) ? 'data-toggle="modal" data-target="#itemModal" onclick="callItem(this)"' : "href='$BASE/products/show/$pizzaItemId'" ?> id="product_<?= $pizzaItemId ?>">
+      <a <?= (detectIE() != true) ? 'data-toggle="modal" data-target="#itemModal"' : "href='$BASE/products/show/$pizzaItemId'" ?> id="product_<?= $pizzaItemId ?>" modal-item>
         <span style="display:none;" id="inputItens">
           <input type="hidden" name="id" value="<?= $pizzaItemId ?>">
           <input type="hidden" name="id_category" value="<?= $pizzaItemIdCategory ?>">

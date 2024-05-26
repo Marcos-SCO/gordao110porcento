@@ -1,6 +1,8 @@
 // Owl functions
 import './owlFunctions';
 
+import './modal/index';
+
 // Loader animation
 // import './_loaderAnimation';
 
