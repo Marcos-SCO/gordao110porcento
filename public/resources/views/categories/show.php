@@ -33,7 +33,7 @@ if ($_SESSION['user_status'] && $_SESSION['user_status'] == 1) :
             </div>
         </div>
     </section>
-    
+
 <?php endif; ?>
 
 <article class="products flex-wrap flex-column">
@@ -45,10 +45,16 @@ if ($_SESSION['user_status'] && $_SESSION['user_status'] == 1) :
 
             <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                 <?php
+
                 echo "<li><a href='$BASE/products' class='dropdown-item'>Todas</a></li>";
 
-                foreach ($categoryElements as $category) {
-                    echo "<li><a href='$BASE/categories/show/$category->id' class='dropdown-item'>$category->category_name</a></li>";
+                foreach ($categoryElements as $categoryItem) {
+
+                    $categoryItemName = objParamExistsOrDefault($categoryItem, 'category_name');
+
+                    $activeItem = $categoryName == $categoryItemName ? ' active' : '';
+
+                    echo "<li><a href='$BASE/categories/show/$categoryItem->id' class='dropdown-item$activeItem'>$categoryItemName</a></li>";
                 }
                 ?>
             </ul>
