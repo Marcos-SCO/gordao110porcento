@@ -150,13 +150,7 @@ $siteTitle = (!$isHomeController) && isset($title)
     }
 
     // Display flash messages
-    if (isset($flash) && $flash != false && $flash != null) {
-
-        $flashClass = isset($flash['class']) ? $flash['class'] : '';
-        $flashMessage = isset($flash['message']) ? $flash['class'] : '';
-
-        echo "<div class='" . $flashClass . "' id='msg-flash' style='transition: transform .18s, opacity .18s, visibility 0s .18s;position:absolute;left:5%;top:17%;text-align: center;z-index:9999999999;'>" . $flashMessage . "</div><script>/*flash message*/ let flash = document.querySelector('#msg-flash'); if (flash != null) {setTimeout(() => { flash.style = 'display:none;transition: transform .18s, opacity .18s, visibility 0s .18s;'; }, 4000); }</script>";
-    }
+    displayFlashMessage();
 
     ?>
 
