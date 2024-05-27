@@ -69,7 +69,7 @@ class Posts extends Controller
             return redirect('posts');
         }
 
-        $result = $this->getPostData();
+        $result = $this->getRequestData();
         $data = $result[0];
         $error = $result[1];
 
@@ -131,7 +131,7 @@ class Posts extends Controller
             return redirect('posts');
         }
 
-        $data = $this->getPostData();
+        $data = $this->getRequestData();
         $error = $data[1];
         $id = $data[0]['id'];
 
@@ -160,7 +160,7 @@ class Posts extends Controller
         return $this->show($id, $flash);
     }
 
-    public function getPostData()
+    public function getRequestData()
     {
         $notAllowedTags = array('<script>', '<a>');
         $body = isset($_POST['body']) ? trim($_POST['body']) : '';

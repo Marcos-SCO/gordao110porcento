@@ -19,7 +19,7 @@ class Users extends Controller
         $this->model = $this->model('User');
     }
 
-    public function getPostData()
+    public function getRequestData()
     {
         // Sanitize data
         $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_SPECIAL_CHARS);
@@ -221,7 +221,7 @@ class Users extends Controller
         // Check for post
 
         // Process Form
-        $data = $this->getPostData();
+        $data = $this->getRequestData();
         $error = $data[1];
         $id = $data['id'];
 
@@ -351,7 +351,7 @@ class Users extends Controller
         if (!$submittedPostData) return;
 
         // Process Form
-        $postResultData = $this->getPostData();
+        $postResultData = $this->getRequestData();
 
         $data = indexParamExistsOrDefault($postResultData, 'data');
 
@@ -435,7 +435,7 @@ class Users extends Controller
         }
 
         // Process
-        $postResultData = $this->getPostData();
+        $postResultData = $this->getRequestData();
 
         $data = indexParamExistsOrDefault($postResultData, 'data');
 

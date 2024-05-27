@@ -20,7 +20,7 @@ class Products extends Controller
         $this->imagesHandler = new ImagesHandler();
     }
 
-    public function getPostData()
+    public function getRequestData()
     {
         // Sanitize data
         $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_SPECIAL_CHARS);
@@ -174,7 +174,7 @@ class Products extends Controller
     {
         $this->isLogin();
 
-        $postResultData = $this->getPostData();
+        $postResultData = $this->getRequestData();
 
         $data = indexParamExistsOrDefault($postResultData, 'data');
 
@@ -255,10 +255,9 @@ class Products extends Controller
         $this->isLogin();
 
         $isPostRequest = $_SERVER['REQUEST_METHOD'] == 'POST';
-
         if (!$isPostRequest) return;
 
-        $postResultData = $this->getPostData();
+        $postResultData = $this->getRequestData();
 
         $data = indexParamExistsOrDefault($postResultData, 'data');
 
@@ -311,11 +310,15 @@ class Products extends Controller
             $img = ($imgName !== '') ? $imgName : $postImg;
 
             // Copy from the older to new one
-            if (file_exists("../public/resources/img/products/category_{$resultId->id_category}/id_$id/$img")) {
+            $oldFolderPath = "../public/resources/img/products/category_{$resultId->id_category}/id_$id/$img";
 
-                copy("../public/resources/img/products/category_{$resultId->id_category}/id_$id/$img", "../public/resources/img/products/category_{$postIdCategory}/id_$id/$img");
+            $newFolderPath = "../public/resources/img/products/category_{$postIdCategory}/id_$id/$img";
+
+            if (file_exists($oldFolderPath)) {
+
+                copy($oldFolderPath, $newFolderPath);  
             }
-
+            
             // Delete the image in the current folder
             $this->imagesHandler->deleteFolder('products', $id, $resultId->id_category);
 
@@ -340,7 +343,7 @@ class Products extends Controller
             return;
         }
 
-        $postResultData = $this->getPostData();
+        $postResultData = $this->getRequestData();
 
         $data = indexParamExistsOrDefault($postResultData, 'data');
 

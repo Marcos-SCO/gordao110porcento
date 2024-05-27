@@ -64,7 +64,7 @@ class Gallery extends Controller
 
         if (!$submittedPostData) return redirect('gallery');
 
-        $result = $this->getPostData();
+        $result = $this->getRequestData();
         $data = $result[0];
         $error = $result[1];
 
@@ -143,7 +143,7 @@ class Gallery extends Controller
 
         if (!$submittedPostData) return;
 
-        $data = $this->getPostData();
+        $data = $this->getRequestData();
         $error = $data[1];
         $id = $data[0]['id'];
 
@@ -177,7 +177,7 @@ class Gallery extends Controller
         return $this->index(1, $flash);
     }
 
-    public function getPostData()
+    public function getRequestData()
     {
         // Sanitize data
         $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);

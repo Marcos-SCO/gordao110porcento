@@ -51,7 +51,7 @@ class Contact extends Controller
         return [];
     }
 
-    public function getPostData()
+    public function getRequestData()
     {
         // Sanitize data
         $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_SPECIAL_CHARS);
@@ -159,7 +159,7 @@ class Contact extends Controller
             return redirect('contact/' . $contactPage);
         }
 
-        $postResultData = $this->getPostData($contactPage);
+        $postResultData = $this->getRequestData($contactPage);
 
         $data = indexParamExistsOrDefault($postResultData, 'data');
 
