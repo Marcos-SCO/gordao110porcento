@@ -84,7 +84,7 @@ class Products extends Controller
             'error' => false
         ];
 
-        $validate =
+        $validatedImgRequest =
             $this->imagesHandler->verifySubmittedImgExtension();
 
         if ($imgFiles && $postImg == '') {
@@ -95,8 +95,8 @@ class Products extends Controller
             }
 
             if (!empty($data['img_files'])) {
-                $error['img_error'] = $validate[1];
-                $error['error'] = $validate[0];
+                $error['img_error'] = $validatedImgRequest[1];
+                $error['error'] = $validatedImgRequest[0];
             }
         }
 
@@ -128,6 +128,8 @@ class Products extends Controller
 
     public function index($requestData)
     {
+        if (isset($_SESSION['submitted'])) unset($_SESSION['submitted']);
+
         $table = 'products';
 
         $pageId = isset($requestData['products']) && !empty($requestData['products']) ? $requestData['products'] : 1;
@@ -157,11 +159,10 @@ class Products extends Controller
     {
         $this->isLogin();
 
-        if (isset($_SESSION['submitted'])) {
-            unset($_SESSION['submitted']);
-        }
+        if (isset($_SESSION['submitted'])) unset($_SESSION['submitted']);
 
         $categories = $this->model->getCategories();
+        
         View::render('products/create.php', [
             'title' => 'Adicione mais produtos',
             'data' => $data,
@@ -173,6 +174,8 @@ class Products extends Controller
     public function store()
     {
         $this->isLogin();
+
+        if (isSubmittedInSession()) return redirect('products');
 
         $postResultData = $this->getRequestData();
 
@@ -195,12 +198,12 @@ class Products extends Controller
         if (!$addedProduct) {
             die('Something went wrong when adding the product...');
         }
+        
+        addSubmittedToSession();
+        
+        // $productLastId = $this->model->lastId();
 
-        $_SESSION['submitted'] = true;
-
-        // $flash = flash('post_message', 'Produto adicionado com sucesso');
-
-        // $id = $this->model->lastId();
+        flash('post_message', 'Produto adicionado com sucesso');
 
         return redirect('products');
     }
@@ -209,13 +212,13 @@ class Products extends Controller
     {
         $productId = indexParamExistsOrDefault($requestData, 'show');
 
-        $flash = indexParamExistsOrDefault($requestData, 'flash');
-
         $data = $this->model->getAllFrom('products', $productId);
 
         $categories = $this->model->getCategories();
 
         $user = $this->model->getAllFrom('users', $data->user_id);
+
+        removeSubmittedFromSession();
 
         return View::render('products/show.php', [
             'title' => $data->product_name,
@@ -223,7 +226,6 @@ class Products extends Controller
             'data' => $data,
             'user' => $user,
             'categories' => $categories,
-            'flash' => $flash
         ]);
     }
 
@@ -250,36 +252,20 @@ class Products extends Controller
         ]);
     }
 
-    public function update($requestData)
+    public function moveUploadImageFolder($data)
     {
-        $this->isLogin();
-
-        $isPostRequest = $_SERVER['REQUEST_METHOD'] == 'POST';
-        if (!$isPostRequest) return;
-
-        $postResultData = $this->getRequestData();
-
-        $data = indexParamExistsOrDefault($postResultData, 'data');
-
-        $errorData =
-            indexParamExistsOrDefault($postResultData, 'errorData');
-
         $id = $data['id'];
-
         $postIdCategory = $data['id_category'];
+
+        $result = $this->model->getProduct($id, $postIdCategory);
+
+        $resultId = $this->model->getProductId($id);
 
         $imgFiles = indexParamExistsOrDefault($data, 'img_files');
 
         $imgName = indexParamExistsOrDefault($imgFiles, 'name');
 
         $postImg = $data['post_img'];
-
-        $isErrorResult = $errorData['error'] == true;
-
-        if ($isErrorResult) return $this->edit(['edit' => $id, 'error' => $errorData]);
-
-        $result = $this->model->getProduct($id, $postIdCategory);
-        $resultId = $this->model->getProductId($id);
 
         if ($result) {
 
@@ -295,41 +281,65 @@ class Products extends Controller
 
                 $data['img_name'] = $imgName;
             }
+
+            return $data;
         }
 
-        if (!$result) {
+        // Create a new path
+        $fullPath = $this->imagesHandler->imgFullPath('products', $id, $imgName, $postIdCategory);
 
-            // Create a new path
-            $fullPath = $this->imagesHandler->imgFullPath('products', $id, $imgName, $postIdCategory);
+        $this->imagesHandler->moveUpload($fullPath);
 
-            $this->imagesHandler->moveUpload($fullPath);
+        $data['img'] = explode('/', $fullPath);
 
-            $data['img'] = explode('/', $fullPath);
+        // Get img data
+        $img = ($imgName !== '') ? $imgName : $postImg;
 
-            // Get img data
-            $img = ($imgName !== '') ? $imgName : $postImg;
+        // Copy from the older to new one
+        $oldFolderPath = "../public/resources/img/products/category_{$resultId->id_category}/id_$id/$img";
 
-            // Copy from the older to new one
-            $oldFolderPath = "../public/resources/img/products/category_{$resultId->id_category}/id_$id/$img";
+        $newFolderPath = "../public/resources/img/products/category_{$postIdCategory}/id_$id/$img";
 
-            $newFolderPath = "../public/resources/img/products/category_{$postIdCategory}/id_$id/$img";
+        if (file_exists($oldFolderPath)) {
 
-            if (file_exists($oldFolderPath)) {
-
-                copy($oldFolderPath, $newFolderPath);  
-            }
-            
-            // Delete the image in the current folder
-            $this->imagesHandler->deleteFolder('products', $id, $resultId->id_category);
-
-            $data['img_name'] = $img;
+            copy($oldFolderPath, $newFolderPath);
         }
+
+        // Delete the image in the current folder
+        $this->imagesHandler->deleteFolder('products', $id, $resultId->id_category);
+
+        $data['img_name'] = $img;
+
+        return $data;
+    }
+
+    public function update($requestData)
+    {
+        $this->isLogin();
+
+        $postResultData = $this->getRequestData();
+
+        $data = indexParamExistsOrDefault($postResultData, 'data');
+
+        $id = $data['id'];
+        if (isSubmittedInSession()) return redirect('products/show/' . $id);
+
+        $errorData =
+            indexParamExistsOrDefault($postResultData, 'errorData');
+
+        $isErrorResult = $errorData['error'] == true;
+
+        if ($isErrorResult) return $this->edit(['edit' => $id, 'error' => $errorData]);
+
+        $data = $this->moveUploadImageFolder($data);
 
         $this->model->updateProduct($data);
 
-        $flash = flash('post_message', 'Produto foi atualizado com sucesso!');
+        addSubmittedToSession();
 
-        return $this->show(['show' => $id, 'flash' => $flash]);
+        flash('post_message', 'Produto foi atualizado com sucesso!');
+
+        return redirect('products/show/' . $id);
     }
 
     // Delete function for controllers
@@ -337,10 +347,9 @@ class Products extends Controller
     {
         $isPostRequest = $_SERVER['REQUEST_METHOD'] == 'POST';
 
-        if (!$isPostRequest) {
+        if (!$isPostRequest || isSubmittedInSession()) {
 
-            redirect('products');
-            return;
+            return redirect('products');
         }
 
         $postResultData = $this->getRequestData();
@@ -357,6 +366,8 @@ class Products extends Controller
         $this->model->deleteProduct('products', ['id' => $id]);
 
         $this->imagesHandler->deleteFolder('products', $id, $idCategory);
+
+        flash('post_message', 'Produto deletado com sucesso!');
 
         redirect('products');
     }
