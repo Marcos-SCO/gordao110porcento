@@ -59,11 +59,15 @@
 
         <div class="form-group">
             <label for="img">Coloque a imagem</label>
+
             <input type="file" name="img" id="img" class="form-control form-control-lg <?= isset($error['img_error']) && $error['img_error'] != '' ? 'is-invalid' : '' ?>" value="<?= $data->img ?? '' ?>">
+
             <input type="hidden" name="img" id="img" value="<?= $data->img ?>">
+
             <span class="invalid-feedback">
                 <?= $error['img_error'] ?? '' ?>
             </span>
+            
             <img src="<?= $BASE ?>/<?= imgOrDefault('products', $data->img, $data->id, "/category_$data->id_category") ?>" title="<?= $data->product_name ?>" onerror="this.onerror=null;this.src='<?= $BASE ?>/public/resources/img/not_found/no_image.jpg';">
         </div>
 

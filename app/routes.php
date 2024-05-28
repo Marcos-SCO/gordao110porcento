@@ -15,6 +15,8 @@ return [
     
     '/posts/?($|[0-9])+/?' => 'Posts@index',
     '/posts/?show/($|[0-9])+/?' => 'Posts@show',
+    '/posts/create/?' => 'Posts@create',
+    '/posts/edit/($|[0-9])+/?' => 'Posts@edit',
     
     '/categories/?($|[0-9])+/?' => 'Categories@index',
 
@@ -41,6 +43,10 @@ return [
   'POST' => [
     'login/?' => 'Users@login',
     '/user/store/?' => 'User@store',
+
+    '/posts/store/?' => 'Posts@store',
+    '/posts/update/?' => 'Posts@update',
+    '/posts/delete/?' => 'Posts@destroy',
 
     '/products/store/?' => 'Products@store',
     '/products/update/?' => 'Products@update',

@@ -233,8 +233,6 @@ class Products extends Controller
     {
         $productId = indexParamExistsOrDefault($requestData, 'edit');
 
-        $flash = indexParamExistsOrDefault($requestData, 'flash');
-
         $errors = indexParamExistsOrDefault($requestData, 'error');
 
         $this->isLogin();
@@ -323,6 +321,7 @@ class Products extends Controller
         $data = indexParamExistsOrDefault($postResultData, 'data');
 
         $id = $data['id'];
+        
         if (isSubmittedInSession()) return redirect('products/show/' . $id);
 
         $errorData =
