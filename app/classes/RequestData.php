@@ -5,15 +5,24 @@ namespace App\Classes;
 class RequestData
 {
 
-  public static function getPostRequestItens()
+  public static function getRequestParams()
   {
     // Sanitize data
     $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_SPECIAL_CHARS);
     if (!$post) return;
 
+    $notAllowedTags = array('<script>', '<a>');
+
+    $body = trim(indexParamExistsOrDefault($post, 'body', ''));
+    $body = str_replace($notAllowedTags, '', $body);
+
     $id = indexParamExistsOrDefault($post, 'id');
 
+
     $postIdCategory = indexParamExistsOrDefault($post, 'id_category');
+
+    $title = trim(indexParamExistsOrDefault($post, 'title', ''));
+
 
     $productName = indexParamExistsOrDefault($post, 'product_name');
 
@@ -45,23 +54,35 @@ class RequestData
 
     $priceError = isset($_POST['price_error']) ? trim($_POST['price_error']) : '';
 
-    $imgPathError = isset($_POST['img_error']) ? trim($_POST['img_error']) : '';
+    $titleError =
+      trim(indexParamExistsOrDefault($post, 'title_error', ''));
+
+    $bodyError =
+      trim(indexParamExistsOrDefault($post, 'body_error', ''));
+
+    $imgPathError =
+      trim(indexParamExistsOrDefault($post, 'img_error', ''));
 
     // Add data to array
     $data = [
       'id' => $id,
+      'user_id' => $userId,
       'id_category' => $postIdCategory,
+      'title' => $title,
+      'body' => $body,
       'product_name' => $productName,
       'product_description' => $productDescription,
       'price' => $price,
       'img_files' => $imgFiles,
       'img_name' => $imgName,
       'post_img' => $postImg,
-      'user_id' => $userId,
     ];
 
     $errors = [
       'id_category_error' => $postIdCategoryError,
+      'title_error' => $titleError,
+      'body_error' => $bodyError,
+
       'product_name_error' => $productNameError,
       'product_description_error' => $productDescriptionError,
       'price_error' => $priceError,
@@ -69,6 +90,6 @@ class RequestData
       'error' => false
     ];
 
-    return ['data' => $data, 'errors' => $error]
+    return ['data' => $data, 'errors' => $errors];
   }
 }

@@ -4,7 +4,7 @@ namespace App\Controllers;
 
 use App\Classes\ImagesHandler;
 use App\Classes\Pagination;
-
+use App\Classes\RequestData;
 use Core\Controller;
 use Core\View;
 
@@ -24,87 +24,42 @@ class Posts extends Controller
         $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_SPECIAL_CHARS);
         if (!$post) return;
 
-        $notAllowedTags = array('<script>', '<a>');
-
-        $body = isset($post['body']) ? trim($post['body']) : '';
-        $body = trim(str_replace($notAllowedTags, '', $body));
-
-        $id = indexParamExistsOrDefault($post, 'id');
-
-        $postIdCategory =
-            indexParamExistsOrDefault($post, 'id_category');
-
-        $title = trim(indexParamExistsOrDefault($post, 'title', ''));
-
-        $imgFiles = indexParamExistsOrDefault($_FILES, 'img');
-        $imgName = indexParamExistsOrDefault($imgFiles, 'name');
-
         $postImg = indexParamExistsOrDefault($post, 'img', '');
         $isEmptyPostImg = $postImg == "" || $postImg == false;
-
-        $userId = indexParamExistsOrDefault($_SESSION, 'user_id', '');
-
-        $postIdCategoryError =
-            trim(indexParamExistsOrDefault($post, 'id_category_error', ''));
-
-        $titleError =
-            trim(indexParamExistsOrDefault($post, 'title_error', ''));
-
-        $bodyError =
-            trim(indexParamExistsOrDefault($post, 'body_error', ''));
-
-        $imgPathError =
-            trim(indexParamExistsOrDefault($post, 'img_error', ''));
-
-
-        // Add data to array
-        $data = [
-            'id' => $id,
-            'id_category' => $postIdCategory,
-            'title' => $title,
-            'body' => $body,
-            'img_files' => $imgFiles,
-            'img_name' => $imgName,
-            'post_img' => $postImg,
-            'user_id' => $userId,
-        ];
-
-        $error = [
-            'id_category_error' => $postIdCategoryError,
-            'title_error' => $titleError,
-            'body_error' => $bodyError,
-            'img_error' => $imgPathError,
-            'error' => false
-        ];
 
         $validatedImgRequest =
             $this->imagesHandler->verifySubmittedImgExtension();
 
+        $requestParams = RequestData::getRequestParams();
+
+        $data = indexParamExistsOrDefault($requestParams, 'data');
+        $errors = indexParamExistsOrDefault($requestParams, 'errors');
+
         if (!$isEmptyPostImg) $data['img_name'] = $postImg;
 
-        if ($imgFiles && $postImg == '') {
+        if ($data['img_files'] && $postImg == '') {
 
-            if (empty($imgFiles)) {
-                $error['img_error'] = "Insira uma imagem";
-                $error['error'] = true;
+            if (empty($data['img_files'])) {
+                $errors['img_error'] = "Insira uma imagem";
+                $errors['error'] = true;
             }
 
-            if (!empty($imgFiles)) {
-                $error['img_error'] = $validatedImgRequest[1];
-                $error['error'] = $validatedImgRequest[0];
+            if (!empty($data['img_files'])) {
+                $errors['img_error'] = $validatedImgRequest[1];
+                $errors['error'] = $validatedImgRequest[0];
             }
         }
 
         if (empty($data['title'])) {
-            $error['title_error'] = "Coloque o título.";
-            $error['error'] = true;
+            $errors['title_error'] = "Coloque o título.";
+            $errors['error'] = true;
         }
         if (empty($data['body'])) {
-            $error['body_error'] = "Preencha o campo de texto.";
-            $error['error'] = true;
+            $errors['body_error'] = "Preencha o campo de texto.";
+            $errors['error'] = true;
         }
 
-        return ['data' => $data, 'errorData' => $error];
+        return ['data' => $data, 'errorData' => $errors];
     }
 
     public function moveUploadImageFolder($data, $lastId = false)
