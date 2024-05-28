@@ -110,7 +110,7 @@ class ImagesHandler
     move_uploaded_file($imageTempName, $imgFullPath);
   }
 
-  public function imgFullPath($table, $id, $imgName, $categoryId = null)
+  public function imgFolderCreate($table, $id, $imgName, $categoryId = null)
   {
 
     $emptyCategoryId = $categoryId == null;
@@ -156,7 +156,7 @@ class ImagesHandler
 
     $imgFileName = $_FILES['img']['name'];
 
-    $imgFullPath = $this->imgFullPath($table, $tableAutoIncrementId, $imgFileName, $folderName);
+    $imgFullPath = $this->imgFolderCreate($table, $tableAutoIncrementId, $imgFileName, $folderName);
 
     return $imgFullPath;
   }

@@ -164,7 +164,7 @@ class Gallery extends Controller
         }
 
         if (!$isEmptyImg) {
-            $fullPath = $this->imgFullPath('gallery', $id, $img);
+            $fullPath = $this->imgFolderCreate('gallery', $id, $img);
             $this->moveUpload($fullPath);
 
             $data['img'] = explode('/', $fullPath);

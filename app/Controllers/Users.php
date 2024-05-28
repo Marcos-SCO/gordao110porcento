@@ -385,7 +385,7 @@ class Users extends Controller
 
         if (!$isEmptyImg) {
 
-            $fullPath = $this->imgFullPath('users', $id, $imgName);
+            $fullPath = $this->imgFolderCreate('users', $id, $imgName);
             $this->moveUpload($fullPath);
 
             $explodedPath = explode('/', $fullPath);

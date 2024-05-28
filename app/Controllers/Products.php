@@ -162,7 +162,7 @@ class Products extends Controller
         if (isset($_SESSION['submitted'])) unset($_SESSION['submitted']);
 
         $categories = $this->model->getCategories();
-        
+
         View::render('products/create.php', [
             'title' => 'Adicione mais produtos',
             'data' => $data,
@@ -198,9 +198,9 @@ class Products extends Controller
         if (!$addedProduct) {
             die('Something went wrong when adding the product...');
         }
-        
+
         addSubmittedToSession();
-        
+
         // $productLastId = $this->model->lastId();
 
         flash('post_message', 'Produto adicionado com sucesso');
@@ -275,9 +275,10 @@ class Products extends Controller
 
             if (!$isEmptyImg) {
 
-                $fullPath = $this->imagesHandler->imgFullPath('products', $id, $imgName, $postIdCategory);
+                $createdFolderPath =
+                    $this->imagesHandler->imgFolderCreate('products', $id, $imgName, $postIdCategory);
 
-                $this->imagesHandler->moveUpload($fullPath);
+                $this->imagesHandler->moveUpload($createdFolderPath);
 
                 $data['img_name'] = $imgName;
             }
@@ -286,7 +287,7 @@ class Products extends Controller
         }
 
         // Create a new path
-        $fullPath = $this->imagesHandler->imgFullPath('products', $id, $imgName, $postIdCategory);
+        $fullPath = $this->imagesHandler->imgFolderCreate('products', $id, $imgName, $postIdCategory);
 
         $this->imagesHandler->moveUpload($fullPath);
 

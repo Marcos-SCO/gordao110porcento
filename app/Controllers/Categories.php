@@ -172,7 +172,7 @@ class Categories extends Controller
 
         if (!$isEmptyImg) {
 
-            $fullPath = $this->imgFullPath('categories', $id, $img);
+            $fullPath = $this->imgFolderCreate('categories', $id, $img);
             $this->moveUpload($fullPath);
 
             $data['img'] = explode('/', $fullPath);
