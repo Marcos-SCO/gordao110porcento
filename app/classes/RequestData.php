@@ -40,19 +40,17 @@ class RequestData
 
     $imgName = indexParamExistsOrDefault($imgFiles, 'name');
 
-    $postImg = isset($_POST['img']) ? $_POST['img'] : '';
+    $postImg = indexParamExistsOrDefault($_POST, 'img', '');
 
-    $userId = isset($_SESSION['user_id']) ? $_SESSION['user_id'] : '';
+    $userId = indexParamExistsOrDefault($imgFiles, 'user_id');
 
-    $postIdCategoryError = isset($_POST['id_category_error']) ? trim($_POST['id_category_error']) : '';
+    $postIdCategoryError = trim(indexParamExistsOrDefault($_POST, 'id_category_error', ''));
 
-    $productNameError = isset($_POST['product_name_error']) ? trim($_POST['product_name_error']) : '';
+    $productNameError = trim(indexParamExistsOrDefault($_POST, 'product_name_error', ''));
+    
+    $productDescriptionError = trim(indexParamExistsOrDefault($_POST, 'product_description_error', ''));
 
-    $productDescriptionError =
-      isset($_POST['product_description_error'])
-      ? trim($_POST['product_description_error']) : '';
-
-    $priceError = isset($_POST['price_error']) ? trim($_POST['price_error']) : '';
+    $priceError = trim(indexParamExistsOrDefault($_POST, 'price_error', ''));
 
     $titleError =
       trim(indexParamExistsOrDefault($post, 'title_error', ''));

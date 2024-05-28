@@ -6,6 +6,8 @@ namespace App\Controllers;
 
 use App\Classes\ImagesHandler;
 use App\Classes\Pagination;
+use App\Classes\RequestData;
+
 use Core\Controller;
 use Core\View;
 
@@ -26,104 +28,54 @@ class Products extends Controller
         $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_SPECIAL_CHARS);
         if (!$post) return;
 
-        $id = indexParamExistsOrDefault($post, 'id');
+        $postImg = indexParamExistsOrDefault($post, 'img', '');
 
-        $postIdCategory = indexParamExistsOrDefault($post, 'id_category');
-
-        $productName = indexParamExistsOrDefault($post, 'product_name');
-
-        $productDescription = indexParamExistsOrDefault($post, 'product_description');
-
-        $price = verifyValue($post, 'price');
-
-        if ($price) {
-
-            $price = trim(preg_replace("/[^0-9,.]+/i", "", $price));
-            $price = str_replace(",", ".", $price);
-        }
-
-        $imgFiles = indexParamExistsOrDefault($_FILES, 'img');
-
-        $imgName = indexParamExistsOrDefault($imgFiles, 'name');
-
-        $postImg = isset($_POST['img']) ? $_POST['img'] : '';
-
-        $userId = isset($_SESSION['user_id']) ? $_SESSION['user_id'] : '';
-
-        $postIdCategoryError = isset($_POST['id_category_error']) ? trim($_POST['id_category_error']) : '';
-
-        $productNameError = isset($_POST['product_name_error']) ? trim($_POST['product_name_error']) : '';
-
-        $productDescriptionError =
-            isset($_POST['product_description_error'])
-            ? trim($_POST['product_description_error']) : '';
-
-        $priceError = isset($_POST['price_error']) ? trim($_POST['price_error']) : '';
-
-        $imgPathError = isset($_POST['img_error']) ? trim($_POST['img_error']) : '';
-
-        // Add data to array
-        $data = [
-            'id' => $id,
-            'id_category' => $postIdCategory,
-            'product_name' => $productName,
-            'product_description' => $productDescription,
-            'price' => $price,
-            'img_files' => $imgFiles,
-            'img_name' => $imgName,
-            'post_img' => $postImg,
-            'user_id' => $userId,
-        ];
-
-        $error = [
-            'id_category_error' => $postIdCategoryError,
-            'product_name_error' => $productNameError,
-            'product_description_error' => $productDescriptionError,
-            'price_error' => $priceError,
-            'img_error' => $imgPathError,
-            'error' => false
-        ];
+        $isEmptyPostImg = $postImg == "" || $postImg == false;
 
         $validatedImgRequest =
             $this->imagesHandler->verifySubmittedImgExtension();
 
-        if ($imgFiles && $postImg == '') {
+        $requestParams = RequestData::getRequestParams();
+
+        $data = indexParamExistsOrDefault($requestParams, 'data');
+        $errors = indexParamExistsOrDefault($requestParams, 'errors');
+
+        if (!$isEmptyPostImg) $data['img_name'] = $postImg;
+
+        if ($data['img_files'] && $postImg == '') {
 
             if (empty($data['img_files'])) {
-                $error['img_error'] = "Insira uma imagem";
-                $error['error'] = true;
+                $errors['img_error'] = "Insira uma imagem";
+                $errors['error'] = true;
             }
 
             if (!empty($data['img_files'])) {
-                $error['img_error'] = $validatedImgRequest[1];
-                $error['error'] = $validatedImgRequest[0];
+                $errors['img_error'] = $validatedImgRequest[1];
+                $errors['error'] = $validatedImgRequest[0];
             }
         }
 
         if (empty($data['id_category'])) {
-            $error['id_category_error'] = "Escolha a categoria";
-            $error['error'] = true;
+            $errors['id_category_error'] = "Escolha a categoria";
+            $errors['error'] = true;
         }
 
         if (empty($data['product_name'])) {
-            $error['product_name_error'] = "Coloque o nome do produto";
-            $error['error'] = true;
+            $errors['product_name_error'] = "Coloque o nome do produto";
+            $errors['error'] = true;
         }
 
         if (empty($data['product_description'])) {
-            $error['product_description_error'] = "Coloque a descrição do produto";
-            $error['error'] = true;
+            $errors['product_description_error'] = "Coloque a descrição do produto";
+            $errors['error'] = true;
         }
 
-        if (isset($data['price'])) {
-
-            if (!$price) {
-                $error['price_error'] = "Insira o preço do produto e somente valores monetários.";
-                $error['error'] = true;
-            }
+        if (empty($data['price'])) {
+            $errors['price_error'] = "Insira o preço do produto e somente valores monetários.";
+            $errors['error'] = true;
         }
 
-        return ['data' => $data, 'errorData' => $error];
+        return ['data' => $data, 'errorData' => $errors];
     }
 
     public function index($requestData)
@@ -265,7 +217,7 @@ class Products extends Controller
 
         $postImg = $data['post_img'];
 
-        if ($result) {
+        if (!$result) {
 
             $isEmptyImg = $imgName == "";
 
@@ -321,7 +273,7 @@ class Products extends Controller
         $data = indexParamExistsOrDefault($postResultData, 'data');
 
         $id = $data['id'];
-        
+
         if (isSubmittedInSession()) return redirect('products/show/' . $id);
 
         $errorData =
