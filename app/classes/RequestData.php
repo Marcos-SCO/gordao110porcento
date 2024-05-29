@@ -18,6 +18,14 @@ class RequestData
 
     $id = indexParamExistsOrDefault($post, 'id');
 
+    $categoryName = trim(indexParamExistsOrDefault($post, 'category_name', ''));
+
+    $categoryNameError = trim(indexParamExistsOrDefault($post, 'category_name_error', ''));
+
+    $categoryDescription = trim(indexParamExistsOrDefault($post, 'category_description', ''));
+
+    $categoryDescriptionError = trim(indexParamExistsOrDefault($post, 'category_description_error', ''));
+
 
     $postIdCategory = indexParamExistsOrDefault($post, 'id_category');
 
@@ -36,6 +44,7 @@ class RequestData
       $price = str_replace(",", ".", $price);
     }
 
+
     $imgFiles = indexParamExistsOrDefault($_FILES, 'img');
 
     $imgName = indexParamExistsOrDefault($imgFiles, 'name');
@@ -47,6 +56,7 @@ class RequestData
 
     $imgGalleryTitleDescriptionError =
       trim(indexParamExistsOrDefault($post, 'img_title_error', ''));
+
 
     $userId = indexParamExistsOrDefault($imgFiles, 'user_id');
 
@@ -72,6 +82,10 @@ class RequestData
       'id' => $id,
       'user_id' => $userId,
       'id_category' => $postIdCategory,
+
+      'category_name' => $categoryName,
+      'category_description' => $categoryDescription,
+
       'title' => $title,
       'body' => $body,
       'product_name' => $productName,
@@ -89,6 +103,9 @@ class RequestData
       'id_category_error' => $postIdCategoryError,
       'title_error' => $titleError,
       'body_error' => $bodyError,
+
+      'category_name_error' => $categoryNameError,
+      'category_description_error' => $categoryDescriptionError,
 
       'product_name_error' => $productNameError,
       'product_description_error' => $productDescriptionError,

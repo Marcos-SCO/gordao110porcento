@@ -22,13 +22,16 @@
 
         <div class="form-group">
             <label for="img">Arquivo de imagem</label>
+
             <input type="file" name="img" id="img" class="form-control form-control-lg <?= isset($error['img_error']) && $error['img_error'] != '' ? 'is-invalid' : '' ?>" value="<?= $data->img ?? '' ?>">
+
             <input type="hidden" name="img" id="img" value="<?= $data->img ?>">
+
             <span class="invalid-feedback">
                 <?= $error['img_error'] ?? '' ?>
             </span>
 
-            <img src="<?= $BASE ?>/<?=imgOrDefault('gallery', $data->img,$data->id)?>" alt="<?= $data->img ?>" title="<?= $data->img_title ?>" onerror="this.onerror=null;this.src='<?=$BASE?>/public/resources/img/not_found/no_image.jpg';">
+            <img src="<?= $BASE ?>/<?= imgOrDefault('gallery', $data->img, $data->id) ?>" alt="<?= $data->img ?>" title="<?= $data->img_title ?>" onerror="this.onerror=null;this.src='<?= $BASE ?>/public/resources/img/not_found/no_image.jpg';">
         </div>
 
         <input type="submit" class="btn btn-success" value="Enviar">

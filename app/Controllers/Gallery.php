@@ -7,6 +7,7 @@ namespace App\Controllers;
 use App\Classes\ImagesHandler;
 use App\Classes\Pagination;
 use App\Classes\RequestData;
+
 use Core\Controller;
 use Core\View;
 
@@ -51,7 +52,6 @@ class Gallery extends Controller
                 $errors['error'] = $validatedImgRequest[0];
             }
         }
-
 
         if (empty($data['img_title'])) {
             $errors['img_title_error'] = "Coloque uma descrição para imagem";

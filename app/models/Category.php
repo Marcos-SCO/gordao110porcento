@@ -23,12 +23,13 @@ class Category extends \Core\Model
             "SELECT img FROM categories WHERE `id` = :id",
             ['id' => $id]
         );
+
         return $result;
     }
-    
+
     public function getProducts($id)
     {
-        $result = $this->customQuery("SELECT * FROM products WHERE `id_category` = :id_category",['id_category' => $id],1);
+        $result = $this->customQuery("SELECT * FROM products WHERE `id_category` = :id_category", ['id_category' => $id], 1);
         return $result;
     }
 
@@ -39,16 +40,12 @@ class Category extends \Core\Model
             'user_id' => $_SESSION['user_id'],
             'category_name' => $data['category_name'],
             'category_description' => $data['category_description'],
-            'img' => $data['img'],
+            'img' => $data['img_name'],
             'created_at' => date("Y-m-d H:i:s")
         ]);
 
         // Execute
-        if ($this->rowCount()) {
-            return true;
-        } else {
-            return false;
-        }
+        return $this->rowCount();
     }
 
     public function updateCategory($data)
@@ -56,19 +53,15 @@ class Category extends \Core\Model
         $this->updateQuery('categories', [
             'category_name' => $data['category_name'],
             'category_description' => $data['category_description'],
-            'img' => $data['img'],
+            'img' => $data['img_name'],
             'updated_at' => date("Y-m-d H:i:s")
         ], ['id', $data['id']]);
 
         // Execute
-        if ($this->rowCount()) {
-            return true;
-        } else {
-            return false;
-        }
+        return $this->rowCount();
     }
 
-    public function deletePost($table, $id) 
+    public function deletePost($table, $id)
     {
         return $this->deleteQuery($table, $id);
     }

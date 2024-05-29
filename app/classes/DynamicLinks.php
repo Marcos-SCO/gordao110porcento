@@ -24,7 +24,7 @@ class DynamicLinks
 
     if (!$isValidUser) return;
 
-    $verb = ($table == 'categories') ? 'destroy' : 'delete';
+    $verb = 'delete';
 
     $idCategory = '';
 

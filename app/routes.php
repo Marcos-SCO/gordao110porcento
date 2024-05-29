@@ -21,9 +21,10 @@ return [
     '/posts/edit/($|[0-9])+/?' => 'Posts@edit',
     
     '/categories/?($|[0-9])+/?' => 'Categories@index',
-
+    '/categories/create/?' => 'Categories@create',
+    '/categories/edit/($|[0-9])+/?' => 'Categories@edit',
     '/categories/?show/($|[0-9]+)(?:/([0-9]+))?/' => 'Categories@show',
-
+    
     '/contact/?($|[\w]+)/?' => 'Contact@index',
 
     // '/user/create' => 'User@create',
@@ -53,6 +54,10 @@ return [
     '/products/store/?' => 'Products@store',
     '/products/update/?' => 'Products@update',
     '/products/delete/?' => 'Products@destroy',
+    
+    '/categories/store/?' => 'Categories@store',
+    '/categories/update/?' => 'Categories@update',
+    '/categories/delete/?' => 'Categories@destroy',
 
     '/gallery/store/?' => 'Gallery@store',
     '/gallery/update/?' => 'Gallery@update',
@@ -61,8 +66,6 @@ return [
     '/users/update/?' => 'Users@update',
 
     '/contact/?($|[\w]+)/send/?' => 'Contact@sendMessage',
-    // '/contact/message/send/?' => 'Contact@sendMessage',
-    // '/contact/work/send/?' => 'Contact@workSend',
     
   ],
 ];
