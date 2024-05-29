@@ -54,6 +54,7 @@ class Posts extends Controller
             $errors['title_error'] = "Coloque o título.";
             $errors['error'] = true;
         }
+        
         if (empty($data['body'])) {
             $errors['body_error'] = "Preencha o campo de texto.";
             $errors['error'] = true;
@@ -130,12 +131,12 @@ class Posts extends Controller
 
         if (isSubmittedInSession()) return redirect('posts');
 
-        $postResultData = $this->getRequestData();
+        $requestedData = $this->getRequestData();
 
-        $data = indexParamExistsOrDefault($postResultData, 'data');
+        $data = indexParamExistsOrDefault($requestedData, 'data');
 
         $errorData =
-            indexParamExistsOrDefault($postResultData, 'errorData');
+            indexParamExistsOrDefault($requestedData, 'errorData');
 
         $isErrorResult = $errorData['error'] == true;
 
