@@ -40,17 +40,23 @@ class RequestData
 
     $imgName = indexParamExistsOrDefault($imgFiles, 'name');
 
-    $postImg = indexParamExistsOrDefault($_POST, 'img', '');
+    $postImg = indexParamExistsOrDefault($post, 'img', '');
+
+    $imgGalleryDescriptionTitle =
+      trim(indexParamExistsOrDefault($post, 'img_title', ''));
+
+    $imgGalleryTitleDescriptionError =
+      trim(indexParamExistsOrDefault($post, 'img_title_error', ''));
 
     $userId = indexParamExistsOrDefault($imgFiles, 'user_id');
 
-    $postIdCategoryError = trim(indexParamExistsOrDefault($_POST, 'id_category_error', ''));
+    $postIdCategoryError = trim(indexParamExistsOrDefault($post, 'id_category_error', ''));
 
-    $productNameError = trim(indexParamExistsOrDefault($_POST, 'product_name_error', ''));
-    
-    $productDescriptionError = trim(indexParamExistsOrDefault($_POST, 'product_description_error', ''));
+    $productNameError = trim(indexParamExistsOrDefault($post, 'product_name_error', ''));
 
-    $priceError = trim(indexParamExistsOrDefault($_POST, 'price_error', ''));
+    $productDescriptionError = trim(indexParamExistsOrDefault($post, 'product_description_error', ''));
+
+    $priceError = trim(indexParamExistsOrDefault($post, 'price_error', ''));
 
     $titleError =
       trim(indexParamExistsOrDefault($post, 'title_error', ''));
@@ -71,6 +77,9 @@ class RequestData
       'product_name' => $productName,
       'product_description' => $productDescription,
       'price' => $price,
+
+      'img_title' => $imgGalleryDescriptionTitle,
+
       'img_files' => $imgFiles,
       'img_name' => $imgName,
       'post_img' => $postImg,
@@ -84,6 +93,9 @@ class RequestData
       'product_name_error' => $productNameError,
       'product_description_error' => $productDescriptionError,
       'price_error' => $priceError,
+
+      'img_title_error' => $imgGalleryTitleDescriptionError,
+
       'img_error' => $imgPathError,
       'error' => false
     ];

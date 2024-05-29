@@ -8,7 +8,7 @@
     <header>
         <h2><?= $data->img_title ?></h2>
     </header>
-    <form action="<?= $BASE ?>/gallery/update/<?= $data->id ?>" method="post" enctype="multipart/form-data">
+    <form action="<?= $BASE ?>/gallery/update/" method="post" enctype="multipart/form-data">
 
         <input type="hidden" name="id" id="<?= $data->id ?>" value="<?= $data->id ?>">
 

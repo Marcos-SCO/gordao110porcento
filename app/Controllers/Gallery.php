@@ -4,23 +4,91 @@ declare(strict_types=1);
 
 namespace App\Controllers;
 
+use App\Classes\ImagesHandler;
 use App\Classes\Pagination;
+use App\Classes\RequestData;
 use Core\Controller;
 use Core\View;
-
-use App\Config\Config;
 
 class Gallery extends Controller
 {
     public $model;
+    public $imagesHandler;
 
     public function __construct()
     {
         $this->model = $this->model('Gallery');
+        $this->imagesHandler = new ImagesHandler();
+    }
+
+    public function getRequestData()
+    {
+        $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_SPECIAL_CHARS);
+        if (!$post) return;
+
+        $postImg = indexParamExistsOrDefault($post, 'img', '');
+        $isEmptyPostImg = $postImg == "" || $postImg == false;
+
+        $validatedImgRequest =
+            $this->imagesHandler->verifySubmittedImgExtension();
+
+        $requestParams = RequestData::getRequestParams();
+
+        $data = indexParamExistsOrDefault($requestParams, 'data');
+        $errors = indexParamExistsOrDefault($requestParams, 'errors');
+
+        if (!$isEmptyPostImg) $data['img_name'] = $postImg;
+
+        if ($data['img_files'] && $postImg == '') {
+
+            if (empty($data['img_files'])) {
+                $errors['img_error'] = "Insira uma imagem";
+                $errors['error'] = true;
+            }
+
+            if (!empty($data['img_files'])) {
+                $errors['img_error'] = $validatedImgRequest[1];
+                $errors['error'] = $validatedImgRequest[0];
+            }
+        }
+
+
+        if (empty($data['img_title'])) {
+            $errors['img_title_error'] = "Coloque uma descrição para imagem";
+            $errors['error'] = true;
+        }
+
+        return ['data' => $data, 'errorData' => $errors];
+    }
+
+    public function moveUploadImageFolder($data, $lastId = false)
+    {
+        if ($lastId) $data['id'] = $lastId;
+
+        $id = $data['id'];
+
+        $imgFiles = indexParamExistsOrDefault($data, 'img_files');
+
+        $imgName = indexParamExistsOrDefault($imgFiles, 'name');
+
+        $isEmptyImg = $imgName == "";
+
+        if ($isEmptyImg) return $data;
+
+        $fullPath =
+            $this->imagesHandler->imgFolderCreate('gallery', $id, $imgName);
+
+        $this->imagesHandler->moveUpload($fullPath);
+
+        $data['img_name'] = $imgName;
+
+        return $data;
     }
 
     public function index($requestData = 1, $flash = false)
     {
+        removeSubmittedFromSession();
+
         $table = 'gallery';
 
         $pageId = isset($requestData['gallery']) && !empty($requestData['gallery']) ? $requestData['gallery'] : 1;
@@ -58,37 +126,32 @@ class Gallery extends Controller
     {
         $this->isLogin();
 
-        $submittedPostData =
-            isset($_SESSION['submitted']) &&
-            $_SERVER['REQUEST_METHOD'] == 'POST';
+        if (isSubmittedInSession()) return redirect('gallery');
 
-        if (!$submittedPostData) return redirect('gallery');
+        $requestedData = $this->getRequestData();
 
-        $result = $this->getRequestData();
-        $data = $result[0];
-        $error = $result[1];
+        $data = indexParamExistsOrDefault($requestedData, 'data');
 
-        $isErrorResult = $error['error'] == true;
+        $errorData =
+            indexParamExistsOrDefault($requestedData, 'errorData');
 
-        if ($isErrorResult) {
-            return $this->create($data, $error);
-        }
+        $isErrorResult = $errorData['error'] == true;
 
-        $fullPath = $this->imgCreateHandler('gallery');
-        $this->moveUpload($fullPath);
+        if ($isErrorResult) return $this->create($data, $errorData);
 
         $addedImg = $this->model->addImg($data);
 
-        if (!$addedImg) {
-            die('Something get wrong when adding a img...');
-            return;
-        }
+        if (!$addedImg) die('Something get wrong when adding a img...');
 
-        $_SESSION['submitted'] = true;
-        $flash = flash('post_message', 'Imagem adicionada com sucesso');
+        $lastInsertedPostId = $this->model->lastId();
 
-        $id = $this->model->lastId();
-        return $this->index(1, $flash);
+        $this->moveUploadImageFolder($data, $lastInsertedPostId);
+
+        addSubmittedToSession();
+
+        flash('post_message', 'Imagem adicionada com sucesso');
+
+        return redirect('gallery');
     }
 
     public function show($id, array $flash = null)
@@ -123,15 +186,22 @@ class Gallery extends Controller
         ]);
     }
 
-    public function edit($id, $error = false)
+    public function edit($requestData)
     {
         $this->isLogin();
+
+        removeSubmittedFromSession();
+
+        $id = indexParamExistsOrDefault($requestData, 'edit');
+
+        $errors = indexParamExistsOrDefault($requestData, 'error');
+
         $data = $this->model->getAllFrom('gallery', $id);
 
         View::render('gallery/edit.php', [
             'title' => "Editar - $data->img_title",
             'data' => $data,
-            'error' => $error
+            'error' => $errors
         ]);
     }
 
@@ -139,101 +209,47 @@ class Gallery extends Controller
     {
         $this->isLogin();
 
-        $submittedPostData = $_SERVER['REQUEST_METHOD'] == 'POST';
+        $requestResultData = $this->getRequestData();
 
-        if (!$submittedPostData) return;
+        $data = indexParamExistsOrDefault($requestResultData, 'data');
 
-        $data = $this->getRequestData();
-        $error = $data[1];
-        $id = $data[0]['id'];
+        $errorData = indexParamExistsOrDefault($requestResultData, 'errorData');
 
-        $isErrorResult = $error['error'] == true;
+        $id = $data['id'];
 
-        if ($isErrorResult) {
-            return $this->edit($id, $error);
-        }
+        if (isSubmittedInSession()) return redirect('gallery');
 
+        $isErrorResult = $errorData['error'] == true;
 
-        $img = $data[0]['img'];
-        $postImg = $data[0]['post_img'];
+        if ($isErrorResult) return $this->edit(['edit' => $id, 'error' => $errorData]);
 
-        $isEmptyImg = $img == "";
+        $data = $this->moveUploadImageFolder($data);
 
-        if ($isEmptyImg) {
-            $data[0]['img'] = $postImg;
-        }
+        $this->model->updateImg($data);
 
-        if (!$isEmptyImg) {
-            $fullPath = $this->imgFolderCreate('gallery', $id, $img);
-            $this->moveUpload($fullPath);
+        flash('post_message', 'Imagem foi atualizada com sucesso!');
 
-            $data['img'] = explode('/', $fullPath);
-        }
-
-        $this->model->updateImg($data[0]);
-
-        $flash = flash('post_message', 'Imagem foi atualizada com sucesso!');
-
-        return $this->index(1, $flash);
+        return redirect('gallery/edit/' . $id);
     }
 
-    public function getRequestData()
+    public function destroy()
     {
-        // Sanitize data
-        $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+        if (isSubmittedInSession()) return redirect('gallery');
 
-        $id = isset($_POST['id']) ? trim($_POST['id']) : '';
+        $requestResultData = $this->getRequestData();
 
-        $imgDescription = isset($_POST['img_title']) ? trim($_POST['img_title']) : '';
+        $data = indexParamExistsOrDefault($requestResultData, 'data');
 
-        $img = isset($_FILES['img']) ? $_FILES['img'] : null;
+        $id = $data['id'];
 
-        $postImg = isset($_POST['img']) ? $_POST['img'] : '';
+        $this->model->deletePost('gallery', ['id' => $id]);
 
-        $userId = isset($_SESSION['user_id'])
-            ? $_SESSION['user_id'] : '';
+        $this->imagesHandler->deleteFolder('gallery', $id);
 
-        $imgDescriptionError = isset($_POST['img_title_error']) ? trim($_POST['img_title_error']) : '';
+        flash('post_message', 'Item da galeria deletado com sucesso!');
 
-        $imgPathError = isset($_POST['img_error']) ? trim($_POST['img_error']) : '';
+        addSubmittedToSession();
 
-        // Add data to array
-        $data = [
-            'id' => $id,
-            'img_title' => $imgDescription,
-            'img' => $img['name'],
-            'post_img' => $postImg,
-            'user_id' => $userId,
-        ];
-
-        $error = [
-            'img_title_error' => $imgDescriptionError,
-            'img_error' => $imgPathError,
-            'error' => false
-        ];
-
-        $validate = $this->imgValidate();
-
-        if (isset($_FILES['img']) && $postImg == '') {
-
-            if (empty($data['img'])) {
-                $error['img_error'] = "Insira uma imagem";
-                $error['error'] = true;
-            }
-            if (!empty($data['img'])) {
-                $error['img_error'] = $validate[1];
-                $error['error'] = $validate[0];
-            }
-        } else if ($postImg && !empty($data['img'])) {
-            $error['img_error'] = $validate[1];
-            $error['error'] = $validate[0];
-        }
-
-        if (empty($data['img_title'])) {
-            $error['img_title_error'] = "Coloque uma descrição para imagem";
-            $error['error'] = true;
-        }
-
-        return [$data, $error];
+        redirect('gallery');
     }
 }

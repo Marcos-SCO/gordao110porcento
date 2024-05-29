@@ -12,6 +12,8 @@ return [
     '/products/create/?' => 'Products@create',
 
     '/gallery/?($|[0-9])+/?' => 'Gallery@index',
+    '/gallery/create/?' => 'Gallery@create',
+    '/gallery/edit/($|[0-9])+/?' => 'Gallery@edit',
     
     '/posts/?($|[0-9])+/?' => 'Posts@index',
     '/posts/?show/($|[0-9])+/?' => 'Posts@show',
@@ -51,6 +53,10 @@ return [
     '/products/store/?' => 'Products@store',
     '/products/update/?' => 'Products@update',
     '/products/delete/?' => 'Products@destroy',
+
+    '/gallery/store/?' => 'Gallery@store',
+    '/gallery/update/?' => 'Gallery@update',
+    '/gallery/delete/?' => 'Gallery@destroy',
 
     '/users/update/?' => 'Users@update',
 

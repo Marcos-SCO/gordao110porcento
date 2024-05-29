@@ -22,6 +22,7 @@ class Gallery extends \Core\Model
             "SELECT img FROM gallery WHERE `id` = :id",
             ['id' => $id]
         );
+
         return $result;
     }
 
@@ -31,32 +32,24 @@ class Gallery extends \Core\Model
         $this->insertQuery('gallery', [
             'user_id' => $_SESSION['user_id'],
             'img_title' => $data['img_title'],
-            'img' => $data['img'],
+            'img' => $data['img_name'],
             'created_at' => date("Y-m-d H:i:s")
         ]);
 
         // Execute
-        if ($this->rowCount()) {
-            return true;
-        } else {
-            return false;
-        }
+        return $this->rowCount();
     }
 
     public function updateImg($data)
     {
         $this->updateQuery('gallery', [
             'img_title' => $data['img_title'],
-            'img' => $data['img'],
+            'img' => $data['img_name'],
             'updated_at' => date("Y-m-d H:i:s")
         ], ['id', $data['id']]);
 
         // Execute
-        if ($this->rowCount()) {
-            return true;
-        } else {
-            return false;
-        }
+        return $this->rowCount();
     }
 
     public function deletePost($table, $id) 
