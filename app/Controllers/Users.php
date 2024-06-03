@@ -399,12 +399,6 @@ class Users extends Controller
 
     public function login()
     {
-        // Process Form
-        $requestedData = $this->validateInputsLogin();
-
-        $data = indexParamExistsOrDefault($requestedData, 'data');
-        $errorData = indexParamExistsOrDefault($requestedData, 'errorData');
-
         // if user is already logged redirect to profile
         $sessionUserId =
             indexParamExistsOrDefault($_SESSION, 'user_id');
@@ -419,11 +413,15 @@ class Users extends Controller
                 'users/login.php',
                 [
                     'title' => 'Users login',
-                    'data' => $data,
-                    'error' => $errorData,
                 ]
             );
         }
+
+        // Process Form
+        $requestedData = $this->validateInputsLogin();
+
+        $data = indexParamExistsOrDefault($requestedData, 'data');
+        $errorData = indexParamExistsOrDefault($requestedData, 'errorData');
 
         // Don't let users with status 0 login
         if ($data['email'] != '') {
