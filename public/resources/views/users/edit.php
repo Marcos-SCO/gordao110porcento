@@ -8,6 +8,8 @@ $imagePath = imgOrDefault('users', $userImg, $userId);
 
 $userName = objParamExistsOrDefault($data, 'name');
 
+$isAdminUser = $_SESSION['adm_id'] == 1 && $userId != 1;
+
 ?>
 
 <header class="imgBackgroundArea usersAdmBackground">
@@ -30,16 +32,17 @@ $userName = objParamExistsOrDefault($data, 'name');
 
                 <?php if ($userId == 1) echo '<input type="hidden" name="adm" id="adm" value="1>'; ?>
 
-                <?php if ($_SESSION['adm_id'] == 1 && $userId != 1) : ?>
-                    <!-- Tipo de usuario -->
+                <?php if ($isAdminUser) : ?>
                     <div class="form-group">
                         <label for="adm">Nivel administrativo</label>
                         <select name="adm" id="adm">
                             <optgroup label="Tipo de usuário">
-                                <?php
-                                for ($i = 0; $i <= 1; $i++) {
+                                <?php for ($i = 0; $i <= 1; $i++) {
+
                                     $selected = ($i == $data->adm) ? 'selected' : '';
+
                                     $type = ['Comum', 'Administrador'];
+
                                     echo "<option value='$i' $selected>$type[$i]</option>";
                                 }
                                 ?>
@@ -48,7 +51,6 @@ $userName = objParamExistsOrDefault($data, 'name');
                     </div>
                 <?php endif; ?>
 
-                <!-- Name -->
                 <div class="form-group">
                     <label for="name">Nome: <sup>*</sup></label>
                     <input type="text" name="name" id="name" class="form-control form-control-lg <?= isset($error['name_error']) && $error['name_error']  != '' ? 'is-invalid' : '' ?>" value="<?= $userName ?? '' ?>">

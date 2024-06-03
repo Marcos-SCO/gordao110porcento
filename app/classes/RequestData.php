@@ -16,7 +16,24 @@ class RequestData
     $body = trim(indexParamExistsOrDefault($post, 'body', ''));
     $body = str_replace($notAllowedTags, '', $body);
 
+
     $id = indexParamExistsOrDefault($post, 'id');
+
+    $adm = indexParamExistsOrDefault($post, 'adm', 0);
+
+    $name = indexParamExistsOrDefault($post, 'name');
+
+    $lastName = indexParamExistsOrDefault($post, 'last_name');
+
+    $email = indexParamExistsOrDefault($post, 'email');
+
+    $bio = indexParamExistsOrDefault($post, 'bio');
+
+    $password = verifyValue($post, 'password');
+
+    $confirmPassword =
+        indexParamExistsOrDefault($post, 'confirm_password', '');
+
 
     $categoryName = trim(indexParamExistsOrDefault($post, 'category_name', ''));
 
@@ -60,6 +77,18 @@ class RequestData
 
     $userId = indexParamExistsOrDefault($imgFiles, 'user_id');
 
+
+    $nameError = indexParamExistsOrDefault($post, 'name_error');
+    
+    $lastNameError = indexParamExistsOrDefault($post, 'last_name_error');
+
+    $emailError = indexParamExistsOrDefault($post, 'email_error');
+
+    $passwordError = indexParamExistsOrDefault($post, 'password_error');
+
+    $confirmPasswordError = indexParamExistsOrDefault($post, 'confirm_password_error');
+
+
     $postIdCategoryError = trim(indexParamExistsOrDefault($post, 'id_category_error', ''));
 
     $productNameError = trim(indexParamExistsOrDefault($post, 'product_name_error', ''));
@@ -80,6 +109,15 @@ class RequestData
     // Add data to array
     $data = [
       'id' => $id,
+      'adm' => $adm,
+
+      'name' => $name,
+      'last_name' => $lastName,
+      'email' => $email,
+      'password' => $password,
+      'confirm_password' => $confirmPassword,
+      'bio' => $bio,
+
       'user_id' => $userId,
       'id_category' => $postIdCategory,
 
@@ -100,6 +138,12 @@ class RequestData
     ];
 
     $errors = [
+      'name_error' => $nameError,
+      'last_name_error' => $lastNameError,
+      'email_error' => $emailError,
+      'password_error' => $passwordError,
+      'confirm_password_error' => $confirmPasswordError,
+
       'id_category_error' => $postIdCategoryError,
       'title_error' => $titleError,
       'body_error' => $bodyError,

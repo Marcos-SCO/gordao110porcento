@@ -11,6 +11,7 @@ class User extends Model
     public function getAll()
     {
         $result = $this->selectQuery('users', 'ORDER BY id AND status DESC');
+
         return $result;
     }
 
@@ -47,7 +48,7 @@ class User extends Model
                 'adm' => $data['adm'],
                 'name' => $data['name'],
                 'last_name' => $data['last_name'],
-                'img' => $data['img'],
+                'img' => $data['img_name'],
                 'bio' => $data['bio'],
                 'updated_at' => date("Y-m-d H:i:s"),
             ],
@@ -62,21 +63,13 @@ class User extends Model
         return $this->updateQuery('users', ['status' => $status], ['id', $id]);
     }
 
-    public function blockLogin($email)
+    public function verifyUserStatus($email)
     {
-        $data['email'] = $email;
-        $status = $this->customQuery("SELECT `status` FROM users WHERE `email` = :email", ['email' => $email]);
+        $userQueryStatus = $this->customQuery("SELECT `status` FROM users WHERE `email` = :email", ['email' => $email]);
 
-        if (isset($status->status)) {
-            if ($status->status != 1) {
-                $error['email_error'] = 'Usuário está desativado do sistema';
-                View::renderTemplate('users/login.html', [
-                    'error' => $error,
-                    'data' => $data
-                ]);
-                return exit();
-            }
-        }
+        $userStatus = objParamExistsOrDefault($userQueryStatus, 'status');
+
+        return $userStatus;
     }
 
     public function createUserSession($loggedInUser)

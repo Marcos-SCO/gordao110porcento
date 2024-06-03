@@ -4,19 +4,21 @@ declare(strict_types=1);
 
 namespace App\Controllers;
 
+use App\Classes\ImagesHandler;
 use App\Classes\Pagination;
+use App\Classes\RequestData;
 use Core\Controller;
-use Core\Error as CoreError;
 use Core\View;
-use Error;
 
 class Users extends Controller
 {
     public $model;
+    public $imagesHandler;
 
     public function __construct()
     {
         $this->model = $this->model('User');
+        $this->imagesHandler = new ImagesHandler();
     }
 
     public function getRequestData()
@@ -25,138 +27,122 @@ class Users extends Controller
         $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_SPECIAL_CHARS);
         if (!$post) return;
 
-        $id = indexParamExistsOrDefault($post, 'id');
+        $postImg = indexParamExistsOrDefault($post, 'img', '');
+        $isEmptyPostImg = $postImg == "" || $postImg == false;
 
-        $adm = indexParamExistsOrDefault($post, 'adm', 0);
+        $validatedImgRequest =
+            $this->imagesHandler->verifySubmittedImgExtension();
 
-        $name = indexParamExistsOrDefault($post, 'name');
+        $requestParams = RequestData::getRequestParams();
 
-        $lastName = indexParamExistsOrDefault($post, 'last_name');
+        $data = indexParamExistsOrDefault($requestParams, 'data');
+        $errors = indexParamExistsOrDefault($requestParams, 'errors');
 
-        $email = indexParamExistsOrDefault($post, 'email');
+        if (!$isEmptyPostImg) $data['img_name'] = $postImg;
 
-        $password = verifyValue($post, 'password');
+        if ($data['img_files'] && $postImg == '') {
 
-        $imgFiles = indexParamExistsOrDefault($_FILES, 'img');
+            if (empty($data['img_files'])) {
+                $errors['img_error'] = "Insira uma imagem";
+                $errors['error'] = true;
+            }
 
-        $imgName = indexParamExistsOrDefault($_FILES, 'name');
-
-        $postImg = indexParamExistsOrDefault($post, 'img');
-
-        $bio = indexParamExistsOrDefault($post, 'bio');
-
-        $confirmPassword =
-            indexParamExistsOrDefault($post, 'confirm_password', '');
-
-        $nameError = indexParamExistsOrDefault($post, 'name_error');
-
-        $lastNameError = indexParamExistsOrDefault($post, 'last_name_error');
-
-        $emailError = indexParamExistsOrDefault($post, 'email_error');
-
-        $passwordError = indexParamExistsOrDefault($post, 'password_error');
-
-        $confirmPasswordError = indexParamExistsOrDefault($post, 'confirm_password_error');
-
-        // Add data to array
-        $data = [
-            'id' => $id,
-            'adm' => $adm,
-            'name' => $name,
-            'last_name' => $lastName,
-            'email' => $email,
-            'password' => $password ? trim($password) : false,
-            'confirm_password' => $confirmPassword,
-            'bio' => $bio,
-            'img' => $imgFiles,
-            'post_img' => $postImg,
-        ];
-
-        $error = [
-            'name_error' => $nameError,
-            'last_name_error' => $lastNameError,
-            'email_error' => $emailError,
-            'password_error' => $passwordError,
-            'confirm_password_error' => $confirmPasswordError,
-            'error' => false
-        ];
-
-        if ($imgFiles || $postImg) {
-            $validate = $this->imgValidate();
-
-            if (isset($_FILES['img']) && $postImg == '') {
-
-                if (empty($data['img'])) {
-                    $errorData['img_error'] = "Insira uma imagem";
-                    $errorData['error'] = true;
-                }
-
-                if (!empty($data['img'])) {
-                    $errorData['img_error'] = $validate[1];
-                    $errorData['error'] = $validate[0];
-                }
-            } else if ($postImg && !empty($data['img'])) {
-                $errorData['img_error'] = $validate[1];
-                $errorData['error'] = $validate[0];
+            if (!empty($data['img_files'])) {
+                $errors['img_error'] = $validatedImgRequest[1];
+                $errors['error'] = $validatedImgRequest[0];
             }
         }
 
-        if (isset($_POST['name']) || isset($_POST['last_name'])) {
-            // Name
-            if (empty($data['name'])) {
-                $errorData['name_error'] = "Digite o nome";
-                $errorData['error'] = true;
-            }
-
-            if (empty($data['last_name'])) {
-                $errorData['last_name_error'] = "Digite o sobrenome";
-                $errorData['error'] = true;
-            }
+        if (empty($data['name'])) {
+            $errors['name_error'] = "Digite o nome";
+            $errors['error'] = true;
         }
 
-        if (isset($_POST['email']) != '') {
-
-            // Validate Email
-            if (empty($data['email'])) {
-                $errorData['email_error'] = "Digite o E-mail";
-                $errorData['error'] = true;
-            }
-
-            if (!filter_input(INPUT_POST, 'email', FILTER_VALIDATE_EMAIL)) {
-                $errorData['email_error'] = "E-mail inválido";
-                $errorData['error'] = true;
-            }
+        if (empty($data['last_name'])) {
+            $errors['last_name_error'] = "Digite o sobrenome";
+            $errors['error'] = true;
         }
 
-        if (isset($_POST['password'])) {
+        return ['data' => $data, 'errorData' => $errors];
+    }
 
-            if (empty($data['password'])) {
+    public function validateInputsLogin()
+    {
+        $requestParams = RequestData::getRequestParams();
 
-                $errorData['password_error'] = "Digite a senha";
-                $errorData['error'] = true;
-            }
+        $data = indexParamExistsOrDefault($requestParams, 'data', []);
+        $errors =
+            indexParamExistsOrDefault($requestParams, 'errors', []);
 
-            if ($data['password'] && strlen($data['password']) < 6) {
-
-                $errorData['password_error'] = "Senha precisa no minimo de ser maior que 6 caracteres";
-                $errorData['error'] = true;
-            }
+        // Validate Email
+        if (empty($data['email'])) {
+            $errors['email_error'] = "Digite o E-mail";
+            $errors['error'] = true;
         }
 
-        // Password validate
-        if (isset($_POST['confirm_password'])) {
-
-            // Password
-            if (empty($data['confirm_password'])) {
-                $errorData['confirm_password_error'] = "Confirme a senha";
-                $errorData['error'] = true;
-            } elseif ($data['password'] != $data['confirm_password']) {
-                $errorData['confirm_password_error'] = "Senhas estão diferentes";
-                $errorData['error'] = true;
-            }
+        if (!filter_input(INPUT_POST, 'email', FILTER_VALIDATE_EMAIL)) {
+            $errors['email_error'] = "E-mail inválido";
+            $errors['error'] = true;
         }
 
-        return ['data' => $data, 'errorData' => $error];
+        if (empty($data['password'])) {
+
+            $errors['password_error'] = "Digite a senha";
+            $errors['error'] = true;
+        }
+
+        return ['data' => $data, 'errorData' => $errors];
+    }
+
+    public function validateUserCreation()
+    {
+        $requestParams = RequestData::getRequestParams();
+
+        $data = indexParamExistsOrDefault($requestParams, 'data');
+        $errors = indexParamExistsOrDefault($requestParams, 'errors');
+
+        if ($data['password'] && strlen($data['password']) < 6) {
+
+            $errors['password_error'] = "Senha precisa no mínimo de ser maior que 6 caracteres";
+            $errors['error'] = true;
+        }
+
+        // Password
+        if (empty($data['confirm_password'])) {
+            $errors['confirm_password_error'] = "Confirme a senha";
+            $errors['error'] = true;
+        }
+
+        if (!empty($data['password']) && $data['password'] != $data['confirm_password']) {
+            $errors['confirm_password_error'] = "Senhas estão diferentes";
+            $errors['error'] = true;
+        }
+
+        return ['data' => $data, 'errorData' => $errors];
+    }
+
+    public function moveUploadImageFolder($data, $lastId = false)
+    {
+        if ($lastId) $data['id'] = $lastId;
+
+        $id = $data['id'];
+
+        $imgFiles = indexParamExistsOrDefault($data, 'img_files');
+
+        $imgName = indexParamExistsOrDefault($imgFiles, 'name');
+
+        $isEmptyImg = $imgName == "";
+
+        if ($isEmptyImg) return $data;
+
+        $fullPath =
+            $this->imagesHandler->imgFolderCreate('users', $id, $imgName);
+
+        $this->imagesHandler->moveUpload($fullPath);
+
+        $data['img_name'] = $imgName;
+
+        return $data;
     }
 
     public function index($requestData)
@@ -191,13 +177,9 @@ class Users extends Controller
     {
         $this->isLogin();
 
-        if (isset($_SESSION['submitted'])) {
-            unset($_SESSION['submitted']);
-        }
+        removeSubmittedFromSession();
 
-        if (!$_SESSION['adm_id'] == 1) {
-            return redirect('users');
-        }
+        if (!($_SESSION['adm_id'] == 1))  return redirect('users');
 
         View::render('users/create.php', [
             'title' => 'Cadastro de usuários',
@@ -218,24 +200,30 @@ class Users extends Controller
             return redirect('users');
         }
 
-        // Check for post
-
         // Process Form
-        $data = $this->getRequestData();
-        $error = $data[1];
-        $id = $data['id'];
+        $requestedData = array_merge(
+            $this->getRequestData(),
+            $this->validateInputsLogin(),
+            $this->validateUserCreation()
+        );
 
+        $data = indexParamExistsOrDefault($requestedData, 'data');
+
+        $errorData =
+            indexParamExistsOrDefault($requestedData, 'errorData');
+
+        // Find user
         $this->model->customQuery("SELECT `email` FROM users WHERE email = :email", ['email' => $data['email']]);
 
         if ($this->model->rowCount() > 0) {
-            $errorData['email_error'] = "Já existe um úsuário com esse E-mail";
+
+            $errorData['email_error'] = "Já existe um usuário com esse E-mail";
             $errorData['error'] = true;
         }
 
-
         $isErrorResult = $errorData['error'] == true;
 
-        if ($isErrorResult) return $this->create($data, $error);
+        if ($isErrorResult) return $this->create($data, $errorData);
 
         $_SESSION['submitted'] = true;
         // Hash password
@@ -243,29 +231,38 @@ class Users extends Controller
 
         $insertedUser = $this->model->insertUser($data);
 
-        if (!$insertedUser) {
-            die('Something went wrong when inserting a user...');
-        }
+        if (!$insertedUser) die('Something went wrong when inserting a user...');
 
         $flash = flash('register_success', 'Usuário registrado com sucesso!');
 
         return $this->index(1, $flash);
     }
 
-    public function status($id, $status)
+    public function status($requestData)
     {
-        $isAdminUser = (isset($_SESSION['adm_id']) && $_SESSION['adm_id'] != 1) || !(isset($_SESSION['user_id'])) && $id == 1;
+        $requestData = array_keys($requestData);
+
+        $id = indexParamExistsOrDefault($requestData, 1);
+
+        if (!$id) die('User id is missing...');
+
+        $status = indexParamExistsOrDefault($requestData, 2);
+
+        $isAdminUser =
+            (isset($_SESSION['adm_id']) && $_SESSION['adm_id'] == 1)
+            || (isset($_SESSION['user_id'])) && $id == 1;
 
         if (!$isAdminUser) return redirect('home');
 
         $this->model->updateStatus($id, $status);
 
-        ($status == 1) ? $message = 'Usuário ativado com sucesso' :
+        $message =  ($status == 1)
+            ? 'Usuário ativado com sucesso'
+            : 'Usuário desativado com sucesso!';
 
-            $message = 'Usuário desativado com sucesso!';
+        flash('register_success', $message);
 
-        $flash = flash('register_success', $message);
-        return $this->index($id = 1, $flash);
+        redirect('users');
     }
 
     public function show($requestData)
@@ -310,22 +307,24 @@ class Users extends Controller
 
         $userId = indexParamExistsOrDefault($requestData, 'edit');
 
-        if (!$userId) throw new \Exception('User id is missing...');
+        $errorData = indexParamExistsOrDefault($requestData, 'error');
 
-        $flashData = indexParamExistsOrDefault($requestData, 'flash');
+        if (!$userId) throw new \Exception('User id is missing...');
 
         $data = $this->model->getAllFrom('users', $userId);
 
         $isUserAdminOne = $userId == 1 && $_SESSION['user_id'] == 1;
 
-        $isSameLoggedUser = $data->id != 1 && $_SESSION['user_id'] == $userId || $_SESSION['adm_id'] == 1 && $userId != 1;
+        $isSameLoggedUser =
+            $data->id != 1
+            && $_SESSION['user_id'] == $userId
+            || $_SESSION['adm_id'] == 1 && $userId != 1;
 
         if ($isUserAdminOne) {
             View::render('users/edit.php', [
                 'title' => 'Editar perfil de ' . $data->name,
                 'data' => $data,
-                'flash' => $flashData,
-                // 'error' => $error
+                'error' => $errorData
             ]);
         }
 
@@ -336,8 +335,7 @@ class Users extends Controller
             View::render('users/edit.php', [
                 'title' => 'Editar perfil de ' . $data->name,
                 'data' => $data,
-                'flash' => $flashData,
-                // 'error' => $error
+                'error' => $errorData
             ]);
         }
     }
@@ -345,10 +343,6 @@ class Users extends Controller
     public function update()
     {
         $this->isLogin();
-
-        $submittedPostData = $_SERVER['REQUEST_METHOD'] == 'POST';
-
-        if (!$submittedPostData) return;
 
         // Process Form
         $postResultData = $this->getRequestData();
@@ -362,62 +356,58 @@ class Users extends Controller
 
         $isErrorResult = $errorData['error'] == true;
 
+
         if ($isErrorResult) {
 
-            $errorArrayData = [
+            return $this->edit([
                 'edit' => $id,
                 'data' => $data,
                 'error' => $errorData
-            ];
-
-            return $this->edit($errorArrayData);
+            ]);
         }
 
 
-        $img = $data['img'];
-        $imgName = indexParamExistsOrDefault($img, 'name');
-
-        $postImg = $data['post_img'];
-
-        $isEmptyImg = $imgName == "";
-
-        if ($isEmptyImg) $data['img'] = $postImg;
-
-        if (!$isEmptyImg) {
-
-            $fullPath = $this->imgFolderCreate('users', $id, $imgName);
-            $this->moveUpload($fullPath);
-
-            $explodedPath = explode('/', $fullPath);
-
-            $data['img'] = end($explodedPath);
-        }
+        $data = $this->moveUploadImageFolder($data);
 
         $this->model->updateUser($data);
 
         $updatedUser = $this->model->rowCount();
 
-        if (!$updatedUser) {
-            die('Something went wrong when updating the user...');
-        }
+        if (!$updatedUser) die('Something went wrong when updating the user...');
 
-        $flash = flash('register_success', 'Atualizado com sucesso!');
-
-        $requestData = [
-            'edit' => $id,
-            'data' => $data,
-            'flash' => $flash,
-        ];
-
-        // return $this->edit($requestData);
+        flash('register_success', 'Usuário atualizado com sucesso!');
 
         return redirect("users/edit/$id/");
     }
 
-    public function login($flash = null)
+    public function blockLoginForDisabledUsers($email)
     {
+        $userStatus = $this->model->verifyUserStatus($email);
+
+        $isValidUserStatus = $userStatus == 1;
+
+        if ($isValidUserStatus) return;
+
+        View::render('users/login.php', [
+            'error' => [
+                'email_error' => 'Usuário está desativado do sistema'
+            ]
+        ]);
+
+        return exit();
+    }
+
+    public function login()
+    {
+        // Process Form
+        $requestedData = $this->validateInputsLogin();
+
+        $data = indexParamExistsOrDefault($requestedData, 'data');
+        $errorData = indexParamExistsOrDefault($requestedData, 'errorData');
+
         // if user is already logged redirect to profile
-        $sessionUserId = indexParamExistsOrDefault($_SESSION, 'user_id');
+        $sessionUserId =
+            indexParamExistsOrDefault($_SESSION, 'user_id');
 
         if ($sessionUserId) redirect("users/show/$sessionUserId");
 
@@ -428,32 +418,24 @@ class Users extends Controller
             return View::render(
                 'users/login.php',
                 [
-                    'flash' => $flash,
                     'title' => 'Users login',
+                    'data' => $data,
+                    'error' => $errorData,
                 ]
             );
         }
 
-        // Process
-        $postResultData = $this->getRequestData();
-
-        $data = indexParamExistsOrDefault($postResultData, 'data');
-
-        $errorData =
-            indexParamExistsOrDefault($postResultData, 'errorData');
-
-        $id = $data['id'];
-
         // Don't let users with status 0 login
         if ($data['email'] != '') {
 
-            $this->model->blockLogin($data['email']);
+            $this->blockLoginForDisabledUsers($data['email']);
         }
 
         $this->model->customQuery("SELECT `email` FROM users WHERE `email` = :email", ['email' => $data['email']]);
 
         // Check for users/email
         if ($_POST['email'] != '' && $this->model->rowCount() <= 0) {
+
             // User not Found
             $errorData['email_error'] = "Nenhum usuário encontrado";
             $errorData['error'] = true;
@@ -470,11 +452,13 @@ class Users extends Controller
         }
 
         // Check an set logged in user
-        $loggedInUser = $this->model->login($data['email'], $data['password']);
+        $loggedInUser =
+            $this->model->login($data['email'], $data['password']);
 
         $userId = objParamExistsOrDefault($loggedInUser, 'id');
 
         if (!$loggedInUser) {
+
             $errorData['password_error'] = "Email ou senha incorretos";
 
             return View::render('users/login.php', [
@@ -487,15 +471,9 @@ class Users extends Controller
         // Create session
         $this->model->createUserSession($loggedInUser);
 
-        $flash = flash('register_success', 'Logado com sucesso!');
+        flash('register_success', 'Logado com sucesso!');
 
-        $requestData = [
-            'show' => $userId,
-            'data' => $data,
-            'flash' => $flash,
-        ];
-
-        return $this->show($requestData);
+        redirect('users/show/' . $userId);
     }
 
     public function logout()

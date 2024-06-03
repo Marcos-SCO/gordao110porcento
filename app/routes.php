@@ -26,18 +26,13 @@ return [
     '/categories/?show/($|[0-9]+)(?:/([0-9]+))?/' => 'Categories@show',
     
     '/contact/?($|[\w]+)/?' => 'Contact@index',
-
-    // '/user/create' => 'User@create',
-    // '/user/' => 'User@index',
-    // '/user/($|[0-9])+' => 'User@show',
     
-    // '/logout' => 'Login@destroy',
-
     '/login/?' => 'Users@login',
     '/logout/?' => 'Users@logout',
-
+    
     '/users/?($|[0-9])+/?' => 'Users@index',
     '/users/edit/($|[0-9])+/?' => 'Users@edit',
+    '/users/create/?' => 'Users@create',
 
     '/users/?show/($|[0-9]+)(?:/([0-9]+))?/' => 'Users@show',
 
@@ -45,7 +40,11 @@ return [
 
   'POST' => [
     'login/?' => 'Users@login',
-    '/user/store/?' => 'User@store',
+
+    '/users/store/?' => 'Users@store',
+    '/users/update/?' => 'Users@update',
+
+    '/users/status/($|[0-9]+)/($|[0-9]+)/?' => 'Users@status',
 
     '/posts/store/?' => 'Posts@store',
     '/posts/update/?' => 'Posts@update',
@@ -62,8 +61,6 @@ return [
     '/gallery/store/?' => 'Gallery@store',
     '/gallery/update/?' => 'Gallery@update',
     '/gallery/delete/?' => 'Gallery@destroy',
-
-    '/users/update/?' => 'Users@update',
 
     '/contact/?($|[\w]+)/send/?' => 'Contact@sendMessage',
     
