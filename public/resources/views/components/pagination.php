@@ -49,10 +49,12 @@ function displayPaginationItens($paginationNumbers, $path)
   }
 }
 
+$lastPageLink = $BASE . '/' . $path . '/' . $totalPages;
+
 ?>
 
 <!-- Pagination -->
-<nav class="d-flex justify-content-center flex-wrap p-2 mt-4">
+<nav class="d-flex justify-content-center flex-wrap p-2 mt-4" data-js="pagination-container">
 
   <ul class="pagination">
 
@@ -85,7 +87,15 @@ function displayPaginationItens($paginationNumbers, $path)
     </li>
 
     <li class="page-item <?= $totalDisable ?>">
-      <span class="page-link"><a href="<?= $BASE ?>/<?= $path . '/' . $totalPages ?>">Última</a></span>
+      <span class="page-link">
+        <a href="<?= $lastPageLink; ?>" 
+        hx-get="<?= $lastPageLink; ?>" 
+        hx-target="[data-js='itens-result-container']" 
+        hx-push-url="true" 
+        hx-swap="outerHTML"
+        hx-select="[data-js='itens-result-container']"
+        >Última</a>
+      </span>
     </li>
 
   </ul>
