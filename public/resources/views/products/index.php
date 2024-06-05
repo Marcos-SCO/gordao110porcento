@@ -5,7 +5,7 @@ $userStatus = indexParamExistsOrDefault($_SESSION, 'user_status');
 $isAdminUser = $userStatus && $userStatus == 1;
 
 ?>
-<header class="imgBackgroundArea productHeader">
+<header class="imgBackgroundArea productHeader" data-js="top-page-header">
     <h1>Todas as nossas Ofertas</h1>
 </header>
 
