@@ -2,9 +2,9 @@ import scrollToTop from '../helpers/dom/scroll';
 
 function updatePaginationContainer(previousUrl) {
 
-  htmx.ajax('GET', previousUrl, {
+  window.htmx.ajax('GET', previousUrl, {
     target: '[data-js="pagination-container"]',
-    select: "[data-js='pagination-container']"
+    select: "[data-js='pagination-container']",
   });
 }
 

@@ -40,16 +40,27 @@ function getNextNumbers($initialValue, $count = 5, $maxNumber = false)
   return $numbers;
 }
 
-function displayPaginationItens($paginationNumbers, $path)
-{
-  global $BASE;
+// ------------ ------------ ------------
 
+
+$basePath = $BASE . '/' . $path;
+
+$lastPageLink = $basePath . '/' . $totalPages;
+$nextPage = $basePath . '/' . $next;
+$prevPage = $basePath . '/' . $prev;
+
+$linkCommonHtmlAttributes
+  = 'hx-push-url="true"  
+    hx-swap="outerHTML"  
+    hx-target="[data-js=\'itens-result-container\']"  
+    hx-select="[data-js=\'itens-result-container\']"';
+
+function displayPaginationItens($paginationNumbers, $basePath, $linkCommonHtmlAttributes) 
+{
   foreach ($paginationNumbers as $paginationNumber) {
-    echo "<li class='page-item'><a href='$BASE/$path/$paginationNumber'><span class='page-link'>$paginationNumber</span></a></li></a></li>";
+    echo "<li class='page-item'><a href='$basePath/$paginationNumber' hx-get='$basePath/$paginationNumber' $linkCommonHtmlAttributes><span class='page-link'>$paginationNumber</span></a></li></a></li>";
   }
 }
-
-$lastPageLink = $BASE . '/' . $path . '/' . $totalPages;
 
 ?>
 
@@ -62,20 +73,20 @@ $lastPageLink = $BASE . '/' . $path . '/' . $totalPages;
 
     $disabled = ($pageId != 1) ? '' : 'disabled';
 
-    echo "<li class='page-item $disabled'><span class='page-link'><a href='$BASE/$path/1'>Primeira</a></span></li>";
+    echo "<li class='page-item $disabled'><span class='page-link'><a href='$basePath/1' hx-get='$basePath/1' $linkCommonHtmlAttributes>Primeira</a></span></li>";
 
-    echo "<li class='page-item $disabled'><span class='page-link'><a href='$BASE/$path/$prev'><</a></span></li>";
+    echo "<li class='page-item $disabled'><span class='page-link'><a href='$prevPage' hx-get='$prevPage' $linkCommonHtmlAttributes><</a></span></li>";
 
     $previousNumbers = array_reverse(getPreviousNumbers($pageId, 5));
 
-    displayPaginationItens($previousNumbers, $path);
+    displayPaginationItens($previousNumbers, $basePath, $linkCommonHtmlAttributes);
 
-    echo "<li class='page-item active'><a href='$BASE/$path/$pageId'><span class='page-link'>$pageId</span></a></li></a></li>";
+    echo "<li class='page-item active'><a href='$basePath/$pageId' hx-get='$basePath/$pageId' $linkCommonHtmlAttributes><span class='page-link'>$pageId</span></a></li></a></li>";
 
 
     $nextNumbers = getNextNumbers($pageId, 5, $totalPages);
 
-    displayPaginationItens($nextNumbers, $path);
+    displayPaginationItens($nextNumbers, $basePath, $linkCommonHtmlAttributes);
 
     $totalDisable =
       ($pageId != $totalPages) ? '' : 'disabled';
@@ -83,18 +94,12 @@ $lastPageLink = $BASE . '/' . $path . '/' . $totalPages;
     ?>
 
     <li class="page-item <?= $totalDisable ?>">
-      <a class="page-link" href="<?= $BASE ?>/<?= $path . '/' . $next ?>">></a>
+      <a class="page-link" href="<?= $nextPage; ?>" hx-get="<?= $nextPage; ?>" <?= $linkCommonHtmlAttributes ?>>></a>
     </li>
 
     <li class="page-item <?= $totalDisable ?>">
       <span class="page-link">
-        <a href="<?= $lastPageLink; ?>" 
-        hx-get="<?= $lastPageLink; ?>" 
-        hx-target="[data-js='itens-result-container']" 
-        hx-push-url="true" 
-        hx-swap="outerHTML"
-        hx-select="[data-js='itens-result-container']"
-        >Última</a>
+        <a href="<?= $lastPageLink; ?>" hx-get="<?= $lastPageLink; ?>" <?= $linkCommonHtmlAttributes ?>>Última</a>
       </span>
     </li>
 

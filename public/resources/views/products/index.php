@@ -38,7 +38,7 @@ $isAdminUser = $userStatus && $userStatus == 1;
         </div>
     </aside>
 
-    <section class="products flex-wrap card-group" data-js="itens-result-container">
+    <section class="products flex-wrap card-group itens-results-container" data-js="itens-result-container" hx-swap="swap:1s">
         <?php
 
         if ($products) :
