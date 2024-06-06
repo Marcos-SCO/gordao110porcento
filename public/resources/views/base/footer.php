@@ -1,8 +1,11 @@
+<?php
+
+// Pagination component
+include_once __DIR__ . '/../components/pagination.php'; ?>
+
 </main>
 
-<?php // Pagination component
-
-include_once __DIR__ . '/../components/pagination.php';
+<?php 
 
 $controller = isset($controller) ? $controller : false;
 
@@ -139,7 +142,7 @@ if ($isTinyMce) echo "<!-- Tiny MCE --><script src='$BASE/public/resources/js/ti
 ?>
 
 <!-- App -->
-<script src="<?= $BASE ?>/public/dist/js/index.js"></script>
+<script src="<?= $BASE ?>/public/dist/js/index.js" type="module"></script>
 
 </body>
 
