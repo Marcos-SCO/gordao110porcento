@@ -1,8 +1,9 @@
 import scrollToTop from '../helpers/dom/scroll';
 
-function updatePaginationContainer(previousUrl) {
+function updatePaginationContainer(previousUrl, htmxReference) {
+  if (!htmxReference) return;
 
-  window.htmx.ajax('GET', previousUrl, {
+  htmxReference.ajax('GET', previousUrl, {
     target: '[data-js="pagination-container"]',
     select: "[data-js='pagination-container']",
   });
@@ -10,12 +11,13 @@ function updatePaginationContainer(previousUrl) {
 
 document.addEventListener('htmx:afterSwap', function resultItensContainer(evt) {
   const eventIsResultContainer =
-    evt.detail.target.matches('[data-js="itens-result-container"]');
+    evt.detail.target.matches('[data-js="result-itens-container"]');
 
   if (!eventIsResultContainer) return;
 
   const eventCurrentUrl = window.location.href;
-  updatePaginationContainer(eventCurrentUrl);
+
+  updatePaginationContainer(eventCurrentUrl, window.htmx);
 
   scrollToTop('[data-js="top-page-header"]');
 });
