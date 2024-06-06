@@ -5,7 +5,7 @@ function updatePaginationContainer(previousUrl, htmxReference) {
 
   htmxReference.ajax('GET', previousUrl, {
     target: '[data-js="pagination-container"]',
-    select: "[data-js='pagination-container']",
+    select: "[data-js='pagination-container'] ul",
   });
 }
 
@@ -19,5 +19,5 @@ document.addEventListener('htmx:afterSwap', function resultItensContainer(evt) {
 
   updatePaginationContainer(eventCurrentUrl, window.htmx);
 
-  scrollToTop('[data-js="top-page-header"]');
+  // scrollToTop('[data-js="top-page-header"]');
 });

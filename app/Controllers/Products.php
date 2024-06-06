@@ -100,6 +100,7 @@ class Products extends Controller
             'flash' => $flash,
             'path' => "products",
             'pageId' => $pageId,
+            'data' => $results,
             'prev' => $results['prev'],
             'next' => $results['next'],
             'totalResults' => $results['totalResults'],

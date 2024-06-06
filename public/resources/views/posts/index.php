@@ -23,21 +23,27 @@ $havePosts = count($posts) > 0;
         <section class="blog flex-wrap card-group">
 
             <?php foreach ($posts as $data) : ?>
-                <figure class="d-flex justify-content-center blogFig card">
+
+                <figure class="d-flex justify-content-center blogFig card" data-js="loop-item">
+
                     <a href="<?= $BASE ?>/posts/show/<?= $data->id ?>">
                         <div class="imgMax">
                             <img class="card-img-top" src="<?= $BASE ?>/<?= imgOrDefault('posts', $data->img, $data->id) ?>" alt="<?= $data->img ?>" title="<?= $data->title ?>" onerror="this.onerror=null;this.src='<?= $BASE ?>/public/resources/img/not_found/no_image.jpg';">
                         </div>
+
                         <figcaption class="blogBody card-body">
                             <h5 class="blogTitle card-title"><?= $data->title ?></h5>
                             <span class="blogSpan card-text"><?= $data->body ?></span>
                         </figcaption>
                     </a>
+
                     <small class="updated card-text">Atualizado em <?= dateFormat($data->updated_at) ?></small>
-                    <?php
-                    App\Classes\DynamicLinks::editDelete($BASE, 'posts', $data, 'Quer mesmo deletar essa postagem?');
+
+                    <?php App\Classes\DynamicLinks::editDelete($BASE, 'posts', $data, 'Quer mesmo deletar essa postagem?');
+
                     ?>
                 </figure>
+
             <?php endforeach; ?>
 
         </section>

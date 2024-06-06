@@ -23,22 +23,13 @@ $isAdminUser = $userStatus && $userStatus == 1;
 <?php endif; ?>
 
 <article class="products flex-wrap">
-    <aside class="productDropdown">
-        <p>Apresentar por categorias</p>
-        <div class="dropdown">
-            <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Selecionar</button>
-            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                <?php foreach ($categoryElements as $category) {
 
-                    echo "<li><a href='$BASE/categories/show/$category->id' class='dropdown-item'>$category->category_name</a></li>";
-                }
+    <?php // Products categories dropdown
+    include_once __DIR__ . '/../components/productCategoriesDropdown.php';
 
-                ?>
-            </ul>
-        </div>
-    </aside>
+    ?>
 
-    <section class="products flex-wrap card-group itens-results-container" data-js="itens-result-container" hx-swap="swap:1s">
+    <section class="products flex-wrap card-group itens-results-container" data-js="result-itens-container" hx-swap="swap:1s">
         <?php
 
         if ($products) :
@@ -46,7 +37,7 @@ $isAdminUser = $userStatus && $userStatus == 1;
             foreach ($products as $data) :
 
         ?>
-                <figure class="card">
+                <figure class="card" data-js="loop-item">
                     <img src="<?= $BASE ?>/<?= imgOrDefault('products', $data->img, $data->id, "/category_$data->id_category") ?>" title="<?= $data->product_name ?>" onerror="this.onerror=null;this.src='<?= $BASE ?>/public/resources/img/not_found/no_image.jpg';">
 
                     <figcaption class="card-body">
@@ -59,15 +50,15 @@ $isAdminUser = $userStatus && $userStatus == 1;
 
                         echo "<p class='card-text'>$data->product_description</p><p class='card-text'>Preço: $data->price</p><small class='text-muted'>Categoria: <a href='$BASE/categories/show/$data->id_category'> $categoryName</a></small><br>";
 
-                        echo ($_SESSION['user_status'] && $_SESSION['user_status'] == 1) ? "<a href='$BASE/products/show/$data->id'>Ver detalhes</a>" : ''; 
-                        
+                        echo ($_SESSION['user_status'] && $_SESSION['user_status'] == 1) ? "<a href='$BASE/products/show/$data->id'>Ver detalhes</a>" : '';
+
                         ?>
                     </figcaption>
 
                     <?php
 
                     App\Classes\DynamicLinks::editDelete($BASE, 'products', $data, 'Quer mesmo deletar esse produto?');
-                    
+
                     ?>
                 </figure>
 

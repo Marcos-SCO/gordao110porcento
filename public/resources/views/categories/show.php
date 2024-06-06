@@ -4,7 +4,7 @@ $categoryName = $data->category_name;
 
 ?>
 
-<header class="categoryHeader productHeader imgBackgroundArea">
+<header class="categoryHeader productHeader imgBackgroundArea" data-js="top-page-header">
     <h1><?= $categoryName; ?></h1>
     <p><?= $data->category_description ?></p>
 
@@ -38,31 +38,12 @@ if ($_SESSION['user_status'] && $_SESSION['user_status'] == 1) :
 
 <article class="products flex-wrap flex-column">
 
-    <aside class="productDropdown">
-        <p>Apresentar por categorias</p>
-        <div class="dropdown">
-            <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Selecionar</button>
+    <?php // Products categories dropdown
+    include_once __DIR__ . '/../components/productCategoriesDropdown.php';
 
-            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                <?php
+    ?>
 
-                echo "<li><a href='$BASE/products' class='dropdown-item'>Todas</a></li>";
-
-                foreach ($categoryElements as $categoryItem) {
-
-                    $categoryItemName = objParamExistsOrDefault($categoryItem, 'category_name');
-
-                    $activeItem = $categoryName == $categoryItemName ? ' active' : '';
-
-                    echo "<li><a href='$BASE/categories/show/$categoryItem->id' class='dropdown-item$activeItem'>$categoryItemName</a></li>";
-                }
-                ?>
-            </ul>
-
-        </div>
-    </aside>
-
-    <section class="products flex-wrap card-group">
+    <section class="products flex-wrap card-group" data-js="result-itens-container">
         <?php
 
         if (!$products) echo "<p>Categoria <strong>{$categoryName}</strong> não possui produtos cadastrados...</p>";

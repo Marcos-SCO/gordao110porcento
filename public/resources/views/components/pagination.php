@@ -51,9 +51,9 @@ $prevPage = $basePath . '/' . $prev;
 
 $linkCommonHtmlAttributes
   = 'hx-push-url="true"  
-    hx-swap="outerHTML"  
-    hx-target="[data-js=\'itens-result-container\']"  
-    hx-select="[data-js=\'itens-result-container\']"';
+    hx-swap="show:[data-js=\'top-page-header\']:top"  
+    hx-target="[data-js=\'result-itens-container\']"  
+    hx-select="[data-js=\'result-itens-container\'] [data-js=\'loop-item\']"';
 
 function displayPaginationItens($paginationNumbers, $basePath, $linkCommonHtmlAttributes) 
 {

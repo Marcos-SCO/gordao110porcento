@@ -2,12 +2,14 @@
     <h1>Categorias</h1>
 </header>
 <article class="products flex-wrap flex-column">
-    <section class="products flex-wrap card-group">
+
+    <section class="products flex-wrap card-group" data-js="result-itens-container">
 
         <?php foreach ($categories as $data) : ?>
-            <a href='<?= $BASE ?>/categories/show/<?= $data->id ?>'>
+
+            <a href='<?= $BASE ?>/categories/show/<?= $data->id ?>' data-js="loop-item">
                 <figure class="card" style="color:#333!important">
-                
+
                     <img src="<?= $BASE ?>/<?= imgOrDefault('categories', $data->img, $data->id) ?>" alt="<?= $data->img ?>" title="<?= $data->category_name ?>" onerror="this.onerror=null;this.src='<?= $BASE ?>/public/resources/img/not_found/no_image.jpg';">
 
                     <figcaption class="card-body" style="height:142px;">
@@ -16,7 +18,9 @@
                     </figcaption>
                 </figure>
             </a>
+
         <?php endforeach; ?>
 
     </section>
+
 </article>

@@ -5,7 +5,7 @@ if (!$categoryElements) return;
 
 foreach ($products as $data) : ?>
 
-  <figure class="card">
+  <figure class="card" data-js="loop-item">
     <img src="<?= $BASE ?>/<?= imgOrDefault('products', $data->img, $data->id, "/category_$data->id_category") ?>" alt="<?= $data->img ?>" title="<?= $data->product_name ?>" onerror="this.onerror=null;this.src='<?= $BASE ?>/public/resources/img/not_found/no_image.jpg';">
 
     <figcaption class="card-body">
