@@ -1,7 +1,7 @@
 <aside class="productDropdown">
   <p>Apresentar por categorias</p>
 
-  <div class="dropdown" hx-boost="true">
+  <div class="dropdown" hx-boost="true" hx-select="main" hx-target="main" hx-swap="innerHTML show:none">
     <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Selecionar</button>
 
     <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
