@@ -3,10 +3,7 @@
 $isPagination =
   (isset($totalPages) && ($totalPages) > 1);
 
-if (!$isPagination) {
-  echo '<style>main{padding-bottom:1.2rem;}</style>';
-  return;
-}
+if (!$isPagination) return;
 
 if (!isset($path)) return;
 
