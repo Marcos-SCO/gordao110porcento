@@ -181,7 +181,7 @@ class Categories extends Controller
 
         $productsTable = 'products';
 
-        $results = Pagination::handler($productsTable, $pageId, $limit = 4, ['id_category', $categoryId], $orderOption = 'ORDER BY id DESC');
+        $results = Pagination::handler($productsTable, $pageId, $limit = 8, ['id_category', $categoryId], $orderOption = 'ORDER BY id DESC');
 
         $categoryElements = $this->model->customQuery('SELECT id, category_name FROM categories', null, 1);
 
