@@ -3,7 +3,10 @@
 $isPagination =
   (isset($totalPages) && ($totalPages) > 1);
 
-if (!$isPagination) return;
+if (!$isPagination) {
+  echo '<style>main{padding-bottom:1.2rem;}</style>';
+  return;
+}
 
 if (!isset($path)) return;
 
@@ -55,7 +58,7 @@ $linkCommonHtmlAttributes
     hx-target="[data-js=\'result-itens-container\']"  
     hx-select="[data-js=\'result-itens-container\'] [data-js=\'loop-item\']"';
 
-function displayPaginationItens($paginationNumbers, $basePath, $linkCommonHtmlAttributes) 
+function displayPaginationItens($paginationNumbers, $basePath, $linkCommonHtmlAttributes)
 {
   foreach ($paginationNumbers as $paginationNumber) {
     echo "<li class='page-item'><a href='$basePath/$paginationNumber' hx-get='$basePath/$paginationNumber' $linkCommonHtmlAttributes><span class='page-link'>$paginationNumber</span></a></li></a></li>";
@@ -65,7 +68,7 @@ function displayPaginationItens($paginationNumbers, $basePath, $linkCommonHtmlAt
 ?>
 
 <!-- Pagination -->
-<nav class="d-flex justify-content-center flex-wrap p-2 mt-4" data-js="pagination-container">
+<nav class="d-flex justify-content-center flex-wrap p-2 my-3" data-js="pagination-container">
 
   <ul class="pagination">
 
