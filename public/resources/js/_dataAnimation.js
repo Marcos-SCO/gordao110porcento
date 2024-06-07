@@ -17,3 +17,4 @@ function dataAnimaInit() {
 }
 
 document.addEventListener('DOMContentLoaded', dataAnimaInit);
+document.addEventListener('htmx:afterSwap', dataAnimaInit);
