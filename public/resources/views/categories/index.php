@@ -6,6 +6,8 @@ $linkCommonHtmlAttributes
   hx-target="main"  
   hx-select="main > *"';
 
+$loopCount = 0;
+
 ?>
 
 <header class="categoryHeader productHeader imgBackgroundArea">
@@ -16,16 +18,28 @@ $linkCommonHtmlAttributes
     <section class="products flex-wrap card-group" data-js="result-itens-container">
 
         <?php foreach ($categories as $data) :
-            
+
+            $loopCount += 1;
+
             $categoryShowLink =
                 $BASE . '/categories/show/' . $data->id;
+
+            $imgLoading =
+                $loopCount <= 4 ? 'eager' : 'lazy';
 
         ?>
 
             <a href='<?= $categoryShowLink ?>' hx-get='<?= $categoryShowLink ?>' <?= $linkCommonHtmlAttributes; ?> data-js="loop-item">
                 <figure class="card" style="color:#333!important">
 
-                    <img src="<?= $BASE ?>/<?= imgOrDefault('categories', $data->img, $data->id) ?>" alt="<?= $data->img ?>" title="<?= $data->category_name ?>" onerror="this.onerror=null;this.src='<?= $BASE ?>/public/resources/img/not_found/no_image.jpg';">
+                    <?php echo getImgWithAttributes(imgOrDefault('categories', $data->img, $data->id), [
+                        'alt' => $data->category_name,
+                        'title' => $data->category_name,
+                        'width' => '299px',
+                        'height' => '224px',
+                        'loading' => $imgLoading
+                    ]);
+                    ?>
 
                     <figcaption class="card-body" style="height:142px;">
                         <h5 class="card-title"><?= $data->category_name ?></h5>

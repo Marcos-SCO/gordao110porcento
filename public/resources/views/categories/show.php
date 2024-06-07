@@ -39,7 +39,7 @@ if ($_SESSION['user_status'] && $_SESSION['user_status'] == 1) :
 <article class="products flex-wrap flex-column">
 
     <?php // Products categories dropdown
-    include_once __DIR__ . '/../components/productCategoriesDropdown.php';
+    include_once __DIR__ . '/../components/products/productCategoriesDropdown.php';
 
     ?>
 
@@ -48,7 +48,8 @@ if ($_SESSION['user_status'] && $_SESSION['user_status'] == 1) :
 
         if (!$products) echo "<p>Categoria <strong>{$categoryName}</strong> não possui produtos cadastrados...</p>";
 
-        if ($products) include_once __DIR__ . '/_listProductItens.php';
+        if ($products) // Products data loop
+        include_once __DIR__ . '/../components/products/productsDataLoop.php';
 
         ?>
     </section>

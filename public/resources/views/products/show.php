@@ -4,7 +4,15 @@
     </header>
 
     <figure class="productShow d-flex flex-column justify-content-center align-items-center">
-        <img src="<?= $BASE ?>/<?= imgOrDefault('products', $data->img, $data->id, "/category_$data->id_category") ?>" title="<?= $data->product_name ?>" onerror="this.onerror=null;this.src='<?= $BASE ?>/public/resources/img/not_found/no_image.jpg';">
+        <?php echo getImgWithAttributes(imgOrDefault('products', $data->img, $data->id, "/category_$data->id_category"), [
+            'alt' => $data->product_name,
+            'title' => $data->product_name,
+            'width' => '299px',
+            'height' => '224px',
+            'loading' => 'eager'
+        ]);
+        
+        ?>
 
         <figcaption class="card-body bg-light" style="width:100%;min-height: auto!important;">
             <p><?= $data->product_description ?><br>Preço: <?= $data->price ?><br>
