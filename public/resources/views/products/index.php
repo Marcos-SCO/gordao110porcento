@@ -4,6 +4,12 @@ $userStatus = indexParamExistsOrDefault($_SESSION, 'user_status');
 
 $isAdminUser = $userStatus && $userStatus == 1;
 
+$linkCommonHtmlAttributes
+  = 'hx-push-url="true"  
+    hx-swap="show:window:top"  
+    hx-target="main"  
+    hx-select="main > *"';
+
 ?>
 <header class="imgBackgroundArea productHeader" data-js="top-page-header">
     <h1>Todas as nossas Ofertas</h1>
@@ -48,9 +54,12 @@ $isAdminUser = $userStatus && $userStatus == 1;
                         foreach ($categoryElements as $element) : ($element->id == $data->id_category) ? $categoryName = $element->category_name : '';
                         endforeach;
 
-                        echo "<p class='card-text'>$data->product_description</p><p class='card-text'>Preço: $data->price</p><small class='text-muted'>Categoria: <a href='$BASE/categories/show/$data->id_category'> $categoryName</a></small><br>";
+                        echo "<p class='card-text'>$data->product_description</p><p class='card-text'>Preço: $data->price</p><small class='text-muted'>Categoria: 
+                            <a href='$BASE/categories/show/$data->id_category' hx-get='$BASE/categories/show/$data->id_category' $linkCommonHtmlAttributes> $categoryName</a>
+                        </small><br>";
 
-                        echo ($_SESSION['user_status'] && $_SESSION['user_status'] == 1) ? "<a href='$BASE/products/show/$data->id'>Ver detalhes</a>" : '';
+                        echo ($_SESSION['user_status'] && $_SESSION['user_status'] == 1) ? "
+                        <a href='$BASE/products/show/$data->id' hx-get='$BASE/products/show/$data->id' $linkCommonHtmlAttributes>Ver detalhes</a>" : '';
 
                         ?>
                     </figcaption>

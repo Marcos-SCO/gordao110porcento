@@ -3,6 +3,12 @@
 if (!$products) return;
 if (!$categoryElements) return;
 
+$linkCommonHtmlAttributes
+    = 'hx-push-url="true"  
+  hx-swap="show:window:top"  
+  hx-target="main"  
+  hx-select="main > *"';
+
 foreach ($products as $data) : ?>
 
   <figure class="card" data-js="loop-item">
@@ -15,10 +21,10 @@ foreach ($products as $data) : ?>
       foreach ($categoryElements as $element) : ($element->id == $data->id_category) ? $categoryName = $element->category_name : '';
       endforeach;
 
-      echo "<p class='card-text'>$data->product_description</p><p class='card-text'>Preço: $data->price</p><small class='text-muted'>Categoria: <a href='$BASE/categories/show/$data->id_category'> $categoryName</a></small><br>";
+      echo "<p class='card-text'>$data->product_description</p><p class='card-text'>Preço: $data->price</p><small class='text-muted'>Categoria: <a href='$BASE/categories/show/$data->id_category' hx-get='$BASE/categories/show/$data->id_category' $linkCommonHtmlAttributes> $categoryName</a></small><br>";
 
       ?>
-      <?= ($_SESSION['user_status'] && $_SESSION['user_status'] == 1) ? "<a href='$BASE/products/show/$data->id'>Ver detalhes</a>" : ''; ?>
+      <?= ($_SESSION['user_status'] && $_SESSION['user_status'] == 1) ? "<a href='$BASE/products/show/$data->id' hx-get='$BASE/products/show/$data->id' $linkCommonHtmlAttributes>Ver detalhes</a>" : ''; ?>
     </figcaption>
     <?php
 
