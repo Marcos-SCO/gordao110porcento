@@ -13,3 +13,22 @@ function imgOrDefault($table, $img, $id, $tableOption = '')
 
     if (!$isUserTable) return "public/resources/img/default/default.png";
 }
+
+function getImgWithAttributes($imgPath, $imgAtributes = [])
+{
+    global $BASE;
+
+    $imgUrl = $BASE . '/' . $imgPath;
+
+    $errorImgUrl = $BASE  . '/public/resources/img/not_found/no_image.jpg';
+
+    $attributesString = '';
+
+    foreach ($imgAtributes as $attributeKey => $attributeParam) {
+        
+        $attributesString .=
+            $attributeKey . '=\'' . $attributeParam . '\'';
+    }
+
+    return "<img src='$imgUrl' onerror=\"this.onerror=null;this.src='$errorImgUrl';\" $attributesString>";
+}
