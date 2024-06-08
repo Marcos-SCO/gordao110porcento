@@ -74,6 +74,10 @@ function isLoggedIn()
     return true;
 }
 
+function isSessionActiveUser(): bool {
+    return ($_SESSION['user_status'] && $_SESSION['user_status'] == 1);
+}
+
 function isSubmittedInSession()
 {
     return isset($_SESSION['submitted']);
