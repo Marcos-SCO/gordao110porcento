@@ -15,6 +15,7 @@ class Categories extends Controller
 {
     public $model;
     public $imagesHandler;
+    public $dataPage = 'product-categories';
 
     public function __construct()
     {
@@ -188,6 +189,7 @@ class Categories extends Controller
         // Display results
         return View::render('categories/show.php', [
             'title' => $data->category_name . ' | Página ' . $pageId,
+            'dataPage' => $this->dataPage,
             'category_description' => $data->category_description,
             'categoryElements' => $categoryElements,
             'pageId' => $pageId,

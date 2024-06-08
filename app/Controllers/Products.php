@@ -15,6 +15,7 @@ class Products extends Controller
 {
     public $model;
     public $imagesHandler;
+    public $dataPage = 'products';
 
     public function __construct()
     {
@@ -95,6 +96,7 @@ class Products extends Controller
 
         View::render('products/index.php', [
             'title' => "Ofertas | Página $pageId",
+            'dataPage' => $this->dataPage,
             'categoryElements' => $categoryElements,
             'products' => $results['tableResults'],
             'flash' => $flash,
