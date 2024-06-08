@@ -2,39 +2,41 @@
 
 
 [data-page="gallery"] main {
-    padding-bottom: 5rem
+    // padding-bottom: 5rem;
 }
 
 .galleryHeader {
-    background-image: url(../img/template/gallery.png)
+    background-image: url(../img/template/gallery.png);
+
+    @media screen and (max-width:600px) {
+        background-image: url(../img/template/gallery_600.png) !important
+    }
 }
+
 .galleryArticle {
     /* height: 200px;
     width: 100px; */
-    overflow: hidden
-}
+    overflow: hidden;
 
-.galleryArticle figure {
-    position: relative;
-}
+    &>section {
+        margin-top: 4.5rem;
+    }
 
-.galleryArticle .galleryImgMax {
-    height: 170px;
-    overflow: hidden
-}
+    figure {
+        position: relative;
+    }
 
-.galleryArticle figcaption p {
-    width: 100%;
-    color: #ff7a08;
-    background-color: #fff;
-    border: 1px solid #dee2e6;
-    border-radius: 44px;
-    border-top: none !important
-}
+    .galleryImgMax {
+        height: 170px;
+        overflow: hidden
+    }
 
-/* -------- Gallery End -------- */
-@media screen and (max-width:600px) {
-    .galleryHeader {
-        background-image: url(../img/template/gallery_600.png)!important
+    figcaption p {
+        width: 100%;
+        color: #ff7a08;
+        background-color: #fff;
+        border: 1px solid #dee2e6;
+        border-radius: 44px;
+        border-top: none !important
     }
 }

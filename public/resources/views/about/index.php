@@ -1,12 +1,10 @@
-<style>
-    body {
-        background-image: url('<?= $BASE ?>/public/resources/img/template/aboutBackgroundSection.png');
-        background-size: cover;
-        background-attachment: fixed;
-        background-repeat: no-repeat;
-        background-position: top
-    }
-</style>
+<?php
+
+$contactPageUrl = $BASE . '/contact/message/send';
+
+echo "<style>body { background-image: url('$BASE/public/resources/img/template/aboutBackgroundSection.png'); background-size: cover; background-attachment: fixed; background-repeat: no-repeat; background-position: top }</style>";
+
+?>
 
 <header class="homeHeaderAbout imgBackgroundArea d-flex flex-wrap justify-content-center flex-row">
     <span>
@@ -61,40 +59,67 @@
         </header>
 
         <div class="contactRow row mb-4 align-items-center">
+
             <div class="col-md-9 mb-md-0 mb-5">
 
-                <form action="<?= $BASE ?>/contact/messageSend" method="post">
+                <form class="m-auto" action="<?= $contactPageUrl ?>" hx-post="<?= $contactPageUrl ?>" method="post" hx-select="form">
                     <div class="row">
-                        <div class="form-group col-md-6"> <label for="name">Nome<sup>*</sup></label> <input type="text" name="name" id="name" class="form-control form-control-lg <?= isset($error['name_error']) && $error['name_error'] != '' ? 'is-invalid' : '' ?>" value="<?= $data['name'] ?? '' ?>"> <span class="invalid-feedback"> <?= $error['name_error'] ?? '' ?> </span> </div>
+                        <div class="mb-3 col-md-6">
+                            <label for="name" class="form-label">Nome<sup>*</sup></label>
+                            <input type="text" name="name" id="name" class="form-control <?= isset($error['name_error']) && $error['name_error'] != '' ? 'is-invalid' : '' ?>" value="<?= $data['name'] ?? '' ?>">
+                            <div class="invalid-feedback">
+                                <?= $error['name_error'] ?? '' ?>
+                            </div>
+                        </div>
 
-                        <div class="form-group col-md-6"> <label for="email">E-mail<sup>*</sup></label> <input type="text" name="email" id="email" class="form-control form-control-lg <?= isset($error['email_error']) && $error['email_error'] != '' ? 'is-invalid' : '' ?>" value="<?= $data['email'] ?? '' ?>"> <span class="invalid-feedback"> <?= $error['email_error'] ?? '' ?> </span> </div>
-                        
+                        <div class="mb-3 col-md-6">
+                            <label for="email" class="form-label">E-mail<sup>*</sup></label>
+                            <input type="email" name="email" id="email" class="form-control <?= isset($error['email_error']) && $error['email_error'] != '' ? 'is-invalid' : '' ?>" value="<?= $data['email'] ?? '' ?>">
+                            <div class="invalid-feedback">
+                                <?= $error['email_error'] ?? '' ?>
+                            </div>
+                        </div>
+
                     </div>
 
-                    <div class="form-group row">
-                        <div class="col-md-12"> <label for="subject">Assunto<sup>*</sup></label> <input type="text" name="subject" id="subject" class="form-control form-control-lg <?= isset($error['subject_error']) && $error['subject_error'] != '' ? 'is-invalid' : '' ?>" value="<?= $data['subject'] ?? '' ?>"> <span class="invalid-feedback"> <?= $error['subject_error'] ?? '' ?> </span> </div>
+                    <div class="mb-3">
+                        <label for="subject" class="form-label">Assunto<sup>*</sup></label>
+                        <input type="text" name="subject" id="subject" class="form-control <?= isset($error['subject_error']) && $error['subject_error'] != '' ? 'is-invalid' : '' ?>" value="<?= $data['subject'] ?? '' ?>">
+                        <div class="invalid-feedback">
+                            <?= $error['subject_error'] ?? '' ?>
+                        </div>
                     </div>
 
-                    <div class="form-group"> <label for="body">Mensagem: <sup>*</sup></label> <textarea name="body" id="body" class="form-control form-control-lg <?= isset($error['body_error']) && $error['body_error'] != '' ? 'is-invalid' : '' ?>"><?= $data['body'] ?? '' ?></textarea> <span class="invalid-feedback"> <?= $error['body_error'] ?? '' ?> </span> </div> <input type="submit" class="btn btn-success" value="Enviar" style="height:100%;width:100%;margin-bottom:1rem;">
+                    <div class="mb-3">
+                        <label for="body" class="form-label">Mensagem<sup>*</sup></label>
+                        <textarea name="body" id="body" class="form-control <?= isset($error['body_error']) && $error['body_error'] != '' ? 'is-invalid' : '' ?>"><?= $data['body'] ?? '' ?></textarea>
+                        <div class="invalid-feedback">
+                            <?= $error['body_error'] ?? '' ?>
+                        </div>
+                    </div>
 
+                    <button type="submit" class="btn btn-success w-100 mb-3">Enviar</button>
                 </form>
             </div>
 
-            <address class="contactInfo text-center align-self-start">
+            <address class="contactInfo mt-5 text-center align-self-start">
                 <ul class="list-unstyled">
                     <li><i class="fa fa-map-marker fa-2x" style="color:#d22"></i>
                         <p>Barueri - SP</p>
                     </li>
+
                     <li><i class="fa fa-phone mt-4 fa-2x" style="color:#ff9800"></i>
-                        <p>(11) 944448798</p>
+                        <p>+55 (11) 944448798</p>
                     </li>
+
                     <li><i class="fa fa-whatsapp mt-4 fa-2x" style="color:#4AC959"></i>
-                        <p>(11) 944448798</p>
+                        <p>+55 (11) 944448798</p>
                     </li>
+
                     <li class="d-flex flex-column"> <i class="fa fa-envelope mt-4 fa-2x"></i> <a href="mailto:marcos_sco@outlook.com" style="color:#333!important">gordão110%@outlook.com</a> </li>
                 </ul>
             </address>
-            
+
         </div>
     </section>
 </article>

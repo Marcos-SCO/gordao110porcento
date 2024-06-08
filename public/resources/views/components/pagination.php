@@ -73,9 +73,9 @@ function displayPaginationItens($paginationNumbers, $basePath, $linkCommonHtmlAt
 
     $disabled = ($pageId != 1) ? '' : 'disabled';
 
-    echo "<li class='page-item $disabled'><span class='page-link'><a href='$basePath/1' hx-get='$basePath/1' $linkCommonHtmlAttributes>Primeira</a></span></li>";
+    echo "<li class='page-item $disabled control'><span class='page-link'><a href='$basePath/1' hx-get='$basePath/1' $linkCommonHtmlAttributes>Primeira</a></span></li>";
 
-    echo "<li class='page-item $disabled'><span class='page-link'><a href='$prevPage' hx-get='$prevPage' $linkCommonHtmlAttributes><</a></span></li>";
+    echo "<li class='page-item $disabled control'><span class='page-link'><a href='$prevPage' hx-get='$prevPage' $linkCommonHtmlAttributes><</a></span></li>";
 
     $previousNumbers = array_reverse(getPreviousNumbers($pageId, 5));
 
@@ -93,11 +93,11 @@ function displayPaginationItens($paginationNumbers, $basePath, $linkCommonHtmlAt
 
     ?>
 
-    <li class="page-item <?= $totalDisable ?>">
+    <li class="page-item <?= $totalDisable ?> control">
       <a class="page-link" href="<?= $nextPage; ?>" hx-get="<?= $nextPage; ?>" <?= $linkCommonHtmlAttributes ?>>></a>
     </li>
 
-    <li class="page-item <?= $totalDisable ?>">
+    <li class="page-item <?= $totalDisable ?> control">
       <span class="page-link">
         <a href="<?= $lastPageLink; ?>" hx-get="<?= $lastPageLink; ?>" <?= $linkCommonHtmlAttributes ?>>Última</a>
       </span>

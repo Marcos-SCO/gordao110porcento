@@ -11,9 +11,9 @@
     justify-content: center
 }
 
-.contactAddress {
+.contactAddress, .contactRow form {
     width: 100%;
-    max-width: 716px
+    max-width: 716px;
 }
 
 .contactAddress div {
@@ -21,12 +21,17 @@
 }
 
 .contactAddress div ul {
-    padding: 1rem
+    padding: 1rem;
+    padding-left: 1.3rem;
 }
 
 @media screen and (max-width:615px) {
     .contactAddress div {
-        flex-wrap: wrap-reverse
+        flex-wrap: wrap-reverse;
+
+        ul {
+            padding-left: .1rem;
+        }
     }
 }
 

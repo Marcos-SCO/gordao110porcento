@@ -1,14 +1,15 @@
 function productsModal() {
 
-  const modalItemContainers =
-    document.querySelectorAll('[modal-item-container]');
+  const modalItemContainers = document.querySelectorAll('[modal-item-container]');
 
   if (!modalItemContainers) return;
 
   Array.from(modalItemContainers).forEach(modalItemContainer => {
 
     modalItemContainer.addEventListener('click', e => {
+
       const target = e.target;
+      const currentElement = e.currentTarget;
 
       const targetHasModalItem = target.closest('[modal-item]');
 
@@ -20,12 +21,12 @@ function productsModal() {
       let qtdInputs, inputs, values, i;
       // Count inputs
       qtdInputs = document.querySelector(`#${item.id} #inputItens`).children;
-      // get Inputs
+      // Get Inputs
       inputs = document.querySelector(`#${item.id} #inputItens`).children;
       values = [];
 
       for (i = 0; i < qtdInputs.length; i++) {
-        // Store on array
+        // Store in array
         values[i] = inputs[i].defaultValue;
       }
 
@@ -40,44 +41,42 @@ function productsModal() {
       img = values[5];
       price = values[6];
 
-      // console.log(id, product_name, category_name, product_description, img, price);
-
+      // Create the modal content
       let itemModal = document.getElementById('itemModal');
-      // console.log(itemModal[1]);
-      let url = window.location.href;
-      url = url.replace('/home', '/');
+      let url = window.location.href.replace('/home', '/');
 
-      let modalContent =
-        `<div class="modal-dialog" role="document">
-        <div class="modal-content">
-        <header class="modal-header">
-        <h3 class="modal-title" id="name">${product_name}</h3>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-        <span aria-hidden="true">&times;</span>
-        </button>
-        </header>
-        <div class="modal-body">
-        <figure>
-        <img src="${url}/public/resources/img/products/category_${id_category}/id_${id}/${img}" alt="${img}" title="${product_name}"  onerror="this.onerror=null;this.src='<?= $BASE ?>/public/resources/img/not_found/no_image.jpg';">
-        <figcaption>
-        <p>Categoria: <a href='${url}categories/show/${id_category}'>${category_name}</a></p>
-        <p>${product_description = values[4]}</>
-        <p>Valor: <a href='${url}categories/show/${id_category}'>R$ ${price}</a></p>
-        </figcaption>
-        </figure>
-        </div>
-        <div class="modal-footer">
-        <button type="button" class="btn" style="background:#fff;color:#676767;border:1px solid #ccc" data-dismiss="modal">Fechar</button>
-        </div>
-        </div>
+      let modalContent = `
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h3 class="modal-title" id="name">${product_name}</h3>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <figure>
+                <img src="${url}/public/resources/img/products/category_${id_category}/id_${id}/${img}" alt="${img}" title="${product_name}" onerror="this.onerror=null;this.src='<?= $BASE ?>/public/resources/img/not_found/no_image.jpg';">
+                <figcaption>
+                  <p>Categoria: <a href='${url}categories/show/${id_category}'>${category_name}</a></p>
+                  <p>${product_description}</p>
+                  <p>Valor: R$ ${price}</p>
+                </figcaption>
+              </figure>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" data-js="dismissal">Fechar</button>
+            </div>
+          </div>
         </div>`;
 
       itemModal.innerHTML = modalContent;
 
-    })
+      // Show the modal using Bootstrap's JS API
+      let modal = new bootstrap.Modal(itemModal);
+      modal.show();
+    });
 
   });
 
 }
 
-document.addEventListener('DOMContentLoaded', productsModal)
+document.addEventListener('DOMContentLoaded', productsModal);

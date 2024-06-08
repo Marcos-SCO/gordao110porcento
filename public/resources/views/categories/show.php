@@ -18,7 +18,7 @@ $userUrl =  $BASE . '/users/show/' . $userId;
     <h1><?= $categoryName; ?></h1>
     <p><?= $categoryDescription ?></p>
 
-    <?php if (!$isSectionActiveUser) : ?>
+    <?php if ($isSectionActiveUser) : ?>
         <small class='mb-3 z-3'>
             Categoria adicionada por <a href='<?= $userUrl; ?>' hx-boost="true"> <?= $userName; ?>
             </a> em <?= $dataCreatedAt; ?>

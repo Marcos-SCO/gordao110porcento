@@ -1,4 +1,13 @@
 /* -------- Products Start -------- */
+
+[data-page="products"],
+[data-page="product-categories"] {
+
+  .pagination {
+    padding-top: 1rem;
+  }
+}
+
 .productHeader {
   background-image: url(../img/template/gordao_letreiros.png)
 }

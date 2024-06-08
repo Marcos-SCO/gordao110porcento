@@ -1,0 +1,51 @@
+.pagination {
+  padding-top: 2rem;
+
+  @media screen and (max-width:326px) {
+    display: flex;
+    flex-wrap: wrap;
+    font-size: 14.5px;
+  }
+
+  @media screen and (max-width:470px) {
+    .control {
+      position: absolute;
+      z-index: -1;
+      opacity: 0;
+    }
+  }
+}
+
+.page-link {
+  color: #d95f1b !important;
+
+  &:focus {
+    box-shadow: 0 0 0 0.2rem rgba(255, 87, 34, 0.44) !important
+  }
+}
+
+.page-item {
+
+  &.disabled {
+    cursor: not-allowed;
+    background-color: initial !important;
+
+    .page-link {
+      background-color: initial !important;
+    }
+  }
+
+  &.active {
+
+    .page-link {
+      color: #fff !important;
+      background-color: #d95f1b !important;
+      border-color: #d95f1b !important;
+      margin-left: initial !important;
+    }
+  }
+
+  &:not(:first-child) .page-link {
+    margin-left: initial !important;
+  }
+}
