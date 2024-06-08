@@ -1,6 +1,5 @@
 // Htmx
-import htmx from 'htmx.org';
-if (!window.htmx) window.htmx = htmx;
+// if (!window.htmx) window.htmx = htmx;
 
 // Htmx custom events
 import './htmxCustom';
