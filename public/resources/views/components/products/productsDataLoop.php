@@ -4,60 +4,90 @@ if (!$products) return;
 
 $loopCount = 0;
 
-$linkCommonHtmlAttributes
-    = 'hx-push-url="true"  
-  hx-swap="show:window:top"  
-  hx-target="main"  
-  hx-select="main > *"';
+$isSectionActiveUser =
+  ($_SESSION['user_status'] && $_SESSION['user_status'] == 1);
 
 foreach ($products as $data) :
-  
+
+  $dataIdCategory = objParamExistsOrDefault($data, 'id_category');
+
+  if (!$dataIdCategory) continue;
+
+  $loopCount += 1;
+
+  $dataItemId = objParamExistsOrDefault($data, 'id');
+
+  $dataItemImg = objParamExistsOrDefault($data, 'img');
+
+  $productName = objParamExistsOrDefault($data, 'product_name');
+
+  $categoryUrlLink = $BASE . '/categories/show/' . $dataIdCategory;
+
+  $productDescription = objParamExistsOrDefault($data, 'product_description');
+  $productPrice = objParamExistsOrDefault($data, 'price');
+
+  $productUrlLink = $BASE . '/products/show/' . $dataItemId;
+
 ?>
   <figure class="card" data-js="loop-item">
-    <?php
-
-    $loopCount += 1;
-
-    $imgPath =
-      imgOrDefault('products', $data->img, $data->id, "/category_$data->id_category");
-
-    $imgLoading =
-      $loopCount <= 4 ? 'eager' : 'lazy';
-
-    echo getImgWithAttributes($imgPath, [
-      'alt' => $data->product_name,
-      'title' => $data->product_name,
-      'width' => '299px',
-      'height' => '224px',
-      'loading' => $imgLoading
-    ]);
-    ?>
-
-    <figcaption class="card-body">
-      <h5 class="card-title"><?= $data->product_name ?></h5>
+    <a href='<?= $productUrlLink; ?>' hx-boost="true">
       <?php
 
-      if ($categoryElements) {
+      $imgPath = imgOrDefault('products', $dataItemImg, $dataItemId, "/category_$dataIdCategory");
+
+      $imgLoading =
+        $loopCount <= 4 ? 'eager' : 'lazy';
+
+      echo getImgWithAttributes($imgPath, [
+        'alt' => $productName,
+        'title' => $productName,
+        'width' => '299px',
+        'height' => '224px',
+        'loading' => $imgLoading
+      ]);
+
+      ?>
+    </a>
+
+    <figcaption class="card-body">
+
+      <a href='<?= $productUrlLink; ?>' hx-boost="true">
+        <h5 class="card-title"><?= $productName ?></h5>
+      </a>
+
+      <?php
+
+      if ($categoryElements) :
         // Get category name from categories table
         foreach ($categoryElements as $element) {
 
-          if ($element->id == $data->id_category) $categoryName = $element->category_name;
+          if ($element->id == $dataIdCategory) {
+
+            $categoryName = $element->category_name;
+            break;
+          }
         }
 
-        echo "<p class='card-text'>$data->product_description</p><p class='card-text'>Preço: $data->price</p><small class='text-muted'>Categoria: 
-                  <a href='$BASE/categories/show/$data->id_category' hx-get='$BASE/categories/show/$data->id_category' $linkCommonHtmlAttributes> $categoryName</a>
-              </small><br>";
-      }
-
-      echo ($_SESSION['user_status'] && $_SESSION['user_status'] == 1) ? "
-            <a href='$BASE/products/show/$data->id' hx-get='$BASE/products/show/$data->id' $linkCommonHtmlAttributes>Ver detalhes</a>" : '';
+        if ($productDescription) echo "<p class='card-text'>$productDescription</p>";
 
       ?>
+        <p class='card-text'>Preço: <?= $productPrice ?></p>
+
+        <small class='text-muted'>
+          Categoria: <a href='<?= $categoryUrlLink ?>' hx-boost='<?= $categoryUrlLink ?>'>
+            <?= $categoryName ?>
+          </a>
+        </small>
+      <?php endif; ?>
+
+      <?php if ($isSectionActiveUser) : ?>
+        </br>
+        <a href='<?= $productUrlLink; ?>' hx-boost="true">Ver detalhes</a>
+      <?php endif; ?>
+
     </figcaption>
 
-    <?php
-
-    App\Classes\DynamicLinks::editDelete($BASE, 'products', $data, 'Quer mesmo deletar esse produto?');
+    <?php App\Classes\DynamicLinks::editDelete($BASE, 'products', $data, 'Quer mesmo deletar esse produto?');
 
     ?>
   </figure>

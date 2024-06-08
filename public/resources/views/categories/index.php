@@ -1,11 +1,5 @@
 <?php
 
-$linkCommonHtmlAttributes
-    = 'hx-push-url="true"  
-  hx-swap="show:window:top"  
-  hx-target="main"  
-  hx-select="main > *"';
-
 $loopCount = 0;
 
 ?>
@@ -21,20 +15,30 @@ $loopCount = 0;
 
             $loopCount += 1;
 
+            $dataItemId = objParamExistsOrDefault($data, 'id');
+
+            if (!$dataItemId) continue;
+
+            $dataItemImg = objParamExistsOrDefault($data, 'img');
+
             $categoryShowLink =
-                $BASE . '/categories/show/' . $data->id;
+                $BASE . '/categories/show/' . $dataItemId;
 
             $imgLoading =
                 $loopCount <= 4 ? 'eager' : 'lazy';
 
-        ?>
+            $categoryName = objParamExistsOrDefault($data, 'category_name');
 
-            <a href='<?= $categoryShowLink ?>' hx-get='<?= $categoryShowLink ?>' <?= $linkCommonHtmlAttributes; ?> data-js="loop-item">
+            $categoryDescription =
+                objParamExistsOrDefault($data, 'category_description');
+
+        ?>
+            <a href='<?= $categoryShowLink ?>' hx-get='<?= $categoryShowLink ?>' <?= getHtmxMainTagAttributes(); ?> data-js="loop-item">
                 <figure class="card" style="color:#333!important">
 
-                    <?php echo getImgWithAttributes(imgOrDefault('categories', $data->img, $data->id), [
-                        'alt' => $data->category_name,
-                        'title' => $data->category_name,
+                    <?php echo getImgWithAttributes(imgOrDefault('categories', $dataItemImg, $dataItemId), [
+                        'alt' => $categoryName,
+                        'title' => $categoryName,
                         'width' => '299px',
                         'height' => '224px',
                         'loading' => $imgLoading
@@ -42,8 +46,8 @@ $loopCount = 0;
                     ?>
 
                     <figcaption class="card-body" style="height:142px;">
-                        <h5 class="card-title"><?= $data->category_name ?></h5>
-                        <?= "<p class='card-text'>$data->category_description</p>" ?>
+                        <h5 class="card-title"><?= $categoryName ?></h5>
+                        <?= "<p class='card-text'>$categoryDescription</p>" ?>
                     </figcaption>
                 </figure>
             </a>

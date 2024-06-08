@@ -1,19 +1,35 @@
 <?php
 
-$categoryName = $data->category_name;
+$isSectionActiveUser = isSessionActiveUser();
+
+$categoryName = objParamExistsOrDefault($data, 'category_name');
+$categoryDescription = objParamExistsOrDefault($data, 'category_description');
+
+$dataCreatedAt = objParamExistsOrDefault($data, 'created_at');
+
+$userName = objParamExistsOrDefault($user, 'name');
+$userId = objParamExistsOrDefault($user, 'id');
+
+$userUrl =  $BASE . '/users/show/' . $userId;
 
 ?>
 
 <header class="categoryHeader productHeader imgBackgroundArea" data-js="top-page-header">
     <h1><?= $categoryName; ?></h1>
-    <p><?= $data->category_description ?></p>
+    <p><?= $categoryDescription ?></p>
 
-    <?= ($_SESSION['user_status'] && $_SESSION['user_status'] == 1) ? "<small class='smallInfo'>Categoria adicionada por <a href='$BASE/users/show/$user->id'>$user->name</a> em " . dateFormat($data->created_at) . "</small>" : ''; ?>
+    <?php if (!$isSectionActiveUser) : ?>
+        <small class='mb-3 z-3'>
+            Categoria adicionada por <a href='<?= $userUrl; ?>' hx-boost="true"> <?= $userName; ?>
+            </a> em <?= $dataCreatedAt; ?>
+        </small>
+    <?php endif; ?>
 </header>
 
 <?php
 
-if ($_SESSION['user_status'] && $_SESSION['user_status'] == 1) :
+if ($isSectionActiveUser) :
+
 ?>
     <section>
         <header class="d-flex flex-column headerEdit imgBackgroundArea">
@@ -32,6 +48,7 @@ if ($_SESSION['user_status'] && $_SESSION['user_status'] == 1) :
                 ?>
             </div>
         </div>
+
     </section>
 
 <?php endif; ?>
@@ -48,8 +65,8 @@ if ($_SESSION['user_status'] && $_SESSION['user_status'] == 1) :
 
         if (!$products) echo "<p>Categoria <strong>{$categoryName}</strong> não possui produtos cadastrados...</p>";
 
-        if ($products) // Products data loop
-        include_once __DIR__ . '/../components/products/productsDataLoop.php';
+        // Products data loop
+        if ($products) include_once __DIR__ . '/../components/products/productsDataLoop.php';
 
         ?>
     </section>
