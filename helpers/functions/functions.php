@@ -2,6 +2,8 @@
 
 include_once('_htmlMinifier.php');
 
+include_once('_htmxHelpers.php');
+
 include_once('_queryString.php');
 include_once('_debug.php');
 include_once('_redirect.php');
