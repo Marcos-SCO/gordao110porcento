@@ -4,8 +4,10 @@ function initializeDropdown() {
 
   const dropdownElementList = Array.from(dropdownToggles);
 
-  dropdownElementList.map(function (dropdownToggleEl) {
-    return new bootstrap.Dropdown(dropdownToggleEl);
+  dropdownElementList.forEach(function (dropdownToggleEl) {
+
+    // Create a new dropdown instance
+    new bootstrap.Dropdown(dropdownToggleEl);
   });
 }
 

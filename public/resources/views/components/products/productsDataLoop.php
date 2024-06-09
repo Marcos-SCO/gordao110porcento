@@ -30,7 +30,7 @@ foreach ($products as $data) :
 
 ?>
   <figure class="card" data-js="loop-item">
-    <a href='<?= $productUrlLink; ?>' hx-boost="true">
+    <a href='<?= $productUrlLink; ?>' hx-boost="true" <?= getHtmxMainTagAttributes(); ?>>
       <?php
 
       $imgPath = imgOrDefault('products', $dataItemImg, $dataItemId, "/category_$dataIdCategory");
@@ -51,7 +51,7 @@ foreach ($products as $data) :
 
     <figcaption class="card-body">
 
-      <a href='<?= $productUrlLink; ?>' hx-boost="true">
+      <a href='<?= $productUrlLink; ?>' hx-boost="true" <?= getHtmxMainTagAttributes(); ?>>
         <h5 class="card-title"><?= $productName ?></h5>
       </a>
 
@@ -82,7 +82,7 @@ foreach ($products as $data) :
 
       <?php if ($isSectionActiveUser) : ?>
         </br>
-        <a href='<?= $productUrlLink; ?>' hx-boost="true">Ver detalhes</a>
+        <a href='<?= $productUrlLink; ?>' hx-boost="true" hx-boost="truin" hx-target="main" hx-swap="outerHTML show:none">Ver detalhes</a>
       <?php endif; ?>
 
     </figcaption>
