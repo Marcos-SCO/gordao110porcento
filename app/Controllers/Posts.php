@@ -12,6 +12,7 @@ class Posts extends Controller
 {
     public $model;
     public $imagesHandler;
+    public $dataPage = 'posts';
 
     public function __construct()
     {
@@ -98,6 +99,7 @@ class Posts extends Controller
         $results = Pagination::handler($table, $pageId, $limit = 8, '', $orderOption = 'ORDER BY id DESC');
 
         View::render('posts/index.php', [
+            'dataPage' => $this->dataPage,
             'title' => 'Posts',
             'controller' => 'Posts',
             'posts' => $results['tableResults'],

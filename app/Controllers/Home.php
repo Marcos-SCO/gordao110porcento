@@ -10,6 +10,7 @@ use Core\View;
 class Home extends Controller
 {
     public $model;
+    public $dataPage = 'home';
 
     public function __construct()
     {
@@ -24,6 +25,7 @@ class Home extends Controller
         $pizzas = $this->model->getProducts(2);
 
         View::render('home/index.php', [
+            'dataPage' => $this->dataPage,
             'controller' => 'Home',
             'title' => 'Gordão a 110%',
             'hamburgers' => $hamburgers,
@@ -31,34 +33,5 @@ class Home extends Controller
             'categories' => $categories,
             'posts' => $posts,
         ]);
-    }
-
-    protected function create()
-    {
-    }
-
-    public function store($request)
-    {
-        //
-    }
-
-    public function show($id)
-    {
-        //
-    }
-
-    public function edit($id)
-    {
-        //
-    }
-
-    public function update($table, $data, $id)
-    {
-        //
-    }
-
-    public function destroy($id)
-    {
-        //
     }
 }

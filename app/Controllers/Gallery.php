@@ -15,6 +15,7 @@ class Gallery extends Controller
 {
     public $model;
     public $imagesHandler;
+    public $dataPage = 'gallery';
 
     public function __construct()
     {
@@ -96,7 +97,7 @@ class Gallery extends Controller
         $results = Pagination::handler($table, $pageId, $limit = 8, '', $orderOption = 'ORDER BY id DESC');
 
         View::render('gallery/index.php', [
-            'dataPage' => 'gallery',
+            'dataPage' => $this->dataPage,
             'title' => 'Galeria de imagens',
             'gallery' => $results['tableResults'],
             'flash' => $flash,

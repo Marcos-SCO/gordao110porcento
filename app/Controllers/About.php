@@ -10,6 +10,7 @@ use Core\View;
 class About extends Controller
 {
     public $model;
+    public $dataPage = 'about';
 
     public function __construct()
     {
@@ -24,6 +25,7 @@ class About extends Controller
         $pizzas = $this->model->getProducts(2);
 
         View::render('about/index.php', [
+            'dataPage' => $this->dataPage,
             'controller' => 'About',
             'title' => 'Sobre',
             'hamburgers' => $hamburgers,
@@ -31,34 +33,5 @@ class About extends Controller
             'categories' => $categories,
             'posts' => $posts,
         ]);
-    }
-
-    protected function create()
-    {
-    }
-
-    public function store($request)
-    {
-        //
-    }
-
-    public function show($id)
-    {
-        //
-    }
-
-    public function edit($id)
-    {
-        //
-    }
-
-    public function update($table, $data, $id)
-    {
-        //
-    }
-
-    public function destroy($id)
-    {
-        //
     }
 }

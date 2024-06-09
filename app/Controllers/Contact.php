@@ -13,6 +13,7 @@ class Contact extends Controller
 {
     public $model;
     public $emailFacade;
+    public $dataPage = 'contact';
 
     public function __construct()
     {
@@ -140,6 +141,7 @@ class Contact extends Controller
         $contaPageTitle = $contactPage == 'work' ? 'Envie sua mensagem com um anexo' : 'Contato - envie sua mensagem';
 
         return View::render('contact/message.php', [
+            'dataPage' => $this->dataPage . '/' . $contactPage,
             'title' => $contaPageTitle,
             'data' => $data,
             'error' => $error,
@@ -186,7 +188,7 @@ class Contact extends Controller
 
         if ($emailError) return $this->message($data, ['body_error' => 'Infelizmente o e-mail não podê ser enviado, tente novamente mais tarde']);
 
-        $flash = flash('post_message', 'Mensagem Enviada com sucesso');
+        flash('post_message', 'Mensagem Enviada com sucesso');
 
         return redirect('contact/success');
     }

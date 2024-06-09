@@ -14,6 +14,7 @@ class Users extends Controller
 {
     public $model;
     public $imagesHandler;
+    public $dataPage = 'users';
 
     public function __construct()
     {
@@ -160,6 +161,7 @@ class Users extends Controller
         $inactiveNumber = $this->model->customQuery("SELECT COUNT(*) as inactive FROM users WHERE status = 0");
 
         View::render('users/index.php', [
+            'dataPage' => $this->dataPage,
             'pageId' => $pageId,
             'title' => 'Users',
             'activeNumber' => $activeNumber,
@@ -412,6 +414,7 @@ class Users extends Controller
             return View::render(
                 'users/login.php',
                 [
+                    'dataPage' => 'users-login',
                     'title' => 'Users login',
                 ]
             );
@@ -444,6 +447,7 @@ class Users extends Controller
         if ($isErrorResult) {
 
             return View::render('users/login.php', [
+                'dataPage' => 'users-login',
                 'data' => $data,
                 'error' => $errorData
             ]);
@@ -460,6 +464,7 @@ class Users extends Controller
             $errorData['password_error'] = "Email ou senha incorretos";
 
             return View::render('users/login.php', [
+                'dataPage' => 'users-login',
                 'title' => 'Users Login',
                 'data' => $data,
                 'error' => $errorData
