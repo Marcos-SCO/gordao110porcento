@@ -15,7 +15,7 @@ class Categories extends Controller
 {
     public $model;
     public $imagesHandler;
-    public $dataPage = 'product-categories';
+    public $dataPage = 'categories';
 
     public function __construct()
     {

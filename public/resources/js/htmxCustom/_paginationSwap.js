@@ -9,7 +9,7 @@ function updatePaginationContainer(previousUrl, htmxReference) {
   });
 }
 
-document.addEventListener('htmx:afterSwap', function resultItensContainer(evt) {
+function paginationResultsInContainer(evt) {
   const eventIsResultContainer =
     evt.detail.target.matches('[data-js="result-itens-container"]');
 
@@ -20,4 +20,8 @@ document.addEventListener('htmx:afterSwap', function resultItensContainer(evt) {
   updatePaginationContainer(eventCurrentUrl, window.htmx);
 
   // scrollToTop('[data-js="top-page-header"]');
-});
+}
+
+// document.addEventListener('htmx:afterSwap', );
+
+export { paginationResultsInContainer };

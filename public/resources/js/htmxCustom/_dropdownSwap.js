@@ -1,16 +1,3 @@
-function initializeDropdown() {
-  const dropdownToggles = document.querySelectorAll('.dropdown-toggle');
-  if (!dropdownToggles) return;
-
-  const dropdownElementList = Array.from(dropdownToggles);
-
-  dropdownElementList.forEach(function (dropdownToggleEl) {
-
-    // Create a new dropdown instance
-    new bootstrap.Dropdown(dropdownToggleEl);
-  });
-}
-
 function outsideClickCloseDropdown() {
   // Close the dropdown when clicking outside
   document.addEventListener('click', function (e) {
@@ -35,9 +22,23 @@ function outsideClickCloseDropdown() {
 
 }
 
-// Reinitialize dropdown after HTMX swap
-document.addEventListener('htmx:afterSwap', function (e) {
+function initializeDropdown() {
+  const dropdownToggles = document.querySelectorAll('.dropdown-toggle');
+  if (!dropdownToggles) return;
+  console.log('toggle init...')
 
-  initializeDropdown();
+  const dropdownElementList = Array.from(dropdownToggles);
+
+  dropdownElementList.forEach(function (dropdownToggleEl) {
+
+    // Create a new dropdown instance
+    new bootstrap.Dropdown(dropdownToggleEl);
+  });
+
   outsideClickCloseDropdown();
-});
+}
+
+// Reinitialize dropdown after HTMX swap
+// afterSwap  | afterSettle
+
+export { initializeDropdown };

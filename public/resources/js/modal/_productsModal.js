@@ -80,3 +80,7 @@ function productsModal() {
 }
 
 document.addEventListener('DOMContentLoaded', productsModal);
+
+// document.addEventListener('htmx:afterSwap', productsModal);
+
+export { productsModal };

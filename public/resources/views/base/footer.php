@@ -1,7 +1,7 @@
 <?php
 
 // Pagination component
-include_once __DIR__ . '/../components/pagination.php'; 
+include_once __DIR__ . '/../components/pagination.php';
 
 $controller = isset($controller) ? $controller : false;
 
@@ -11,14 +11,14 @@ $getQuery = getQueryString();
 
 $yearsInService = date('Y') - 1997;
 
-$isHomeController = $controller == 'Home';
+$isHomePage = $dataPage == 'home';
 
 ?>
 
 </main>
 
 <!-- Footer -->
-<footer class="footerSection page-footer font-small blue pt-4" data-base-url="<?= $BASE; ?>">
+<footer class="footerSection page-footer font-small blue pt-4" data-base-url="<?= $BASE; ?>" data-page="<?= $dataPage; ?>">
 
     <article style="position:relative">
 
@@ -26,7 +26,7 @@ $isHomeController = $controller == 'Home';
             <header class="text-left" style="max-width:500px">
                 <h5 class="font-swashCaps lightText f-4" style="font-size:2.5rem">Gordão a 110%</h5>
                 <p class="mt-2">Somos uma lanchonete e restaurante com mais de <a href="<?= $BASE ?>/about">
-                <span class="activeYears" class="link"><?= $yearsInService ?></span></a> anos de tradição. Já servimos todo tipo de refeição com nosso extenso <span class="link" id="menu">menu</span>, peça já! Te convidamos a se deliciar com nossas ofertas. Você terá a satisfação a 110% e garantia de qualidade.<br>É gordão ou nada! <a href="<?= $BASE ?>/about">Saiba mais</a></p>
+                        <span class="activeYears" class="link"><?= $yearsInService ?></span></a> anos de tradição. Já servimos todo tipo de refeição com nosso extenso <span class="link" id="menu">menu</span>, peça já! Te convidamos a se deliciar com nossas ofertas. Você terá a satisfação a 110% e garantia de qualidade.<br>É gordão ou nada! <a href="<?= $BASE ?>/about">Saiba mais</a></p>
             </header>
 
             <hr class="clearfix w-100 d-md-none pb-3" style="border-top:1px solid #d48369!important">
@@ -71,12 +71,12 @@ $isHomeController = $controller == 'Home';
             </div>
         </section>
 
-        <?php if ($isHomeController) : 
-            
+        <?php if ($isHomePage) :
+
             echo "<style>@media screen and (min-width:1000px) {footer article {flex-direction: row !important;align-items: center} .footerInfo { flex-wrap: wrap !important; max-width: 436px; align-items: center}}</style>";
-            
-            ?>
-           
+
+        ?>
+
             <section class="contactSection">
                 <address data-anima="right">
                     <nav>
@@ -117,12 +117,11 @@ $isHomeController = $controller == 'Home';
 
 <?php
 
-if ($isHomeController) echo "<!-- Owl --><script src='$BASE/public/resources/js/libraries/owl.carousel.min.js'></script>";
-
 $tinyMceControllers = ['posts/show'];
 $isTinyMce = in_array($dataPage, $tinyMceControllers);
 
 // tiny MCE 
+
 if ($isTinyMce) echo "<!-- Tiny MCE --><script src='$BASE/public/resources/js/tinyMCE.js'></script>";
 
 ?>
@@ -132,6 +131,14 @@ if ($isTinyMce) echo "<!-- Tiny MCE --><script src='$BASE/public/resources/js/ti
 
 <!-- App -->
 <script src="<?= $BASE ?>/public/dist/js/index.js" type="module"></script>
+
+<script src='<?= $BASE ?>/public/resources/js/libraries/owl.carousel.min.js' type="module"></script>
+<?php if ($isHomePage) : ?>
+    <!-- Owl -->
+    <!-- <script src='</?= $BASE ?>/public/resources/js/libraries/owl.carousel.min.js' type="module"></script> -->
+
+    <!-- <script src='</?= $BASE ?>/public/resources/js/libraries/owl.carousel.js'></script> -->
+<?php endif; ?>
 
 </body>
 

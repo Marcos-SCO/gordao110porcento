@@ -8,6 +8,7 @@
                     <h3 class="text-left">Sobre nós</h3>
                 </span>
             </header>
+            
             <div class="about">
                 <div data-anima="center">
                     <strong class="font-swashCaps lightText">Gordão a 110%</strong>

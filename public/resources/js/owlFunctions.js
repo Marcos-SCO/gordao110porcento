@@ -1,13 +1,20 @@
-function owlCarouselFunctions() {
+async function owlCarouselFunctions() {
 
-    const owlCarouselExists = (typeof $.fn.owlCarousel === 'function');
-    if (!owlCarouselExists) return;
+    // console.log('result inside', window.owlCarousel);
+
+    const owlCarouselExists =
+        (typeof $.fn.owlCarousel === 'function');
+
+    if (!owlCarouselExists) {
+        console.error('Owl Carousel functions not loaded');
+        return;
+    }
 
     // owl carousel
     const owl = $('[data-js="owlDefaultItem"]');
 
     if (owl) {
-        
+
         owl.owlCarousel({
             loop: true,
             margin: 10,
@@ -69,4 +76,8 @@ function owlCarouselFunctions() {
 
 }
 
-owlCarouselFunctions();
+document.addEventListener('DOMContentLoaded', owlCarouselFunctions);
+
+// document.addEventListener('htmx:afterSwap', owlCarouselFunctions);
+
+export default owlCarouselFunctions;

@@ -35,6 +35,18 @@ body {
   overflow-x: hidden
 }
 
+
+@keyframes navOpacityAnimation {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 100%;
+  }
+
+}
+
 @media screen and (max-width:300px) {
 
   html,
@@ -527,7 +539,11 @@ footer .contactSection .map {
 /* Dropdown toggle start */
 .dropdown-toggle {
   background-color: #fff !important;
-  color: #d95f1b
+  color: #d95f1b;
+
+  &.header-menu {
+    color: initial;
+  }
 }
 
 /* Dropdown toggle end */

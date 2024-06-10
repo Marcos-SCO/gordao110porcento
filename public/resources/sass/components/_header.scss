@@ -1,0 +1,13 @@
+.main-header {
+
+  /* &.fixed-top {
+    animation-duration: .2s;
+    animation-name: navOpacityAnimation;
+  } */
+
+  .active {
+    & > a {
+      color: #d95f1b;
+    }
+  }
+}

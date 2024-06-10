@@ -12,6 +12,6 @@ import './modal/index';
 // Loader animation
 // import './_loaderAnimation';
 
-// import './_headerTop';
+import './header';
 import './_heroSlider';
 import './_dataAnimation';

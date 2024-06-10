@@ -82,7 +82,7 @@ foreach ($products as $data) :
 
       <?php if ($isSectionActiveUser) : ?>
         </br>
-        <a href='<?= $productUrlLink; ?>' hx-boost="true" hx-boost="truin" hx-target="main" hx-swap="outerHTML show:none">Ver detalhes</a>
+        <a href='<?= $productUrlLink; ?>' hx-boost="true" <?= getHtmxMainTagAttributes(); ?>>Ver detalhes</a>
       <?php endif; ?>
 
     </figcaption>

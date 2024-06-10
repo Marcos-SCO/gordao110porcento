@@ -4,7 +4,7 @@ $controller = isset($controller) ? $controller : false;
 
 $dataPage = isset($dataPage) ? $dataPage : mb_strtolower($controller);
 
-$isHomeController = $controller == 'Home';
+$isHomePage = $dataPage == 'home';
 
 $isGalleryPage = $dataPage == 'gallery';
 
@@ -13,15 +13,14 @@ $isTinyMce = in_array($dataPage, $tinyMceControllers);
 
 $siteName = 'Gordão a 110%';
 
-$siteTitle = (!$isHomeController) && isset($title)
+$siteTitle = (!$isHomePage) && isset($title)
     ? $title . ' - ' . $siteName : $siteName;
 
-$getQuery = getQueryString(); // get url 
-
-function activePage($getQuery, $op)
+function activePageClass(array $pagesToActivate, string $pageName)
 {
-    $active = ($getQuery[0] == $op) ? 'active' : '';
-    return $active;
+    $isInPage = in_array($pageName, $pagesToActivate);
+
+    if ($isInPage) return 'active';
 }
 
 ?>
@@ -45,7 +44,7 @@ function activePage($getQuery, $op)
     <meta name="msapplication-TileColor" content="#da532c">
     <meta name="theme-color" content="#ffffff">
 
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous" hx-swap-oob="true">
 
     <!-- Font awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -73,13 +72,13 @@ function activePage($getQuery, $op)
 
 <body data-page="<?= $dataPage; ?>">
 
-    <?php // if (!$isHomeController) echo '<!-- Spinner --><div id="loader" class="center" style="display:none"></div>'; 
+    <?php // if (!$isHomePage) echo '<!-- Spinner --><div id="loader" class="center" style="display:none"></div>'; 
     ?>
 
-    <header class="<?= $isHomeController ? 'fixed-top' : '' ?> z-index bg-light main-header" id="topNav" data-js="navHeader">
+    <header class="<?= $isHomePage ? 'fixed-top' : '' ?> z-index bg-light main-header" id="topNav" data-js="navHeader">
 
         <!-- Nav -->
-        <nav class="navbar navbar-expand-lg navbar-light bg-light" style="background-color:#f8f9fa;">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light" style="background-color:#f8f9fa;" hx-boost="true" hx-target="body" hx-swap="outerHTML">
 
             <!-- Show this only on mobile to medium screens -->
             <a class="navbar-brand d-lg-none" href="<?= $BASE ?>">
@@ -99,7 +98,7 @@ function activePage($getQuery, $op)
                         </a>
                     </li>
 
-                    <li class="nav-item <?= ($getQuery[0] == 'products' || $getQuery[0] == 'categories') ? 'active' : '' ?>">
+                    <li class="nav-item <?= activePageClass(['products', 'categories'], $dataPage); ?>">
                         <a class="nav-link" href="<?= $BASE ?>/products">Ofertas</a>
                     </li>
 
@@ -118,11 +117,11 @@ function activePage($getQuery, $op)
                 </a>
 
                 <ul class="navbar-nav">
-                    <li class="nav-item">
-                        <a class="nav-link" href="<?= $BASE ?>/about" data-active-page="about">Sobre</a>
+                    <li class="nav-item" data-active-page="about">
+                        <a class="nav-link" href="<?= $BASE ?>/about">Sobre</a>
                     </li>
 
-                    <li class="nav-item dropdown" data-active-page="contact">
+                    <li class="nav-item dropdown  <?= activePageClass(['contact', 'contact/work', 'contact/message'], $dataPage); ?>" data-active-page="contact">
                         <a class="nav-link dropdown-toggle header-menu" style="background:#f8f9fa!important" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">Contato</a>
 
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
@@ -163,6 +162,7 @@ function activePage($getQuery, $op)
                                     <a class="dropdown-item" href="<?= $BASE ?>/gallery/create">Fotos</a>
                                 </li>
                             </ul>
+
                         </li>
 
                         <li class="nav-item dropdown" data-active-page="users">
@@ -187,7 +187,7 @@ function activePage($getQuery, $op)
 
     </header>
 
-    <?php if ($isHomeController) {
+    <?php if ($isHomePage) {
 
         // Hero Slider
         include_once __DIR__ . '/../components/heroSlider.php';

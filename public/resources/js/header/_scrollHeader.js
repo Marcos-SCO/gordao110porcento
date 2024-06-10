@@ -4,7 +4,7 @@ function navHeaderScroll() {
 
   document.addEventListener('scroll', () => {
 
-    let pageYOffsetMoreThan300 = window.scrollY >= 300;
+    let pageYOffsetMoreThan300 = window.scrollY >= 400;
 
     if (pageYOffsetMoreThan300) navHeader.classList.add('fixed-top');
 
@@ -13,4 +13,4 @@ function navHeaderScroll() {
   });
 }
 
-document.addEventListener('DOMContentLoaded', navHeaderScroll);
+// document.addEventListener('DOMContentLoaded', navHeaderScroll);

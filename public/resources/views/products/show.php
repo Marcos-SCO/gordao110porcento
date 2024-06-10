@@ -39,7 +39,7 @@ $userUrl =  $BASE . '/users/show/' . $userId;
                 <?= $data->product_description ?>
                 <br>Preço: <?= $data->price ?><br>
 
-                <a href="<?= $categoryUrlLink ?>" hx-get="<?= $categoryUrlLink; ?>" <?= getHtmxMainTagAttributes(); ?>>Ver Categoria</a>
+                <a href="<?= $categoryUrlLink ?>" hx-get="<?= $categoryUrlLink; ?>" <?= getHtmxMainTagAttributes(); ?> hx-swap="outerHTML">Ver Categoria</a>
                 <br>
 
                 <?php if ($isSectionActiveUser) : ?>
