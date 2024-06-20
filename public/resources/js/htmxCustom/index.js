@@ -14,6 +14,9 @@ import { bodyRefreshScriptTags } from './_bodyScripts';
 
 import { owlCarouselFunctions } from '../owlFunctions';
 
+import { navHeaderScroll } from '../header/_scrollHeader';
+import { initializeDropdown } from './_dropdownSwap';
+
 
 // document.addEventListener('htmx:afterSwap', (evt) => {});
 
@@ -27,12 +30,21 @@ document.addEventListener('htmx:afterSettle', (evt) => {
 
   activePageMarker();
 
-  paginationResultsInContainer(evt);
+  navHeaderScroll();
 
-  productsModal();
+  paginationResultsInContainer(evt);
 
   bodyRefreshScriptTags(evt, ['[data-js="bootstrap"]']);
 
+  productsModal();
+    
+  initializeDropdown();
+
   owlCarouselFunctions();
 
+  if (evt.detail.trigger === 'history') {
+    // Add your logic here to handle actions after settling due to history navigation
+    console.log('User navigated back using browser history.');
+  }
+  
 });

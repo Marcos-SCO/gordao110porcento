@@ -1,13 +1,21 @@
 .main-header {
 
-  /* &.fixed-top {
-    animation-duration: .2s;
-    animation-name: navOpacityAnimation;
-  } */
+  min-height: 75px;
+  transition: all 1s ease-in-out;
+  
+  &.fixed-top,
+  & .fixed-top {
+    
+    box-shadow: 0 2px 80px rgb(0 0 0 / 9%);
+    transition: all 1s ease-in-out;
+  }
 
+  
   .active {
-    & > a {
+    &>a {
       color: #d95f1b;
     }
   }
+
+
 }
