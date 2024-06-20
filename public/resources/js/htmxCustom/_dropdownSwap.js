@@ -25,14 +25,17 @@ function outsideClickCloseDropdown() {
 function initializeDropdown() {
   const dropdownToggles = document.querySelectorAll('.dropdown-toggle');
   if (!dropdownToggles) return;
+  
+  // Check if there are any dropdown toggles found
+  if (!dropdownToggles || dropdownToggles.length === 0) return;
+
   console.log('toggle init...')
 
-  const dropdownElementList = Array.from(dropdownToggles);
+  // const dropdownElementList = Array.from(dropdownToggles);
 
-  dropdownElementList.forEach(function (dropdownToggleEl) {
-
+  dropdownToggles.forEach(function (dropdownToggleEl) {
     // Create a new dropdown instance
-    new bootstrap.Dropdown(dropdownToggleEl);
+    return new bootstrap.Dropdown(dropdownToggleEl);
   });
 
   outsideClickCloseDropdown();

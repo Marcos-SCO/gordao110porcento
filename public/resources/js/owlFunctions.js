@@ -1,7 +1,4 @@
 async function owlCarouselFunctions() {
-
-    // console.log('result inside', window.owlCarousel);
-
     const owlCarouselExists =
         (typeof $.fn.owlCarousel === 'function');
 
@@ -12,8 +9,11 @@ async function owlCarouselFunctions() {
 
     // owl carousel
     const owl = $('[data-js="owlDefaultItem"]');
+    const owlLoaded = owl.attr('data-loaded');
 
-    if (owl) {
+    if (owl && !owlLoaded) {
+
+        owl.attr('data-loaded', true);
 
         owl.owlCarousel({
             loop: true,
@@ -43,8 +43,11 @@ async function owlCarouselFunctions() {
     }
 
     const blogPostsSection = $('[data-js="blog-posts-section"]');
+    const blogPostsLoaded = blogPostsSection.attr('data-loaded');
 
-    if (blogPostsSection) {
+    if (blogPostsSection && !blogPostsLoaded) {
+
+        blogPostsSection.attr('data-loaded', true);
 
         blogPostsSection.owlCarousel({
             loop: true,
@@ -80,4 +83,4 @@ document.addEventListener('DOMContentLoaded', owlCarouselFunctions);
 
 // document.addEventListener('htmx:afterSwap', owlCarouselFunctions);
 
-export default owlCarouselFunctions;
+export { owlCarouselFunctions };

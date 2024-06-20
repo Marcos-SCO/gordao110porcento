@@ -113,7 +113,7 @@ $isHomePage = $dataPage == 'home';
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 
 <!-- Bootstrap -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous" data-js="bootstrap"></script>
 
 <?php
 
@@ -126,19 +126,16 @@ if ($isTinyMce) echo "<!-- Tiny MCE --><script src='$BASE/public/resources/js/ti
 
 ?>
 
+<!-- Owl min -->
+<script src='<?= $BASE ?>/public/resources/js/libraries/owl.carousel.min.js' data-js="owl-min">
+    window.$.fn.owlCarousel = $.fn.owlCarousel;
+</script>
+
 <!-- Htmx -->
 <script src="<?= $BASE ?>/public/resources/js/libraries/htmx.org@1.9.12.js"></script>
 
 <!-- App -->
 <script src="<?= $BASE ?>/public/dist/js/index.js" type="module"></script>
-
-<script src='<?= $BASE ?>/public/resources/js/libraries/owl.carousel.min.js' type="module"></script>
-<?php if ($isHomePage) : ?>
-    <!-- Owl -->
-    <!-- <script src='</?= $BASE ?>/public/resources/js/libraries/owl.carousel.min.js' type="module"></script> -->
-
-    <!-- <script src='</?= $BASE ?>/public/resources/js/libraries/owl.carousel.js'></script> -->
-<?php endif; ?>
 
 </body>
 

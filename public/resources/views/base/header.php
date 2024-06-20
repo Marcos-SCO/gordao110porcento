@@ -75,7 +75,7 @@ function activePageClass(array $pagesToActivate, string $pageName)
     <?php // if (!$isHomePage) echo '<!-- Spinner --><div id="loader" class="center" style="display:none"></div>'; 
     ?>
 
-    <header class="<?= $isHomePage ? 'fixed-top' : '' ?> z-index bg-light main-header" id="topNav" data-js="navHeader">
+    <header class="z-index bg-light main-header" id="topNav" data-js="navHeader">
 
         <!-- Nav -->
         <nav class="navbar navbar-expand-lg navbar-light bg-light" style="background-color:#f8f9fa;" hx-boost="true" hx-target="body" hx-swap="outerHTML">
@@ -121,7 +121,8 @@ function activePageClass(array $pagesToActivate, string $pageName)
                         <a class="nav-link" href="<?= $BASE ?>/about">Sobre</a>
                     </li>
 
-                    <li class="nav-item dropdown  <?= activePageClass(['contact', 'contact/work', 'contact/message'], $dataPage); ?>" data-active-page="contact">
+                    <li id="headerDropdown" class="nav-item dropdown  <?= activePageClass(['contact', 'contact/work', 'contact/message'], $dataPage); ?>" data-active-page="contact">
+
                         <a class="nav-link dropdown-toggle header-menu" style="background:#f8f9fa!important" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">Contato</a>
 
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">

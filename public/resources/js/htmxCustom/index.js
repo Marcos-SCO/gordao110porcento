@@ -4,15 +4,15 @@ import './_bodyContent';
 
 import { updateBodyDataPage } from './_bodyContent';
 
-import { initializeDropdown } from './_dropdownSwap';
-
 import { paginationResultsInContainer } from './_paginationSwap';
-
-import owlCarouselFunctions from '../owlFunctions';
 
 import { activePageMarker } from '../header/_headerActive';
 
 import { productsModal } from '../modal/_productsModal';
+
+import { bodyRefreshScriptTags } from './_bodyScripts';
+
+import { owlCarouselFunctions } from '../owlFunctions';
 
 
 // document.addEventListener('htmx:afterSwap', (evt) => {});
@@ -21,16 +21,18 @@ import { productsModal } from '../modal/_productsModal';
 
 // document.addEventListener('htmx:load', function (e) {});
 
+
 document.addEventListener('htmx:afterSettle', (evt) => {
   updateBodyDataPage();
-  
+
   activePageMarker();
+
+  paginationResultsInContainer(evt);
+
   productsModal();
 
-  initializeDropdown();
+  bodyRefreshScriptTags(evt, ['[data-js="bootstrap"]']);
 
   owlCarouselFunctions();
 
-  paginationResultsInContainer(evt);
-  
 });
