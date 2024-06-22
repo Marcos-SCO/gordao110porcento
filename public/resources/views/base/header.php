@@ -86,11 +86,11 @@ function activePageClass(array $pagesToActivate, string $pageName)
                  <img src="<?= $BASE ?>/public/resources/img/template/gordao110Logo100.png" alt="Gordão a 110%" title="Gordão a 110%">
              </a>
         
-             <button class="navbar-toggler dropdown-toggle" type="button" data-bs-toggle="collapse" data-bs-target="#navbarToggle" aria-controls="navbarToggle" aria-expanded="false" aria-label="Toggle navigation">
+             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarToggle" aria-controls="navbarToggle" aria-expanded="false" aria-label="Toggle navigation">
                  <span class="navbar-toggler-icon"></span>
              </button>
         
-             <div class="collapse navbar-collapse justify-content-between" id="navbarToggle" style="padding-right: 4.4rem;">
+             <div class="collapse navbar-collapse justify-content-between" id="navbarToggle" style="padding-right: 4.4rem;" data-js="navbar-collapse">
         
                  <ul class="navbar-nav">
                      <li class="nav-item" data-active-page="home">
@@ -124,7 +124,7 @@ function activePageClass(array $pagesToActivate, string $pageName)
         
                      <li id="headerDropdown" class="nav-item dropdown  <?= activePageClass(['contact', 'contact/work', 'contact/message'], $dataPage); ?>" data-active-page="contact" hx-history="false">
         
-                         <a class="nav-link dropdown-toggle header-menu" style="background:#f8f9fa!important" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">Contato</a>
+                         <a class="nav-link dropdown-toggle header-menu" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">Contato</a>
         
                          <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                              <li data-active-page="contact/message">

@@ -22,14 +22,32 @@ function outsideClickCloseDropdown() {
 
 }
 
+function toggleHeaderNavbar() {
+  const mainHeader = document.querySelector('.main-header');
+  if (!mainHeader) return;
+
+  const headerNavbarToggle = mainHeader.querySelector('.navbar-toggler');
+  if (!headerNavbarToggle) return;
+
+  const navbarColapse = mainHeader.querySelector('[data-js="navbar-collapse"]');
+  // console.log(navbarColapse, 'collapese')
+  if (!navbarColapse) return;
+
+  navbarColapse.classList.toggle('disable-display');
+
+  headerNavbarToggle.addEventListener('click', () => {
+    navbarColapse.classList.toggle('disable-display');
+  });
+}
+
 function initializeDropdown() {
   const dropdownToggles = document.querySelectorAll('.dropdown-toggle');
   if (!dropdownToggles) return;
-  
+
   // Check if there are any dropdown toggles found
   if (!dropdownToggles || dropdownToggles.length === 0) return;
 
-  console.log('toggle init...')
+  // console.log('toggle init...')
 
   // const dropdownElementList = Array.from(dropdownToggles);
 
@@ -39,6 +57,8 @@ function initializeDropdown() {
   });
 
   outsideClickCloseDropdown();
+
+  toggleHeaderNavbar();
 }
 
 // Reinitialize dropdown after HTMX swap
