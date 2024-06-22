@@ -37,10 +37,6 @@
         color: #000;
       }
     }
-
-    .disable-display {
-      display: none!important;
-    }
   }
 
   .nav-item.dropdown  {
@@ -67,6 +63,10 @@
     nav {
       a {
         color: #000;
+      }
+
+      .disable-display {
+        display: none!important;
       }
     }
 
