@@ -1,4 +1,6 @@
 async function owlCarouselFunctions() {
+    // console.log(window.$.fn.owlCarousel);
+
     const owlCarouselExists =
         (typeof $.fn.owlCarousel === 'function');
 

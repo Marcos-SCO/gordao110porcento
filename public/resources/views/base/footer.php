@@ -127,7 +127,7 @@ if ($isTinyMce) echo "<!-- Tiny MCE --><script src='$BASE/public/resources/js/ti
 ?>
 
 <!-- Owl min -->
-<script src='<?= $BASE ?>/public/resources/js/libraries/owl.carousel.min.js' data-js="owl-min">
+<script src='<?= $BASE ?>/public/resources/js/libraries/owl.carousel.min.js' data-js="owl-min" defer>
     window.$.fn.owlCarousel = $.fn.owlCarousel;
 </script>
 
