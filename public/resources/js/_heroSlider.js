@@ -228,3 +228,5 @@ function heroSlider() {
 }
 
 addEventListener('DOMContentLoaded', heroSlider);
+
+export { heroSlider };

@@ -15,6 +15,7 @@ import { bodyRefreshScriptTags } from './_bodyScripts';
 import { owlCarouselFunctions } from '../owlFunctions';
 
 import { navHeaderScroll } from '../header/_scrollHeader';
+import { heroSlider } from '../_heroSlider';
 
 // document.addEventListener('htmx:afterSwap', (evt) => {});
 
@@ -22,12 +23,15 @@ import { navHeaderScroll } from '../header/_scrollHeader';
 
 // document.addEventListener('htmx:load', function (e) {});
 
+// Refresh function after HTMX settle
 document.addEventListener('htmx:afterSettle', (evt) => {
   updateBodyDataPage();
 
   activePageMarker();
 
   navHeaderScroll();
+
+  heroSlider();
 
   paginationResultsInContainer(evt);
 
