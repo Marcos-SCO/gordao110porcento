@@ -1,4 +1,5 @@
 .main-header {
+  position: relative;
 
   min-height: 75px;
   transition: all 1s ease-in-out;
@@ -13,21 +14,61 @@
 
   .active {
     &>a {
-      color: #d95f1b;
+      color: #d95f1b!important;
     }
   }
 
+
   nav {
     position: relative;
+    // background-color: rgb(50 50 50) !important;
+
+    a {
+      // color: #fff;
+
+      &:hover {
+        color: #d95f1b;
+      }
+    }
+
+    .dropdown-menu {
+     
+      a {
+        color: #000;
+      }
+    }
+
+    .disable-display {
+      display: none!important;
+    }
+  }
+
+  .nav-item.dropdown  {
+    @media (min-width: 991.99px) {
+      a {
+        background: transparent !important;
+      }
+    }
   }
 
   .navbar-toggler {
+    background-color: #fff;
+
+    &:focus {
+      box-shadow: none;
+    }
+
     &::after {
       display: none;
     }
   }
 
   @media (max-width: 991.99px) {
+    nav {
+      a {
+        color: #000;
+      }
+    }
 
     .navbar-collapse {
       position: absolute;
@@ -37,7 +78,7 @@
       min-height: 100%;
       background: #fff;
       width: 100%;
-      z-index: 999;
+      z-index: 999999;
     }
   }
 
