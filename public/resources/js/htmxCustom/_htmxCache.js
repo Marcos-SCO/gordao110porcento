@@ -5,6 +5,6 @@ document.addEventListener('htmx:historyCacheMiss', function (evt) {
   window.htmx.ajax('GET',  window.location.href, {
     target: 'body',
     select: 'body > *',
-    swap: 'innerHTML',
+    swap: 'outerHTML',
   });
 });

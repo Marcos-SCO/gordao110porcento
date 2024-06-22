@@ -17,13 +17,15 @@ import { owlCarouselFunctions } from '../owlFunctions';
 import { navHeaderScroll } from '../header/_scrollHeader';
 import { heroSlider } from '../_heroSlider';
 
+import { initializeDropdown } from './_dropdownSwap';
+
 // document.addEventListener('htmx:afterSwap', (evt) => {});
 
 // document.addEventListener('htmx:afterOnLoad', () => {});
 
 // document.addEventListener('htmx:load', function (e) {});
 
-// Refresh function after HTMX settle
+// Refresh function after HTMX settles
 document.addEventListener('htmx:afterSettle', (evt) => {
   updateBodyDataPage();
 
@@ -36,6 +38,8 @@ document.addEventListener('htmx:afterSettle', (evt) => {
   paginationResultsInContainer(evt);
 
   bodyRefreshScriptTags(evt, ['[data-js="bootstrap"]']);
+
+  initializeDropdown();
 
   productsModal();
 

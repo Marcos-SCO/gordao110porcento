@@ -86,7 +86,7 @@ function activePageClass(array $pagesToActivate, string $pageName)
                  <img src="<?= $BASE ?>/public/resources/img/template/gordao110Logo100.png" alt="Gordão a 110%" title="Gordão a 110%">
              </a>
         
-             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarToggle" aria-controls="navbarToggle" aria-expanded="false" aria-label="Toggle navigation">
+             <button class="navbar-toggler dropdown-toggle" type="button" data-bs-toggle="collapse" data-bs-target="#navbarToggle" aria-controls="navbarToggle" aria-expanded="false" aria-label="Toggle navigation">
                  <span class="navbar-toggler-icon"></span>
              </button>
         

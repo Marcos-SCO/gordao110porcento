@@ -2,20 +2,43 @@
 
   min-height: 75px;
   transition: all 1s ease-in-out;
-  
+
   &.fixed-top,
   & .fixed-top {
-    
+
     box-shadow: 0 2px 80px rgb(0 0 0 / 9%);
     transition: all 1s ease-in-out;
   }
 
-  
+
   .active {
     &>a {
       color: #d95f1b;
     }
   }
 
+  nav {
+    position: relative;
+  }
+
+  .navbar-toggler {
+    &::after {
+      display: none;
+    }
+  }
+
+  @media (max-width: 991.99px) {
+
+    .navbar-collapse {
+      position: absolute;
+      top: 75px;
+      left: 0;
+      padding: 1rem;
+      min-height: 100%;
+      background: #fff;
+      width: 100%;
+      z-index: 999;
+    }
+  }
 
 }
