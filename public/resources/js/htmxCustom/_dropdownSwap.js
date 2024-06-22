@@ -29,7 +29,7 @@ function initializeDropdown() {
   // Check if there are any dropdown toggles found
   if (!dropdownToggles || dropdownToggles.length === 0) return;
 
-  // console.log('toggle init...')
+  console.log('toggle init...')
 
   // const dropdownElementList = Array.from(dropdownToggles);
 
@@ -43,5 +43,7 @@ function initializeDropdown() {
 
 // Reinitialize dropdown after HTMX swap
 // afterSwap  | afterSettle
+
+// document.addEventListener('DOMContentLoaded', initializeDropdown);
 
 export { initializeDropdown };

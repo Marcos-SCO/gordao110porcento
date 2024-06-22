@@ -122,7 +122,7 @@ function activePageClass(array $pagesToActivate, string $pageName)
                          <a class="nav-link" href="<?= $BASE ?>/about">Sobre</a>
                      </li>
         
-                     <li id="headerDropdown" class="nav-item dropdown  <?= activePageClass(['contact', 'contact/work', 'contact/message'], $dataPage); ?>" data-active-page="contact">
+                     <li id="headerDropdown" class="nav-item dropdown  <?= activePageClass(['contact', 'contact/work', 'contact/message'], $dataPage); ?>" data-active-page="contact" hx-history="false">
         
                          <a class="nav-link dropdown-toggle header-menu" style="background:#f8f9fa!important" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">Contato</a>
         
@@ -140,7 +140,7 @@ function activePageClass(array $pagesToActivate, string $pageName)
         
                      <?php if (isset($_SESSION['user_name']) && isset($_SESSION['user_id'])) : ?>
         
-                         <li class="nav-item dropdown">
+                         <li class="nav-item dropdown" hx-history="false">
                              <a class="nav-link dropdown-toggle" style="background:#f8f9fa!important" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">Adicionar</a>
         
                              <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
@@ -167,7 +167,7 @@ function activePageClass(array $pagesToActivate, string $pageName)
         
                          </li>
         
-                         <li class="nav-item dropdown" data-active-page="users">
+                         <li class="nav-item dropdown" data-active-page="users" hx-history="false">
                              <a class="nav-link dropdown-toggle" style="background:#f8f9fa!important" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false"><?= $_SESSION['user_name'] ?? "" ?></a>
         
                              <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
