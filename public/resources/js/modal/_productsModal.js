@@ -4,6 +4,8 @@ function productsModal() {
 
   if (!modalItemContainers) return;
 
+  const baseUrl = document.querySelector('footer')?.getAttribute('data-page');
+
   Array.from(modalItemContainers).forEach(modalItemContainer => {
 
     modalItemContainer.addEventListener('click', e => {
@@ -54,14 +56,26 @@ function productsModal() {
             </div>
             <div class="modal-body">
               <figure>
-                <img src="${url}/public/resources/img/products/category_${id_category}/id_${id}/${img}" alt="${img}" title="${product_name}" onerror="this.onerror=null;this.src='<?= $BASE ?>/public/resources/img/not_found/no_image.jpg';">
+                <img src="${url}/public/resources/img/products/category_${id_category}/id_${id}/${img}" alt="${img}" title="${product_name}" onerror="this.onerror=null;this.src='${baseUrl}/public/resources/img/not_found/no_image.jpg';">
                 <figcaption>
-                  <p>Categoria: <a href='${url}categories/show/${id_category}'>${category_name}</a></p>
+                  <p>Categoria: 
+                    <a 
+                      href='${url}categories/show/${id_category}' 
+                      hx-boost="true" 
+                      hx-target="body"
+                      hx-swap="outerHTML show:top"
+                      data-bs-dismiss="modal" data-js="dismissal"
+                      >
+                      ${category_name}
+                    </a>
+                  </p>
                   <p>${product_description}</p>
                   <p>Valor: R$ ${price}</p>
                 </figcaption>
+
               </figure>
             </div>
+
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" data-js="dismissal">Fechar</button>
             </div>
@@ -73,10 +87,14 @@ function productsModal() {
       // Show the modal using Bootstrap's JS API
       let modal = new bootstrap.Modal(itemModal);
       modal.show();
+
+      // if (window.htmx) window.htmx.process(itemModal);
+      if (window.htmx) window.htmx.process(document);
+
     });
 
   });
-
+//hx-get='${url}categories/show/${id_category}'
 }
 
 document.addEventListener('DOMContentLoaded', productsModal);
