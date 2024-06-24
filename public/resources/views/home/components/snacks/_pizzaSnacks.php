@@ -31,6 +31,7 @@ if (!$pizzas) return;
 
     ?>
       <a <?= (detectIE() != true) ? 'data-toggle="modal" data-target="#itemModal"' : "href='$BASE/products/show/$pizzaItemId'" ?> id="product_<?= $pizzaItemId ?>" modal-item>
+      
         <span style="display:none;" id="inputItens">
           <input type="hidden" name="id" value="<?= $pizzaItemId ?>">
           <input type="hidden" name="id_category" value="<?= $pizzaItemIdCategory ?>">

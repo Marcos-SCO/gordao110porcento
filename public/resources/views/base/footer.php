@@ -122,7 +122,7 @@ $isTinyMce = in_array($dataPage, $tinyMceControllers);
 
 // tiny MCE 
 
-if ($isTinyMce) echo "<!-- Tiny MCE --><script src='$BASE/public/resources/js/tinyMCE.js'></script>";
+// if ($isTinyMce) echo "<!-- Tiny MCE --><script src='$BASE/public/resources/js/tinyMCE.js'></script>";
 
 ?>
 
