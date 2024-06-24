@@ -77,7 +77,7 @@ function activePageClass(array $pagesToActivate, string $pageName)
 
     <header class="z-index bg-light main-header" id="topNav" data-js="navHeader">
 
-       <div class="z-index" data-js="header-inner-container">
+       <div class="headerBody z-index" data-js="header-inner-container">
          <!-- Nav -->
          <nav class="navbar navbar-expand-lg navbar-light bg-light" style="background-color:#f8f9fa;" hx-boost="true" hx-target="body" hx-swap="outerHTML">
         

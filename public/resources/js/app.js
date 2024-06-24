@@ -1,5 +1,5 @@
 // Htmx
-// if (!window.htmx) window.htmx = htmx;
+if (!window.htmx) window.htmx = htmx;
 
 // Htmx custom events
 import './htmxCustom';

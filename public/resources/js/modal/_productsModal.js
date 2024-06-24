@@ -6,6 +6,8 @@ function productsModal() {
 
   const baseUrl = document.querySelector('footer')?.getAttribute('data-page');
 
+  const navHeader = document.querySelector('[data-js="navHeader"] [data-js="header-inner-container"]');
+
   Array.from(modalItemContainers).forEach(modalItemContainer => {
 
     modalItemContainer.addEventListener('click', e => {
@@ -16,6 +18,9 @@ function productsModal() {
       const targetHasModalItem = target.closest('[modal-item]');
 
       if (!targetHasModalItem) return;
+
+
+      if (navHeader) navHeader.classList.remove('fixed-top');
 
       const item = targetHasModalItem;
 
@@ -87,14 +92,14 @@ function productsModal() {
       // Show the modal using Bootstrap's JS API
       let modal = new bootstrap.Modal(itemModal);
       modal.show();
-
+      
       // if (window.htmx) window.htmx.process(itemModal);
       if (window.htmx) window.htmx.process(document);
 
     });
 
   });
-//hx-get='${url}categories/show/${id_category}'
+
 }
 
 document.addEventListener('DOMContentLoaded', productsModal);
