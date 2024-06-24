@@ -6,6 +6,8 @@ $isContactMessage = $contactPage == 'message';
 
 $attachment = indexParamExistsOrDefault($_FILES, 'attachment');
 
+$formActionUrl = $BASE . '/contact/' . $contactPage . '/send';
+
 ?>
 
 <header class="contactHeader imgBackgroundArea">
@@ -39,11 +41,14 @@ $attachment = indexParamExistsOrDefault($_FILES, 'attachment');
 
         <div class="col-lg-9 mb-md-0 mb-5">
 
-            <form class="m-auto" action="<?= $BASE; ?>/contact/<?= $contactPage; ?>/send" method="post" enctype="multipart/form-data">
+            <form class="m-auto" action="<?= $formActionUrl ?>" method="post" enctype="multipart/form-data" hx-post="<?= $formActionUrl ?>" hx-select="form">
+
                 <div class="row">
                     <div class="mb-3 col-md-6">
                         <label for="name" class="form-label">Nome<sup>*</sup></label>
+
                         <input type="text" name="name" id="name" class="form-control <?= isset($error['name_error']) && $error['name_error'] != '' ? 'is-invalid' : '' ?>" value="<?= $data['name'] ?? '' ?>">
+
                         <div class="invalid-feedback">
                             <?= $error['name_error'] ?? '' ?>
                         </div>
@@ -60,7 +65,9 @@ $attachment = indexParamExistsOrDefault($_FILES, 'attachment');
 
                 <div class="mb-3">
                     <label for="subject" class="form-label">Assunto<sup>*</sup></label>
+
                     <input type="text" name="subject" id="subject" class="form-control <?= isset($error['subject_error']) && $error['subject_error'] != '' ? 'is-invalid' : '' ?>" value="<?= $data['subject'] ?? '' ?>">
+
                     <div class="invalid-feedback">
                         <?= $error['subject_error'] ?? '' ?>
                     </div>
@@ -68,7 +75,9 @@ $attachment = indexParamExistsOrDefault($_FILES, 'attachment');
 
                 <div class="mb-3">
                     <label for="body" class="form-label">Mensagem<sup>*</sup></label>
+
                     <textarea name="body" id="body" class="form-control <?= isset($error['body_error']) && $error['body_error'] != '' ? 'is-invalid' : '' ?>"><?= $data['body'] ?? '' ?></textarea>
+
                     <div class="invalid-feedback">
                         <?= $error['body_error'] ?? '' ?>
                     </div>
@@ -76,8 +85,11 @@ $attachment = indexParamExistsOrDefault($_FILES, 'attachment');
 
                 <?php if ($isWorkMessage) : ?>
                     <div class="mb-3">
+
                         <label for="attachment" class="form-label">Anexo<sup>*</sup></label>
+
                         <input type="file" name="attachment" id="attachment" class="form-control <?= isset($error['attachment_error']) && $error['attachment_error'] != '' ? 'is-invalid' : '' ?>" accept=".pdf,.doc,.docx">
+
                         <div class="invalid-feedback">
                             <?= $error['attachment_error'] ?? '' ?>
                         </div>
@@ -92,6 +104,7 @@ $attachment = indexParamExistsOrDefault($_FILES, 'attachment');
 
     <address class="contactAddress m-auto">
         <h3>Onde Estamos</h3>
+
         <div>
             <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d58537.08625555666!2d-46.91708754613075!3d-23.512068734946492!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x94cf03dd6cef1295%3A0x746b94a987d123a3!2sBarueri%20-%20SP!5e0!3m2!1spt-BR!2sbr!4v1591283488037!5m2!1spt-BR!2sbr" width="100%" height="300" frameborder="0" style="border:0;" allowfullscreen="" aria-hidden="false" tabindex="0"></iframe>
 
@@ -99,17 +112,24 @@ $attachment = indexParamExistsOrDefault($_FILES, 'attachment');
                 <li><i class="fa fa-map-marker fa-2x" style="color:#d22"></i>
                     <p>Barueri - SP</p>
                 </li>
-                <li><i class="fa fa-phone fa-2x" style="color:#ff9800"></i>
+
+                <li>
+                    <i class="fa fa-phone fa-2x" style="color:#ff9800"></i>
                     <p>(11) 944448798</p>
                 </li>
+
                 <li><i class="fa fa-whatsapp fa-2x" style="color:#4AC959"></i></i>
                     <p>(11) 944448798</p>
                 </li>
+
                 <li class="d-flex flex-column">
                     <i class="fa fa-envelope fa-2x"></i>
+
                     <a href="mailto:marcos_sco@outlook.com" style="color:#333!important">gordão110%@outlook.com</a>
                 </li>
+
             </ul>
+        </div>
 
     </address>
 

@@ -44,7 +44,7 @@ echo "<style>body { background-image: url('$BASE/public/resources/img/template/a
         <figure>
             <img src="<?= $BASE ?>/public/resources/img/template/restaurante_500.png" alt="restaurante_500.png" title="Clientes" data-anima="right">
             <figcaption>
-                <p><strong class="lightText">VALORES</strong><br>Trabalhando com responsabilidade, maturalidade emocional, educação cortesia e respeito, pontualidade e assuidade, com facilidade de comunicação, com entusiasmo, com segurança no que fazemos, vontade e disposição, aqui esses valores serão sempre prioridades, tornando-se um diferencial.
+                <p><strong class="lightText">VALORES</strong><br>Trabalhando com responsabilidade, naturalidade emocional, educação cortesia e respeito, pontualidade e assiduidade, com facilidade de comunicação, com entusiasmo, com segurança no que fazemos, vontade e disposição, aqui esses valores serão sempre prioridades, tornando-se um diferencial.
                 </p>
             </figcaption>
         </figure>

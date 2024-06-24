@@ -27,7 +27,7 @@ class Contact extends Controller
         $fileAttachmentName = verifyValue($attachment, 'tmp_name');
 
         if (!$fileAttachmentName) {
-            $error['attachment_error'] = "Coloque seu currículo como anexo.";
+            $error['attachment_error'] = "Envie seu currículo em anexo.";
 
             $error['error'] = true;
 
@@ -52,7 +52,7 @@ class Contact extends Controller
         return [];
     }
 
-    public function getRequestData()
+    public function getRequestData($contactPage)
     {
         // Sanitize data
         $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_SPECIAL_CHARS);
@@ -106,7 +106,13 @@ class Contact extends Controller
             $error['error'] = true;
         }
 
-        if ($attachment) $error = array_merge($error, $this->processFileAttachmentData($attachment));
+        $isContactWork = $contactPage && $contactPage == 'work';
+
+        if ($isContactWork) {
+
+            $error =
+                array_merge($error, $this->processFileAttachmentData($attachment));
+        }
 
         return ['data' => $data, 'errorData' => $error];
     }
