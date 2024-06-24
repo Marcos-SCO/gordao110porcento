@@ -27,8 +27,6 @@ function navHeaderScroll() {
 
     lastScrollY = currentScrollY;
 
-    console.log('iaaa')
-
   }, 100);
 
   document.addEventListener('scroll', scrollHandler, { passive: true });
