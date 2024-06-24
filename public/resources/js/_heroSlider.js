@@ -38,9 +38,11 @@ function getSliderItens() {
 function preloadSliderImages(imageUrls, path = '') {
     const pathUrl = path;
 
-    imageUrls.forEach(function (imgName) {
-        const img = new Image();
-        img.src = pathUrl.imgName;
+    imageUrls.forEach(function (imgObj) {
+        const imgInstance = new Image();
+        const imgName = imgObj?.img;
+        
+        if (imgName) imgInstance.src = pathUrl + imgName;
     });
 }
 
