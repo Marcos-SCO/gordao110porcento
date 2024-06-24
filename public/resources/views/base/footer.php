@@ -18,7 +18,7 @@ $isHomePage = $dataPage == 'home';
 </main>
 
 <!-- Footer -->
-<footer class="footerSection page-footer font-small blue pt-4" data-base-url="<?= $BASE; ?>" data-page="<?= $dataPage; ?>">
+<footer class="footerSection page-footer font-small blue pt-4" data-base-url="<?= $BASE; ?>" data-page="<?= $dataPage; ?>" hx-boost="true" hx-target="body" hx-swap="outerHTML">
 
     <article style="position:relative">
 

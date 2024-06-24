@@ -12,7 +12,7 @@ if (!$categories) return;
     </span>
   </header>
 
-  <div class="owlDefaultItem owl-carousel owl-theme" data-js="owlDefaultItem">
+  <div class="owlDefaultItem owl-carousel owl-theme" data-js="owlDefaultItem" hx-boost="true" hx-target="body" hx-swap="outerHTML">
     <?php foreach ($categories as $categoryItem) : 
       
       $categoryItemId = objParamExistsOrDefault($categoryItem, 'id');

@@ -14,7 +14,7 @@ if (!$posts) return;
     </span>
   </header>
 
-  <div class="owl-carousel owl-theme" data-js="blog-posts-section">
+  <div class="owl-carousel owl-theme" data-js="blog-posts-section" hx-boost="true" hx-target="body" hx-swap="outerHTML">
     <?php foreach ($posts as $postItem) :
 
       $postId = objParamExistsOrDefault($postItem, 'id');
