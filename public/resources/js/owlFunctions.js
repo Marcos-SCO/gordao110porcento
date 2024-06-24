@@ -1,4 +1,11 @@
+import { preventPassiveWarning } from "./helpers/dom/preventPassiveWarning";
+
+
 async function owlCarouselFunctions() {
+    // Prevents passive warnings caused by Jquery lib
+    preventPassiveWarning('touchstart');
+    preventPassiveWarning('touchmove');
+
     // console.log(window.$.fn.owlCarousel);
 
     const owlCarouselExists =
@@ -75,7 +82,7 @@ async function owlCarouselFunctions() {
                 1161: {
                     items: 5,
                 }
-            }
+            },
         });
     }
 
