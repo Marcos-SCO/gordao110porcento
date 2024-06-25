@@ -1,4 +1,4 @@
-<header class="galleryHeader imgBackgroundArea">
+<header class="galleryHeader imgBackgroundArea" data-js="top-page-header">
     <span style="z-index:1">
         <h2>Nossa</h2>
         <h1>Galeria de imagens</h1>
@@ -11,7 +11,7 @@
 
 <article class="galleryArticle container">
 
-    <section class="row text-center text-lg-left">
+    <section class="row text-center text-lg-left" data-js="result-itens-container">
 
         <?php foreach ($gallery as $data) : ?>
 
