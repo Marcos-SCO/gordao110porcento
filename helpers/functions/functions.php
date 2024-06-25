@@ -18,3 +18,4 @@ include_once('_strings.php');
 
 include_once('_dates.php');
 include_once('_images.php');
+include_once('_dom.php');
