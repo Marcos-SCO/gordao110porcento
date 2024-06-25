@@ -2,6 +2,7 @@
 .contactHeader {
     background-image: url(../img/template/contact.png)
 }
+
 .contactForm {
     max-width: 1053px
 }
@@ -11,7 +12,8 @@
     justify-content: center
 }
 
-.contactAddress, .contactRow form {
+.contactAddress,
+.contactRow form {
     width: 100%;
     max-width: 716px;
 }
@@ -23,6 +25,12 @@
 .contactAddress div ul {
     padding: 1rem;
     padding-left: 1.3rem;
+}
+
+.contactInfo {
+    a {
+        color: #000;
+    }
 }
 
 @media screen and (max-width:615px) {
@@ -49,6 +57,6 @@
 /* -------- Contact End -------- */
 @media screen and (max-width:600px) {
     .contactHeader {
-        background-image: url(../img/template/contact_600.png)!important
+        background-image: url(../img/template/contact_600.png) !important
     }
 }

@@ -108,15 +108,31 @@ echo "<style>body { background-image: url('$BASE/public/resources/img/template/a
                         <p>Barueri - SP</p>
                     </li>
 
-                    <li><i class="fa fa-phone mt-4 fa-2x" style="color:#ff9800"></i>
-                        <p>+55 (11) 944448798</p>
+                    <li>
+                        <a href="<?= whatsAppMessageLink(); ?>" target="_blank">
+                            <i class="fa fa-phone mt-4 fa-2x" style="color:#ff9800"></i>
+                            <p>+55 (11) 944448798</p>
+                        </a>
                     </li>
 
-                    <li><i class="fa fa-whatsapp mt-4 fa-2x" style="color:#4AC959"></i>
-                        <p>+55 (11) 944448798</p>
+                    <li>
+                        <a href="<?= whatsAppMessageLink(); ?>" target="_blank">
+                            <i class="fa fa-whatsapp mt-4 fa-2x" style="color:#4AC959"></i>
+                            <p>
+                                +55 (11) 944448798
+                            </p>
+                        </a>
                     </li>
 
-                    <li class="d-flex flex-column"> <i class="fa fa-envelope mt-4 fa-2x"></i> <a href="mailto:marcos_sco@outlook.com" style="color:#333!important">gordão110%@outlook.com</a> </li>
+                    <li class="d-flex flex-column">
+                        <a href="mailto:marcos_sco@outlook.com" style="color:#333!important">
+                            <i class="fa fa-envelope mt-4 fa-2x"></i>
+                            <p>
+                                gordão110%@outlook.com
+                            </p>
+                        </a>
+                    </li>
+
                 </ul>
             </address>
 

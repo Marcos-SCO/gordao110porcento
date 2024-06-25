@@ -16,13 +16,6 @@ $siteName = 'Gordão a 110%';
 $siteTitle = (!$isHomePage) && isset($title)
     ? $title . ' - ' . $siteName : $siteName;
 
-function activePageClass(array $pagesToActivate, string $pageName)
-{
-    $isInPage = in_array($pageName, $pagesToActivate);
-
-    if ($isInPage) return 'active';
-}
-
 ?>
 
 <!DOCTYPE html>
@@ -199,7 +192,7 @@ function activePageClass(array $pagesToActivate, string $pageName)
     <!-- <button id="topBtn" data-anima="right"><i class="fa fa-arrow-up"></i></button> -->
 
     <!-- Whatsapp btn -->
-    <a href="https://api.whatsapp.com/send?phone=5511916459334&text=Olá+Marcos+tudo+bem?+Vim+por+meio+do+link+no+site+%22Gordão+a+110%%22+e+gostaria+de+conversar+com+você." class="float" target="_blank" id="whats"><i class="fa fa-whatsapp my-float"></i></a>
+    <a href="<?= whatsAppMessageLink(); ?>" class="float" target="_blank" id="whats"><i class="fa fa-whatsapp my-float"></i></a>
 
     <main>
         <?php // Display flash messages
