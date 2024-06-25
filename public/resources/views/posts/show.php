@@ -1,47 +1,86 @@
-<header class="postShow imgBackgroundArea" style="background-image:url('<?= $BASE . '/' . imgOrDefault('posts', $data->img, $data->id) ?>');">
+<header class="postShow imgBackgroundArea" style="background-image:url('<?= $BASE . '/' . imgOrDefault('posts', $data->img, $data->id) ?>');" hx-boost="true" hx-target="body" hx-swap="outerHTML">
     <h1><?= $data->title ?></h1>
-    <small class='smallInfo'>Escrito por <a href='<?= "$BASE/users/show/$user->id" ?>'><?= $user->name ?></a> em <?= dateFormat($data->created_at) ?></small>
+
+    <small class='smallInfo'>
+        Escrito por <a href='<?= "$BASE/users/show/$user->id" ?>'><?= $user->name ?></a> em <?= dateFormat($data->created_at) ?>
+    </small>
 </header>
 
-<?php if ($_SESSION['user_status'] == 1) { ?>
+<?php if ($_SESSION['user_status'] == 1) : ?>
     <div class="d-flex flex-wrap justify-content-center align-items-center postShowAdm">
         <?php
-        
+
         App\Classes\DynamicLinks::editDelete($BASE, 'posts', $data, 'Quer mesmo deletar essa postagem?');
-        
+
         App\Classes\DynamicLinks::addLink($BASE, 'posts', 'Adicionar mais postagens');
         ?>
     </div>
-<?php } ?>
+<?php endif; ?>
 
-<article class="pr-4 pl-4">
+<article class="pr-4 pl-4" hx-boost="true" hx-target="body" hx-swap="outerHTML">
+
     <section class="postShowSection mb-3">
         <figure class="postFigure">
             <header>
                 <h3 class="text-left p-1 mb-2"><?= $data->title ?></h3>
             </header>
-            <img src="<?= $BASE ?>/<?= imgOrDefault('posts', $data->img, $data->id) ?>" title="<?= $data->title ?>" onerror="this.onerror=null;this.src='<?=$BASE?>/public/resources/img/not_found/no_image.jpg';">
+            <img src="<?= $BASE ?>/<?= imgOrDefault('posts', $data->img, $data->id) ?>" title="<?= $data->title ?>" onerror="this.onerror=null;this.src='<?= $BASE ?>/public/resources/img/not_found/no_image.jpg';">
 
             <figcaption class="postText"><?= $data->body ?></figcaption>
 
         </figure>
     </section>
+
     <section class="aboutUser m-auto">
+
         <a href="<?= $BASE ?>/users/show/<?= $user->id ?>">
+
             <h5>Sobre o Autor</h5>
+
             <figure class="d-flex align-items-center justify-content-left">
-                <style>.imgUserBox::before {content: '<?= $user->name ?>';position: absolute;z-index: 9999;word-break: break-all;bottom: 30px;left: 17px;font-size: 1rem;background: #d95f1b;padding: .01rem;min-width: 100px;max-width: 100px;text-align: center;text-decoration: none;}
-                a:hover .imgUserBox::before {background-color: #fff !important} @media screen and (max-width:600px) {.imgUserBox::before { left: 1rem;top: -15px;min-width: 149px !important;max-height: 25px;}}
+
+                <style>
+                    .imgUserBox::before {
+                        content: '<?= $user->name ?>';
+                        position: absolute;
+                        z-index: 9999;
+                        word-break: break-all;
+                        bottom: 30px;
+                        left: 17px;
+                        font-size: 1rem;
+                        background: #d95f1b;
+                        padding: .01rem;
+                        min-width: 100px;
+                        max-width: 100px;
+                        text-align: center;
+                        text-decoration: none;
+                    }
+
+                    a:hover .imgUserBox::before {
+                        background-color: #fff !important
+                    }
+
+                    @media screen and (max-width:600px) {
+                        .imgUserBox::before {
+                            left: 1rem;
+                            top: -15px;
+                            min-width: 149px !important;
+                            max-height: 25px;
+                        }
+                    }
                 </style>
+
                 <div class="imgUserBox">
-                    <img src="<?= $BASE ?>/<?= imgOrDefault('users', $user->img, $user->id) ?>" alt="<?= $user->img ?>" title="<?= $user->name ?>" class="imgFitUser" onerror="this.onerror=null;this.src='<?=$BASE?>/public/resources/img/not_found/no_image.jpg';">
+                    <img src="<?= $BASE ?>/<?= imgOrDefault('users', $user->img, $user->id) ?>" alt="<?= $user->img ?>" title="<?= $user->name ?>" class="imgFitUser" onerror="this.onerror=null;this.src='<?= $BASE ?>/public/resources/img/not_found/no_image.jpg';">
                     <span><?= $user->name ?></span>
                 </div>
+
                 <figcaption class="p-2">
                     <p><?= $user->bio ?></p>
                 </figcaption>
             </figure>
         </a>
+
     </section>
 
     <!-- Disqus -->
@@ -67,6 +106,8 @@
         //     (d.head || d.body).appendChild(s);
         // })();
     </script>
+
     <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
 </article>
+
 <div id="disqus_thread"></div>

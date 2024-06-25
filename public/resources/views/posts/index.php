@@ -3,9 +3,15 @@
 $posts = valueParamExistsOrDefault($posts);
 $havePosts = count($posts) > 0;
 
+$linkCommonHtmlAttributes
+  = 'hx-push-url="true"  
+    hx-swap="show:body:top"  
+    hx-target="[data-js=\'result-itens-container\']"  
+    hx-select="[data-js=\'result-itens-container\'] [data-js=\'loop-item\']"';
+
 ?>
 
-<header class="imgBackgroundArea homeBlog d-flex flex-wrap justify-content-center align-items-center flex-column">
+<header class="imgBackgroundArea homeBlog d-flex flex-wrap justify-content-center align-items-center flex-column" data-js="top-page-header">
     <span>
         <h1 class="text-left">Blog</h1>
         <h2 class="text-left">Últimas noticias</h2>
@@ -20,7 +26,7 @@ $havePosts = count($posts) > 0;
     if ($havePosts) :
 
     ?>
-        <section class="blog flex-wrap card-group">
+        <section class="blog flex-wrap card-group itens-results-container" data-js="result-itens-container" hx-boost="true" hx-target="body" hx-swap="outerHTML">
 
             <?php foreach ($posts as $data) : ?>
 

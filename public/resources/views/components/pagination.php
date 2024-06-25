@@ -49,8 +49,10 @@ $lastPageLink = $basePath . '/' . $totalPages;
 $nextPage = $basePath . '/' . $next;
 $prevPage = $basePath . '/' . $prev;
 
-$linkCommonHtmlAttributes
-  = 'hx-push-url="true"  
+$linkCommonHtmlAttributes =
+  isset($linkCommonHtmlAttributes)
+  ?  $linkCommonHtmlAttributes
+  : 'hx-push-url="true"  
     hx-swap="show:[data-js=\'top-page-header\']:top"  
     hx-target="[data-js=\'result-itens-container\']"  
     hx-select="[data-js=\'result-itens-container\'] [data-js=\'loop-item\']"';
