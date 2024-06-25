@@ -8,12 +8,31 @@
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
-    margin: auto
+    margin: auto;
+    
+    figure {
+        padding-bottom:.7rem
+    }
+
+    .blogBody {
+        color: #333 !important;
+        max-height: 211px;
+        overflow: hidden;
+    }
+    
+    .blogSpan {
+        align-self: flex-end;
+        display: block;
+        overflow: hidden;
+        height: 150px
+    }
+    
+    .updated {
+        margin-top: .5rem;
+        margin-left: 1rem
+    }
 }
 
-.blog figure {
-    padding-bottom:.7rem
-}
 
 .blogFig img {
     /* height: 100%; */
@@ -61,24 +80,6 @@
     max-width: 259px;
     text-overflow: ellipsis;
     overflow: hidden
-}
-
-.blog .blogBody {
-    color: #333 !important;
-    max-height: 211px;
-    overflow: hidden
-}
-
-.blog .blogSpan {
-    align-self: flex-end;
-    display: block;
-    overflow: hidden;
-    height: 150px
-}
-
-.blog .updated {
-    margin-top: .5rem;
-    margin-left: 1rem
 }
 
 /* -------- Blog End -------- */

@@ -1,10 +1,13 @@
 <?php
 
-function limitChars($str, $limit, $stringEnd = '')
+function limitChars($str, $limit, $stringEnd = '', $alwaysShowStringEnd = false)
 {
   $explodeStr = explode(' ', $str);
   $slicedArray = array_slice($explodeStr, 0, $limit);
-  $stringEnd = count($explodeStr) > $limit ? $stringEnd : '';
+  
+  $stringEnd =
+    (count($explodeStr) > $limit) || $alwaysShowStringEnd
+    ? $stringEnd : '';
 
   return substr(implode(' ', $slicedArray), 0, $limit) . $stringEnd;
 }
@@ -18,9 +21,9 @@ function limitWords($str, $limit, $stringEnd = '')
   return implode(' ', $slicedArray) . $stringEnd;
 }
 
-function limitStringWith($string, $limitWith = 'palavras', $limitNum = 10, $delimiter = '')
+function limitStringWith($string, $limitWith = 'words', $limitNum = 10, $delimiter = '')
 {
-  return $limitWith == 'palavras'
+  return $limitWith == 'words'
     ? limitWords($string, $limitNum, $delimiter)
     : limitChars($string, $limitNum, $delimiter);
 }

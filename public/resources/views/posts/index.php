@@ -4,7 +4,7 @@ $posts = valueParamExistsOrDefault($posts);
 $havePosts = count($posts) > 0;
 
 $linkCommonHtmlAttributes
-  = 'hx-push-url="true"  
+    = 'hx-push-url="true"  
     hx-swap="show:body:top"  
     hx-target="[data-js=\'result-itens-container\']"  
     hx-select="[data-js=\'result-itens-container\'] [data-js=\'loop-item\']"';
@@ -28,7 +28,13 @@ $linkCommonHtmlAttributes
     ?>
         <section class="blog flex-wrap card-group itens-results-container" data-js="result-itens-container" hx-boost="true" hx-target="body" hx-swap="outerHTML">
 
-            <?php foreach ($posts as $data) : ?>
+            <?php foreach ($posts as $data) :
+
+                $postTextString = objParamExistsOrDefault($data, 'body', '');
+                
+                $postText = preg_replace('/<\/?p[^>]*>/', '', $postTextString);
+
+            ?>
 
                 <figure class="d-flex justify-content-center blogFig card" data-js="loop-item">
 
@@ -38,8 +44,12 @@ $linkCommonHtmlAttributes
                         </div>
 
                         <figcaption class="blogBody card-body">
-                            <h5 class="blogTitle card-title"><?= $data->title ?></h5>
-                            <span class="blogSpan card-text"><?= $data->body ?></span>
+                            <h5 class="blogTitle card-title">
+                                <?= $data->title ?>
+                            </h5>
+                            <div class="blogSpan card-text">
+                                <?= $postText ?>
+                            </div>
                         </figcaption>
                     </a>
 
