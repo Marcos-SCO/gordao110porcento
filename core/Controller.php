@@ -15,14 +15,4 @@ class Controller
         // Instantiate model
         return new $instance;
     }
-
-    // Verifies if a user is login, if not redirect
-    public function isLogin()
-    {
-        if (isLoggedIn()) return;
-
-        redirect('login');
-        return exit();
-    }
-   
 }

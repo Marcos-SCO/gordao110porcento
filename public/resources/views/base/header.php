@@ -93,7 +93,7 @@ $sessionUserId = indexParamExistsOrDefault($_SESSION, 'user_id');
     <!-- To top btn -->
     <!-- <button id="topBtn" data-anima="right"><i class="fa fa-arrow-up"></i></button> -->
 
-    <!-- Whatsapp btn -->
+    <!-- WhatsApp btn -->
     <a href="<?= whatsAppMessageLink(); ?>" class="float" target="_blank" id="whats"><i class="fa fa-whatsapp my-float"></i></a>
 
     <main>

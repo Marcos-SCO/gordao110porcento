@@ -27,8 +27,8 @@ return [
     
     '/contact/?($|[\w]+)/?' => 'Contact@index',
     
-    '/login/?' => 'Users@login',
-    '/logout/?' => 'Users@logout',
+    '/login/?' => 'UsersAuth@login',
+    '/logout/?' => 'UsersAuth@logout',
     
     '/users/?($|[0-9])+/?' => 'Users@index',
     '/users/edit/($|[0-9])+/?' => 'Users@edit',
@@ -39,7 +39,7 @@ return [
   ],
 
   'POST' => [
-    'login/?' => 'Users@login',
+    'login/?' => 'UsersAuth@login',
 
     '/users/store/?' => 'Users@store',
     '/users/update/?' => 'Users@update',

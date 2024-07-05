@@ -33,7 +33,10 @@ Display in view - <?php echo flash('register_success');
 */
 function flash($name = '', $message = '', $class = 'alert alert-success')
 {
-    return $_SESSION['flashMessage'] = [
+    $activeSession = session_status() == PHP_SESSION_ACTIVE;
+    if (!$activeSession) session_start();
+
+    $_SESSION['flashMessage'] = [
         'name' => $name,
         'message' => $message,
         'class' => $class
@@ -53,10 +56,11 @@ function displayFlashMessage()
     echo "<div class='" . $flashClass . "' id='msg-flash' style='transition: transform .18s, opacity .18s, visibility 0s .18s;position:absolute;left:5%;top:17%;text-align: center;z-index:9999999999;'>" . $flashMessage . "</div>
     
     <script>
-        let flash = document.querySelector('#msg-flash'); 
-        if (flash) {
+        window.globalFlash = document.querySelector('#msg-flash'); 
+
+        if (globalFlash) {
             setTimeout(() => { 
-                flash.style = 'display:none;transition: transform .18s, opacity .18s, visibility 0s .18s;'; 
+                globalFlash.style = 'display:none;transition: transform .18s, opacity .18s, visibility 0s .18s;'; 
             }, 4000); 
         }
     </script>";
@@ -74,7 +78,8 @@ function isLoggedIn()
     return true;
 }
 
-function isSessionActiveUser(): bool {
+function isSessionActiveUser(): bool
+{
     return ($_SESSION['user_status'] && $_SESSION['user_status'] == 1);
 }
 
