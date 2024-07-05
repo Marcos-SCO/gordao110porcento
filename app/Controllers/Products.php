@@ -112,7 +112,7 @@ class Products extends Controller
 
     public function create($data = null, $error = null)
     {
-        $this->isLogin();
+        $this->ifNotAuthRedirect();
 
         if (isset($_SESSION['submitted'])) unset($_SESSION['submitted']);
 
@@ -128,7 +128,7 @@ class Products extends Controller
 
     public function store()
     {
-        $this->isLogin();
+        $this->ifNotAuthRedirect();
 
         if (isSubmittedInSession()) return redirect('products');
 
@@ -190,7 +190,7 @@ class Products extends Controller
 
         $errors = indexParamExistsOrDefault($requestData, 'error');
 
-        $this->isLogin();
+        $this->ifNotAuthRedirect();
 
         $data = $this->model->getAllFrom('products', $productId);
 
@@ -269,7 +269,7 @@ class Products extends Controller
 
     public function update($requestData)
     {
-        $this->isLogin();
+        $this->ifNotAuthRedirect();
 
         $postResultData = $this->getRequestData();
 

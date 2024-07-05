@@ -21,12 +21,6 @@ class Users extends Controller
     {
         $this->model = $this->model('User');
         $this->imagesHandler = new ImagesHandler();
-        $this->userAuth = new UsersAuth();
-    }
-
-    public function ifNotAuthRedirect()
-    {
-        return $this->userAuth->ifNotAuthRedirect();
     }
 
     public function getRequestData()

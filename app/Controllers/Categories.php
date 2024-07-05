@@ -119,7 +119,7 @@ class Categories extends Controller
 
     public function create($data = null, $error = null)
     {
-        $this->isLogin();
+        $this->ifNotAuthRedirect();
 
         removeSubmittedFromSession();
 
@@ -132,7 +132,7 @@ class Categories extends Controller
 
     public function store()
     {
-        $this->isLogin();
+        $this->ifNotAuthRedirect();
 
         if (isSubmittedInSession()) return redirect('categories');
 
@@ -207,7 +207,7 @@ class Categories extends Controller
 
     public function edit($requestData)
     {
-        $this->isLogin();
+        $this->ifNotAuthRedirect();
 
         removeSubmittedFromSession();
 
@@ -226,7 +226,7 @@ class Categories extends Controller
 
     public function update()
     {
-        $this->isLogin();
+        $this->ifNotAuthRedirect();
 
         $requestResultData = $this->getRequestData();
 

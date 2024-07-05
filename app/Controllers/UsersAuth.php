@@ -19,15 +19,6 @@ class UsersAuth extends Controller
     $this->userAuth = $this->model('UserAuth');
   }
 
-  // Verifies if a user is login, if not redirect
-  public function ifNotAuthRedirect($redirectOption = 'login')
-  {
-    if (isLoggedIn()) return;
-
-    redirect($redirectOption);
-    return exit();
-  }
-
   public function validateInputsLogin()
   {
     $requestParams = RequestData::getRequestParams();

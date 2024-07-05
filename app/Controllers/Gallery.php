@@ -112,7 +112,7 @@ class Gallery extends Controller
 
     public function create($data = null, $error = null)
     {
-        $this->isLogin();
+        $this->ifNotAuthRedirect();
 
         if (isset($_SESSION['submitted'])) unset($_SESSION['submitted']);
 
@@ -125,7 +125,7 @@ class Gallery extends Controller
 
     public function store()
     {
-        $this->isLogin();
+        $this->ifNotAuthRedirect();
 
         if (isSubmittedInSession()) return redirect('gallery');
 
@@ -189,7 +189,7 @@ class Gallery extends Controller
 
     public function edit($requestData)
     {
-        $this->isLogin();
+        $this->ifNotAuthRedirect();
 
         removeSubmittedFromSession();
 
@@ -208,7 +208,7 @@ class Gallery extends Controller
 
     public function update()
     {
-        $this->isLogin();
+        $this->ifNotAuthRedirect();
 
         $requestResultData = $this->getRequestData();
 

@@ -115,7 +115,7 @@ class Posts extends Controller
 
     public function create($data = null, $error = null)
     {
-        $this->isLogin();
+        $this->ifNotAuthRedirect();
 
         removeSubmittedFromSession();
 
@@ -129,7 +129,7 @@ class Posts extends Controller
 
     public function store()
     {
-        $this->isLogin();
+        $this->ifNotAuthRedirect();
 
         if (isSubmittedInSession()) return redirect('posts');
 
@@ -179,7 +179,7 @@ class Posts extends Controller
 
     public function edit($requestData)
     {
-        $this->isLogin();
+        $this->ifNotAuthRedirect();
 
         removeSubmittedFromSession();
 
@@ -199,7 +199,7 @@ class Posts extends Controller
 
     public function update($requestData)
     {
-        $this->isLogin();
+        $this->ifNotAuthRedirect();
 
         $postResultData = $this->getRequestData();
 
