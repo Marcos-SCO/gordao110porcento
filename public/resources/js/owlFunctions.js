@@ -24,6 +24,11 @@ async function owlCarouselFunctions() {
 
         owl.attr('data-loaded', true);
 
+        // Destroy existing Owl Carousel instance if it exists
+        if (owl.data('owl.carousel')) {
+            owl.trigger('destroy.owl.carousel');
+        }
+
         owl.owlCarousel({
             loop: true,
             margin: 10,
@@ -57,6 +62,11 @@ async function owlCarouselFunctions() {
     if (blogPostsSection && !blogPostsLoaded) {
 
         blogPostsSection.attr('data-loaded', true);
+
+        // Destroy existing Owl Carousel instance if it exists
+        if (blogPostsSection.data('owl.carousel')) {
+            blogPostsSection.trigger('destroy.owl.carousel');
+        }
 
         blogPostsSection.owlCarousel({
             loop: true,
