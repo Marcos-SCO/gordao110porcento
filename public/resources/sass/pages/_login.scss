@@ -1,0 +1,17 @@
+[data-page="users-login"] {
+  #whats {
+    display: none;
+  }
+
+  main {
+    display: flex;
+    justify-content: center;
+    
+    height: 100% !important;
+    background: url('../../resources/img/template/aboutBackgroundSection.png');
+    background-image: url('../../resources/img/template/aboutBackgroundSection.png');
+    background-repeat: no-repeat;
+    background-size: cover;
+  }
+
+}

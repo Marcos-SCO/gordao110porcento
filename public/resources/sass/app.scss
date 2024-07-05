@@ -129,7 +129,6 @@ label {
 
 a {
   color: #d95f1b;
-  ;
   text-decoration: none;
   transition: ease-in-out .1s
 }
@@ -142,6 +141,10 @@ a:focus {
 a:hover {
   color: #ff5b00 !important;
   text-decoration: none
+}
+
+.form-label {
+  cursor: pointer;
 }
 
 .btn:hover {
