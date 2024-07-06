@@ -9,14 +9,7 @@ use App\Models\UserAuth;
 // Base controller | Loads the models 
 class Controller
 {
-    public $usersAuth;
-
-    public function __construct()
-    {
-        $this->usersAuth = new UsersAuth();
-    }
-
-    // Load Model
+    // Instantiate Model
     public function model($model)
     {
         $instance = "App\Models\\" . $model;

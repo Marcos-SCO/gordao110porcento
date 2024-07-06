@@ -7,11 +7,11 @@ use Core\Model;
 class UserAuth extends Model
 {
     // Login
-    public function login($email, $password)
+    public function authenticate($email, $password)
     {
         $result = $this->customQuery("SELECT `status`, `id`, `adm`, `name`, `email`, `password` FROM users WHERE email = :email", ['email' => $email]);
 
-        $hashedPassword = $result->password;
+        $hashedPassword = objParamExistsOrDefault($result, 'password');
 
         $isCorrectPassword =
             password_verify($password, $hashedPassword);

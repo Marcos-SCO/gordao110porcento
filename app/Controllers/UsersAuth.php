@@ -15,11 +15,11 @@ class UsersAuth extends Controller
 
   public function __construct()
   {
-    $this->userModel = $this->model('user');
+    $this->userModel = $this->model('User');
     $this->userAuth = $this->model('UserAuth');
   }
 
-  public function validateInputsLogin()
+  protected function validateInputsLogin()
   {
     $requestParams = RequestData::getRequestParams();
 
@@ -33,7 +33,7 @@ class UsersAuth extends Controller
       $errors['error'] = true;
     }
 
-    if (!filter_input(INPUT_POST, 'email', FILTER_VALIDATE_EMAIL)) {
+    if (!empty($data['email']) && !filter_input(INPUT_POST, 'email', FILTER_VALIDATE_EMAIL)) {
       $errors['email_error'] = "E-mail inválido";
       $errors['error'] = true;
     }
@@ -47,21 +47,68 @@ class UsersAuth extends Controller
     return ['data' => $data, 'errorData' => $errors];
   }
 
-  public function blockLoginForDisabledUsers($email)
+  protected function validateUserAuthInputs($data)
   {
-    $userStatus = $this->userModel->verifyUserStatus($email);
+    // Check an set logged in user
+    $authenticatedUser =
+      $this->userAuth->authenticate($data['email'], $data['password']);
 
-    $isValidUserStatus = $userStatus == 1;
+    $userStatus = objParamExistsOrDefault($authenticatedUser, 'status');
 
-    if ($isValidUserStatus) return;
+    $data['authenticatedUser'] = $authenticatedUser;
 
-    View::render('usersAuth/login.php', [
-      'error' => [
-        'email_error' => 'Usuário está desativado do sistema'
-      ]
-    ]);
+    $errors['error'] = false;
 
-    return exit();
+    if (!$authenticatedUser) {
+
+      $errors['error'] = true;
+      $errors['password_error'] = "Email ou senha incorretos";
+    }
+
+    // Don't let users with status 0 login
+    if ($authenticatedUser && $userStatus != 1) {
+
+      $errors['error'] = true;
+      $errors['password_error'] = 'Usuário está desativado do sistema';
+    }
+
+    return ['data' => $data, 'errorData' => $errors];
+  }
+
+  protected function allRequestedForAuthData()
+  {
+    // Process Form
+    $requestedData = $this->validateInputsLogin();
+
+    $data = indexParamExistsOrDefault($requestedData, 'data');
+    $errorData = indexParamExistsOrDefault($requestedData, 'errorData');
+
+    $isErrorBeforeAuth = $errorData['error'] == true;
+
+    // User Authentication
+    if (!$isErrorBeforeAuth) {
+
+      $authInputData = $this->validateUserAuthInputs($data);
+
+      $data = indexParamExistsOrDefault($authInputData, 'data');
+
+      $errorData =
+        indexParamExistsOrDefault($authInputData, 'errorData');
+    }
+
+    $isErrorAfterAuth = $errorData['error'] == true;
+
+    if ($isErrorAfterAuth) {
+
+      return View::render('users/login.php', [
+        'dataPage' => 'users-login',
+        'title' => 'Users Login',
+        'data' => $data,
+        'error' => $errorData
+      ]);
+    }
+
+    return ['data' => $data, 'error' => $errorData];
   }
 
   public function login()
@@ -76,68 +123,20 @@ class UsersAuth extends Controller
 
     if (!$isPostRequest) {
 
-      return View::render(
-        'users/login.php',
-        [
-          'dataPage' => 'users-login',
-          'title' => 'Users login',
-        ]
-      );
+      return View::render('users/login.php', ['dataPage' => 'users-login', 'title' => 'Users login',]);
     }
 
-    // Process Form
-    $requestedData = $this->validateInputsLogin();
+    $allRequestedData = $this->allRequestedForAuthData();
 
-    $data = indexParamExistsOrDefault($requestedData, 'data');
-    $errorData = indexParamExistsOrDefault($requestedData, 'errorData');
+    $data = indexParamExistsOrDefault($allRequestedData, 'data');
 
-    // Don't let users with status 0 login
-    if ($data['email'] != '') {
+    $authenticatedUser =
+      indexParamExistsOrDefault($data, 'authenticatedUser');
 
-      $this->blockLoginForDisabledUsers($data['email']);
-    }
+    $userId = objParamExistsOrDefault($authenticatedUser, 'id');
 
-    $this->userModel->customQuery("SELECT `email` FROM users WHERE `email` = :email", ['email' => $data['email']]);
-
-    // Check for users/email
-    if ($_POST['email'] != '' && $this->userModel->rowCount() <= 0) {
-
-      // User not Found
-      $errorData['email_error'] = "Nenhum usuário encontrado";
-      $errorData['error'] = true;
-    }
-
-    $isErrorResult = $errorData['error'] == true;
-
-    if ($isErrorResult) {
-
-      return View::render('users/login.php', [
-        'dataPage' => 'users-login',
-        'data' => $data,
-        'error' => $errorData
-      ]);
-    }
-
-    // Check an set logged in user
-    $loggedInUser =
-      $this->userAuth->login($data['email'], $data['password']);
-
-    $userId = objParamExistsOrDefault($loggedInUser, 'id');
-
-    if (!$loggedInUser) {
-
-      $errorData['password_error'] = "Email ou senha incorretos";
-
-      return View::render('users/login.php', [
-        'dataPage' => 'users-login',
-        'title' => 'Users Login',
-        'data' => $data,
-        'error' => $errorData
-      ]);
-    }
-
-    // Create session
-    $this->userAuth->createUserSession($loggedInUser);
+    // Create user session
+    $this->userAuth->createUserSession($authenticatedUser);
 
     flash('register_success', 'Logado com sucesso!');
 

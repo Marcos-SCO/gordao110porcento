@@ -39,7 +39,7 @@ return [
   ],
 
   'POST' => [
-    'login/?' => 'UsersAuth@login',
+    '/login/?' => 'UsersAuth@login',
 
     '/users/store/?' => 'Users@store',
     '/users/update/?' => 'Users@update',

@@ -134,7 +134,7 @@ class Contact extends Controller
     public function success()
     {
         View::render('contact/success.php', [
-            'title' => 'Sua menssagem foi enviada com sucesso!',
+            'title' => 'Sua mensagem foi enviada com sucesso!',
         ]);
     }
 
