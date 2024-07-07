@@ -10,6 +10,8 @@ $userName = objParamExistsOrDefault($data, 'name');
 
 $isAdminUser = $_SESSION['adm_id'] == 1 && $userId != 1;
 
+$formActionUrl = $BASE  . '/users/update';
+
 ?>
 
 <header class="imgBackgroundArea usersAdmBackground">
@@ -24,32 +26,16 @@ $isAdminUser = $_SESSION['adm_id'] == 1 && $userId != 1;
         <h3>Preencha o formulário</h3>
     </header>
 
-    <form action="<?= $BASE ?>/users/update" method="post" enctype="multipart/form-data" class="mb-3">
+    <form action="<?= $formActionUrl ?>" method="post" enctype="multipart/form-data" class="mb-3" hx-post="<?= $formActionUrl ?>" hx-target="body" hx-swap="show:body:top">
 
         <div class="d-flex flex-wrap">
             <div class="w-100">
                 <input type="hidden" name="id" value="<?= $userId ?>">
 
-                <?php if ($userId == 1) echo '<input type="hidden" name="adm" id="adm" value="1>'; ?>
+                <?php // Admin level select
+                include_once __DIR__ . '/../users/components/_adminLevelSelect.php';
 
-                <?php if ($isAdminUser) : ?>
-                    <div class="form-group">
-                        <label for="adm">Nivel administrativo</label>
-                        <select name="adm" id="adm">
-                            <optgroup label="Tipo de usuário">
-                                <?php for ($i = 0; $i <= 1; $i++) {
-
-                                    $selected = ($i == $data->adm) ? 'selected' : '';
-
-                                    $type = ['Comum', 'Administrador'];
-
-                                    echo "<option value='$i' $selected>$type[$i]</option>";
-                                }
-                                ?>
-                            </optgroup>
-                        </select>
-                    </div>
-                <?php endif; ?>
+                ?>
 
                 <div class="form-group">
                     <label for="name">Nome: <sup>*</sup></label>
@@ -78,9 +64,9 @@ $isAdminUser = $_SESSION['adm_id'] == 1 && $userId != 1;
             <div class="imgGroup form-group img">
                 <label for="img">Imagem de perfil</label>
 
-                <input type="file" name="img" id="img" class="form-control form-control-lg <?= isset($error['img_error']) && $error['img_error'] != '' ? 'is-invalid' : '' ?>" value="<?= $userImg ?? '' ?>">
+                <input type="file" name="img" id="img" class="form-control form-control-lg <?= isset($error['img_error']) && $error['img_error'] != '' ? 'is-invalid' : '' ?>" value="<?= $userImg ?>">
 
-                <input type="hidden" name="img" id="img" value="<?= $userImg ?>">
+                <input type="hidden" name="img" value="<?= $userImg; ?>">
 
                 <span class="invalid-feedback"><?= $error['img_error'] ?? '' ?></span>
 
