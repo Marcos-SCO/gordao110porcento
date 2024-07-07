@@ -36,9 +36,9 @@ class Model extends Conn
         return $this->stmt->bindValue($param, $value, $type);
     }
 
-    public function selectQuery($table, $option = '')
+    public function selectQuery($table, $option = '', $selectOptions = '*')
     {
-        $query = "SELECT * FROM {$table}";
+        $query = "SELECT $selectOptions FROM {$table}";
         if ($option != '') $query .= " {$option}";
 
         $this->stmt = $this->conn->prepare($query);

@@ -1,14 +1,20 @@
 <?php
 
-namespace App\Classes;
+namespace App\Request;
 
 class RequestData
 {
 
+  public static function getPostData()
+  {
+    $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_SPECIAL_CHARS);
+
+    return $post;
+  }
+
   public static function getRequestParams()
   {
-    // Sanitize data
-    $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_SPECIAL_CHARS);
+    $post = self::getPostData();
     if (!$post) return;
 
     $notAllowedTags = array('<script>', '<a>');
@@ -21,18 +27,18 @@ class RequestData
 
     $adm = indexParamExistsOrDefault($post, 'adm', 0);
 
-    $name = indexParamExistsOrDefault($post, 'name');
+    // $name = indexParamExistsOrDefault($post, 'name');
 
-    $lastName = indexParamExistsOrDefault($post, 'last_name');
+    // $lastName = indexParamExistsOrDefault($post, 'last_name');
 
-    $email = indexParamExistsOrDefault($post, 'email');
+    // $email = indexParamExistsOrDefault($post, 'email');
 
     $bio = indexParamExistsOrDefault($post, 'bio');
 
-    $password = verifyValue($post, 'password');
+    // $password = verifyValue($post, 'password');
 
-    $confirmPassword =
-        indexParamExistsOrDefault($post, 'confirm_password', '');
+    // $confirmPassword =
+    //   indexParamExistsOrDefault($post, 'confirm_password', '');
 
 
     $categoryName = trim(indexParamExistsOrDefault($post, 'category_name', ''));
@@ -78,16 +84,15 @@ class RequestData
     $userId = indexParamExistsOrDefault($imgFiles, 'user_id');
 
 
-    $nameError = indexParamExistsOrDefault($post, 'name_error');
-    
-    $lastNameError = indexParamExistsOrDefault($post, 'last_name_error');
+    // $nameError = indexParamExistsOrDefault($post, 'name_error');
 
-    $emailError = indexParamExistsOrDefault($post, 'email_error');
+    // $lastNameError = indexParamExistsOrDefault($post, 'last_name_error');
 
-    $passwordError = indexParamExistsOrDefault($post, 'password_error');
+    // $emailError = indexParamExistsOrDefault($post, 'email_error');
 
-    $confirmPasswordError = indexParamExistsOrDefault($post, 'confirm_password_error');
+    // $passwordError = indexParamExistsOrDefault($post, 'password_error');
 
+    // $confirmPasswordError = indexParamExistsOrDefault($post, 'confirm_password_error');
 
     $postIdCategoryError = trim(indexParamExistsOrDefault($post, 'id_category_error', ''));
 
@@ -111,11 +116,13 @@ class RequestData
       'id' => $id,
       'adm' => $adm,
 
-      'name' => $name,
-      'last_name' => $lastName,
-      'email' => $email,
-      'password' => $password,
-      'confirm_password' => $confirmPassword,
+      // 'name' => $name,
+      // 'last_name' => $lastName,
+
+      // 'email' => $email,
+      // 'password' => $password,
+      // 'confirm_password' => $confirmPassword,
+
       'bio' => $bio,
 
       'user_id' => $userId,
@@ -138,11 +145,12 @@ class RequestData
     ];
 
     $errors = [
-      'name_error' => $nameError,
-      'last_name_error' => $lastNameError,
-      'email_error' => $emailError,
-      'password_error' => $passwordError,
-      'confirm_password_error' => $confirmPasswordError,
+      // 'name_error' => $nameError,
+      // 'last_name_error' => $lastNameError,
+
+      // 'email_error' => $emailError,
+      // 'password_error' => $passwordError,
+      // 'confirm_password_error' => $confirmPasswordError,
 
       'id_category_error' => $postIdCategoryError,
       'title_error' => $titleError,
@@ -161,6 +169,6 @@ class RequestData
       'error' => false
     ];
 
-    return ['data' => $data, 'errors' => $errors];
+    return ['data' => $data, 'errorData' => $errors];
   }
 }

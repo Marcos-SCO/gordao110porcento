@@ -6,7 +6,7 @@ namespace App\Controllers;
 
 use App\Classes\ImagesHandler;
 use App\Classes\Pagination;
-use App\Classes\RequestData;
+use App\Request\RequestData;
 
 use Core\Controller;
 use Core\View;
@@ -39,7 +39,7 @@ class Products extends Controller
         $requestParams = RequestData::getRequestParams();
 
         $data = indexParamExistsOrDefault($requestParams, 'data');
-        $errors = indexParamExistsOrDefault($requestParams, 'errors');
+        $errors = indexParamExistsOrDefault($requestParams, 'errorData');
 
         if (!$isEmptyPostImg) $data['img_name'] = $postImg;
 

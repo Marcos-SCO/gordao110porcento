@@ -2,7 +2,7 @@
 
 namespace App\Controllers;
 
-use App\Classes\RequestData;
+use App\Request\RequestData;
 use Core\Controller;
 use Core\View;
 
@@ -25,7 +25,7 @@ class UsersAuth extends Controller
 
     $data = indexParamExistsOrDefault($requestParams, 'data', []);
     $errors =
-      indexParamExistsOrDefault($requestParams, 'errors', []);
+      indexParamExistsOrDefault($requestParams, 'errorData', []);
 
     // Validate Email
     if (empty($data['email'])) {

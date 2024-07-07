@@ -13,6 +13,7 @@ include_once('_redirect.php');
 // include_once('_svg.php');
 // include_once('_style.php');
 
+include_once('_arrays.php');
 include_once('_decision.php');
 include_once('_strings.php');
 

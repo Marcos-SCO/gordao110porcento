@@ -2,6 +2,7 @@
 
 namespace App\Classes;
 
+use App\Request\RequestData;
 use Core\Model;
 
 class ImagesHandler
@@ -82,7 +83,7 @@ class ImagesHandler
 
     $error = [0 => false, 1 => false];
 
-    if (!in_array($imgExt, $valid_extensions)) {
+    if ($imgExt && !in_array($imgExt, $valid_extensions)) {
 
       $valid_extensions = implode(', ', $valid_extensions);
 
@@ -160,4 +161,38 @@ class ImagesHandler
 
     return $imgFullPath;
   }
+
+  public static function validateImageParams($requestData = false, $imageIsRequested = false)
+  {
+    $requestData = $requestData ? $requestData : RequestData::getRequestParams();
+
+    $data = indexParamExistsOrDefault($requestData, 'data');
+    $errorData = indexParamExistsOrDefault($requestData, 'errorData');
+
+    $postImg = indexParamExistsOrDefault($data, 'post_img', '');
+
+    $isEmptyPostImg = $postImg == "" || $postImg == false;
+
+    if (!$isEmptyPostImg) $data['img_name'] = $postImg;
+
+    if ($imageIsRequested && empty($data['img_files'])) {
+
+      $errorData['error'] = true;
+      $errorData['img_error'] = "Insira uma imagem";
+    }
+
+    if (!empty($data['img_files']) && !empty($data['img_name'])) {
+
+      $imagesHandler = new self();
+
+      $validatedImgRequest =
+        $imagesHandler->verifySubmittedImgExtension();
+
+      $errorData['error'] = $validatedImgRequest[0];
+      $errorData['img_error'] = $validatedImgRequest[1];
+    }
+
+    return ['data' => $data, 'errorData' => $errorData];
+  }
+
 }

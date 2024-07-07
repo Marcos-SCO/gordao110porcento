@@ -54,4 +54,32 @@ class User extends Model
 
         return $userStatus;
     }
+
+    public static function verifyIFExistsWith(array $userParams = [])
+    {
+        $queryOption = "WHERE";
+
+        foreach ($userParams as $key => $value) {
+            $value = is_string($value) ? '\'' . $value . '\'' : $value;
+
+            $queryOption .= " $key = {$value},";
+        }
+
+        $queryOption = rtrim($queryOption, ',');
+
+        $self = new self();
+        $self->selectQuery('users', $queryOption, 'email');
+        // $self->selectQuery('users', $queryOption);
+
+        if ($self->rowCount() > 0) {
+
+            return true;
+            // $errorData['email_error'] = "Já existe um usuário com esse E-mail";
+            // $errorData['error'] = true;
+
+            // return $errorData;
+        }
+
+        return false;
+    }
 }

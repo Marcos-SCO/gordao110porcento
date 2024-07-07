@@ -6,7 +6,9 @@ namespace App\Controllers;
 
 use App\Classes\ImagesHandler;
 use App\Classes\Pagination;
-use App\Classes\RequestData;
+use App\Request\RequestData;
+use App\Models\User;
+use App\Request\UserValidation;
 use Core\Controller;
 use Core\View;
 
@@ -21,78 +23,6 @@ class Users extends Controller
     {
         $this->model = $this->model('User');
         $this->imagesHandler = new ImagesHandler();
-    }
-
-    public function getRequestData()
-    {
-        // Sanitize data
-        $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_SPECIAL_CHARS);
-        if (!$post) return;
-
-        $postImg = indexParamExistsOrDefault($post, 'img', '');
-        $isEmptyPostImg = $postImg == "" || $postImg == false;
-
-        $validatedImgRequest =
-            $this->imagesHandler->verifySubmittedImgExtension();
-
-        $requestParams = RequestData::getRequestParams();
-
-        $data = indexParamExistsOrDefault($requestParams, 'data');
-        $errors = indexParamExistsOrDefault($requestParams, 'errors');
-
-        if (!$isEmptyPostImg) $data['img_name'] = $postImg;
-
-        if ($data['img_files'] && $postImg == '') {
-
-            if (empty($data['img_files'])) {
-                $errors['img_error'] = "Insira uma imagem";
-                $errors['error'] = true;
-            }
-
-            if (!empty($data['img_files'])) {
-                $errors['img_error'] = $validatedImgRequest[1];
-                $errors['error'] = $validatedImgRequest[0];
-            }
-        }
-
-        if (empty($data['name'])) {
-            $errors['name_error'] = "Digite o nome";
-            $errors['error'] = true;
-        }
-
-        if (empty($data['last_name'])) {
-            $errors['last_name_error'] = "Digite o sobrenome";
-            $errors['error'] = true;
-        }
-
-        return ['data' => $data, 'errorData' => $errors];
-    }
-
-    public function validateUserCreation()
-    {
-        $requestParams = RequestData::getRequestParams();
-
-        $data = indexParamExistsOrDefault($requestParams, 'data');
-        $errors = indexParamExistsOrDefault($requestParams, 'errors');
-
-        if ($data['password'] && strlen($data['password']) < 6) {
-
-            $errors['password_error'] = "Senha precisa no mínimo de ser maior que 6 caracteres";
-            $errors['error'] = true;
-        }
-
-        // Password
-        if (empty($data['confirm_password'])) {
-            $errors['confirm_password_error'] = "Confirme a senha";
-            $errors['error'] = true;
-        }
-
-        if (!empty($data['password']) && $data['password'] != $data['confirm_password']) {
-            $errors['confirm_password_error'] = "Senhas estão diferentes";
-            $errors['error'] = true;
-        }
-
-        return ['data' => $data, 'errorData' => $errors];
     }
 
     public function moveUploadImageFolder($data, $lastId = false)
@@ -121,6 +51,8 @@ class Users extends Controller
 
     public function index($requestData)
     {
+        removeSubmittedFromSession();
+
         $this->ifNotAuthRedirect();
 
         $table = 'users';
@@ -150,9 +82,9 @@ class Users extends Controller
 
     public function create($data = false, $error = false)
     {
-        $this->ifNotAuthRedirect();
-
         removeSubmittedFromSession();
+
+        $this->ifNotAuthRedirect();
 
         if (!($_SESSION['adm_id'] == 1))  return redirect('users');
 
@@ -167,18 +99,14 @@ class Users extends Controller
     {
         $this->ifNotAuthRedirect();
 
-        $submittedPostData =
-            isset($_SESSION['submitted']) &&
-            $_SERVER['REQUEST_METHOD'] == 'POST';
+        $isPostRequest = $_SERVER['REQUEST_METHOD'] == 'POST';
 
-        if ($submittedPostData) {
-            return redirect('users');
-        }
+        if (isSubmittedInSession() || !$isPostRequest) return redirect('users');
 
-        // Process Form
-        $requestedData = array_merge(
-            $this->getRequestData(),
-            $this->validateUserCreation()
+        $requestedData = array_merge_recursive(
+            UserValidation::nameFieldsValidation(),
+            UserValidation::validatePasswords(),
+            UserValidation::validateEmailInput(),
         );
 
         $data = indexParamExistsOrDefault($requestedData, 'data');
@@ -186,20 +114,23 @@ class Users extends Controller
         $errorData =
             indexParamExistsOrDefault($requestedData, 'errorData');
 
-        // Find user
-        $this->model->customQuery("SELECT `email` FROM users WHERE email = :email", ['email' => $data['email']]);
+        $getFirstErrorSign = isset($errorData['error'])
+            && array_filter($errorData['error'], function ($item) {
+                return $item && $item === true;
+            });
 
-        if ($this->model->rowCount() > 0) {
+        if (!$getFirstErrorSign) {
 
-            $errorData['email_error'] = "Já existe um usuário com esse E-mail";
-            $errorData['error'] = true;
+            $errorData = array_merge($errorData, UserValidation::existenceValidation()['errorData']);
         }
 
         $isErrorResult = $errorData['error'] == true;
 
-        if ($isErrorResult) return $this->create($data, $errorData);
+        if ($isErrorResult) {
 
-        $_SESSION['submitted'] = true;
+            return $this->create($data, $errorData);
+        }
+
         // Hash password
         $data['password'] = password_hash($data['password'], PASSWORD_DEFAULT);
 
@@ -207,9 +138,11 @@ class Users extends Controller
 
         if (!$insertedUser) die('Something went wrong when inserting a user...');
 
-        $flash = flash('register_success', 'Usuário registrado com sucesso!');
+        flash('register_success', 'Usuário registrado com sucesso!');
 
-        return $this->index(1, $flash);
+        addSubmittedToSession();
+
+        return redirect('users');
     }
 
     public function status($requestData)
@@ -295,8 +228,10 @@ class Users extends Controller
             || $_SESSION['adm_id'] == 1 && $userId != 1;
 
         if ($isUserAdminOne) {
+
             View::render('users/edit.php', [
                 'title' => 'Editar perfil de ' . $data->name,
+                'dataPage' => 'users/edit',
                 'data' => $data,
                 'error' => $errorData
             ]);
@@ -321,6 +256,9 @@ class Users extends Controller
         // Process Form
         $postResultData = $this->getRequestData();
 
+        $postResultData =
+            ImagesHandler::validateImageParams($postResultData);
+
         $data = indexParamExistsOrDefault($postResultData, 'data');
 
         $errorData =
@@ -330,7 +268,6 @@ class Users extends Controller
 
         $isErrorResult = $errorData['error'] == true;
 
-
         if ($isErrorResult) {
 
             return $this->edit([
@@ -339,7 +276,6 @@ class Users extends Controller
                 'error' => $errorData
             ]);
         }
-
 
         $data = $this->moveUploadImageFolder($data);
 
