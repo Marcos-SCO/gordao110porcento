@@ -162,37 +162,4 @@ class ImagesHandler
     return $imgFullPath;
   }
 
-  public static function validateImageParams($requestData = false, $imageIsRequested = false)
-  {
-    $requestData = $requestData ? $requestData : RequestData::getRequestParams();
-
-    $data = indexParamExistsOrDefault($requestData, 'data');
-    $errorData = indexParamExistsOrDefault($requestData, 'errorData');
-
-    $postImg = indexParamExistsOrDefault($data, 'post_img', '');
-
-    $isEmptyPostImg = $postImg == "" || $postImg == false;
-
-    if (!$isEmptyPostImg) $data['img_name'] = $postImg;
-
-    if ($imageIsRequested && empty($data['img_files'])) {
-
-      $errorData['error'] = true;
-      $errorData['img_error'] = "Insira uma imagem";
-    }
-
-    if (!empty($data['img_files']) && !empty($data['img_name'])) {
-
-      $imagesHandler = new self();
-
-      $validatedImgRequest =
-        $imagesHandler->verifySubmittedImgExtension();
-
-      $errorData['error'] = $validatedImgRequest[0];
-      $errorData['img_error'] = $validatedImgRequest[1];
-    }
-
-    return ['data' => $data, 'errorData' => $errorData];
-  }
-
 }
