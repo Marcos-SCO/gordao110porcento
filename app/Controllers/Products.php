@@ -6,6 +6,9 @@ namespace App\Controllers;
 
 use App\Classes\ImagesHandler;
 use App\Classes\Pagination;
+
+use App\Request\ImageRequest;
+use App\Request\ProductRequest;
 use App\Request\RequestData;
 
 use Core\Controller;
@@ -132,16 +135,25 @@ class Products extends Controller
 
         if (isSubmittedInSession()) return redirect('products');
 
-        $postResultData = $this->getRequestData();
+        $requestedData = array_merge_recursive(
+            ProductRequest::productFieldsValidation(),
+            ImageRequest::validateImageParams(true),
+        );
 
-        $data = indexParamExistsOrDefault($postResultData, 'data');
+        $data = indexParamExistsOrDefault($requestedData, 'data');
 
         $errorData =
-            indexParamExistsOrDefault($postResultData, 'errorData');
+            indexParamExistsOrDefault($requestedData, 'errorData');
 
-        $isErrorResult = $errorData['error'] == true;
+        $getFirstErrorSign = isset($errorData['error'])
+            && array_filter($errorData['error'], function ($item) {
+                return $item && $item === true;
+            });
 
-        if ($isErrorResult) return $this->create($data, $errorData);
+        if ($getFirstErrorSign) {
+
+            return $this->create($data, $errorData);
+        }
 
         // Create a folder in products
         $imageDynamicPath = $this->imagesHandler->getNewImgDynamicPath('products', $data['product_id_category']);
@@ -186,11 +198,13 @@ class Products extends Controller
 
     public function edit($requestData)
     {
+        $this->ifNotAuthRedirect();
+
+        removeSubmittedFromSession();
+
         $productId = indexParamExistsOrDefault($requestData, 'edit');
 
         $errors = indexParamExistsOrDefault($requestData, 'error');
-
-        $this->ifNotAuthRedirect();
 
         $data = $this->model->getAllFrom('products', $productId);
 
@@ -200,7 +214,7 @@ class Products extends Controller
             'title' => "Editar - $data->product_name",
             'data' => $data,
             'categories' => $categories,
-            'id_category' => $data->id_category,
+            'product_id_category' => $data->id_category,
             'error' => $errors,
         ]);
     }
@@ -208,15 +222,20 @@ class Products extends Controller
     public function moveUploadImageFolder($data)
     {
         $id = $data['id'];
-        $postIdCategory = $data['product_id_category'];
+        $productIdCategory = $data['product_id_category'];
 
-        $result = $this->model->getProduct($id, $postIdCategory);
+        $currentProductCategoryId = $data['current_product_category_id'];
+
+        $currentAndSelectedCategoriesAreEqual =
+            $currentProductCategoryId == $productIdCategory;
+
+        $result = $this->model->getProduct($id, $productIdCategory);
 
         $resultId = $this->model->getProductId($id);
 
         $imgFiles = indexParamExistsOrDefault($data, 'img_files');
-
         $imgName = indexParamExistsOrDefault($imgFiles, 'name');
+        $tempName = indexParamExistsOrDefault($imgFiles, 'tmp_name');
 
         $postImg = $data['post_img'];
 
@@ -229,22 +248,21 @@ class Products extends Controller
             if (!$isEmptyImg) {
 
                 $createdFolderPath =
-                    $this->imagesHandler->imgFolderCreate('products', $id, $imgName, $postIdCategory);
+                    $this->imagesHandler->createCategoryItemFolder('products', $id, $productIdCategory);
 
                 $this->imagesHandler->moveUpload($createdFolderPath);
 
                 $data['img_name'] = $imgName;
+
+                return $data;
             }
 
-            return $data;
         }
 
         // Create a new path
-        $fullPath = $this->imagesHandler->imgFolderCreate('products', $id, $imgName, $postIdCategory);
+        $fullPath = $this->imagesHandler->createCategoryItemFolder('products', $productIdCategory, $id) . $imgName;
 
         $this->imagesHandler->moveUpload($fullPath);
-
-        $data['img'] = explode('/', $fullPath);
 
         // Get img data
         $img = ($imgName !== '') ? $imgName : $postImg;
@@ -252,39 +270,53 @@ class Products extends Controller
         // Copy from the older to new one
         $oldFolderPath = "../public/resources/img/products/category_{$resultId->id_category}/id_$id/$img";
 
-        $newFolderPath = "../public/resources/img/products/category_{$postIdCategory}/id_$id/$img";
+        $newFolderPath = "../public/resources/img/products/category_{$productIdCategory}/id_$id/$img";
 
         if (file_exists($oldFolderPath)) {
 
             copy($oldFolderPath, $newFolderPath);
-        }
 
-        // Delete the image in the current folder
-        $this->imagesHandler->deleteFolder('products', $id, $resultId->id_category);
+            // Delete old folder
+            if (!$currentAndSelectedCategoriesAreEqual) $this->imagesHandler->deleteFolder('products', $id, $resultId->id_category);
+        }
 
         $data['img_name'] = $img;
 
         return $data;
     }
 
-    public function update($requestData)
+    public function update()
     {
         $this->ifNotAuthRedirect();
 
-        $postResultData = $this->getRequestData();
-
-        $data = indexParamExistsOrDefault($postResultData, 'data');
-
-        $id = $data['id'];
+        $id = indexParamExistsOrDefault(ProductRequest::getPostData(), 'id');
 
         if (isSubmittedInSession()) return redirect('products/show/' . $id);
 
+        $requestedData = array_merge_recursive(
+            ProductRequest::productFieldsValidation(),
+            ImageRequest::validateImageParams(true),
+        );
+
+        $data = indexParamExistsOrDefault($requestedData, 'data');
+
+        if ($id) $data['id'] = $id;
+
         $errorData =
-            indexParamExistsOrDefault($postResultData, 'errorData');
+            indexParamExistsOrDefault($requestedData, 'errorData');
 
-        $isErrorResult = $errorData['error'] == true;
+        $getFirstErrorSign = isset($errorData['error'])
+            && array_filter($errorData['error'], function ($item) {
+                return $item && $item === true;
+            });
 
-        if ($isErrorResult) return $this->edit(['edit' => $id, 'error' => $errorData]);
+        if ($getFirstErrorSign) {
+
+            return $this->edit(['edit' => $id, 'error' => $errorData]);
+        }
+
+        // var_dump($data);
+        // die('monster');
 
         $data = $this->moveUploadImageFolder($data);
 
@@ -294,7 +326,8 @@ class Products extends Controller
 
         flash('post_message', 'Produto foi atualizado com sucesso!');
 
-        return redirect('products/show/' . $id);
+        // return redirect('products/show/' . $id);
+        return redirect('products/edit/' . $id);
     }
 
     // Delete function for controllers

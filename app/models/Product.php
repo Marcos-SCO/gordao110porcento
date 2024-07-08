@@ -19,18 +19,21 @@ class Product extends \Core\Model
     public function getCategories()
     {
         $result = $this->customQuery("SELECT id, category_name FROM categories ORDER BY id DESC", null, 1);
+        
         return $result;
     }
 
     public function getProduct($id, $idCategory)
     {
         $result = $this->customQuery("SELECT id, id_category FROM products WHERE id = :id AND id_category = :id_category", ['id' => $id, 'id_category' => $idCategory]);
+
         return $result;
     }
 
     public function getProductId($id)
     {
         $result = $this->customQuery("SELECT id, id_category FROM products WHERE id = :id", ['id' => $id]);
+
         return $result;
     }
 
@@ -41,6 +44,7 @@ class Product extends \Core\Model
             "SELECT img FROM products WHERE `id` = :id",
             ['id' => $id]
         );
+
         return $result;
     }
 
@@ -49,7 +53,7 @@ class Product extends \Core\Model
         // dump($data);
         $this->insertQuery('products', [
             'user_id' => $_SESSION['user_id'],
-            'id_category' => $data['id_category'],
+            'id_category' => $data['product_id_category'],
             'product_name' => $data['product_name'],
             'product_description' => $data['product_description'],
             'img' => $data['img_name'],
@@ -58,17 +62,15 @@ class Product extends \Core\Model
         ]);
 
         // Execute
-        if ($this->rowCount()) {
-            return true;
-        } else {
-            return false;
-        }
+        if (!$this->rowCount()) return false;
+
+        return true;
     }
 
     public function updateProduct($data)
     {
         $this->updateQuery('products', [
-            'id_category' => $data['id_category'],
+            'id_category' => $data['product_id_category'],
             'product_name' => $data['product_name'],
             'product_description' => $data['product_description'],
             'img' => $data['img_name'],

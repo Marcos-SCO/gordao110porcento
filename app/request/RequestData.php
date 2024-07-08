@@ -50,14 +50,14 @@ class RequestData
     // $categoryDescriptionError = trim(indexParamExistsOrDefault($post, 'category_description_error', ''));
 
 
-    $postIdCategory = indexParamExistsOrDefault($post, 'id_category');
+    // $postIdCategory = indexParamExistsOrDefault($post, 'id_category');
 
     $title = trim(indexParamExistsOrDefault($post, 'title', ''));
 
 
-    $productName = indexParamExistsOrDefault($post, 'product_name');
+    // $productName = indexParamExistsOrDefault($post, 'product_name');
 
-    $productDescription = indexParamExistsOrDefault($post, 'product_description');
+    // $productDescription = indexParamExistsOrDefault($post, 'product_description');
 
     // $price = verifyValue($post, 'price');
 
@@ -133,8 +133,8 @@ class RequestData
 
       'title' => $title,
       'body' => $body,
-      'product_name' => $productName,
-      'product_description' => $productDescription,
+      // 'product_name' => $productName,
+      // 'product_description' => $productDescription,
       // 'price' => $price,
 
       'img_title' => $imgGalleryDescriptionTitle,
@@ -152,16 +152,16 @@ class RequestData
       // 'password_error' => $passwordError,
       // 'confirm_password_error' => $confirmPasswordError,
 
-      'id_category_error' => $postIdCategoryError,
+      // 'id_category_error' => $postIdCategoryError,
       'title_error' => $titleError,
       'body_error' => $bodyError,
 
       // 'category_name_error' => $categoryNameError,
       // 'category_description_error' => $categoryDescriptionError,
 
-      'product_name_error' => $productNameError,
-      'product_description_error' => $productDescriptionError,
-      'price_error' => $priceError,
+      // 'product_name_error' => $productNameError,
+      // 'product_description_error' => $productDescriptionError,
+      // 'price_error' => $priceError,
 
       'img_title_error' => $imgGalleryTitleDescriptionError,
 
