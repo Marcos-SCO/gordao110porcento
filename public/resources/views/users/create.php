@@ -17,7 +17,7 @@ $formActionUrl = $BASE . '/users/store';
         <p>Preencha o formulário</p>
     </header>
 
-    <form action="<?= $formActionUrl ?>" method="post" hax-post="<?= $formActionUrl ?>" hax-target="body" hax-swap="outerHTML">
+    <form action="<?= $formActionUrl ?>" method="post" hx-post="<?= $formActionUrl ?>" hx-target="body" hx-swap="show:body:top">
 
         <?php // Admin level select
         include_once __DIR__ . '/../users/components/_adminLevelSelect.php';

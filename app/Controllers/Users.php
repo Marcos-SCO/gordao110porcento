@@ -109,6 +109,8 @@ class Users extends Controller
             UserValidation::validateEmailInput(),
         );
 
+        $adm = indexParamExistsOrDefault(UserValidation::getPostData(), 'adm', 0);
+
         $data = indexParamExistsOrDefault($requestedData, 'data');
 
         $errorData =
@@ -133,6 +135,8 @@ class Users extends Controller
 
         // Hash password
         $data['password'] = password_hash($data['password'], PASSWORD_DEFAULT);
+
+        $data['adm'] = $adm;
 
         $insertedUser = $this->model->insertUser($data);
 

@@ -25,7 +25,7 @@ class RequestData
 
     $id = indexParamExistsOrDefault($post, 'id');
 
-    $adm = indexParamExistsOrDefault($post, 'adm', 0);
+    // $adm = indexParamExistsOrDefault($post, 'adm', 0);
 
     // $name = indexParamExistsOrDefault($post, 'name');
 
@@ -114,7 +114,7 @@ class RequestData
     // Add data to array
     $data = [
       'id' => $id,
-      'adm' => $adm,
+      // 'adm' => $adm,
 
       // 'name' => $name,
       // 'last_name' => $lastName,
