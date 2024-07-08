@@ -6,6 +6,8 @@ namespace App\Controllers;
 
 use App\Classes\ImagesHandler;
 use App\Classes\Pagination;
+use App\Request\CategoryRequest;
+use App\Request\ImageRequest;
 use App\Request\RequestData;
 
 use Core\Controller;
@@ -22,51 +24,6 @@ class Categories extends Controller
         $this->model = $this->model('Category');
         $this->imagesHandler = new ImagesHandler();
     }
-
-    public function getRequestData()
-    {
-        $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_SPECIAL_CHARS);
-        if (!$post) return;
-
-        $postImg = indexParamExistsOrDefault($post, 'img', '');
-        $isEmptyPostImg = $postImg == "" || $postImg == false;
-
-        $validatedImgRequest =
-            $this->imagesHandler->verifySubmittedImgExtension();
-
-        $requestParams = RequestData::getRequestParams();
-
-        $data = indexParamExistsOrDefault($requestParams, 'data');
-        $errors = indexParamExistsOrDefault($requestParams, 'errorData');
-
-        if (!$isEmptyPostImg) $data['img_name'] = $postImg;
-
-        if ($data['img_files'] && $postImg == '') {
-
-            if (empty($data['img_files'])) {
-                $errors['img_error'] = "Insira uma imagem";
-                $errors['error'] = true;
-            }
-
-            if (!empty($data['img_files'])) {
-                $errors['img_error'] = $validatedImgRequest[1];
-                $errors['error'] = $validatedImgRequest[0];
-            }
-        }
-
-        if (empty($data['category_name'])) {
-            $errors['category_name_error'] = "Coloque o nome da categoria";
-            $errors['error'] = true;
-        }
-
-        if (empty($data['category_description'])) {
-            $errors['category_description_error'] = "Coloque uma descrição para imagem";
-            $errors['error'] = true;
-        }
-
-        return ['data' => $data, 'errorData' => $errors];
-    }
-
 
     public function moveUploadImageFolder($data, $lastId = false)
     {
@@ -117,51 +74,6 @@ class Categories extends Controller
         ]);
     }
 
-    public function create($data = null, $error = null)
-    {
-        $this->ifNotAuthRedirect();
-
-        removeSubmittedFromSession();
-
-        View::render('categories/create.php', [
-            'title' => 'Adicione mais uma categoria',
-            'data' => $data,
-            'error' => $error,
-        ]);
-    }
-
-    public function store()
-    {
-        $this->ifNotAuthRedirect();
-
-        if (isSubmittedInSession()) return redirect('categories');
-
-        $requestedData = $this->getRequestData();
-
-        $data = indexParamExistsOrDefault($requestedData, 'data');
-
-        $errorData =
-            indexParamExistsOrDefault($requestedData, 'errorData');
-
-        $isErrorResult = $errorData['error'] == true;
-
-        if ($isErrorResult) return $this->create($data, $errorData);
-
-        $addedCategory = $this->model->addCategory($data);
-
-        if (!$addedCategory) die('Something went wrong while creating a category');
-
-        $lastInsertedPostId = $this->model->lastId();
-
-        $this->moveUploadImageFolder($data, $lastInsertedPostId);
-
-        addSubmittedToSession();
-
-        flash('post_message', 'Categoria adicionada com sucesso!');
-
-        return redirect('categories');
-    }
-
     public function show($requestData)
     {
         removeSubmittedFromSession();
@@ -205,6 +117,60 @@ class Categories extends Controller
         ]);
     }
 
+    public function create($data = null, $error = null)
+    {
+        $this->ifNotAuthRedirect();
+
+        removeSubmittedFromSession();
+
+        View::render('categories/create.php', [
+            'title' => 'Adicione mais uma categoria',
+            'data' => $data,
+            'error' => $error,
+        ]);
+    }
+
+    public function store()
+    {
+        $this->ifNotAuthRedirect();
+
+        if (isSubmittedInSession()) return redirect('categories');
+
+        $requestedData = array_merge_recursive(
+            CategoryRequest::categoryFieldsValidation(),
+            ImageRequest::validateImageParams(true),
+        );
+
+        $data = indexParamExistsOrDefault($requestedData, 'data');
+
+        $errorData =
+            indexParamExistsOrDefault($requestedData, 'errorData');
+
+        $getFirstErrorSign = isset($errorData['error'])
+            && array_filter($errorData['error'], function ($item) {
+                return $item && $item === true;
+            });
+
+        if ($getFirstErrorSign) {
+
+            return $this->create($data, $errorData);
+        }
+
+        $addedCategory = $this->model->addCategory($data);
+
+        if (!$addedCategory) die('Something went wrong while creating a category');
+
+        $lastInsertedPostId = $this->model->lastId();
+
+        $this->moveUploadImageFolder($data, $lastInsertedPostId);
+
+        addSubmittedToSession();
+
+        flash('post_message', 'Categoria adicionada com sucesso!');
+
+        return redirect('categories');
+    }
+
     public function edit($requestData)
     {
         $this->ifNotAuthRedirect();
@@ -228,19 +194,31 @@ class Categories extends Controller
     {
         $this->ifNotAuthRedirect();
 
-        $requestResultData = $this->getRequestData();
-
-        $data = indexParamExistsOrDefault($requestResultData, 'data');
-
-        $errorData = indexParamExistsOrDefault($requestResultData, 'errorData');
-
-        $id = $data['id'];
-
         if (isSubmittedInSession()) return redirect('categories');
 
-        $isErrorResult = $errorData['error'] == true;
+        $id = indexParamExistsOrDefault(RequestData::getPostData(), 'id');
 
-        if ($isErrorResult) return $this->edit(['edit' => $id, 'error' => $errorData]);
+        $requestedData = array_merge_recursive(
+            CategoryRequest::categoryFieldsValidation(),
+            ImageRequest::validateImageParams(true),
+        );
+
+        $data = indexParamExistsOrDefault($requestedData, 'data');
+
+        if ($id) $data['id'] = $id;
+
+        $errorData =
+            indexParamExistsOrDefault($requestedData, 'errorData');
+
+        $getFirstErrorSign = isset($errorData['error'])
+            && array_filter($errorData['error'], function ($item) {
+                return $item && $item === true;
+            });
+
+        if ($getFirstErrorSign) {
+
+            return $this->edit(['edit' => $id, 'error' => $errorData]);
+        }
 
         $data = $this->moveUploadImageFolder($data);
 
@@ -248,19 +226,15 @@ class Categories extends Controller
 
         flash('post_message', 'Categoria foi atualizada com sucesso!');
 
-        return redirect('categories');
+        return redirect("categories/show/$id/");
     }
 
     // Delete function for controllers
-    public function destroy($id)
+    public function destroy()
     {
         if (isSubmittedInSession()) return redirect('categories');
 
-        $requestResultData = $this->getRequestData();
-
-        $data = indexParamExistsOrDefault($requestResultData, 'data');
-
-        $id = $data['id'];
+        $id = indexParamExistsOrDefault(RequestData::getPostData(), 'id');
 
         $this->model->deletePost('categories', ['id' => $id]);
 

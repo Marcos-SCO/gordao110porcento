@@ -41,13 +41,13 @@ class RequestData
     //   indexParamExistsOrDefault($post, 'confirm_password', '');
 
 
-    $categoryName = trim(indexParamExistsOrDefault($post, 'category_name', ''));
+    // $categoryName = trim(indexParamExistsOrDefault($post, 'category_name', ''));
 
-    $categoryNameError = trim(indexParamExistsOrDefault($post, 'category_name_error', ''));
+    // $categoryNameError = trim(indexParamExistsOrDefault($post, 'category_name_error', ''));
 
-    $categoryDescription = trim(indexParamExistsOrDefault($post, 'category_description', ''));
+    // $categoryDescription = trim(indexParamExistsOrDefault($post, 'category_description', ''));
 
-    $categoryDescriptionError = trim(indexParamExistsOrDefault($post, 'category_description_error', ''));
+    // $categoryDescriptionError = trim(indexParamExistsOrDefault($post, 'category_description_error', ''));
 
 
     $postIdCategory = indexParamExistsOrDefault($post, 'id_category');
@@ -128,8 +128,8 @@ class RequestData
       'user_id' => $userId,
       'id_category' => $postIdCategory,
 
-      'category_name' => $categoryName,
-      'category_description' => $categoryDescription,
+      // 'category_name' => $categoryName,
+      // 'category_description' => $categoryDescription,
 
       'title' => $title,
       'body' => $body,
@@ -156,8 +156,8 @@ class RequestData
       'title_error' => $titleError,
       'body_error' => $bodyError,
 
-      'category_name_error' => $categoryNameError,
-      'category_description_error' => $categoryDescriptionError,
+      // 'category_name_error' => $categoryNameError,
+      // 'category_description_error' => $categoryDescriptionError,
 
       'product_name_error' => $productNameError,
       'product_description_error' => $productDescriptionError,

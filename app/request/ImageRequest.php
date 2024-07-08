@@ -25,7 +25,7 @@ class ImageRequest extends RequestData
     $isEmptyPostImg = $postImg == "" || $postImg == false;
     if (!$isEmptyPostImg) $data['img_name'] = $postImg;
 
-    if ($imageIsRequired && empty($data['img_files'])) {
+    if ($imageIsRequired && empty($data['img_name'])) {
 
       $errorData['error'] = true;
       $errorData['img_error'] = "Insira uma imagem";
