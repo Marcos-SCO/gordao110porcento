@@ -102,13 +102,38 @@ class ImagesHandler
     $isEmptyImg = $imageTempName == "";
 
     if ($isEmptyImg) {
-      $data['img_error'] = "Envie uma imagem";
-      $error = true;
 
-      return $error;
+      $dataError['error'] = true;
+      $dataError['img_error'] = "Envie uma imagem";
+
+      return $dataError;
     }
 
     move_uploaded_file($imageTempName, $imgFullPath);
+  }
+
+  public function createIdItemFolder($table, $id)
+  {
+    if (!file_exists("../public/resources/img/{$table}/id_$id")) {
+
+      mkdir("../public/resources/img/{$table}/id_$id");
+    }
+
+    $uploadDir = "public/resources/img/{$table}/id_$id/";
+
+    return $uploadDir;
+  }
+
+  public function createCategoryItemFolder($table, $categoryId, $id)
+  {
+    if (!file_exists("../public/resources/img/{$table}/category_{$categoryId}/id_$id")) {
+
+      mkdir("../public/resources/img/{$table}/category_{$categoryId}/id_$id", 0755, true);
+    }
+
+    $uploadDir = "public/resources/img/{$table}/category_$categoryId/id_$id/";
+
+    return $uploadDir;
   }
 
   public function imgFolderCreate($table, $id, $imgName, $categoryId = null)
@@ -121,12 +146,7 @@ class ImagesHandler
       // delete the folder
       $this->deleteFolder($table, $id);
 
-      if (!file_exists("../public/resources/img/{$table}/id_$id")) {
-
-        mkdir("../public/resources/img/{$table}/id_$id");
-      }
-
-      $uploadDir = "public/resources/img/{$table}/id_$id/";
+      $uploadDir = $this->createIdItemFolder($table, $id);
     }
 
     if (!$emptyCategoryId) {
@@ -134,12 +154,7 @@ class ImagesHandler
       $this->deleteFolder($table, $id, $categoryId);
       // Create folder
 
-      if (!file_exists("../public/resources/img/{$table}/category_{$categoryId}/id_$id")) {
-
-        mkdir("../public/resources/img/{$table}/category_{$categoryId}/id_$id", 0755, true);
-      }
-
-      $uploadDir = "public/resources/img/{$table}/category_$categoryId/id_$id/";
+      $uploadDir = $this->createCategoryItemFolder($table, $id, $categoryId);
     }
 
     $picProfile = $imgName;
@@ -161,5 +176,4 @@ class ImagesHandler
 
     return $imgFullPath;
   }
-
 }
