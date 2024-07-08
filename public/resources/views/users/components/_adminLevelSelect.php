@@ -6,7 +6,7 @@ $isAdminUser = $_SESSION['adm_id'] == 1;
 
 if (!$isAdminUser) return;
 
-if ($userId == 1) echo '<input type="hidden" name="adm" id="adm" value="1">';
+if ($userId == 1) echo '<input type="hidden" name="adm" value="1">';
 
 $usersEditPage = !empty($dataPage) && $dataPage == 'users/edit';
 

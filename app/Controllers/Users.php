@@ -6,9 +6,9 @@ namespace App\Controllers;
 
 use App\Classes\ImagesHandler;
 use App\Classes\Pagination;
-use App\Request\RequestData;
-use App\Models\User;
-use App\Request\UserValidation;
+
+use App\Request\ImageRequest;
+use App\Request\UserRequest;
 use Core\Controller;
 use Core\View;
 
@@ -17,7 +17,6 @@ class Users extends Controller
     public $model;
     public $imagesHandler;
     public $dataPage = 'users';
-    public $userAuth;
 
     public function __construct()
     {
@@ -47,6 +46,33 @@ class Users extends Controller
         $data['img_name'] = $imgName;
 
         return $data;
+    }
+
+    public function status($requestData)
+    {
+        $requestData = array_keys($requestData);
+
+        $id = indexParamExistsOrDefault($requestData, 1);
+
+        if (!$id) die('User id is missing...');
+
+        $status = indexParamExistsOrDefault($requestData, 2);
+
+        $isAdminUser =
+            (isset($_SESSION['adm_id']) && $_SESSION['adm_id'] == 1)
+            || (isset($_SESSION['user_id'])) && $id == 1;
+
+        if (!$isAdminUser) return redirect('home');
+
+        $this->model->updateStatus($id, $status);
+
+        $message =  ($status == 1)
+            ? 'Usuário ativado com sucesso'
+            : 'Usuário desativado com sucesso!';
+
+        flash('register_success', $message);
+
+        redirect('users');
     }
 
     public function index($requestData)
@@ -104,12 +130,12 @@ class Users extends Controller
         if (isSubmittedInSession() || !$isPostRequest) return redirect('users');
 
         $requestedData = array_merge_recursive(
-            UserValidation::nameFieldsValidation(),
-            UserValidation::validatePasswords(),
-            UserValidation::validateEmailInput(),
+            UserRequest::nameFieldsValidation(),
+            UserRequest::validatePasswords(),
+            UserRequest::validateEmailInput(),
         );
 
-        $adm = indexParamExistsOrDefault(UserValidation::getPostData(), 'adm', 0);
+        $adm = indexParamExistsOrDefault(UserRequest::getPostData(), 'adm', 0);
 
         $data = indexParamExistsOrDefault($requestedData, 'data');
 
@@ -123,7 +149,7 @@ class Users extends Controller
 
         if (!$getFirstErrorSign) {
 
-            $errorData = array_merge($errorData, UserValidation::existenceValidation()['errorData']);
+            $errorData = array_merge($errorData, UserRequest::existenceValidation()['errorData']);
         }
 
         $isErrorResult = $errorData['error'] == true;
@@ -147,33 +173,6 @@ class Users extends Controller
         addSubmittedToSession();
 
         return redirect('users');
-    }
-
-    public function status($requestData)
-    {
-        $requestData = array_keys($requestData);
-
-        $id = indexParamExistsOrDefault($requestData, 1);
-
-        if (!$id) die('User id is missing...');
-
-        $status = indexParamExistsOrDefault($requestData, 2);
-
-        $isAdminUser =
-            (isset($_SESSION['adm_id']) && $_SESSION['adm_id'] == 1)
-            || (isset($_SESSION['user_id'])) && $id == 1;
-
-        if (!$isAdminUser) return redirect('home');
-
-        $this->model->updateStatus($id, $status);
-
-        $message =  ($status == 1)
-            ? 'Usuário ativado com sucesso'
-            : 'Usuário desativado com sucesso!';
-
-        flash('register_success', $message);
-
-        redirect('users');
     }
 
     public function show($requestData)
@@ -231,48 +230,49 @@ class Users extends Controller
             && $_SESSION['user_id'] == $userId
             || $_SESSION['adm_id'] == 1 && $userId != 1;
 
-        if ($isUserAdminOne) {
-
-            View::render('users/edit.php', [
-                'title' => 'Editar perfil de ' . $data->name,
-                'dataPage' => 'users/edit',
-                'data' => $data,
-                'error' => $errorData
-            ]);
-        }
-
         if (!$isUserAdminOne) {
 
             if (!$isSameLoggedUser) return redirect('users');
-
-            View::render('users/edit.php', [
-                'title' => 'Editar perfil de ' . $data->name,
-                'data' => $data,
-                'error' => $errorData
-            ]);
         }
+        
+        View::render('users/edit.php', [
+            'title' => 'Editar perfil de ' . $data->name,
+            'dataPage' => 'users/edit',
+            'data' => $data,
+            'error' => $errorData
+        ]);
     }
 
     public function update()
     {
         $this->ifNotAuthRedirect();
 
-        // Process Form
-        $postResultData = $this->getRequestData();
+        $adm = indexParamExistsOrDefault(UserRequest::getPostData(), 'adm', 0);
 
-        $postResultData =
-            ImagesHandler::validateImageParams($postResultData);
+        $id = indexParamExistsOrDefault(UserRequest::getPostData(), 'id');
 
-        $data = indexParamExistsOrDefault($postResultData, 'data');
+        $bio = indexParamExistsOrDefault(UserRequest::getPostData(), 'bio');
+
+        $requestedData = array_merge_recursive(
+            UserRequest::nameFieldsValidation(),
+            ImageRequest::validateImageParams(),
+        );
+
+        $data = indexParamExistsOrDefault($requestedData, 'data');
+
+        if ($id) $data['id'] = $id;
+        if ($bio) $data['bio'] = $bio;
+        $data['adm'] = $adm;
 
         $errorData =
-            indexParamExistsOrDefault($postResultData, 'errorData');
+            indexParamExistsOrDefault($requestedData, 'errorData');
 
-        $id = $data['id'];
+        $getFirstErrorSign = isset($errorData['error'])
+            && array_filter($errorData['error'], function ($item) {
+                return $item && $item === true;
+            });
 
-        $isErrorResult = $errorData['error'] == true;
-
-        if ($isErrorResult) {
+        if ($getFirstErrorSign) {
 
             return $this->edit([
                 'edit' => $id,
