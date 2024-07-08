@@ -37,7 +37,7 @@ if (!$hamburgers) return;
         <span style="display:none;" id="inputItens">
           <input type="hidden" name="id" value="<?= $hamburgerItemId ?>">
 
-          <input type="hidden" name="id_category" value="<?= $hamburgerItemIdCategory ?>">
+          <input type="hidden" name="product_id_category" value="<?= $hamburgerItemIdCategory ?>">
 
           <input type="hidden" name="product_name" value="<?= $hamburgerProductName ?>">
 

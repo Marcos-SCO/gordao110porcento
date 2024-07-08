@@ -59,13 +59,13 @@ class RequestData
 
     $productDescription = indexParamExistsOrDefault($post, 'product_description');
 
-    $price = verifyValue($post, 'price');
+    // $price = verifyValue($post, 'price');
 
-    if ($price) {
+    // if ($price) {
 
-      $price = trim(preg_replace("/[^0-9,.]+/i", "", $price));
-      $price = str_replace(",", ".", $price);
-    }
+    //   $price = trim(preg_replace("/[^0-9,.]+/i", "", $price));
+    //   $price = str_replace(",", ".", $price);
+    // }
 
 
     $imgFiles = indexParamExistsOrDefault($_FILES, 'img');
@@ -94,13 +94,13 @@ class RequestData
 
     // $confirmPasswordError = indexParamExistsOrDefault($post, 'confirm_password_error');
 
-    $postIdCategoryError = trim(indexParamExistsOrDefault($post, 'id_category_error', ''));
+    // $postIdCategoryError = trim(indexParamExistsOrDefault($post, 'id_category_error', ''));
 
-    $productNameError = trim(indexParamExistsOrDefault($post, 'product_name_error', ''));
+    // $productNameError = trim(indexParamExistsOrDefault($post, 'product_name_error', ''));
 
-    $productDescriptionError = trim(indexParamExistsOrDefault($post, 'product_description_error', ''));
+    // $productDescriptionError = trim(indexParamExistsOrDefault($post, 'product_description_error', ''));
 
-    $priceError = trim(indexParamExistsOrDefault($post, 'price_error', ''));
+    // $priceError = trim(indexParamExistsOrDefault($post, 'price_error', ''));
 
     $titleError =
       trim(indexParamExistsOrDefault($post, 'title_error', ''));
@@ -126,7 +126,7 @@ class RequestData
       'bio' => $bio,
 
       'user_id' => $userId,
-      'id_category' => $postIdCategory,
+      // 'product_id_category' => $productIdCategory,
 
       // 'category_name' => $categoryName,
       // 'category_description' => $categoryDescription,
@@ -135,7 +135,7 @@ class RequestData
       'body' => $body,
       'product_name' => $productName,
       'product_description' => $productDescription,
-      'price' => $price,
+      // 'price' => $price,
 
       'img_title' => $imgGalleryDescriptionTitle,
 

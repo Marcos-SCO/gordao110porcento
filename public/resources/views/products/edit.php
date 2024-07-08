@@ -16,8 +16,8 @@
 
         <!-- Tipo de categoria -->
         <div class="form-group">
-            <label for="id_category">Categoria</label>
-            <select name="id_category" id="id_category">
+            <label for="product_id_category">Categoria</label>
+            <select name="product_id_category" id="product_id_category">
                 <optgroup label="Tipo de usuário">
                     <?php foreach ($categories as $category) {
 

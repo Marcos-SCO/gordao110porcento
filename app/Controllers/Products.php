@@ -56,7 +56,7 @@ class Products extends Controller
             }
         }
 
-        if (empty($data['id_category'])) {
+        if (empty($data['product_id_category'])) {
             $errors['id_category_error'] = "Escolha a categoria";
             $errors['error'] = true;
         }
@@ -144,7 +144,7 @@ class Products extends Controller
         if ($isErrorResult) return $this->create($data, $errorData);
 
         // Create a folder in products
-        $imageDynamicPath = $this->imagesHandler->getNewImgDynamicPath('products', $data['id_category']);
+        $imageDynamicPath = $this->imagesHandler->getNewImgDynamicPath('products', $data['product_id_category']);
 
         $this->imagesHandler->moveUpload($imageDynamicPath);
 
@@ -208,7 +208,7 @@ class Products extends Controller
     public function moveUploadImageFolder($data)
     {
         $id = $data['id'];
-        $postIdCategory = $data['id_category'];
+        $postIdCategory = $data['product_id_category'];
 
         $result = $this->model->getProduct($id, $postIdCategory);
 
@@ -316,7 +316,7 @@ class Products extends Controller
 
         $id = $data['id'];
 
-        $idCategory = $data['id_category'];
+        $idCategory = $data['product_id_category'];
 
         $this->model->deleteProduct('products', ['id' => $id]);
 

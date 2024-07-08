@@ -34,7 +34,7 @@ if (!$pizzas) return;
       
         <span style="display:none;" id="inputItens">
           <input type="hidden" name="id" value="<?= $pizzaItemId ?>">
-          <input type="hidden" name="id_category" value="<?= $pizzaItemIdCategory ?>">
+          <input type="hidden" name="product_id_category" value="<?= $pizzaItemIdCategory ?>">
           <input type="hidden" name="product_name" value="<?= $pizzaItemProductName ?>">
           <input type="hidden" name="category_name" value="<?= ($pizzaItemIdCategory == 1) ? 'Hambúrgueres' : 'Pizzas' ?>">
           <input type="hidden" name="product_description" value="<?= $productDescription ?>">
