@@ -4,7 +4,7 @@ namespace App\Request;
 
 use App\Models\User;
 
-class UserValidation extends RequestData
+class UserRequest extends RequestData
 {
 
   public static function nameFieldsValidation()
