@@ -1,3 +1,11 @@
+<?php
+
+$formActionUrl = $BASE  . '/categories/store';
+
+$imgName = isset($img) ? indexParamExistsOrDefault($img, 'name') : false;
+
+?>
+
 <header class="categoryHeader productHeader imgBackgroundArea">
     <span>
         <h1>Adicionar Categoria<h1>
@@ -9,7 +17,7 @@
         <h2>Adicionar Categoria</h2>
     </header>
 
-    <form action="<?= $BASE ?>/categories/store" method="post" enctype="multipart/form-data">
+    <form action="<?= $formActionUrl ?>" method="post" enctype="multipart/form-data" hx-post="<?= $formActionUrl ?>" hx-target="body" hx-swap="show:body:top">
 
         <div class="form-group">
             <label for="category_name">Nome da categoria<sup>*</sup></label>
@@ -34,7 +42,9 @@
         <div class="form-group">
             <label for="img">Coloque a imagem</label>
 
-            <input type="file" name="img" id="img" class="form-control form-control-lg <?= isset($error['img_error']) && $error['img_error'] != '' ? 'is-invalid' : '' ?>" value="<?= $img['name'] ?? '' ?>">
+            <input type="file" name="img" id="img" class="form-control form-control-lg <?= isset($error['img_error']) && $error['img_error'] != '' ? 'is-invalid' : '' ?>" value="<?= $imgName ?? '' ?>">
+
+            <input type="hidden" name="img" value="<?= $imgName; ?>">
 
             <span class="invalid-feedback">
                 <?= $error['img_error'] ?? '' ?>
