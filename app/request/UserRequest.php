@@ -52,26 +52,22 @@ class UserRequest extends RequestData
 
     if (empty($password)) {
 
-      // $errorData['error'] = true;
       $errorData['password_error'] = "Digite a senha";
     }
 
     if ($password && strlen($password) < 6) {
 
-      // $errorData['error'] = true;
       $errorData['password_error'] = "Senha precisa no mínimo de ser maior que 6 caracteres";
     }
 
     // Password
     if (empty($confirmPassword)) {
 
-      // $errorData['error'] = true;
       $errorData['confirm_password_error'] = "Confirme a senha";
     }
 
     if (!empty($password) && $password != $confirmPassword) {
 
-      // $errorData['error'] = true;
       $errorData['confirm_password_error'] = "Senhas estão diferentes";
     }
 
@@ -94,7 +90,6 @@ class UserRequest extends RequestData
     if ($userExistsData) {
 
       $errorData['email_error'] = "Já existe um usuário com esse E-mail";
-      // $errorData['error'] = true;
     }
 
     if (count($errorData) > 1) $errorData['error'] = true;
@@ -118,13 +113,11 @@ class UserRequest extends RequestData
 
     if (empty($email)) {
 
-      // $errorData['error'] = true;
       $errorData['email_error'] = "Digite o E-mail";
     }
 
     if (!empty($email) && !$isValidEmail) {
 
-      // $errorData['error'] = true;
       $errorData['email_error'] = "E-mail inválido";
     }
 

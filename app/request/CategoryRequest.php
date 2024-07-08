@@ -19,16 +19,15 @@ class CategoryRequest extends RequestData
     if ($categoryName) $data['category_name'] = trim($categoryName);
     if ($categoryDescription) $data['category_description'] = trim($categoryDescription);
 
-
     if (empty($data['category_name'])) {
       $errorData['category_name_error'] = "Coloque o nome da categoria";
-      $errorData['error'] = true;
     }
 
     if (empty($data['category_description'])) {
       $errorData['category_description_error'] = "Coloque uma descrição para imagem";
-      $errorData['error'] = true;
     }
+
+    if (count($errorData) > 1) $errorData['error'] = true;
 
     return ['data' => $data, 'errorData' => $errorData];
   }
