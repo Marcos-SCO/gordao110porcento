@@ -154,7 +154,7 @@ class ImagesHandler
       $this->deleteFolder($table, $id, $categoryId);
       // Create folder
 
-      $uploadDir = $this->createCategoryItemFolder($table, $id, $categoryId);
+      $uploadDir = $this->createCategoryItemFolder($table, $categoryId, $id);
     }
 
     $picProfile = $imgName;

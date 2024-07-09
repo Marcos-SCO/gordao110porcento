@@ -30,18 +30,25 @@ class DynamicLinks
 
     $isProductTable = $table == 'products';
 
-    $idCategory = $isProductTable
-      ?  $data->id_category
-      :  $data->id;
+    $idCategoryName = 'id_category';
+    $idCategory = $data->id;
+
+    if ($isProductTable) {
+
+      $idCategoryName = 'product_id_category';
+      $idCategory = $data->id_category;
+    }
 
     echo "<div class='editDelete d-flex p-1 flex-wrap'>
                <a href='{$BASE}/{$table}/edit/{$data->id}' class='btn btn-warning m-1' style='height:38px'>Editar</a>
 
                <form action='{$BASE}/{$table}/$verb/' method='post'>
 
+                  <input type='hidden' name='user_id' value='{$userId}'>
+
                   <input type='hidden' name='id' value='{$data->id}'>
 
-                  <input type='hidden' name='id_category' value='{$idCategory}'>
+                  <input type='hidden' name='{$idCategoryName}' value='{$idCategory}'>
 
                   <button onclick=\"return confirm('$text');\" class='btn btn-danger m-1'>Deletar</button>
                </form>

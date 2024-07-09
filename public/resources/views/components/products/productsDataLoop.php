@@ -9,9 +9,9 @@ $isSectionActiveUser =
 
 foreach ($products as $data) :
 
-  $dataIdCategory = objParamExistsOrDefault($data, 'id_category');
+  $productIdCategory = objParamExistsOrDefault($data, 'id_category');
 
-  if (!$dataIdCategory) continue;
+  if (!$productIdCategory) continue;
 
   $loopCount += 1;
 
@@ -21,7 +21,7 @@ foreach ($products as $data) :
 
   $productName = objParamExistsOrDefault($data, 'product_name');
 
-  $categoryUrlLink = $BASE . '/categories/show/' . $dataIdCategory;
+  $categoryUrlLink = $BASE . '/categories/show/' . $productIdCategory;
 
   $productDescription = objParamExistsOrDefault($data, 'product_description');
   $productPrice = objParamExistsOrDefault($data, 'price');
@@ -33,7 +33,7 @@ foreach ($products as $data) :
     <a href='<?= $productUrlLink; ?>' hx-boost="true" <?= getHtmxMainTagAttributes(); ?>>
       <?php
 
-      $imgPath = imgOrDefault('products', $dataItemImg, $dataItemId, "/category_$dataIdCategory");
+      $imgPath = imgOrDefault('products', $dataItemImg, $dataItemId, "/category_$productIdCategory");
 
       $imgLoading =
         $loopCount <= 4 ? 'eager' : 'lazy';
@@ -61,7 +61,7 @@ foreach ($products as $data) :
         // Get category name from categories table
         foreach ($categoryElements as $element) {
 
-          if ($element->id == $dataIdCategory) {
+          if ($element->id == $productIdCategory) {
 
             $categoryName = $element->category_name;
             break;

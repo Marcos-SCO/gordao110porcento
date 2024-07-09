@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 namespace App\Controllers;
 
 use App\Classes\ImagesHandler;
@@ -10,12 +8,14 @@ use App\Classes\Pagination;
 use App\Request\ImageRequest;
 use App\Request\ProductRequest;
 use App\Request\RequestData;
-
+use App\Traits\ProductsImages;
 use Core\Controller;
 use Core\View;
 
 class Products extends Controller
 {
+    use ProductsImages;
+
     public $model;
     public $imagesHandler;
     public $dataPage = 'products';
@@ -26,65 +26,9 @@ class Products extends Controller
         $this->imagesHandler = new ImagesHandler();
     }
 
-    public function getRequestData()
-    {
-        // Sanitize data
-        $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_SPECIAL_CHARS);
-        if (!$post) return;
-
-        $postImg = indexParamExistsOrDefault($post, 'img', '');
-
-        $isEmptyPostImg = $postImg == "" || $postImg == false;
-
-        $validatedImgRequest =
-            $this->imagesHandler->verifySubmittedImgExtension();
-
-        $requestParams = RequestData::getRequestParams();
-
-        $data = indexParamExistsOrDefault($requestParams, 'data');
-        $errors = indexParamExistsOrDefault($requestParams, 'errorData');
-
-        if (!$isEmptyPostImg) $data['img_name'] = $postImg;
-
-        if ($data['img_files'] && $postImg == '') {
-
-            if (empty($data['img_files'])) {
-                $errors['img_error'] = "Insira uma imagem";
-                $errors['error'] = true;
-            }
-
-            if (!empty($data['img_files'])) {
-                $errors['img_error'] = $validatedImgRequest[1];
-                $errors['error'] = $validatedImgRequest[0];
-            }
-        }
-
-        if (empty($data['product_id_category'])) {
-            $errors['id_category_error'] = "Escolha a categoria";
-            $errors['error'] = true;
-        }
-
-        if (empty($data['product_name'])) {
-            $errors['product_name_error'] = "Coloque o nome do produto";
-            $errors['error'] = true;
-        }
-
-        if (empty($data['product_description'])) {
-            $errors['product_description_error'] = "Coloque a descrição do produto";
-            $errors['error'] = true;
-        }
-
-        if (empty($data['price'])) {
-            $errors['price_error'] = "Insira o preço do produto e somente valores monetários.";
-            $errors['error'] = true;
-        }
-
-        return ['data' => $data, 'errorData' => $errors];
-    }
-
     public function index($requestData)
     {
-        if (isset($_SESSION['submitted'])) unset($_SESSION['submitted']);
+        removeSubmittedFromSession();
 
         $table = 'products';
 
@@ -117,7 +61,7 @@ class Products extends Controller
     {
         $this->ifNotAuthRedirect();
 
-        if (isset($_SESSION['submitted'])) unset($_SESSION['submitted']);
+        removeSubmittedFromSession();
 
         $categories = $this->model->getCategories();
 
@@ -137,7 +81,7 @@ class Products extends Controller
 
         $requestedData = array_merge_recursive(
             ProductRequest::productFieldsValidation(),
-            ImageRequest::validateImageParams(true),
+            ImageRequest::validateImageParams(),
         );
 
         $data = indexParamExistsOrDefault($requestedData, 'data');
@@ -149,6 +93,9 @@ class Products extends Controller
             && array_filter($errorData['error'], function ($item) {
                 return $item && $item === true;
             });
+
+            // var_dump($data);
+            // die('monster');
 
         if ($getFirstErrorSign) {
 
@@ -219,72 +166,6 @@ class Products extends Controller
         ]);
     }
 
-    public function moveUploadImageFolder($data)
-    {
-        $id = $data['id'];
-        $productIdCategory = $data['product_id_category'];
-
-        $currentProductCategoryId = $data['current_product_category_id'];
-
-        $currentAndSelectedCategoriesAreEqual =
-            $currentProductCategoryId == $productIdCategory;
-
-        $result = $this->model->getProduct($id, $productIdCategory);
-
-        $resultId = $this->model->getProductId($id);
-
-        $imgFiles = indexParamExistsOrDefault($data, 'img_files');
-        $imgName = indexParamExistsOrDefault($imgFiles, 'name');
-        $tempName = indexParamExistsOrDefault($imgFiles, 'tmp_name');
-
-        $postImg = $data['post_img'];
-
-        if (!$result) {
-
-            $isEmptyImg = $imgName == "";
-
-            if ($isEmptyImg) $data['img_name'] = $postImg;
-
-            if (!$isEmptyImg) {
-
-                $createdFolderPath =
-                    $this->imagesHandler->createCategoryItemFolder('products', $id, $productIdCategory);
-
-                $this->imagesHandler->moveUpload($createdFolderPath);
-
-                $data['img_name'] = $imgName;
-
-                return $data;
-            }
-
-        }
-
-        // Create a new path
-        $fullPath = $this->imagesHandler->createCategoryItemFolder('products', $productIdCategory, $id) . $imgName;
-
-        $this->imagesHandler->moveUpload($fullPath);
-
-        // Get img data
-        $img = ($imgName !== '') ? $imgName : $postImg;
-
-        // Copy from the older to new one
-        $oldFolderPath = "../public/resources/img/products/category_{$resultId->id_category}/id_$id/$img";
-
-        $newFolderPath = "../public/resources/img/products/category_{$productIdCategory}/id_$id/$img";
-
-        if (file_exists($oldFolderPath)) {
-
-            copy($oldFolderPath, $newFolderPath);
-
-            // Delete old folder
-            if (!$currentAndSelectedCategoriesAreEqual) $this->imagesHandler->deleteFolder('products', $id, $resultId->id_category);
-        }
-
-        $data['img_name'] = $img;
-
-        return $data;
-    }
-
     public function update()
     {
         $this->ifNotAuthRedirect();
@@ -295,7 +176,7 @@ class Products extends Controller
 
         $requestedData = array_merge_recursive(
             ProductRequest::productFieldsValidation(),
-            ImageRequest::validateImageParams(true),
+            ImageRequest::validateImageParams(),
         );
 
         $data = indexParamExistsOrDefault($requestedData, 'data');
@@ -314,9 +195,6 @@ class Products extends Controller
 
             return $this->edit(['edit' => $id, 'error' => $errorData]);
         }
-
-        // var_dump($data);
-        // die('monster');
 
         $data = $this->moveUploadImageFolder($data);
 
@@ -340,20 +218,16 @@ class Products extends Controller
             return redirect('products');
         }
 
-        $postResultData = $this->getRequestData();
+        $id = indexParamExistsOrDefault(RequestData::getPostData(), 'id');
 
-        $data = indexParamExistsOrDefault($postResultData, 'data');
+        $productIdCategory = indexParamExistsOrDefault(RequestData::getPostData(), 'product_id_category');
 
-        $errorData =
-            indexParamExistsOrDefault($postResultData, 'errorData');
-
-        $id = $data['id'];
-
-        $idCategory = $data['product_id_category'];
+        if (!$id) die('No id was provided');
+        if (!$productIdCategory) die('No product_id_category was provided');
 
         $this->model->deleteProduct('products', ['id' => $id]);
 
-        $this->imagesHandler->deleteFolder('products', $id, $idCategory);
+        $this->imagesHandler->deleteFolder('products', $id, $productIdCategory);
 
         flash('post_message', 'Produto deletado com sucesso!');
 
