@@ -4,7 +4,9 @@ namespace App\Controllers;
 
 use App\Classes\ImagesHandler;
 use App\Classes\Pagination;
-use App\Request\RequestData;
+
+use App\Request\GalleryRequest;
+use App\Request\ImageRequest;
 
 use App\Traits\GeneralImagesHandlerTrait;
 
@@ -23,45 +25,6 @@ class Gallery extends Controller
     {
         $this->model = $this->model('Gallery');
         $this->imagesHandler = new ImagesHandler();
-    }
-
-    public function getRequestData()
-    {
-        $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_SPECIAL_CHARS);
-        if (!$post) return;
-
-        $postImg = indexParamExistsOrDefault($post, 'img', '');
-        $isEmptyPostImg = $postImg == "" || $postImg == false;
-
-        $validatedImgRequest =
-            $this->imagesHandler->verifySubmittedImgExtension();
-
-        $requestParams = RequestData::getRequestParams();
-
-        $data = indexParamExistsOrDefault($requestParams, 'data');
-        $errors = indexParamExistsOrDefault($requestParams, 'errorData');
-
-        if (!$isEmptyPostImg) $data['img_name'] = $postImg;
-
-        if ($data['img_files'] && $postImg == '') {
-
-            if (empty($data['img_files'])) {
-                $errors['img_error'] = "Insira uma imagem";
-                $errors['error'] = true;
-            }
-
-            if (!empty($data['img_files'])) {
-                $errors['img_error'] = $validatedImgRequest[1];
-                $errors['error'] = $validatedImgRequest[0];
-            }
-        }
-
-        if (empty($data['img_title'])) {
-            $errors['img_title_error'] = "Coloque uma descrição para imagem";
-            $errors['error'] = true;
-        }
-
-        return ['data' => $data, 'errorData' => $errors];
     }
 
     public function index($requestData = 1, $flash = false)
@@ -107,16 +70,22 @@ class Gallery extends Controller
 
         if (isSubmittedInSession()) return redirect('gallery');
 
-        $requestedData = $this->getRequestData();
+        $requestedData = array_merge_recursive(
+            GalleryRequest::galleryFieldsValidation(),
+            ImageRequest::validateImageParams(),
+        );
 
         $data = indexParamExistsOrDefault($requestedData, 'data');
 
         $errorData =
             indexParamExistsOrDefault($requestedData, 'errorData');
 
-        $isErrorResult = $errorData['error'] == true;
+        $getFirstErrorSign = GalleryRequest::isErrorInRequest($errorData);
 
-        if ($isErrorResult) return $this->create($data, $errorData);
+        if ($getFirstErrorSign) {
+
+            return $this->create($data, $errorData);
+        }
 
         $addedImg = $this->model->addImg($data);
 
@@ -188,21 +157,29 @@ class Gallery extends Controller
     {
         $this->ifNotAuthRedirect();
 
-        $requestResultData = $this->getRequestData();
+        $id = indexParamExistsOrDefault(GalleryRequest::getPostData(), 'id');
 
-        $data = indexParamExistsOrDefault($requestResultData, 'data');
+        $requestedData = array_merge_recursive(
+            GalleryRequest::galleryFieldsValidation(),
+            ImageRequest::validateImageParams(),
+        );
 
-        $errorData = indexParamExistsOrDefault($requestResultData, 'errorData');
+        $data = indexParamExistsOrDefault($requestedData, 'data');
+        if ($id) $data['id'] = $id;
 
-        $id = $data['id'];
+        $errorData =
+            indexParamExistsOrDefault($requestedData, 'errorData');
 
         if (isSubmittedInSession()) return redirect('gallery');
 
-        $isErrorResult = $errorData['error'] == true;
+        $getFirstErrorSign = GalleryRequest::isErrorInRequest($errorData);
 
-        if ($isErrorResult) return $this->edit(['edit' => $id, 'error' => $errorData]);
+        if ($getFirstErrorSign) {
 
-        $data = $this->moveUploadImageFolder($data);
+            return $this->edit(['edit' => $id, 'error' => $errorData]);
+        }
+
+        $data = $this->moveUploadImageFolder('gallery', $data);
 
         $this->model->updateImg($data);
 
@@ -215,11 +192,7 @@ class Gallery extends Controller
     {
         if (isSubmittedInSession()) return redirect('gallery');
 
-        $requestResultData = $this->getRequestData();
-
-        $data = indexParamExistsOrDefault($requestResultData, 'data');
-
-        $id = $data['id'];
+        $id = indexParamExistsOrDefault(GalleryRequest::getPostData(), 'id');
 
         $this->model->deletePost('gallery', ['id' => $id]);
 
