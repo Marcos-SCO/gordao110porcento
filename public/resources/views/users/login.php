@@ -14,7 +14,7 @@ $formActionUrl = $BASE . '/login';
         <div class="form-container card card-body mt-5">
             <p>Preencha os campos</p>
 
-            <form action="<?= $formActionUrl ?>" method="post" hx-post="<?= $formActionUrl ?>" hx-target="body" hx-swap="outerHTML">
+            <form action="<?= $formActionUrl ?>" method="post" hax-post="<?= $formActionUrl ?>" hax-target="body" hax-swap="outerHTML">
 
                 <!-- Email -->
                 <div class="form-group mb-3">
@@ -31,7 +31,7 @@ $formActionUrl = $BASE . '/login';
                 <div class="form-group mb-4">
                     <label for="password" class="form-label">Senha: <sup>*</sup></label>
 
-                    <input type="password" name="password" id="password" class="form-control <?= isset($error['password_error']) && $error['password_error'] != '' ? 'is-invalid' : '' ?>">
+                    <input type="password" name="password" id="password" class="form-control <?= isset($error['password_error']) && $error['password_error'] != '' ? 'is-invalid' : '' ?>" value="<?= $data['password'] ?? '' ?>">
 
                     <span class="invalid-feedback">
                         <?= $error['password_error'] ?? '' ?>

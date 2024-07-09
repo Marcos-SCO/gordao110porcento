@@ -23,11 +23,17 @@ class UserAuth extends Model
 
     public function createUserSession($loggedInUser)
     {
-        $_SESSION['user_status'] = $loggedInUser->status;
-        $_SESSION['user_id'] = $loggedInUser->id;
-        $_SESSION['adm_id'] = $loggedInUser->adm;
-        $_SESSION['user_email'] = $loggedInUser->email;
-        $_SESSION['user_name'] = $loggedInUser->name;
+        $status = objParamExistsOrDefault($loggedInUser, 'status');
+        $id = objParamExistsOrDefault($loggedInUser, 'id');
+        $adm = objParamExistsOrDefault($loggedInUser, 'adm');
+        $email = objParamExistsOrDefault($loggedInUser, 'email');
+        $name = objParamExistsOrDefault($loggedInUser, 'name');
+
+        $_SESSION['user_status'] = $status;
+        $_SESSION['user_id'] = $id;
+        $_SESSION['adm_id'] = $adm;
+        $_SESSION['user_email'] = $email;
+        $_SESSION['user_name'] = $name;
     }
 
     public function destroy()
