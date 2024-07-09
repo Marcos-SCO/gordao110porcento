@@ -4,6 +4,9 @@ namespace App\Controllers;
 
 use App\Classes\ImagesHandler;
 use App\Classes\Pagination;
+
+use App\Request\ImageRequest;
+use App\Request\PostRequest;
 use App\Request\RequestData;
 
 use App\Traits\GeneralImagesHandlerTrait;
@@ -23,50 +26,6 @@ class Posts extends Controller
     {
         $this->model = $this->model('Post');
         $this->imagesHandler = new ImagesHandler();
-    }
-
-    public function getRequestData()
-    {
-        $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_SPECIAL_CHARS);
-        if (!$post) return;
-
-        $postImg = indexParamExistsOrDefault($post, 'img', '');
-        $isEmptyPostImg = $postImg == "" || $postImg == false;
-
-        $validatedImgRequest =
-            $this->imagesHandler->verifySubmittedImgExtension();
-
-        $requestParams = RequestData::getRequestParams();
-
-        $data = indexParamExistsOrDefault($requestParams, 'data');
-        $errors = indexParamExistsOrDefault($requestParams, 'errorData');
-
-        if (!$isEmptyPostImg) $data['img_name'] = $postImg;
-
-        if ($data['img_files'] && $postImg == '') {
-
-            if (empty($data['img_files'])) {
-                $errors['img_error'] = "Insira uma imagem";
-                $errors['error'] = true;
-            }
-
-            if (!empty($data['img_files'])) {
-                $errors['img_error'] = $validatedImgRequest[1];
-                $errors['error'] = $validatedImgRequest[0];
-            }
-        }
-
-        if (empty($data['title'])) {
-            $errors['title_error'] = "Coloque o título.";
-            $errors['error'] = true;
-        }
-
-        if (empty($data['body'])) {
-            $errors['body_error'] = "Preencha o campo de texto.";
-            $errors['error'] = true;
-        }
-
-        return ['data' => $data, 'errorData' => $errors];
     }
 
     public function index($requestData, $flash = false)
@@ -114,16 +73,25 @@ class Posts extends Controller
 
         if (isSubmittedInSession()) return redirect('posts');
 
-        $requestedData = $this->getRequestData();
+        $requestedData = array_merge_recursive(
+            PostRequest::postFieldsValidation(),
+            ImageRequest::validateImageParams(),
+        );
 
         $data = indexParamExistsOrDefault($requestedData, 'data');
 
         $errorData =
             indexParamExistsOrDefault($requestedData, 'errorData');
 
-        $isErrorResult = $errorData['error'] == true;
+        $getFirstErrorSign = isset($errorData['error'])
+            && array_filter($errorData['error'], function ($item) {
+                return $item && $item === true;
+            });
 
-        if ($isErrorResult) return $this->create($data, $errorData);
+        if ($getFirstErrorSign) {
+
+            return $this->create($data, $errorData);
+        }
 
         $addedPost = $this->model->addPost($data);
 
@@ -178,26 +146,36 @@ class Posts extends Controller
         ]);
     }
 
-    public function update($requestData)
+    public function update()
     {
         $this->ifNotAuthRedirect();
 
-        $postResultData = $this->getRequestData();
-
-        $data = indexParamExistsOrDefault($postResultData, 'data');
-
-        $id = $data['id'];
+        $id = indexParamExistsOrDefault(PostRequest::getPostData(), 'id');
 
         if (isSubmittedInSession()) return redirect('posts/show/' . $id);
 
+        $requestedData = array_merge_recursive(
+            PostRequest::postFieldsValidation(),
+            ImageRequest::validateImageParams(),
+        );
+
+        $data = indexParamExistsOrDefault($requestedData, 'data');
+        if ($id) $data['id'] = $id;
+
         $errorData =
-            indexParamExistsOrDefault($postResultData, 'errorData');
+            indexParamExistsOrDefault($requestedData, 'errorData');
 
-        $isErrorResult = $errorData['error'] == true;
+        $getFirstErrorSign = isset($errorData['error'])
+            && array_filter($errorData['error'], function ($item) {
+                return $item && $item === true;
+            });
 
-        if ($isErrorResult) return $this->edit(['edit' => $id, 'error' => $errorData]);
+        if ($getFirstErrorSign) {
 
-        $data = $this->moveUploadImageFolder($data);
+            return $this->edit(['edit' => $id, 'error' => $errorData]);
+        }
+
+        $data = $this->moveUploadImageFolder('posts', $data);
 
         $this->model->updatePost($data);
 
@@ -212,14 +190,7 @@ class Posts extends Controller
     {
         if (isSubmittedInSession()) return redirect('posts');
 
-        $postResultData = $this->getRequestData();
-
-        $data = indexParamExistsOrDefault($postResultData, 'data');
-
-        $errorData =
-            indexParamExistsOrDefault($postResultData, 'errorData');
-
-        $id = $data['id'];
+        $id = indexParamExistsOrDefault(PostRequest::getPostData(), 'id');
 
         $this->model->deletePost('posts', ['id' => $id]);
 

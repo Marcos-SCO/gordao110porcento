@@ -17,10 +17,10 @@ class RequestData
     $post = self::getPostData();
     if (!$post) return;
 
-    $notAllowedTags = array('<script>', '<a>');
+    // $notAllowedTags = array('<script>', '<a>');
 
-    $body = trim(indexParamExistsOrDefault($post, 'body', ''));
-    $body = str_replace($notAllowedTags, '', $body);
+    // $body = trim(indexParamExistsOrDefault($post, 'body', ''));
+    // $body = str_replace($notAllowedTags, '', $body);
 
 
     $id = indexParamExistsOrDefault($post, 'id');
@@ -52,7 +52,7 @@ class RequestData
 
     // $postIdCategory = indexParamExistsOrDefault($post, 'id_category');
 
-    $title = trim(indexParamExistsOrDefault($post, 'title', ''));
+    // $title = trim(indexParamExistsOrDefault($post, 'title', ''));
 
 
     // $productName = indexParamExistsOrDefault($post, 'product_name');
@@ -102,8 +102,8 @@ class RequestData
 
     // $priceError = trim(indexParamExistsOrDefault($post, 'price_error', ''));
 
-    $titleError =
-      trim(indexParamExistsOrDefault($post, 'title_error', ''));
+    // $titleError =
+    //   trim(indexParamExistsOrDefault($post, 'title_error', ''));
 
     $bodyError =
       trim(indexParamExistsOrDefault($post, 'body_error', ''));
@@ -131,7 +131,7 @@ class RequestData
       // 'category_name' => $categoryName,
       // 'category_description' => $categoryDescription,
 
-      'title' => $title,
+      // 'title' => $title,
       'body' => $body,
       // 'product_name' => $productName,
       // 'product_description' => $productDescription,
