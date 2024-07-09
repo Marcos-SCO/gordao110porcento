@@ -23,9 +23,6 @@ class ProductRequest extends RequestData
     if ($productName) $data['product_name'] = $productName;
     if ($productDescription) $data['product_description'] = $productDescription;
 
-    // var_dump($post);
-    // die();
-
     if ($price) {
 
       $price = trim(preg_replace("/[^0-9,.]+/i", "", $price));
