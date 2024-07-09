@@ -8,13 +8,15 @@ use App\Classes\Pagination;
 use App\Request\ImageRequest;
 use App\Request\ProductRequest;
 use App\Request\RequestData;
-use App\Traits\ProductsImages;
+
+use App\Traits\ProductsImagesHandlerTrait;
+
 use Core\Controller;
 use Core\View;
 
 class Products extends Controller
 {
-    use ProductsImages;
+    use ProductsImagesHandlerTrait;
 
     public $model;
     public $imagesHandler;

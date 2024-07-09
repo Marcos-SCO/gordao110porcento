@@ -2,7 +2,7 @@
 
 namespace App\Traits;
 
-trait ProductsImages
+trait ProductsImagesHandlerTrait
 {
   
   public function moveUploadImageFolder($data)

@@ -5,11 +5,16 @@ namespace App\Controllers;
 use App\Classes\ImagesHandler;
 use App\Classes\Pagination;
 use App\Request\RequestData;
+
+use App\Traits\GeneralImagesHandlerTrait;
+
 use Core\Controller;
 use Core\View;
 
 class Posts extends Controller
 {
+    use GeneralImagesHandlerTrait;
+
     public $model;
     public $imagesHandler;
     public $dataPage = 'posts';
@@ -55,37 +60,13 @@ class Posts extends Controller
             $errors['title_error'] = "Coloque o título.";
             $errors['error'] = true;
         }
-        
+
         if (empty($data['body'])) {
             $errors['body_error'] = "Preencha o campo de texto.";
             $errors['error'] = true;
         }
 
         return ['data' => $data, 'errorData' => $errors];
-    }
-
-    public function moveUploadImageFolder($data, $lastId = false)
-    {
-        if ($lastId) $data['id'] = $lastId;
-
-        $id = $data['id'];
-
-        $imgFiles = indexParamExistsOrDefault($data, 'img_files');
-
-        $imgName = indexParamExistsOrDefault($imgFiles, 'name');
-
-        $isEmptyImg = $imgName == "";
-
-        if ($isEmptyImg) return $data;
-
-        $fullPath =
-            $this->imagesHandler->imgFolderCreate('posts', $id, $imgName);
-
-        $this->imagesHandler->moveUpload($fullPath);
-
-        $data['img_name'] = $imgName;
-
-        return $data;
     }
 
     public function index($requestData, $flash = false)
@@ -150,7 +131,7 @@ class Posts extends Controller
 
         if (!$addedPost) die('Something went wrong when adding the post...');
 
-        $this->moveUploadImageFolder($data, $lastInsertedPostId);
+        $this->moveUploadImageFolder('posts', $data, $lastInsertedPostId);
 
         addSubmittedToSession();
 

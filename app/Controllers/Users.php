@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 namespace App\Controllers;
 
 use App\Classes\ImagesHandler;
@@ -9,11 +7,16 @@ use App\Classes\Pagination;
 
 use App\Request\ImageRequest;
 use App\Request\UserRequest;
+
+use App\Traits\GeneralImagesHandlerTrait;
+
 use Core\Controller;
 use Core\View;
 
 class Users extends Controller
 {
+    use GeneralImagesHandlerTrait;
+
     public $model;
     public $imagesHandler;
     public $dataPage = 'users';
@@ -22,30 +25,6 @@ class Users extends Controller
     {
         $this->model = $this->model('User');
         $this->imagesHandler = new ImagesHandler();
-    }
-
-    public function moveUploadImageFolder($data, $lastId = false)
-    {
-        if ($lastId) $data['id'] = $lastId;
-
-        $id = $data['id'];
-
-        $imgFiles = indexParamExistsOrDefault($data, 'img_files');
-
-        $imgName = indexParamExistsOrDefault($imgFiles, 'name');
-
-        $isEmptyImg = $imgName == "";
-
-        if ($isEmptyImg) return $data;
-
-        $fullPath =
-            $this->imagesHandler->imgFolderCreate('users', $id, $imgName);
-
-        $this->imagesHandler->moveUpload($fullPath);
-
-        $data['img_name'] = $imgName;
-
-        return $data;
     }
 
     public function status($requestData)
@@ -234,7 +213,7 @@ class Users extends Controller
 
             if (!$isSameLoggedUser) return redirect('users');
         }
-        
+
         View::render('users/edit.php', [
             'title' => 'Editar perfil de ' . $data->name,
             'dataPage' => 'users/edit',
@@ -251,7 +230,7 @@ class Users extends Controller
 
         $id = indexParamExistsOrDefault(UserRequest::getPostData(), 'id');
 
-        $bio = indexParamExistsOrDefault(UserRequest::getPostData(), 'bio');
+        $bio = indexParamExistsOrDefault(UserRequest::getPostData(), 'bio', '');
 
         $requestedData = array_merge_recursive(
             UserRequest::nameFieldsValidation(),
@@ -261,7 +240,7 @@ class Users extends Controller
         $data = indexParamExistsOrDefault($requestedData, 'data');
 
         if ($id) $data['id'] = $id;
-        if ($bio) $data['bio'] = $bio;
+        if ($bio || $bio == '') $data['bio'] = $bio;
         $data['adm'] = $adm;
 
         $errorData =
@@ -281,7 +260,7 @@ class Users extends Controller
             ]);
         }
 
-        $data = $this->moveUploadImageFolder($data);
+        $data = $this->moveUploadImageFolder('users', $data);
 
         $this->model->updateUser($data);
 

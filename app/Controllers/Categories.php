@@ -10,11 +10,15 @@ use App\Request\CategoryRequest;
 use App\Request\ImageRequest;
 use App\Request\RequestData;
 
+use App\Traits\GeneralImagesHandlerTrait;
+
 use Core\Controller;
 use Core\View;
 
 class Categories extends Controller
 {
+    use GeneralImagesHandlerTrait;
+
     public $model;
     public $imagesHandler;
     public $dataPage = 'categories';
@@ -23,30 +27,6 @@ class Categories extends Controller
     {
         $this->model = $this->model('Category');
         $this->imagesHandler = new ImagesHandler();
-    }
-
-    public function moveUploadImageFolder($data, $lastId = false)
-    {
-        if ($lastId) $data['id'] = $lastId;
-
-        $id = $data['id'];
-
-        $imgFiles = indexParamExistsOrDefault($data, 'img_files');
-
-        $imgName = indexParamExistsOrDefault($imgFiles, 'name');
-
-        $isEmptyImg = $imgName == "";
-
-        if ($isEmptyImg) return $data;
-
-        $fullPath =
-            $this->imagesHandler->imgFolderCreate('categories', $id, $imgName);
-
-        $this->imagesHandler->moveUpload($fullPath);
-
-        $data['img_name'] = $imgName;
-
-        return $data;
     }
 
     public function index($requestData = 1, $flash = false)
@@ -162,7 +142,7 @@ class Categories extends Controller
 
         $lastInsertedPostId = $this->model->lastId();
 
-        $this->moveUploadImageFolder($data, $lastInsertedPostId);
+        $this->moveUploadImageFolder('categories', $data, $lastInsertedPostId);
 
         addSubmittedToSession();
 

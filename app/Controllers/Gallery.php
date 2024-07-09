@@ -1,18 +1,20 @@
 <?php
 
-declare(strict_types=1);
-
 namespace App\Controllers;
 
 use App\Classes\ImagesHandler;
 use App\Classes\Pagination;
 use App\Request\RequestData;
 
+use App\Traits\GeneralImagesHandlerTrait;
+
 use Core\Controller;
 use Core\View;
 
 class Gallery extends Controller
 {
+    use GeneralImagesHandlerTrait;
+
     public $model;
     public $imagesHandler;
     public $dataPage = 'gallery';
@@ -60,30 +62,6 @@ class Gallery extends Controller
         }
 
         return ['data' => $data, 'errorData' => $errors];
-    }
-
-    public function moveUploadImageFolder($data, $lastId = false)
-    {
-        if ($lastId) $data['id'] = $lastId;
-
-        $id = $data['id'];
-
-        $imgFiles = indexParamExistsOrDefault($data, 'img_files');
-
-        $imgName = indexParamExistsOrDefault($imgFiles, 'name');
-
-        $isEmptyImg = $imgName == "";
-
-        if ($isEmptyImg) return $data;
-
-        $fullPath =
-            $this->imagesHandler->imgFolderCreate('gallery', $id, $imgName);
-
-        $this->imagesHandler->moveUpload($fullPath);
-
-        $data['img_name'] = $imgName;
-
-        return $data;
     }
 
     public function index($requestData = 1, $flash = false)
@@ -146,7 +124,7 @@ class Gallery extends Controller
 
         $lastInsertedPostId = $this->model->lastId();
 
-        $this->moveUploadImageFolder($data, $lastInsertedPostId);
+        $this->moveUploadImageFolder('gallery', $data, $lastInsertedPostId);
 
         addSubmittedToSession();
 
