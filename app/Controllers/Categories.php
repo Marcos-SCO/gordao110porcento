@@ -138,7 +138,7 @@ class Categories extends Controller
 
         $requestedData = array_merge_recursive(
             CategoryRequest::categoryFieldsValidation(),
-            ImageRequest::validateImageParams(true),
+            ImageRequest::validateImageParams(),
         );
 
         $data = indexParamExistsOrDefault($requestedData, 'data');
@@ -200,7 +200,7 @@ class Categories extends Controller
 
         $requestedData = array_merge_recursive(
             CategoryRequest::categoryFieldsValidation(),
-            ImageRequest::validateImageParams(true),
+            ImageRequest::validateImageParams(),
         );
 
         $data = indexParamExistsOrDefault($requestedData, 'data');

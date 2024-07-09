@@ -7,7 +7,7 @@ use App\Classes\ImagesHandler;
 class ImageRequest extends RequestData
 {
 
-  public static function validateImageParams($imageIsRequired = false)
+  public static function validateImageParams($imageIsRequired = true)
   {
     $post = self::getPostData();
 

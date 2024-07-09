@@ -255,7 +255,7 @@ class Users extends Controller
 
         $requestedData = array_merge_recursive(
             UserRequest::nameFieldsValidation(),
-            ImageRequest::validateImageParams(),
+            ImageRequest::validateImageParams(false),
         );
 
         $data = indexParamExistsOrDefault($requestedData, 'data');
