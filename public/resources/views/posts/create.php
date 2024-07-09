@@ -1,3 +1,13 @@
+<?php 
+
+$formActionUrl = $BASE  . '/posts/store';
+
+$title = indexParamExistsOrDefault($data, 'title');
+$name = indexParamExistsOrDefault($data, 'name');
+$body = indexParamExistsOrDefault($data, 'body');
+
+?>
+
 <header class="imgBackgroundArea homeBlog">
     <span style="z-index:1">
         <h1>Criar uma postagem<h1>
@@ -10,13 +20,13 @@
         <p>Crie uma postagem com esse formulário</p>
     </header>
 
-    <form action="<?=$BASE?>/posts/store" method="post" enctype="multipart/form-data">
+    <form action="<?= $formActionUrl ?>" method="post" enctype="multipart/form-data" hx-post="<?= $formActionUrl ?>" hx-target="body" hx-swap="show:body:top">
+
         <div class="form-group">
             <label for="title">Titulo<sup>*</sup></label>
             
-            <input type="text" name="title" id="title"
-                class="form-control form-control-lg <?= isset($error['title_error']) && $error['title_error'] != '' ? 'is-invalid' : '' ?>"
-                value="<?= $data['title'] ?? '' ?>">
+            <input type="text" name="title" id="title" class="form-control form-control-lg <?= isset($error['title_error']) && $error['title_error'] != '' ? 'is-invalid' : '' ?>" value="<?= $title ?? '' ?>">
+
             <span class="invalid-feedback">
                 <?= $error['title_error'] ?? '' ?>
             </span>
@@ -24,7 +34,9 @@
 
         <div class="form-group">
             <label for="img">Imagem da postagem</label>
-            <input type="file" name="img" id="img" class="form-control form-control-lg <?= isset($error['img_error']) && $error['img_error'] != '' ? 'is-invalid' : '' ?>" value="<?= $img['name'] ?? '' ?>">
+
+            <input type="file" name="img" id="img" class="form-control form-control-lg <?= isset($error['img_error']) && $error['img_error'] != '' ? 'is-invalid' : '' ?>" value="<?= $name ?? '' ?>">
+
             <span class="invalid-feedback">
                 <?= $error['img_error'] ?? '' ?>
             </span>
@@ -34,8 +46,9 @@
 
         <div class="form-group">
             <label for="body">Digite o texto: <sup>*</sup></label>
+
             <textarea name="body" id="tinyMCE"
-                class="form-control form-control-lg <?= isset($error['body_error']) && $error['body_error'] != '' ? 'is-invalid' : '' ?>"><?= $data['body'] ?? '' ?></textarea>
+                class="form-control form-control-lg <?= isset($error['body_error']) && $error['body_error'] != '' ? 'is-invalid' : '' ?>"><?= $body ?? '' ?></textarea>
 
             <span class="invalid-feedback">
                 <?=  $error['body_error'] ?? '' ?>
