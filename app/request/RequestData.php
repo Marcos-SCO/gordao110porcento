@@ -12,6 +12,20 @@ class RequestData
     return $post;
   }
 
+  public static function isErrorInRequest(array $errorData)
+  {
+    if (!isset($errorData['error'])) return false;
+
+    $isErrorArray = is_array($errorData['error']);
+    if (!$isErrorArray) return $errorData['error'];
+    
+    $foundError = isset($errorData['error']) && array_filter($errorData['error'], function ($item) {
+      return $item && $item === true;
+    });;
+
+    return $foundError;
+  }
+
   public static function getRequestParams()
   {
     $post = self::getPostData();
@@ -33,7 +47,7 @@ class RequestData
 
     // $email = indexParamExistsOrDefault($post, 'email');
 
-    $bio = indexParamExistsOrDefault($post, 'bio');
+    // $bio = indexParamExistsOrDefault($post, 'bio');
 
     // $password = verifyValue($post, 'password');
 
@@ -81,7 +95,7 @@ class RequestData
       trim(indexParamExistsOrDefault($post, 'img_title_error', ''));
 
 
-    $userId = indexParamExistsOrDefault($imgFiles, 'user_id');
+    // $userId = indexParamExistsOrDefault($imgFiles, 'user_id');
 
 
     // $nameError = indexParamExistsOrDefault($post, 'name_error');
@@ -123,16 +137,16 @@ class RequestData
       // 'password' => $password,
       // 'confirm_password' => $confirmPassword,
 
-      'bio' => $bio,
+      // 'bio' => $bio,
 
-      'user_id' => $userId,
+      // 'user_id' => $userId,
       // 'product_id_category' => $productIdCategory,
 
       // 'category_name' => $categoryName,
       // 'category_description' => $categoryDescription,
 
       // 'title' => $title,
-      'body' => $body,
+      // 'body' => $body,
       // 'product_name' => $productName,
       // 'product_description' => $productDescription,
       // 'price' => $price,
@@ -153,8 +167,8 @@ class RequestData
       // 'confirm_password_error' => $confirmPasswordError,
 
       // 'id_category_error' => $postIdCategoryError,
-      'title_error' => $titleError,
-      'body_error' => $bodyError,
+      // 'title_error' => $titleError,
+      // 'body_error' => $bodyError,
 
       // 'category_name_error' => $categoryNameError,
       // 'category_description_error' => $categoryDescriptionError,
