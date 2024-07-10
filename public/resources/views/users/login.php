@@ -14,7 +14,7 @@ $formActionUrl = $BASE . '/login';
         <div class="form-container card card-body mt-5">
             <p>Preencha os campos</p>
 
-            <form action="<?= $formActionUrl ?>" method="post" hax-post="<?= $formActionUrl ?>" hax-target="body" hax-swap="outerHTML">
+            <form action="<?= $formActionUrl ?>" method="post" hx-post="<?= $formActionUrl ?>" hx-target="body" hx-swap="outerHTML">
 
                 <!-- Email -->
                 <div class="form-group mb-3">
