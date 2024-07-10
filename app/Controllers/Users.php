@@ -160,18 +160,18 @@ class Users extends Controller
 
         $userPageId = isset($requestData['show']) && !empty($requestData['show']) ? $requestData['show'] : 1;
 
-        $lastKey = array_key_last($requestData);
+        $urlPath = "users/show/$userPageId";
 
+        $lastKey = array_key_last($requestData);
+        
         $pageId = !($lastKey == 'show') ? end($requestData) : 1;
 
-        if ($userPageId && !($lastKey == 'show')) $pageId = $userPageId;
+        if ($userPageId && ($lastKey == 'show')) $pageId = $userPageId;
 
         $user = $this->model->getAllFrom('users', $userPageId);
 
         // Pagination for posts with user id
-        $table = 'posts';
-
-        $results = Pagination::handler($table, $pageId, $limit = 4, ['user_id', $user->id], $orderOption = 'ORDER BY id DESC');
+        $results = Pagination::handler('posts', $pageId, $limit = 4, ['user_id', $user->id], $orderOption = 'ORDER BY id DESC');
 
         // Display results
         $pageInfo = ($userPageId > 1) ? " | Página $userPageId" : '';
@@ -181,7 +181,7 @@ class Users extends Controller
             'pageId' => $pageId,
             'user' => $user,
             'page' => $pageId,
-            'path' => "users/show/$userPageId",
+            'path' => $urlPath,
             'posts' => $results['tableResults'],
             'prev' => $results['prev'],
             'next' => $results['next'],
