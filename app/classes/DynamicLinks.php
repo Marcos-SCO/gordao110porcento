@@ -20,9 +20,14 @@ class DynamicLinks
     $sessionUserId = indexParamExistsOrDefault($_SESSION, 'user_id');
     $sessionAdmId = indexParamExistsOrDefault($_SESSION, 'adm_id');
 
+    if (!$sessionUserId) return;
+    
     $isValidUser = ($userId == $sessionUserId) or ($sessionAdmId == 1);
 
-    if (!$isValidUser) return;
+    if (!$isValidUser) {
+      echo "<div class='editDelete hidden'></div>";
+      return;
+    }
 
     $verb = 'delete';
 

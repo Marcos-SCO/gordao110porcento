@@ -1,0 +1,27 @@
+.post-card {
+
+
+  .editDelete {
+
+    &,
+    &.hidden {
+      margin-top: 2.4rem;
+    }
+
+    &,
+    &::before {
+
+      left: .25rem !important;
+      padding-left: .5rem !important;
+    }
+  }
+
+  @media (min-width:600px) {
+    .editDelete {
+
+      &.hidden {
+        min-height: 54px;
+      }
+    }
+  }
+}
