@@ -97,7 +97,10 @@ class ImagesHandler
   {
     $imgFullPath = __DIR__ . '/../../' . $imgFullPath;
 
-    $imageTempName = $_FILES['img']['tmp_name'];
+    $filesImg = isset($_FILES['img']) ? $_FILES['img'] : false;
+
+    $imageTempName =
+      isset($filesImg['tmp_name']) ? $filesImg['tmp_name'] : '';
 
     $isEmptyImg = $imageTempName == "";
 
@@ -109,7 +112,7 @@ class ImagesHandler
       return $dataError;
     }
 
-    move_uploaded_file($imageTempName, $imgFullPath);
+    if (!empty($imageTempName)) move_uploaded_file($imageTempName, $imgFullPath);
   }
 
   public function createIdItemFolder($table, $id)

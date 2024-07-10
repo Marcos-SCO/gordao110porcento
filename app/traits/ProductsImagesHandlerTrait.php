@@ -4,7 +4,7 @@ namespace App\Traits;
 
 trait ProductsImagesHandlerTrait
 {
-  
+
   public function moveUploadImageFolder($data)
   {
     $id = $data['id'];
@@ -38,7 +38,8 @@ trait ProductsImagesHandlerTrait
 
         $this->imagesHandler->moveUpload($createdFolderPath);
 
-        $data['img_name'] = $imgName;
+        if (!empty($imgName)) $data['img_name'] = $imgName;
+        if (empty($imgName)) $data['img_name'] = $postImg;
 
         return $data;
       }
@@ -50,22 +51,24 @@ trait ProductsImagesHandlerTrait
     $this->imagesHandler->moveUpload($fullPath);
 
     // Get img data
-    $img = ($imgName !== '') ? $imgName : $postImg;
+    $img = (!empty($imgName)) ? $imgName : $postImg;
 
-    // Copy from the older to new one
-    $oldFolderPath = "../public/resources/img/products/category_{$resultId->id_category}/id_$id/$img";
+    if (!empty($imgName)) $data['img_name'] = $imgName;
+    if (empty($imgName)) $data['img_name'] = $postImg;
 
-    $newFolderPath = "../public/resources/img/products/category_{$productIdCategory}/id_$id/$img";
+    $oldFolderPath = "./../public/resources/img/products/category_{$resultId->id_category}/id_$id/$img";
 
-    if (file_exists($oldFolderPath)) {
+    $newFolderPath =  "./../public/resources/img/products/category_{$productIdCategory}/id_$id/$img";
 
+    $olderAdnNewPathAreEqual = $oldFolderPath == $newFolderPath;
+
+    if (!$olderAdnNewPathAreEqual && file_exists($oldFolderPath)) {
+            
       copy($oldFolderPath, $newFolderPath);
 
       // Delete old folder
       if (!$currentAndSelectedCategoriesAreEqual) $this->imagesHandler->deleteFolder('products', $id, $resultId->id_category);
     }
-
-    $data['img_name'] = $img;
 
     return $data;
   }

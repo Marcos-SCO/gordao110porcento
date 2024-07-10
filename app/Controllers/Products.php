@@ -172,10 +172,12 @@ class Products extends Controller
     {
         $this->ifNotAuthRedirect();
 
-        $id = indexParamExistsOrDefault(ProductRequest::getPostData(), 'id');
+        $post = ProductRequest::getPostData();
+        $id = indexParamExistsOrDefault($post, 'id');
+        $postImg = indexParamExistsOrDefault($post, 'img');
 
         if (isSubmittedInSession()) return redirect('products/show/' . $id);
-
+        
         $requestedData = array_merge_recursive(
             ProductRequest::productFieldsValidation(),
             ImageRequest::validateImageParams(),
@@ -184,6 +186,7 @@ class Products extends Controller
         $data = indexParamExistsOrDefault($requestedData, 'data');
 
         if ($id) $data['id'] = $id;
+        if ($postImg || $postImg == '0') $data['post_img'] = $postImg;
 
         $errorData =
             indexParamExistsOrDefault($requestedData, 'errorData');
@@ -197,15 +200,15 @@ class Products extends Controller
 
             return $this->edit(['edit' => $id, 'error' => $errorData]);
         }
-
+        
         $data = $this->moveUploadImageFolder($data);
-
+                
         $this->model->updateProduct($data);
-
+        
         addSubmittedToSession();
-
+        
         flash('post_message', 'Produto foi atualizado com sucesso!');
-
+        
         // return redirect('products/show/' . $id);
         return redirect('products/edit/' . $id);
     }

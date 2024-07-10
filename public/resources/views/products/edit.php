@@ -25,7 +25,8 @@ $formActionUrl = $BASE  . '/products/update/';
         <h2><?= $productName ?></h2>
     </header>
 
-    <form action="<?= $formActionUrl ?>" method="post" enctype="multipart/form-data">
+    <form action="<?= $formActionUrl ?>" method="post" enctype="multipart/form-data" hx-post="<?= $formActionUrl ?>" hx-target="body" hx-swap="show:body:top">
+
         <input type="hidden" name="id" id="<?= $productId ?>" value="<?= $productId ?>">
 
         <input type="hidden" name="current_product_category_id" value="<?= $productIdCategory; ?>">
@@ -83,7 +84,7 @@ $formActionUrl = $BASE  . '/products/update/';
 
             <input type="file" name="img" id="img" class="form-control form-control-lg <?= isset($error['img_error']) && $error['img_error'] != '' ? 'is-invalid' : '' ?>" value="<?= $productImg ?? '' ?>">
 
-            <input type="hidden" name="img" id="img" value="<?= $productImg ?>">
+            <input type="hidden" name="img" value="<?= $productImg ?>">
 
             <span class="invalid-feedback">
                 <?= $error['img_error'] ?? '' ?>
@@ -92,6 +93,6 @@ $formActionUrl = $BASE  . '/products/update/';
             <img src="<?= $BASE ?>/<?= imgOrDefault('products', $productImg, $productId, "/category_$productIdCategory") ?>" title="<?= $productName ?>" onerror="this.onerror=null;this.src='<?= $BASE ?>/public/resources/img/not_found/no_image.jpg';">
         </div>
 
-        <input type="submit" class="btn btn-success" value="Enviar">
+        <input type="submit" class="btn btn-success" value="Atualizar">
     </form>
     </div>

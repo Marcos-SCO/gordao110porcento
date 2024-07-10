@@ -1,6 +1,12 @@
+<?php 
+
+$formActionUrl = $BASE . '/products/store';
+
+?>
+
 <header class="categoryHeader productHeader imgBackgroundArea">
     <span>
-        <h1>Adionar um produto</h1>
+        <h1>Adicionar um produto</h1>
     </span>
 </header>
 
@@ -9,7 +15,7 @@
         <h2>Adicionar Produto</h2>
     </header>
 
-    <form action="<?= $BASE ?>/products/store" method="post" enctype="multipart/form-data">
+    <form action="<?= $formActionUrl ?>" method="post" enctype="multipart/form-data" hx-post="<?= $formActionUrl ?>" hx-target="body" hx-swap="show:body:top">
 
         <!-- Tipo de categoria -->
         <div class="form-group">
@@ -17,9 +23,9 @@
 
             <select name="product_id_category" id="product_id_category">
                 <optgroup label="Tipo de usuário">
-                    <?php foreach ($categories as $category) { ?>
+                    <?php foreach ($categories as $category) : ?>
                         <option value="<?= $category->id ?>"><?= $category->category_name ?></option>
-                    <?php } ?>
+                    <?php endforeach; ?>
                 </optgroup>
             </select>
 
