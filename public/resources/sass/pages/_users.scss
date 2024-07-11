@@ -1,42 +1,76 @@
 /* -------- Users adm Start  -------- */
 .usersAdmBackground {
-    background-image: url(../img/template/users.png)
-}
-.usersAdm li {
-    min-width: 300px
+    background-image: url(../img/template/users.png);
+
+    @media screen and (max-width: 600px) {
+        background-image: url(../img/template/users_600.png) !important;
+    }
 }
 
-.usersAdm .userPic {
-    width: 30px;
-    height: 30px;
-    border-radius: 50%;
-    border: 1px solid #ccc;
-    overflow: hidden
-}
+.usersAdm {
+    margin-bottom: 1rem;
 
-.usersAdm img {
-    max-width: 40px
-}
+    li {
+        min-width: 300px;
 
-.usersAdm button {
-    margin-left: .5rem;
-    border: none;
-    color: #d95f1b;
-    background: none;
-    padding: 0 .2rem
-}
+        @media screen and (min-width: 468px) {
+            min-width: 468px;
+        }
+    }
 
-.usersAdm button:hover {
-    color: #ff5b00
-}
+    .userPic {
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        border: 1px solid #ccc;
+        overflow: hidden;
+    }
 
-.usersAdm button:focus {
-    border: none
-}
+    img {
+        max-width: 40px;
+    }
 
-@media screen and (min-width:468px) {
-    .usersAdm li {
-        min-width: 468px
+    button {
+        &.disabledButton {
+            min-height: 30.4px;
+            max-height: 30.4px;
+            position: relative;
+            border: none;
+
+            &::before {
+                content: '';
+                cursor: not-allowed!important;
+                position: absolute;
+                top: 0;
+                left: 0;
+                // background-color: #0a942b;
+                width: 100%;
+                height: 100%;
+                display: block;
+                z-index: 999;
+            }
+
+            &:focus {
+                border: none;
+            }
+        }
+
+        margin-left: 0.5rem;
+        // border: none;
+        // color: #d95f1b;
+        // background: none;
+        // padding: 0 0.2rem;
+        padding: .3rem;
+
+        font-size: .8rem;
+
+        &:hover {
+            // color: #ff5b00;
+        }
+
+        &:focus {
+            // border: none;
+        }
     }
 }
 
@@ -45,114 +79,116 @@
 /* -------- User show Start  -------- */
 .user {
     position: relative;
-    margin: 0 auto 2rem !important
-}
+    margin: 0 auto 2rem !important;
 
-.user header {
-    display: flex;
-}
+    header {
+        display: flex;
 
-.user header::before {
-    content: '';
-    border-left: 8px solid #d95f1b;
-    background: #d95f1b;
-}
-
-.user figure {
-    margin: auto !important;
-    max-width: 800px
-}
-
-.user img {
-    margin-top: 1rem !important;
-    box-shadow: 15px 15px 0px #ff833e;
-    max-width: 250px;
-    overflow: hidden
-}
-
-@media screen and (min-width:712px) {
-    .user img {
-        width: auto;
-        height: auto;
-        position: relative;
-        right: 20%;
-        -webkit-transform: translate(50%, 0);
-        -ms-transform: translate(50%, 0)
+        &::before {
+            content: '';
+            border-left: 8px solid #d95f1b;
+            background: #d95f1b;
+        }
     }
-    .user figcaption {
-        min-width: 406px
+
+    figure {
+        margin: auto !important;
+        max-width: 800px;
+
+        img {
+            margin-top: 1rem !important;
+            box-shadow: 15px 15px 0px #ff833e;
+            max-width: 250px;
+            overflow: hidden;
+
+            @media screen and (min-width: 712px) {
+                width: auto;
+                height: auto;
+                position: relative;
+                right: 20%;
+                transform: translate(50%, 0);
+            }
+        }
+
+        figcaption {
+            padding: 1rem;
+            margin-left: 1rem;
+            word-break: break-word;
+
+            h5,
+            p {
+                max-width: 370px;
+                margin: auto;
+                word-break: break-word;
+            }
+
+            @media screen and (min-width: 712px) {
+                min-width: 406px;
+            }
+        }
     }
-}
 
-.user figcaption {
-    padding: 1rem;
-    margin-left: 1rem;
-    word-break: break-word
-}
+    .userPosts {
+        header {
+            h3 {
+                &::after {
+                    content: '';
+                    border-bottom: 0.16rem solid #d95f1b;
+                    padding-bottom: 0.5rem;
+                    display: block;
+                    width: 80%;
+                    margin: auto;
+                }
+            }
+        }
 
-.user figcaption h5,
-.user figcaption p {
-    max-width: 370px;
-    margin: auto;
-    word-break:break-word
-}
-
-.userPosts header h3::after {
-    content: '';
-    border-bottom: .16rem solid #d95f1b;
-    padding-bottom: .5rem;
-    display: block;
-    width: 80%;
-    margin: auto
+    }
 }
 
 /* -------- User show End -------- */
 
 /* -------- User Edit Start -------- */
-.userEdit form {
-    padding: 1rem
-}
+.userEdit {
 
-.userEdit::after {
-    content: '';
-    display: block;
-    width: 40%;
-    margin: 2rem auto
-}
+    form {
+        padding: 1rem;
+    }
 
-.userEdit img {
-    margin: 1rem 0 !important;
-    max-width: 250px;
-    box-shadow: 15px 15px 0px #ff833e;
-    overflow: hidden
-}
+    &::after {
+        content: '';
+        display: block;
+        width: 40%;
+        margin: 2rem auto;
+    }
 
-.usersAdm {
-    margin-bottom: 1rem
+    img {
+        margin: 1rem 0 !important;
+        max-width: 250px;
+        box-shadow: 15px 15px 0px #ff833e;
+        overflow: hidden;
+    }
 }
 
 /* -------- User Edit End -------- */
+
 .activeList::before,
 .inactiveList::before {
-    padding: .5rem 1rem;
-    color: #fff
+    padding: 0.5rem 1rem;
+    color: #fff;
 }
 
 .activeList::before {
     content: 'Usuário Ativos';
-    background: #0a942b
+    background: #0a942b;
 }
 
 .inactiveList::before {
     content: 'Usuário Inativos';
-    background: #c70e0e
-}
-@media screen and (max-width:600px) {
-    .usersAdmBackground {
-        background-image: url(../img/template/users_600.png)!important
-    }
+    background: #c70e0e;
 }
 
-[data-page="users"] main {
-    margin-bottom: 1rem
+[data-page="users"] {
+    main {
+        margin-bottom: 1rem;
+    }
 }

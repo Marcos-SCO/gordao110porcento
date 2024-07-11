@@ -64,7 +64,9 @@ class Users extends Controller
 
         $pageId = isset($requestData['users']) && !empty($requestData['users']) ? $requestData['users'] : 1;
 
-        $results = Pagination::handler($table, $pageId, $limit = 10, '', $orderOption = 'GROUP BY id');
+        $activeUsers = Pagination::handler($table, $pageId, $limit = 10, ['status', 1], $orderOption = 'GROUP BY id');
+     
+        $inactiveUsers = Pagination::handler($table, $pageId, $limit = 10, ['status', 0], $orderOption = 'GROUP BY id');
 
         $activeNumber = $this->model->customQuery("SELECT COUNT(*) as active FROM users WHERE status = 1");
 
@@ -77,11 +79,12 @@ class Users extends Controller
             'activeNumber' => $activeNumber,
             'inactiveNumber' => $inactiveNumber,
             'path' => "users",
-            'users' => $results['tableResults'],
-            'prev' => $results['prev'],
-            'next' => $results['next'],
-            'totalResults' => $results['totalResults'],
-            'totalPages' => $results['totalPages'],
+            'inactiveUsers' => $inactiveUsers['tableResults'],
+            'activeUsers' => $activeUsers['tableResults'],
+            'prev' => $activeUsers['prev'],
+            'next' => $activeUsers['next'],
+            'totalResults' => $activeUsers['totalResults'],
+            'totalPages' => $activeUsers['totalPages'],
         ]);
     }
 

@@ -1,10 +1,16 @@
 <?php
 
-$activeUsers = $activeNumber->active;
+$activeUsersNumber = objParamExistsOrDefault($activeNumber, 'active');
 
-$inactiveUsers = $inactiveNumber->inactive;
+$inactiveUsersNumber = objParamExistsOrDefault($inactiveNumber, 'inactive');
 
 echo "<style>main {min-height:100%}</style>";
+
+$linkCommonHtmlAttributes =
+    'hx-push-url="true"  
+hx-swap="show:body:top"  
+hx-target="[data-js=\'result-itens-container\']"  
+hx-select="[data-js=\'result-itens-container\'] [data-js=\'users-container-data\']"';
 
 ?>
 
@@ -15,96 +21,39 @@ echo "<style>main {min-height:100%}</style>";
     </span>
 </header>
 
-<?php App\Classes\DynamicLinks::addLink($BASE, 'users', 'Adicionar mais Usuários');
+<div hx-boost="true" hx-target="body" hx-swap="outerHTML">
+    <?php App\Classes\DynamicLinks::addLink($BASE, 'users', 'Adicionar mais Usuários');
 
-?>
-<section>
-    <div class="usersAdm flex justify-content-center align-content-center">
+    ?>
+</div>
 
-        <?php if ($activeUsers > 0) : ?>
+<section data-js="result-itens-container" hx-boost="true" hx-target="body" hx-swap="outerHTML">
 
-            <ul class="activeList list-group">
-                <li class="list-group-item">Quantidade <?= $activeUsers ?></li>
+    <div class="usersAdm flex justify-content-center align-content-center" data-js="users-container-data">
 
-                <?php foreach ($users as $user) :
+        <?php if ($activeUsersNumber > 0) :
 
-                    $isUserStatusOne = $user->status == 1;
+            $users = $activeUsers;
+            $informationNumber = $activeUsersNumber;
 
-                    if (!$isUserStatusOne) continue;
+            include __DIR__ . '/components/_usersList.php';
 
-                ?>
-                    <li class="d-flex flex-wrap list-group-item">
+        endif;
 
-                        <figure class="userPic mr-2">
-                            <img src="<?= $BASE ?>/<?= imgOrDefault('users', $user->img, $user->id) ?>" class="userImg" onerror="this.onerror=null;this.src='<?= $BASE ?>/public/resources/img/not_found/no_image.jpg';">
-                        </figure>
+        ?>
 
-                        id <?= $user->id ?> - <a href="<?= $BASE ?>/users/<?= ($_SESSION['adm_id'] == 1) ? 'edit' : 'show' ?>/<?= $user->id ?>" class="ml-1 mr-1"><?= $user->name ?></a> - <?= $user->email ?>
+        <?php if ($inactiveUsersNumber > 0) :
 
-                        <?php
+            $users = $inactiveUsers;
+            $informationNumber = $inactiveUsersNumber;
+            $ulListName = 'inactiveList';
 
-                        if ($_SESSION['adm_id'] == 1 && $user->id != 1) :
+            include __DIR__ . '/components/_usersList.php';
 
-                            if ($user->status == 1) {
-                                $active = [0, 'Desativar', 'Quer Mesmo desativar esse usuário?'];
-                            }
+        endif;
 
-                        ?>
-                            <form action="<?= $BASE ?>/users/status/<?= $user->id ?>/<?= $active[0] ?>" method="post" name="delete">
-                                <input type="hidden" value="<?= $active[0] ?>" />
-                                <button onclick="return confirm('<?= $active[2] ?>')"><?= $active[1] ?></button>
-                            </form>
-                        <?php endif; ?>
-                    </li>
-
-                <?php endforeach; ?>
-            </ul>
-
-        <?php endif; ?>
-
-        <?php if ($inactiveUsers > 0) : ?>
-
-            <ul class="inactiveList list-group">
-                <li class="list-group-item">Quantidade <?= $inactiveUsers ?></li>
-
-                <?php foreach ($users as $user) :
-
-                    $isUserStatusZero = $user->status == 0;
-
-                    if (!$isUserStatusZero) continue;
-
-                ?>
-                    <li class="d-flex flex-wrap list-group-item">
-                        <figure class="userPic mr-2">
-                            <img src="<?= $BASE ?>/<?= imgOrDefault('users', $user->img, $user->id) ?>" class="userImg" onerror="this.onerror=null;this.src='<?= $BASE ?>/public/resources/img/not_found/no_image.jpg';">
-                        </figure>
-
-                        id <?= $user->id ?> - <a href="<?= $BASE ?>/users/<?= ($_SESSION['adm_id'] == 1) ? 'edit' : 'show' ?>/<?= $user->id ?>" class="ml-1 mr-1"><?= $user->name ?></a> - <?= $user->email ?>
-
-                        <?php
-
-                        if ($_SESSION['adm_id'] == 1 && $user->id != 1) :
-
-                            if ($user->status == 0) {
-
-                                $active = [1, 'Ativar', 'Quer Mesmo Ativar esse usuário?'];
-                            }
-
-                        ?>
-
-                            <form action="<?= $BASE ?>/users/status/<?= $user->id ?>/<?= $active[0] ?>" method="post" name="delete">
-                                <input type="hidden" value="<?= $active[0] ?>" />
-                                <button onclick="return confirm('<?= $active[2] ?>')"><?= $active[1] ?></button>
-                            </form>
-
-                        <?php endif; ?>
-
-                    </li>
-
-                <?php endforeach; ?>
-            </ul>
-
-        <?php endif; ?>
+        ?>
 
     </div>
+
 </section>
