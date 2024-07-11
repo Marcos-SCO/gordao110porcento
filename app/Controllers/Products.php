@@ -69,6 +69,7 @@ class Products extends Controller
 
         View::render('products/create.php', [
             'title' => 'Adicione mais produtos',
+            'dataPage' => 'products/create',
             'data' => $data,
             'categories' => $categories,
             'error' => $error,

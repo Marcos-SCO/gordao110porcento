@@ -103,6 +103,7 @@ class Categories extends Controller
 
         View::render('categories/create.php', [
             'title' => 'Adicione mais uma categoria',
+            'dataPage' => 'categories/create',
             'data' => $data,
             'error' => $error,
         ]);

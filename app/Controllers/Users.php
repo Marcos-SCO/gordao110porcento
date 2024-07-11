@@ -71,7 +71,7 @@ class Users extends Controller
         $inactiveNumber = $this->model->customQuery("SELECT COUNT(*) as inactive FROM users WHERE status = 0");
 
         View::render('users/index.php', [
-            'dataPage' => $this->dataPage,
+            'dataPage' => 'users',
             'pageId' => $pageId,
             'title' => 'Users',
             'activeNumber' => $activeNumber,
@@ -95,6 +95,7 @@ class Users extends Controller
 
         View::render('users/create.php', [
             'title' => 'Cadastro de usuários',
+            'dataPage' => 'users/create',
             'data' => $data,
             'error' => $error
         ]);
@@ -178,6 +179,7 @@ class Users extends Controller
 
         return View::render('users/show.php', [
             'title' => 'Funcionário ' . $user->name . $pageInfo,
+            'dataPage' => 'users/show',
             'pageId' => $pageId,
             'user' => $user,
             'page' => $pageId,

@@ -61,6 +61,7 @@ class Posts extends Controller
 
         View::render('posts/create.php', [
             'controller' => 'Posts',
+            'dataPage' => 'posts/create',
             'title' => 'Criar Post ',
             'data' => $data,
             'error' => $error,

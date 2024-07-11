@@ -59,6 +59,7 @@ class Gallery extends Controller
 
         View::render('gallery/create.php', [
             'title' => 'Enviar uma nova foto para galeria',
+            'dataPage' => 'gallery/create',
             'data' => $data,
             'error' => $error,
         ]);

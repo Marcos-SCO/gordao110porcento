@@ -66,43 +66,46 @@
 
       <?php if ($isUserLoggedIn) : ?>
 
-        <li class="nav-item dropdown" hx-history="false">
+        <li class="nav-item dropdown <?= activePageClass(['users/create', 'categories/create', 'products/create', 'posts/create', 'gallery/create'], $dataPage); ?>" hx-history="false">
+
           <a class="nav-link dropdown-toggle" style="background:#f8f9fa!important" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">Adicionar</a>
 
           <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-            <li>
+
+            <li data-active-page="users/create">
               <a class="dropdown-item" href="<?= $BASE ?>/users/create">Usuário</a>
             </li>
 
-            <li>
+            <li data-active-page="categories/create">
               <a class="dropdown-item" href="<?= $BASE ?>/categories/create">Categorias</a>
             </li>
 
-            <li>
+            <li data-active-page="products/create">
               <a class="dropdown-item" href="<?= $BASE ?>/products/create">Produtos</a>
             </li>
 
-            <li>
+            <li data-active-page="posts/create">
               <a class="dropdown-item" href="<?= $BASE ?>/posts/create">Postagens</a>
             </li>
 
-            <li>
+            <li data-active-page="gallery/create">
               <a class="dropdown-item" href="<?= $BASE ?>/gallery/create">Fotos</a>
             </li>
           </ul>
 
         </li>
 
-        <li class="nav-item dropdown" data-active-page="users" hx-history="false">
+        <li class="nav-item dropdown <?= activePageClass(['users', 'users/edit', 'users/show'], $dataPage); ?>" hx-history="false">
 
           <a class="nav-link dropdown-toggle" style="background:#f8f9fa!important" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false"><?= $sessionUserName ?? "" ?></a>
 
           <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-            <li><a class="dropdown-item" href="<?= $BASE ?>/users/edit/<?= $sessionUserId ?>">Meu perfil</a></li>
 
-            <li><a class="dropdown-item" href="<?= $BASE ?>/users/show/<?= $sessionUserId ?>">Página</a></li>
+            <li data-active-page="users/edit"><a class="dropdown-item" href="<?= $BASE ?>/users/edit/<?= $sessionUserId ?>">Meu perfil</a></li>
 
-            <li><a class="dropdown-item" href="<?= $BASE ?>/users/">Usuários</a></li>
+            <li data-active-page="users/show"><a class="dropdown-item" href="<?= $BASE ?>/users/show/<?= $sessionUserId ?>">Página</a></li>
+
+            <li data-active-page="users"><a class="dropdown-item" href="<?= $BASE ?>/users/">Usuários</a></li>
 
             <li><a class="dropdown-item" href="<?= $BASE ?>/logout">Sair</a></li>
           </ul>
