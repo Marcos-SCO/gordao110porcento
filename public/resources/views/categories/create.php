@@ -22,7 +22,7 @@ $slugFieldError =
         <h2>Adicionar Categoria</h2>
     </header>
 
-    <form action="<?= $formActionUrl ?>" method="post" enctype="multipart/form-data" hax-post="<?= $formActionUrl ?>" hax-target="body" hax-swap="show:body:top" data-js="category-form">
+    <form action="<?= $formActionUrl ?>" method="post" enctype="multipart/form-data" hx-post="<?= $formActionUrl ?>" hx-target="body" hx-swap="show:body:top" data-js="category-form">
 
         <div class="form-group">
             <label for="category_name">Nome da categoria<sup>*</sup></label>
