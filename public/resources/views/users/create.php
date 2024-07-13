@@ -2,6 +2,21 @@
 
 $formActionUrl = $BASE . '/users/store';
 
+$name = indexParamExistsOrDefault($data, 'name');
+$nameError = indexParamExistsOrDefault($error, 'name_error');
+
+$lastName = indexParamExistsOrDefault($data, 'last_name');
+$lastNameError = indexParamExistsOrDefault($error, 'last_name_error');
+
+$email = indexParamExistsOrDefault($data, 'email');
+$emailError = indexParamExistsOrDefault($error, 'email_error');
+
+$password = indexParamExistsOrDefault($data, 'password');
+$passwordError = indexParamExistsOrDefault($error, 'password_error');
+
+$confirmPassword = indexParamExistsOrDefault($data, 'confirm_password');
+$confirmPasswordError = indexParamExistsOrDefault($error, 'confirm_password_error');
+
 ?>
 
 <header class="imgBackgroundArea usersAdmBackground">
@@ -28,46 +43,46 @@ $formActionUrl = $BASE . '/users/store';
         <div class="form-group">
             <label for="name">Nome: <sup>*</sup></label>
 
-            <input type="text" name="name" id="name" class="form-control form-control-lg <?= isset($error['name_error']) && $error['name_error'] != '' ? 'is-invalid' : '' ?>" value="<?= $data['name'] ?? '' ?>">
+            <input type="text" name="name" id="name" class="form-control form-control-lg <?= $nameError != '' ? 'is-invalid' : '' ?>" value="<?= $name ?? '' ?>">
 
             <span class=" invalid-feedback">
-                <?= $error['name_error'] ?? '' ?>
+                <?= $nameError ?? '' ?>
             </span>
         </div>
 
         <div class="form-group">
             <label for="last_name">Sobrenome: <sup>*</sup></label>
 
-            <input type="text" name="last_name" id="last_name" class="form-control form-control-lg <?= isset($error['last_name_error']) && $error['last_name_error'] != '' ? 'is-invalid' : '' ?>" value="<?= $data['last_name'] ?? '' ?>">
+            <input type="text" name="last_name" id="last_name" class="form-control form-control-lg <?= $lastNameError != '' ? 'is-invalid' : '' ?>" value="<?= $lastName ?? '' ?>">
 
-            <span class=" invalid-feedback"><?= $error['last_name_error'] ?? '' ?></span>
+            <span class=" invalid-feedback"><?= $lastNameError ?? '' ?></span>
         </div>
 
         <!-- Email -->
         <div class="form-group">
             <label for="email">E-mail: <sup>*</sup></label>
 
-            <input name="email" id="email" class="form-control form-control-lg <?= isset($error['email_error']) && $error['email_error'] != '' ? 'is-invalid' : '' ?>" value="<?= $data['email'] ?? '' ?>">
+            <input name="email" id="email" class="form-control form-control-lg <?= $emailError != '' ? 'is-invalid' : '' ?>" value="<?= $email ?? '' ?>">
 
-            <span class=" invalid-feedback"><?= $error['email_error'] ?? '' ?></span>
+            <span class=" invalid-feedback"><?= $emailError ?? '' ?></span>
         </div>
 
         <!-- Password -->
         <div class="form-group">
             <label for="password">Senha: <sup>*</sup></label>
 
-            <input type="password" name="password" id="password" class="form-control form-control-lg <?= isset($error['password_error']) && $error['password_error'] != '' ? 'is-invalid' : '' ?>" value="<?= $data['password'] ?? '' ?>">
+            <input type="password" name="password" id="password" class="form-control form-control-lg <?= $passwordError != '' ? 'is-invalid' : '' ?>" value="<?= $password ?? '' ?>">
 
-            <span class="invalid-feedback"><?= $error['password_error'] ?? '' ?></span>
+            <span class="invalid-feedback"><?= $passwordError ?? '' ?></span>
         </div>
 
         <!-- Confirm Password -->
         <div class="form-group">
             <label for="confirm_password">Confirmar Senha: <sup>*</sup></label>
 
-            <input type="password" name="confirm_password" id="confirm_password" class="form-control form-control-lg <?= isset($error['confirm_password_error']) && $error['confirm_password_error'] != '' ? 'is-invalid' : '' ?>" value="<?= $data['confirm_password'] ?? '' ?>">
+            <input type="password" name="confirm_password" id="confirm_password" class="form-control form-control-lg <?= isset($confirmPasswordError) && $confirmPasswordError != '' ? 'is-invalid' : '' ?>" value="<?= $confirmPassword ?? '' ?>">
 
-            <span class="invalid-feedback"><?= $error['confirm_password_error'] ?? '' ?></span>
+            <span class="invalid-feedback"><?= $confirmPasswordError ?? '' ?></span>
         </div>
 
         <div class="row">
