@@ -16,6 +16,19 @@ class Category extends \Core\Model
         return $result;
     }
 
+    public static function getCategories($selectParams = 'slug, category_name, id')
+    {
+        $self = new self();
+        $result = $self->selectQuery('categories', '', $selectParams);
+
+        $categories = [];
+        foreach ($result as $row) {
+
+            $categories[$row->id] = ['slug' => $row->slug, 'category_name' => $row->category_name, 'id' => $row->id];
+        }
+
+        return $categories;
+    }
 
     public function getImg($id)
     {

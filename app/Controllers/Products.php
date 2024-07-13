@@ -4,19 +4,21 @@ namespace App\Controllers;
 
 use App\Classes\ImagesHandler;
 use App\Classes\Pagination;
-
+use App\Models\Category;
 use App\Request\ImageRequest;
 use App\Request\ProductRequest;
 use App\Request\RequestData;
 
 use App\Traits\ProductsImagesHandlerTrait;
-
+use App\Traits\SlugsTrait;
 use Core\Controller;
+use Core\Model;
 use Core\View;
 
 class Products extends Controller
 {
     use ProductsImagesHandlerTrait;
+    use SlugsTrait;
 
     public $model;
     public $imagesHandler;
@@ -41,7 +43,7 @@ class Products extends Controller
         $flash = indexParamExistsOrDefault($requestData, 'flash');
 
         // Category elements from table categories
-        $categoryElements = $this->model->customQuery('SELECT id, category_name FROM categories', null, 1);
+        $categoryElements = Category::getCategories();
 
         View::render('products/index.php', [
             'title' => "Ofertas | Página $pageId",
@@ -125,9 +127,11 @@ class Products extends Controller
 
         $data = $this->model->getAllFrom('products', $productId);
 
-        $categories = $this->model->getCategories();
+        // $categories = $this->model->getCategories();
 
         $user = $this->model->getAllFrom('users', $data->user_id);
+
+        $category = self::getSlugById('categories', $data->id_category, 'slug')[0];
 
         removeSubmittedFromSession();
 
@@ -136,7 +140,8 @@ class Products extends Controller
             'product_name' => $data->product_name,
             'data' => $data,
             'user' => $user,
-            'categories' => $categories,
+            'category' => $category,
+            // 'categories' => $categories,
         ]);
     }
 

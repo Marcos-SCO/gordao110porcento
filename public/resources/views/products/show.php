@@ -6,8 +6,11 @@ $productName = objParamExistsOrDefault($data, 'product_name');
 
 $dataIdCategory = objParamExistsOrDefault($data, 'id_category');
 
-$categoryUrlLink =
-    $BASE . '/categories/show/' . $dataIdCategory;
+$categoryUrlLink = $BASE . '/categories/';
+
+$categorySlug = objParamExistsOrDefault($category, 'slug');
+
+if ($categorySlug) $categoryUrlLink = $BASE . '/category/' . $categorySlug;
 
 $dataCreatedAt = objParamExistsOrDefault($data, 'created_at');
 

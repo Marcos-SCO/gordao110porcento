@@ -1,11 +1,15 @@
 <?php
 
+use App\Models\Category;
+
 if (!$products) return;
 
 $loopCount = 0;
 
 $isSectionActiveUser =
   ($_SESSION['user_status'] && $_SESSION['user_status'] == 1);
+
+// $categories = Category::getCategories();
 
 foreach ($products as $data) :
 
@@ -21,12 +25,22 @@ foreach ($products as $data) :
 
   $productName = objParamExistsOrDefault($data, 'product_name');
 
-  $categoryUrlLink = $BASE . '/categories/show/' . $productIdCategory;
+  $categoryUrlLink = $BASE . '/categories/';
 
   $productDescription = objParamExistsOrDefault($data, 'product_description');
   $productPrice = objParamExistsOrDefault($data, 'price');
 
   $productUrlLink = $BASE . '/products/show/' . $dataItemId;
+
+  $categoryItem = indexParamExistsOrDefault($categoryElements, $productIdCategory);
+
+  $categoryName = indexParamExistsOrDefault($categoryItem, 'category_name');
+
+  $categorySlug = indexParamExistsOrDefault($categoryItem, 'slug');
+
+  $categoryUrlLink = $BASE . '/categories/';
+
+  if ($categorySlug) $categoryUrlLink = $BASE . '/category/' . $categorySlug;
 
 ?>
   <figure class="card" data-js="loop-item">
@@ -57,24 +71,15 @@ foreach ($products as $data) :
 
       <?php
 
-      if ($categoryElements) :
-        // Get category name from categories table
-        foreach ($categoryElements as $element) {
+      if ($productDescription) echo "<p class='card-text'>$productDescription</p>";
 
-          if ($element->id == $productIdCategory) {
+      echo '<p class="card-text">Preço: ' . $productPrice . '</p>';
 
-            $categoryName = $element->category_name;
-            break;
-          }
-        }
-
-        if ($productDescription) echo "<p class='card-text'>$productDescription</p>";
+      if ($categoryItem) :
 
       ?>
-        <p class='card-text'>Preço: <?= $productPrice ?></p>
-
         <small class='text-muted'>
-          Categoria: <a href='<?= $categoryUrlLink ?>' hx-boost='<?= $categoryUrlLink ?>'>
+          Categoria: <a href='<?= $categoryUrlLink ?>' hx-boost='true'>
             <?= $categoryName ?>
           </a>
         </small>

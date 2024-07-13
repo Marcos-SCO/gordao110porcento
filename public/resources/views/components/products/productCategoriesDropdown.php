@@ -2,7 +2,7 @@
   <p>Apresentar por categorias</p>
 
   <div class="dropdown" hx-boost="true" hx-select="main" hx-target="main" hx-swap="outerHTML show:none">
-    
+
     <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">Selecionar</button>
 
     <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
@@ -15,13 +15,22 @@
 
       foreach ($categoryElements as $categoryItem) {
 
+        $categoryItemSlug =
+          indexParamExistsOrDefault($categoryItem, 'slug');
+
         $categoryItemName =
-          objParamExistsOrDefault($categoryItem, 'category_name');
+          indexParamExistsOrDefault($categoryItem, 'category_name');
+
+        $categoryItemId =
+          indexParamExistsOrDefault($categoryItem, 'id');
 
         $activeItem = $currentCategoryName == $categoryItemName
           ? ' active' : '';
 
-        echo "<li><a href='$BASE/categories/show/$categoryItem->id' class='dropdown-item$activeItem'>$categoryItemName</a></li>";
+        $categoryUrl = $BASE . '/categories/';
+        if ($categoryItemSlug) $categoryUrl = $BASE . '/category/' . $categoryItemSlug;
+
+        echo "<li><a href='$categoryUrl' class='dropdown-item$activeItem'>$categoryItemName</a></li>";
       }
       ?>
     </ul>

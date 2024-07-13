@@ -23,7 +23,8 @@ return [
     '/categories/?($|[0-9])+/?' => 'Categories@index',
     '/categories/create/?' => 'Categories@create',
     '/categories/edit/($|[0-9])+/?' => 'Categories@edit',
-    '/categories/?show/($|[0-9]+)(?:/([0-9]+))?/' => 'Categories@show',
+
+    '/category/([a-z0-9-]+)(?:/page/(\d+))?/?' => 'Categories@show',
     
     '/contact/?($|[\w]+)/?' => 'Contact@index',
     

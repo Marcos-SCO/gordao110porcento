@@ -2,6 +2,8 @@
 
 $loopCount = 0;
 
+$categoryBase = $BASE . '/category/';
+
 ?>
 
 <header class="categoryHeader productHeader imgBackgroundArea">
@@ -16,13 +18,14 @@ $loopCount = 0;
             $loopCount += 1;
 
             $dataItemId = objParamExistsOrDefault($data, 'id');
-
+            
             if (!$dataItemId) continue;
+
+            $dataItemSlug = objParamExistsOrDefault($data, 'slug');
 
             $dataItemImg = objParamExistsOrDefault($data, 'img');
 
-            $categoryShowLink =
-                $BASE . '/categories/show/' . $dataItemId;
+            $categoryShowLink = $categoryBase . $dataItemSlug;
 
             $imgLoading =
                 $loopCount <= 4 ? 'eager' : 'lazy';

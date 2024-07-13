@@ -4,6 +4,7 @@ namespace App\Controllers;
 
 use App\Classes\ImagesHandler;
 use App\Classes\Pagination;
+use App\Models\Category;
 use App\Request\CategoryRequest;
 use App\Request\ImageRequest;
 use App\Request\RequestData;
@@ -35,8 +36,7 @@ class Categories extends Controller
 
         $results = Pagination::handler($table, $pageId, $limit = 3, '', $orderOption = 'ORDER BY id DESC');
 
-        // Category elements from table categories
-        $categoryElements = $this->model->customQuery('SELECT id, category_name FROM categories', null, 1);
+        $categoryElements = Category::getCategories();
 
         View::render('categories/index.php', [
             'title' => 'Todas Categorias',
@@ -57,25 +57,26 @@ class Categories extends Controller
     {
         removeSubmittedFromSession();
 
-        $categoryId =
-            indexParamExistsOrDefault($requestData, 'show', 1);
+        $categorySlug =
+            indexParamExistsOrDefault($requestData, 'category', 1);
 
         $lastKey = array_key_last($requestData);
-
-        $pageId = !($lastKey == 'show') ? end($requestData) : 1;
-
-        $urlPath = "categories/show/$categoryId";
-
+          
+        $pageId = indexParamExistsOrDefault($requestData, 'page', 1);
+        
+        $urlPath = "category/$categorySlug/page";
+        
         // get category fata
-        $data = $this->model->getAllFrom('categories', $categoryId);
+        $data = $this->model->getAllFrom('categories', "$categorySlug", 'slug');
+        
         // get user data
         $user = $this->model->getAllFrom('users', $data->user_id);
-
+        
         $productsTable = 'products';
-
-        $results = Pagination::handler($productsTable, $pageId, $limit = 8, ['id_category', $categoryId], $orderOption = 'ORDER BY id DESC');
-
-        $categoryElements = $this->model->customQuery('SELECT id, category_name FROM categories', null, 1);
+        
+        $results = Pagination::handler($productsTable, $pageId, $limit = 8, ['id_category', $data->id], $orderOption = 'ORDER BY id DESC');
+                
+        $categoryElements = Category::getCategories();
 
         // Display results
         return View::render('categories/show.php', [
