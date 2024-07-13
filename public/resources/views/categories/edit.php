@@ -1,6 +1,7 @@
 <?php
 
 $categoryId = objParamExistsOrDefault($data, 'id');
+$categorySlug = objParamExistsOrDefault($data, 'slug');
 $categoryName = objParamExistsOrDefault($data, 'category_name');
 $categoryImg = objParamExistsOrDefault($data, 'img');
 
@@ -22,15 +23,25 @@ $formActionUrl = $BASE  . '/categories/update/';
 
     <form action="<?= $formActionUrl ?>" method="post" enctype="multipart/form-data" hx-post="<?= $formActionUrl ?>" hx-target="body" hx-swap="show:body:top">
 
-        <input type="hidden" name="id" id="<?= $categoryId ?>" value="<?= $categoryId ?>">
+        <input type="hidden" name="id" id="<?= $categoryId ?>" value="<?= $categoryId ?>" data-js="category-form">
 
         <div class="form-group">
             <label for="category_name">Nome da categoria<sup>*</sup></label>
 
-            <input type="text" name="category_name" id="category_name" class="form-control form-control-lg <?= isset($error['category_name_error']) && $error['category_name_error'] != '' ? 'is-invalid' : '' ?>" value="<?= $categoryName ?? '' ?>">
+            <input type="text" name="category_name" data-slug-origin id="category_name" class="form-control form-control-lg <?= isset($error['category_name_error']) && $error['category_name_error'] != '' ? 'is-invalid' : '' ?>" value="<?= $categoryName ?? '' ?>">
 
             <span class="invalid-feedback">
                 <?= $error['category_name_error'] ?? '' ?>
+            </span>
+        </div>
+
+        <div class="form-group">
+            <label for="category_slug">Slug da categoria<sup>*</sup></label>
+
+            <input type="text" name="category_slug" data-slug-receptor id="category_slug" class="form-control form-control-lg <?= isset($error['category_slug_error']) && $error['category_slug_error'] != '' ? 'is-invalid' : '' ?>" value="<?= $categorySlug ?? '' ?>">
+
+            <span class="invalid-feedback">
+                <?= $error['category_slug_error'] ?? '' ?>
             </span>
         </div>
 

@@ -15,3 +15,5 @@ import './modal/index';
 import './header';
 import './_heroSlider';
 import './_dataAnimation';
+
+import './forms';

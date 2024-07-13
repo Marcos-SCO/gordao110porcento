@@ -107,6 +107,10 @@
 
             <li data-active-page="users"><a class="dropdown-item" href="<?= $BASE ?>/users/">Usuários</a></li>
 
+            <li class="nav-item <?= activePageClass(['categories'], $dataPage); ?>">
+              <a class="dropdown-item" href="<?= $BASE ?>/categories">Categorias</a>
+            </li>
+
             <li><a class="dropdown-item" href="<?= $BASE ?>/logout">Sair</a></li>
           </ul>
 

@@ -4,6 +4,11 @@ $formActionUrl = $BASE  . '/categories/store';
 
 $imgName = isset($img) ? indexParamExistsOrDefault($img, 'name') : false;
 
+$slugField = indexParamExistsOrDefault($data, 'category_slug', '');
+
+$slugFieldError =
+    indexParamExistsOrDefault($error, 'category_slug_error', '');
+
 ?>
 
 <header class="categoryHeader productHeader imgBackgroundArea">
@@ -17,15 +22,25 @@ $imgName = isset($img) ? indexParamExistsOrDefault($img, 'name') : false;
         <h2>Adicionar Categoria</h2>
     </header>
 
-    <form action="<?= $formActionUrl ?>" method="post" enctype="multipart/form-data" hx-post="<?= $formActionUrl ?>" hx-target="body" hx-swap="show:body:top">
+    <form action="<?= $formActionUrl ?>" method="post" enctype="multipart/form-data" hx-post="<?= $formActionUrl ?>" hx-target="body" hx-swap="show:body:top" data-js="category-form">
 
         <div class="form-group">
             <label for="category_name">Nome da categoria<sup>*</sup></label>
 
-            <input type="text" name="category_name" id="category_name" class="form-control form-control-lg <?= isset($error['category_name_error']) && $error['category_name_error'] != '' ? 'is-invalid' : '' ?>" value="<?= $data['category_name'] ?? '' ?>">
+            <input type="text" name="category_name" data-slug-origin id="category_name" class="form-control form-control-lg <?= isset($error['category_name_error']) && $error['category_name_error'] != '' ? 'is-invalid' : '' ?>" value="<?= $data['category_name'] ?? '' ?>">
 
             <span class="invalid-feedback">
                 <?= $error['category_name_error'] ?? '' ?>
+            </span>
+        </div>
+
+        <div class="form-group">
+            <label for="category_slug">Slug da categoria<sup>*</sup></label>
+
+            <input type="text" name="category_slug" data-slug-receptor id="category_slug" class="form-control form-control-lg <?= isset($slugFieldError) && $slugFieldError != '' ? 'is-invalid' : '' ?>" value="<?= $slugField ?? '' ?>">
+
+            <span class="invalid-feedback">
+                <?= $slugFieldError ?? '' ?>
             </span>
         </div>
 

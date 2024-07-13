@@ -40,6 +40,7 @@ class Categories extends Controller
 
         View::render('categories/index.php', [
             'title' => 'Todas Categorias',
+            'dataPage' => $this->dataPage,
             'categoryElements' => $categoryElements,
             'categories' => $results['tableResults'],
             'flash' => $flash,
