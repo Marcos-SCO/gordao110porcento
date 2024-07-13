@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-class Category extends \Core\Model
+class ProductCategory extends \Core\Model
 {
     /**
      * Get all the categories as an associative array
@@ -12,14 +12,14 @@ class Category extends \Core\Model
      */
     public function getAll()
     {
-        $result = $this->selectQuery('categories', "ORDER BY id DESC");
+        $result = $this->selectQuery('product_categories', "ORDER BY id DESC");
         return $result;
     }
 
     public static function getCategories($selectParams = 'slug, category_name, id')
     {
         $self = new self();
-        $result = $self->selectQuery('categories', '', $selectParams);
+        $result = $self->selectQuery('product_categories', '', $selectParams);
 
         $categories = [];
         foreach ($result as $row) {
@@ -33,7 +33,7 @@ class Category extends \Core\Model
     public function getImg($id)
     {
         $result = $this->customQuery(
-            "SELECT img FROM categories WHERE `id` = :id",
+            "SELECT img FROM product_categories WHERE `id` = :id",
             ['id' => $id]
         );
 
@@ -49,7 +49,7 @@ class Category extends \Core\Model
     public function addCategory($data)
     {
         // dump($data);
-        $this->insertQuery('categories', [
+        $this->insertQuery('product_categories', [
             'user_id' => $_SESSION['user_id'],
             'slug' => $data['category_slug'],
             'category_name' => $data['category_name'],
@@ -64,7 +64,7 @@ class Category extends \Core\Model
 
     public function updateCategory($data)
     {
-        $this->updateQuery('categories', [
+        $this->updateQuery('product_categories', [
             'slug' => $data['category_slug'],
             'category_name' => $data['category_name'],
             'category_description' => $data['category_description'],

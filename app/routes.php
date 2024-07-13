@@ -20,11 +20,11 @@ return [
     '/posts/create/?' => 'Posts@create',
     '/posts/edit/($|[0-9])+/?' => 'Posts@edit',
     
-    '/categories/?($|[0-9])+/?' => 'Categories@index',
-    '/categories/create/?' => 'Categories@create',
-    '/categories/edit/($|[0-9])+/?' => 'Categories@edit',
+    '/categories/?($|[0-9])+/?' => 'ProductCategories@index',
+    '/categories/create/?' => 'ProductCategories@create',
+    '/categories/edit/($|[0-9])+/?' => 'ProductCategories@edit',
 
-    '/category/([a-z0-9-]+)(?:/page/(\d+))?/?' => 'Categories@show',
+    '/category/([a-z0-9-]+)(?:/page/(\d+))?/?' => 'ProductCategories@show',
     
     '/contact/?($|[\w]+)/?' => 'Contact@index',
     
@@ -55,9 +55,9 @@ return [
     '/products/update/?' => 'Products@update',
     '/products/delete/?' => 'Products@destroy',
     
-    '/categories/store/?' => 'Categories@store',
-    '/categories/update/?' => 'Categories@update',
-    '/categories/delete/?' => 'Categories@destroy',
+    '/categories/store/?' => 'ProductCategories@store',
+    '/categories/update/?' => 'ProductCategories@update',
+    '/categories/delete/?' => 'ProductCategories@destroy',
 
     '/gallery/store/?' => 'Gallery@store',
     '/gallery/update/?' => 'Gallery@update',

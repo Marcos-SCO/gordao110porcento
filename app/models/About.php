@@ -22,6 +22,6 @@ class About extends Model
 
     public function getCategories()
     {
-        return $this->selectQuery("categories", "ORDER BY id DESC");
+        return $this->selectQuery("product_categories", "ORDER BY id DESC");
     }
 }

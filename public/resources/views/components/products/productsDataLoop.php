@@ -9,7 +9,7 @@ $loopCount = 0;
 $isSectionActiveUser =
   ($_SESSION['user_status'] && $_SESSION['user_status'] == 1);
 
-// $categories = Category::getCategories();
+// $categories = ProductCategory::getCategories();
 
 foreach ($products as $data) :
 

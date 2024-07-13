@@ -20,7 +20,7 @@ trait CategoriesImagesHandlerTrait
     if ($isEmptyImg) return $data;
 
     $fullPath =
-      $this->imagesHandler->imgFolderCreate('categories', $id, $imgName);
+      $this->imagesHandler->imgFolderCreate('product_categories', $id, $imgName);
 
     $this->imagesHandler->moveUpload($fullPath);
 

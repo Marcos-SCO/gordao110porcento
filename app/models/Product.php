@@ -18,7 +18,7 @@ class Product extends \Core\Model
 
     public function getCategories()
     {
-        $result = $this->customQuery("SELECT id, category_name FROM categories ORDER BY id DESC", null, 1);
+        $result = $this->customQuery("SELECT id, category_name FROM product_categories ORDER BY id DESC", null, 1);
         
         return $result;
     }

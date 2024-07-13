@@ -5,6 +5,7 @@ namespace App\Controllers;
 use App\Classes\ImagesHandler;
 use App\Classes\Pagination;
 use App\Models\Category;
+use App\Models\ProductCategory;
 use App\Request\ImageRequest;
 use App\Request\ProductRequest;
 use App\Request\RequestData;
@@ -43,7 +44,7 @@ class Products extends Controller
         $flash = indexParamExistsOrDefault($requestData, 'flash');
 
         // Category elements from table categories
-        $categoryElements = Category::getCategories();
+        $categoryElements = ProductCategory::getCategories();
 
         View::render('products/index.php', [
             'title' => "Ofertas | Página $pageId",
@@ -131,7 +132,7 @@ class Products extends Controller
 
         $user = $this->model->getAllFrom('users', $data->user_id);
 
-        $category = self::getSlugById('categories', $data->id_category, 'slug')[0];
+        $category = self::getSlugById('product_categories', $data->id_category, 'slug')[0];
 
         removeSubmittedFromSession();
 

@@ -4,7 +4,9 @@ namespace App\Controllers;
 
 use App\Classes\ImagesHandler;
 use App\Classes\Pagination;
-use App\Models\Category;
+
+use App\Models\ProductCategory;
+
 use App\Request\CategoryRequest;
 use App\Request\ImageRequest;
 use App\Request\RequestData;
@@ -14,7 +16,7 @@ use App\Traits\GeneralImagesHandlerTrait;
 use Core\Controller;
 use Core\View;
 
-class Categories extends Controller
+class ProductCategories extends Controller
 {
     use GeneralImagesHandlerTrait;
 
@@ -24,19 +26,19 @@ class Categories extends Controller
 
     public function __construct()
     {
-        $this->model = $this->model('Category');
+        $this->model = $this->model('ProductCategory');
         $this->imagesHandler = new ImagesHandler();
     }
 
     public function index($requestData = 1, $flash = false)
     {
-        $table = 'categories';
+        $table = 'product_categories';
 
         $pageId = isset($requestData['categories']) && !empty($requestData['categories']) ? $requestData['categories'] : 1;
 
         $results = Pagination::handler($table, $pageId, $limit = 3, '', $orderOption = 'ORDER BY id DESC');
 
-        $categoryElements = Category::getCategories();
+        $categoryElements = ProductCategory::getCategories();
 
         View::render('categories/index.php', [
             'title' => 'Todas Categorias',
@@ -67,7 +69,7 @@ class Categories extends Controller
         $urlPath = "category/$categorySlug/page";
         
         // get category fata
-        $data = $this->model->getAllFrom('categories', "$categorySlug", 'slug');
+        $data = $this->model->getAllFrom('product_categories', "$categorySlug", 'slug');
         
         // get user data
         $user = $this->model->getAllFrom('users', $data->user_id);
@@ -76,7 +78,7 @@ class Categories extends Controller
         
         $results = Pagination::handler($productsTable, $pageId, $limit = 8, ['id_category', $data->id], $orderOption = 'ORDER BY id DESC');
                 
-        $categoryElements = Category::getCategories();
+        $categoryElements = ProductCategory::getCategories();
 
         // Display results
         return View::render('categories/show.php', [
