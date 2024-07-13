@@ -26,10 +26,14 @@ if (!$categories) return;
       $categoryUrl = $BASE . 'categories';
       if ($categoryItemSlug) $categoryUrl = $BASE . '/category/' . $categoryItemSlug;
 
+      $imgUrl = $BASE . '/' . imgOrDefault('product_categories', $categoryItemImg, $categoryItem->id);
+
     ?>
       <a href="<?= $categoryUrl ?>">
 
-        <figure class="item"><img class="mx-auto" src="<?= $BASE ?>/<?= imgOrDefault('categories', $categoryItemImg, $categoryItem->id) ?>" alt="<?= $categoryItemImg ?>" title="<?= $categoryItemName ?>" onerror="this.onerror=null;this.src='<?= $BASE ?>/public/resources/img/not_found/no_image.jpg';" loading="lazy" width="246" height="184">
+        <figure class="item">
+
+          <img class="mx-auto" src="<?= $imgUrl ?>" alt="<?= $categoryItemImg ?>" title="<?= $categoryItemName ?>" onerror="this.onerror=null;this.src='<?= $BASE ?>/public/resources/img/not_found/no_image.jpg';" loading="lazy" width="246" height="184">
 
           <figcaption><?= $categoryItemName ?></figcaption>
 
