@@ -1,7 +1,5 @@
 <?php
 
-use App\Models\Category;
-
 if (!$products) return;
 
 $loopCount = 0;
@@ -43,8 +41,8 @@ foreach ($products as $data) :
   if ($categorySlug) $categoryUrlLink = $BASE . '/category/' . $categorySlug;
 
 ?>
-  <figure class="card" data-js="loop-item">
-    <a href='<?= $productUrlLink; ?>' hx-boost="true" <?= getHtmxMainTagAttributes(); ?>>
+  <figure class="product-card card" data-js="loop-item" hx-boost="true" hx-target="body" hx-swap="outerHTML">
+    <a href='<?= $productUrlLink; ?>'>
       <?php
 
       $imgPath = imgOrDefault('products', $dataItemImg, $dataItemId, "/category_$productIdCategory");
@@ -65,7 +63,7 @@ foreach ($products as $data) :
 
     <figcaption class="card-body">
 
-      <a href='<?= $productUrlLink; ?>' hx-boost="true" <?= getHtmxMainTagAttributes(); ?>>
+      <a href='<?= $productUrlLink; ?>'>
         <h5 class="card-title"><?= $productName ?></h5>
       </a>
 
@@ -87,7 +85,7 @@ foreach ($products as $data) :
 
       <?php if ($isSectionActiveUser) : ?>
         </br>
-        <a href='<?= $productUrlLink; ?>' hx-boost="true" <?= getHtmxMainTagAttributes(); ?>>Ver detalhes</a>
+        <a href='<?= $productUrlLink; ?>'>Ver detalhes</a>
       <?php endif; ?>
 
     </figcaption>

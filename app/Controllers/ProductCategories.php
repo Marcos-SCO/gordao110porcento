@@ -63,21 +63,21 @@ class ProductCategories extends Controller
             indexParamExistsOrDefault($requestData, 'category', 1);
 
         $lastKey = array_key_last($requestData);
-          
+
         $pageId = indexParamExistsOrDefault($requestData, 'page', 1);
-        
+
         $urlPath = "category/$categorySlug/page";
-        
+
         // get category fata
         $data = $this->model->getAllFrom('product_categories', "$categorySlug", 'slug');
-        
+
         // get user data
         $user = $this->model->getAllFrom('users', $data->user_id);
-        
+
         $productsTable = 'products';
-        
+
         $results = Pagination::handler($productsTable, $pageId, $limit = 8, ['id_category', $data->id], $orderOption = 'ORDER BY id DESC');
-                
+
         $categoryElements = ProductCategory::getCategories();
 
         // Display results
@@ -122,11 +122,12 @@ class ProductCategories extends Controller
         $requestedData = array_merge(
             CategoryRequest::categoryFieldsValidation(),
             ImageRequest::validateImageParams(),
-            SlugsRequest::slugExistenceValidation('categories', false, 'categorias', [
+            SlugsRequest::slugExistenceValidation('product_categories', false, 'categorias', [
                 'slugField' => 'category_slug',
                 'slugFieldError' => 'category_slug_error'
             ]),
         );
+
 
         $data = indexParamExistsOrDefault($requestedData, 'data');
 
@@ -146,7 +147,7 @@ class ProductCategories extends Controller
 
         $lastInsertedPostId = $this->model->lastId();
 
-        $this->moveUploadImageFolder('categories', $data, $lastInsertedPostId);
+        $this->moveUploadImageFolder('product_categories', $data, $lastInsertedPostId);
 
         addSubmittedToSession();
 
@@ -165,7 +166,7 @@ class ProductCategories extends Controller
 
         $errors = indexParamExistsOrDefault($requestData, 'error');
 
-        $data = $this->model->getAllFrom('categories', $id);
+        $data = $this->model->getAllFrom('product_categories', $id);
 
         View::render('categories/edit.php', [
             'title' => "Editar - $data->category_name",
@@ -187,7 +188,7 @@ class ProductCategories extends Controller
         $requestedData = array_merge(
             CategoryRequest::categoryFieldsValidation(),
             ImageRequest::validateImageParams(),
-            SlugsRequest::slugExistenceValidation('categories', "AND id != $id", 'categorias', [
+            SlugsRequest::slugExistenceValidation('product_categories', "AND id != $id", 'categorias', [
                 'slugField' => 'category_slug',
                 'slugFieldError' => 'category_slug_error'
             ]),
@@ -208,7 +209,7 @@ class ProductCategories extends Controller
             return $this->edit(['edit' => $id, 'error' => $errorData]);
         }
 
-        $data = $this->moveUploadImageFolder('categories', $data);
+        $data = $this->moveUploadImageFolder('product_categories', $data);
 
         $this->model->updateCategory($data);
 
@@ -225,9 +226,9 @@ class ProductCategories extends Controller
 
         $id = indexParamExistsOrDefault(RequestData::getPostData(), 'id');
 
-        $this->model->deletePost('categories', ['id' => $id]);
+        $this->model->deletePost('product_categories', ['id' => $id]);
 
-        $this->imagesHandler->deleteFolder('categories', $id);
+        $this->imagesHandler->deleteFolder('product_categories', $id);
         $this->imagesHandler->deleteFolder('products', false, $id, true);
 
         flash('post_message', 'Item de categoria deletado com sucesso!');

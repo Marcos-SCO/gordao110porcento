@@ -1,4 +1,4 @@
-<?php 
+<?php
 $categories = valueParamExistsOrDefault($categories);
 
 if (!$categories) return;
@@ -13,18 +13,26 @@ if (!$categories) return;
   </header>
 
   <div class="owlDefaultItem owl-carousel owl-theme" data-js="owlDefaultItem" hx-boost="true" hx-target="body" hx-swap="outerHTML">
-    <?php foreach ($categories as $categoryItem) : 
-      
+    <?php foreach ($categories as $categoryItem) :
+
       $categoryItemId = objParamExistsOrDefault($categoryItem, 'id');
-      
+      $categoryItemSlug = objParamExistsOrDefault($categoryItem, 'slug');
+
       $categoryItemImg = objParamExistsOrDefault($categoryItem, 'img');
-      
+
+
       $categoryItemName = objParamExistsOrDefault($categoryItem, 'category_name');
 
-      ?>
-      <a href="<?= $BASE ?>/categories/show/<?= $categoryItem->id ?>">
+      $categoryUrl = $BASE . 'categories';
+      if ($categoryItemSlug) $categoryUrl = $BASE . '/category/' . $categoryItemSlug;
+
+    ?>
+      <a href="<?= $categoryUrl ?>">
+
         <figure class="item"><img class="mx-auto" src="<?= $BASE ?>/<?= imgOrDefault('categories', $categoryItemImg, $categoryItem->id) ?>" alt="<?= $categoryItemImg ?>" title="<?= $categoryItemName ?>" onerror="this.onerror=null;this.src='<?= $BASE ?>/public/resources/img/not_found/no_image.jpg';" loading="lazy" width="246" height="184">
+
           <figcaption><?= $categoryItemName ?></figcaption>
+
         </figure>
       </a>
     <?php endforeach; ?>

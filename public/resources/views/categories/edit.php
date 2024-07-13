@@ -66,7 +66,7 @@ $formActionUrl = $BASE  . '/categories/update/';
                 <?= $error['img_error'] ?? '' ?>
             </span>
 
-            <img src="<?= $BASE ?>/<?= imgOrDefault('categories', $categoryImg, $categoryId) ?>" alt="<?= $categoryImg ?>" title="<?= $categoryName ?>" onerror="this.onerror=null;this.src='<?= $BASE ?>/public/resources/img/not_found/no_image.jpg';">
+            <img src="<?= $BASE ?>/<?= imgOrDefault('product_categories', $categoryImg, $categoryId) ?>" alt="<?= $categoryImg ?>" title="<?= $categoryName ?>" onerror="this.onerror=null;this.src='<?= $BASE ?>/public/resources/img/not_found/no_image.jpg';">
         </div>
 
         <input type="submit" class="btn btn-success" value="Salvar">

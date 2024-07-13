@@ -18,7 +18,7 @@ class ImageRequest extends RequestData
     if ($imgFiles) self::$data['img_files'] = $imgFiles;
     if ($imgName) self::$data['img_name'] = $imgName;
     if ($postImg) self::$data['post_img'] = $postImg;
-   
+
     $isEmptyPostImg = $postImg == "" || $postImg == false;
     if (!$isEmptyPostImg) self::$data['img_name'] = $postImg;
 
@@ -36,7 +36,12 @@ class ImageRequest extends RequestData
         $imagesHandler->verifySubmittedImgExtension();
 
       self::$errorData['error'] = $validatedImgRequest[0];
-      self::$errorData['img_error'] = $validatedImgRequest[1];
+      $imgError = $validatedImgRequest[1];
+
+      if (!empty($imgError)) {
+
+        self::$errorData['img_error'] = $imgError;
+      }
     }
 
     return ['data' => self::$data, 'errorData' => self::$errorData];

@@ -39,7 +39,7 @@ $categoryBase = $BASE . '/category/';
             <a href='<?= $categoryShowLink ?>' hx-get='<?= $categoryShowLink ?>' <?= getHtmxMainTagAttributes(); ?> data-js="loop-item">
                 <figure class="card" style="color:#333!important">
 
-                    <?php echo getImgWithAttributes(imgOrDefault('categories', $dataItemImg, $dataItemId), [
+                    <?php echo getImgWithAttributes(imgOrDefault('product_categories', $dataItemImg, $dataItemId), [
                         'alt' => $categoryName,
                         'title' => $categoryName,
                         'width' => '299px',
