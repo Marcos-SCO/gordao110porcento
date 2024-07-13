@@ -7,7 +7,7 @@ use App\Classes\Pagination;
 use App\Request\CategoryRequest;
 use App\Request\ImageRequest;
 use App\Request\RequestData;
-
+use App\Request\SlugsRequest;
 use App\Traits\GeneralImagesHandlerTrait;
 
 use Core\Controller;
@@ -115,9 +115,13 @@ class Categories extends Controller
 
         if (isSubmittedInSession()) return redirect('categories');
 
-        $requestedData = array_merge_recursive(
+        $requestedData = array_merge(
             CategoryRequest::categoryFieldsValidation(),
             ImageRequest::validateImageParams(),
+            SlugsRequest::slugExistenceValidation('categories', false, 'categorias', [
+                'slugField' => 'category_slug',
+                'slugFieldError' => 'category_slug_error'
+            ]),
         );
 
         $data = indexParamExistsOrDefault($requestedData, 'data');
@@ -125,10 +129,7 @@ class Categories extends Controller
         $errorData =
             indexParamExistsOrDefault($requestedData, 'errorData');
 
-        $getFirstErrorSign = isset($errorData['error'])
-            && array_filter($errorData['error'], function ($item) {
-                return $item && $item === true;
-            });
+        $getFirstErrorSign = RequestData::isErrorInRequest($errorData);
 
         if ($getFirstErrorSign) {
 
@@ -175,37 +176,42 @@ class Categories extends Controller
 
         if (isSubmittedInSession()) return redirect('categories');
 
-        $id = indexParamExistsOrDefault(RequestData::getPostData(), 'id');
+        $postData = RequestData::getPostData();
+        $id = indexParamExistsOrDefault($postData, 'id');
+        $slug = indexParamExistsOrDefault($postData, 'category_slug');
 
-        $requestedData = array_merge_recursive(
+        $requestedData = array_merge(
             CategoryRequest::categoryFieldsValidation(),
             ImageRequest::validateImageParams(),
+            SlugsRequest::slugExistenceValidation('categories', "AND id != $id", 'categorias', [
+                'slugField' => 'category_slug',
+                'slugFieldError' => 'category_slug_error'
+            ]),
         );
 
         $data = indexParamExistsOrDefault($requestedData, 'data');
 
         if ($id) $data['id'] = $id;
+        if ($slug) $data['category_slug'] = $slug;
 
         $errorData =
             indexParamExistsOrDefault($requestedData, 'errorData');
 
-        $getFirstErrorSign = isset($errorData['error'])
-            && array_filter($errorData['error'], function ($item) {
-                return $item && $item === true;
-            });
+        $getFirstErrorSign = RequestData::isErrorInRequest($errorData);
 
         if ($getFirstErrorSign) {
 
             return $this->edit(['edit' => $id, 'error' => $errorData]);
         }
 
-        $data = $this->moveUploadImageFolder($data);
+        $data = $this->moveUploadImageFolder('categories', $data);
 
         $this->model->updateCategory($data);
 
         flash('post_message', 'Categoria foi atualizada com sucesso!');
 
-        return redirect("categories/show/$id/");
+        // return redirect("categories/show/$id/");
+        return redirect("categories/edit/$id/");
     }
 
     // Delete function for controllers

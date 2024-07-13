@@ -9,19 +9,16 @@ class GalleryRequest extends RequestData
   {
     $post = self::getPostData();
 
-    $data = [];
-    $errorData = ['error' => false];
-
     $imgTitle = indexParamExistsOrDefault($post, 'img_title');
 
-    if ($imgTitle) $data['img_title'] = trim($imgTitle);
+    if ($imgTitle) self::$data['img_title'] = trim($imgTitle);
 
-    if (empty($data['img_title'])) {
-      $errorData['img_title_error'] = "Coloque uma descrição para imagem";
+    if (empty(self::$data['img_title'])) {
+      self::$errorData['img_title_error'] = "Coloque uma descrição para imagem";
     }
 
-    if (count($errorData) > 1) $errorData['error'] = true;
+    if (count(self::$errorData) > 1) self::$errorData['error'] = true;
 
-    return ['data' => $data, 'errorData' => $errorData];
+    return ['data' => self::$data, 'errorData' => self::$errorData];
   }
 }

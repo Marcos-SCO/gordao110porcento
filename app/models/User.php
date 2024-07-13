@@ -74,10 +74,6 @@ class User extends Model
         if ($self->rowCount() > 0) {
 
             return true;
-            // $errorData['email_error'] = "Já existe um usuário com esse E-mail";
-            // $errorData['error'] = true;
-
-            // return $errorData;
         }
 
         return false;

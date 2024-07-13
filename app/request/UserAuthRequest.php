@@ -9,73 +9,70 @@ class UserAuthRequest extends RequestData
 
   public static function validateUserAuthLogin($userAuthInstance = false)
   {
-    $post = self::getPostData();
+    self::$post = self::getPostData();
 
-    $data = [];
-    $errorData = ['error' => false];
+    self::$data = [];
+    self::$errorData = ['error' => false];
 
-    $email = indexParamExistsOrDefault($post, 'email');
-    $password = indexParamExistsOrDefault($post, 'password');
+    $email = indexParamExistsOrDefault(self::$post, 'email');
+    $password = indexParamExistsOrDefault(self::$post, 'password');
 
-    if ($email) $data['email'] = trim($email);
-    if ($password) $data['password'] = trim($password);
+    if ($email) self::$data['email'] = trim($email);
+    if ($password) self::$data['password'] = trim($password);
 
     // Check an set logged in user
     $userAuthInstance = $userAuthInstance
       ? $userAuthInstance : new UserAuth();
 
     $authenticatedUser =
-      $userAuthInstance->authenticate($data['email'], $data['password']);
+      $userAuthInstance->authenticate(self::$data['email'], self::$data['password']);
 
     $userStatus = objParamExistsOrDefault($authenticatedUser, 'status');
 
-    $data['authenticatedUser'] = $authenticatedUser;
+    self::$data['authenticatedUser'] = $authenticatedUser;
 
     if (!$authenticatedUser) {
       
-      $errorData['password_error'] = "Email ou senha incorretos";
+      self::$errorData['password_error'] = "Email ou senha incorretos";
     }
 
     // Don't let users with status 0 login
     if ($authenticatedUser && $userStatus != 1) {
 
-      $errorData['password_error'] = 'Usuário está desativado do sistema';
+      self::$errorData['password_error'] = 'Usuário está desativado do sistema';
     }
 
-    if (count($errorData) > 1) $errorData['error'] = true;
+    if (count(self::$errorData) > 1) self::$errorData['error'] = true;
 
-    return ['data' => $data, 'errorData' => $errorData];
+    return ['data' => self::$data, 'errorData' => self::$errorData];
   }
 
   public static function validateUserAuthInputs()
   {
-    $post = self::getPostData();
+    self::$post = self::getPostData();
 
-    $data = [];
-    $errorData = ['error' => false];
+    $email = indexParamExistsOrDefault(self::$post, 'email');
+    $password = indexParamExistsOrDefault(self::$post, 'password');
 
-    $email = indexParamExistsOrDefault($post, 'email');
-    $password = indexParamExistsOrDefault($post, 'password');
-
-    if ($email) $data['email'] = trim($email);
-    if ($password) $data['password'] = trim($password);
+    if ($email) self::$data['email'] = trim($email);
+    if ($password) self::$data['password'] = trim($password);
 
     // Validate Email
-    if (empty($data['email'])) {
-      $errorData['email_error'] = "Digite o E-mail";
+    if (empty(self::$data['email'])) {
+      self::$errorData['email_error'] = "Digite o E-mail";
     }
 
-    if (!empty($data['email']) && !filter_input(INPUT_POST, 'email', FILTER_VALIDATE_EMAIL)) {
-      $errorData['email_error'] = "E-mail inválido";
+    if (!empty(self::$data['email']) && !filter_input(INPUT_POST, 'email', FILTER_VALIDATE_EMAIL)) {
+      self::$errorData['email_error'] = "E-mail inválido";
     }
 
-    if (empty($data['password'])) {
+    if (empty(self::$data['password'])) {
 
-      $errorData['password_error'] = "Digite a senha";
+      self::$errorData['password_error'] = "Digite a senha";
     }
 
-    if (count($errorData) > 1) $errorData['error'] = true;
+    if (count(self::$errorData) > 1) self::$errorData['error'] = true;
 
-    return ['data' => $data, 'errorData' => $errorData];
+    return ['data' => self::$data, 'errorData' => self::$errorData];
   }
 }

@@ -82,7 +82,7 @@ class Products extends Controller
 
         if (isSubmittedInSession()) return redirect('products');
 
-        $requestedData = array_merge_recursive(
+        $requestedData = array_merge(
             ProductRequest::productFieldsValidation(),
             ImageRequest::validateImageParams(),
         );
@@ -92,13 +92,7 @@ class Products extends Controller
         $errorData =
             indexParamExistsOrDefault($requestedData, 'errorData');
 
-        $getFirstErrorSign = isset($errorData['error'])
-            && array_filter($errorData['error'], function ($item) {
-                return $item && $item === true;
-            });
-
-            // var_dump($data);
-            // die('monster');
+        $getFirstErrorSign = RequestData::isErrorInRequest($errorData);
 
         if ($getFirstErrorSign) {
 
@@ -178,8 +172,8 @@ class Products extends Controller
         $postImg = indexParamExistsOrDefault($post, 'img');
 
         if (isSubmittedInSession()) return redirect('products/show/' . $id);
-        
-        $requestedData = array_merge_recursive(
+
+        $requestedData = array_merge(
             ProductRequest::productFieldsValidation(),
             ImageRequest::validateImageParams(),
         );
@@ -192,24 +186,21 @@ class Products extends Controller
         $errorData =
             indexParamExistsOrDefault($requestedData, 'errorData');
 
-        $getFirstErrorSign = isset($errorData['error'])
-            && array_filter($errorData['error'], function ($item) {
-                return $item && $item === true;
-            });
+        $getFirstErrorSign = RequestData::isErrorInRequest($errorData);
 
         if ($getFirstErrorSign) {
 
             return $this->edit(['edit' => $id, 'error' => $errorData]);
         }
-        
+
         $data = $this->moveUploadImageFolder($data);
-                
+
         $this->model->updateProduct($data);
-        
+
         addSubmittedToSession();
-        
+
         flash('post_message', 'Produto foi atualizado com sucesso!');
-        
+
         // return redirect('products/show/' . $id);
         return redirect('products/edit/' . $id);
     }

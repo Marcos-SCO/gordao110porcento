@@ -7,52 +7,49 @@ class ProductRequest extends RequestData
 
   public static function productFieldsValidation()
   {
-    $post = self::getPostData();
+    self::$post = self::getPostData();
 
-    $data = [];
-    $errorData = ['error' => false];
+    $productName = indexParamExistsOrDefault(self::$post, 'product_name');
+    $productDescription = indexParamExistsOrDefault(self::$post, 'product_description');
 
-    $productName = indexParamExistsOrDefault($post, 'product_name');
-    $productDescription = indexParamExistsOrDefault($post, 'product_description');
+    $price = verifyValue(self::$post, 'price');
+    $productIdCategory = verifyValue(self::$post, 'product_id_category');
 
-    $price = verifyValue($post, 'price');
-    $productIdCategory = verifyValue($post, 'product_id_category');
+    $currentProductCategoryId = verifyValue(self::$post, 'current_product_category_id');
 
-    $currentProductCategoryId = verifyValue($post, 'current_product_category_id');
-
-    if ($productName) $data['product_name'] = $productName;
-    if ($productDescription) $data['product_description'] = $productDescription;
+    if ($productName) self::$data['product_name'] = $productName;
+    if ($productDescription) self::$data['product_description'] = $productDescription;
 
     if ($price) {
 
       $price = trim(preg_replace("/[^0-9,.]+/i", "", $price));
       $price = str_replace(",", ".", $price);
 
-      $data['price'] = $price;
+      self::$data['price'] = $price;
     }
 
-    if ($productIdCategory) $data['product_id_category'] = $productIdCategory;
+    if ($productIdCategory) self::$data['product_id_category'] = $productIdCategory;
     
-    if ($currentProductCategoryId) $data['current_product_category_id'] = $currentProductCategoryId;
+    if ($currentProductCategoryId) self::$data['current_product_category_id'] = $currentProductCategoryId;
 
-    if (empty($data['product_id_category'])) {
-      $errorData['id_category_error'] = "Escolha a categoria";
+    if (empty(self::$data['product_id_category'])) {
+      self::$errorData['id_category_error'] = "Escolha a categoria";
     }
 
     if (empty($productName)) {
-      $errorData['product_name_error'] = "Coloque o nome do produto";
+      self::$errorData['product_name_error'] = "Coloque o nome do produto";
     }
 
     if (empty($productDescription)) {
-      $errorData['product_description_error'] = "Coloque a descrição do produto";
+      self::$errorData['product_description_error'] = "Coloque a descrição do produto";
     }
 
     if (empty($price)) {
-      $errorData['price_error'] = "Insira o preço do produto e somente valores monetários.";
+      self::$errorData['price_error'] = "Insira o preço do produto e somente valores monetários.";
     }
 
-    if (count($errorData) > 1) $errorData['error'] = true;
+    if (count(self::$errorData) > 1) self::$errorData['error'] = true;
 
-    return ['data' => $data, 'errorData' => $errorData];
+    return ['data' => self::$data, 'errorData' => self::$errorData];
   }
 }

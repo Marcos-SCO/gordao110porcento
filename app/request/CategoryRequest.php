@@ -7,28 +7,25 @@ class CategoryRequest extends RequestData
 
   public static function categoryFieldsValidation()
   {
-    $post = self::getPostData();
+    self::$post = self::getPostData();
 
-    $data = [];
-    $errorData = ['error' => false];
+    $categoryName = indexParamExistsOrDefault(self::$post, 'category_name');
 
-    $categoryName = indexParamExistsOrDefault($post, 'category_name');
+    $categoryDescription = indexParamExistsOrDefault(self::$post, 'category_description');
 
-    $categoryDescription = indexParamExistsOrDefault($post, 'category_description');
+    if ($categoryName) self::$data['category_name'] = trim($categoryName);
+    if ($categoryDescription) self::$data['category_description'] = trim($categoryDescription);
 
-    if ($categoryName) $data['category_name'] = trim($categoryName);
-    if ($categoryDescription) $data['category_description'] = trim($categoryDescription);
-
-    if (empty($data['category_name'])) {
-      $errorData['category_name_error'] = "Coloque o nome da categoria";
+    if (empty(self::$data['category_name'])) {
+      self::$errorData['category_name_error'] = "Coloque o nome da categoria";
     }
 
-    if (empty($data['category_description'])) {
-      $errorData['category_description_error'] = "Coloque uma descrição para imagem";
+    if (empty(self::$data['category_description'])) {
+      self::$errorData['category_description_error'] = "Coloque uma descrição para imagem";
     }
 
-    if (count($errorData) > 1) $errorData['error'] = true;
+    if (count(self::$errorData) > 1) self::$errorData['error'] = true;
 
-    return ['data' => $data, 'errorData' => $errorData];
+    return ['data' => self::$data, 'errorData' => self::$errorData];
   }
 }

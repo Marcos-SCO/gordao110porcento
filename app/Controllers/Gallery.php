@@ -71,7 +71,7 @@ class Gallery extends Controller
 
         if (isSubmittedInSession()) return redirect('gallery');
 
-        $requestedData = array_merge_recursive(
+        $requestedData = array_merge(
             GalleryRequest::galleryFieldsValidation(),
             ImageRequest::validateImageParams(),
         );
@@ -160,7 +160,7 @@ class Gallery extends Controller
 
         $id = indexParamExistsOrDefault(GalleryRequest::getPostData(), 'id');
 
-        $requestedData = array_merge_recursive(
+        $requestedData = array_merge(
             GalleryRequest::galleryFieldsValidation(),
             ImageRequest::validateImageParams(),
         );

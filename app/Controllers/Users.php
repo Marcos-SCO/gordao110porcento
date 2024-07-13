@@ -6,6 +6,7 @@ use App\Classes\ImagesHandler;
 use App\Classes\Pagination;
 
 use App\Request\ImageRequest;
+use App\Request\RequestData;
 use App\Request\UserRequest;
 
 use App\Traits\GeneralImagesHandlerTrait;
@@ -65,7 +66,7 @@ class Users extends Controller
         $pageId = isset($requestData['users']) && !empty($requestData['users']) ? $requestData['users'] : 1;
 
         $activeUsers = Pagination::handler($table, $pageId, $limit = 10, ['status', 1], $orderOption = 'GROUP BY id');
-     
+
         $inactiveUsers = Pagination::handler($table, $pageId, $limit = 10, ['status', 0], $orderOption = 'GROUP BY id');
 
         $activeNumber = $this->model->customQuery("SELECT COUNT(*) as active FROM users WHERE status = 1");
@@ -112,7 +113,7 @@ class Users extends Controller
 
         if (isSubmittedInSession() || !$isPostRequest) return redirect('users');
 
-        $requestedData = array_merge_recursive(
+        $requestedData = array_merge(
             UserRequest::nameFieldsValidation(),
             UserRequest::validatePasswords(),
             UserRequest::validateEmailInput(),
@@ -122,13 +123,9 @@ class Users extends Controller
 
         $data = indexParamExistsOrDefault($requestedData, 'data');
 
-        $errorData =
-            indexParamExistsOrDefault($requestedData, 'errorData');
+        $errorData = indexParamExistsOrDefault($requestedData, 'errorData');
 
-        $getFirstErrorSign = isset($errorData['error'])
-            && array_filter($errorData['error'], function ($item) {
-                return $item && $item === true;
-            });
+        $getFirstErrorSign = RequestData::isErrorInRequest($errorData);
 
         if (!$getFirstErrorSign) {
 
@@ -167,7 +164,7 @@ class Users extends Controller
         $urlPath = "users/show/$userPageId";
 
         $lastKey = array_key_last($requestData);
-        
+
         $pageId = !($lastKey == 'show') ? end($requestData) : 1;
 
         if ($userPageId && ($lastKey == 'show')) $pageId = $userPageId;
@@ -231,13 +228,15 @@ class Users extends Controller
     {
         $this->ifNotAuthRedirect();
 
-        $adm = indexParamExistsOrDefault(UserRequest::getPostData(), 'adm', 0);
+        $postData = UserRequest::getPostData();
 
-        $id = indexParamExistsOrDefault(UserRequest::getPostData(), 'id');
+        $adm = indexParamExistsOrDefault($postData, 'adm', 0);
 
-        $bio = indexParamExistsOrDefault(UserRequest::getPostData(), 'bio', '');
+        $id = indexParamExistsOrDefault($postData, 'id');
 
-        $requestedData = array_merge_recursive(
+        $bio = indexParamExistsOrDefault($postData, 'bio', '');
+
+        $requestedData = array_merge(
             UserRequest::nameFieldsValidation(),
             ImageRequest::validateImageParams(false),
         );
@@ -252,9 +251,7 @@ class Users extends Controller
             indexParamExistsOrDefault($requestedData, 'errorData');
 
         $getFirstErrorSign = isset($errorData['error'])
-            && array_filter($errorData['error'], function ($item) {
-                return $item && $item === true;
-            });
+            && $errorData['error'] == true;
 
         if ($getFirstErrorSign) {
 

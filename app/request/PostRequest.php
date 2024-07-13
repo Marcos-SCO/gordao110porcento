@@ -7,32 +7,29 @@ class PostRequest extends RequestData
 
   public static function postFieldsValidation()
   {
-    $post = self::getPostData();
+    self::$post = self::getPostData();
 
-    $data = [];
-    $errorData = ['error' => false];
-
-    $title = trim(indexParamExistsOrDefault($post, 'title', ''));
+    $title = trim(indexParamExistsOrDefault(self::$post, 'title', ''));
 
     $notAllowedTags = array('<script>', '<a>');
-    $body = trim(indexParamExistsOrDefault($post, 'body', ''));
+    $body = trim(indexParamExistsOrDefault(self::$post, 'body', ''));
     $body = str_replace($notAllowedTags, '', $body);
 
-    if ($title) $data['title'] = $title;
-    if ($body) $data['body'] = $body;
+    if ($title) self::$data['title'] = $title;
+    if ($body) self::$data['body'] = $body;
 
-    if (empty($data['title'])) {
+    if (empty(self::$data['title'])) {
 
-      $errorData['title_error'] = "Coloque o título.";
+      self::$errorData['title_error'] = "Coloque o título.";
     }
 
-    if (empty($data['body'])) {
+    if (empty(self::$data['body'])) {
 
-      $errorData['body_error'] = "Preencha o campo de texto.";
+      self::$errorData['body_error'] = "Preencha o campo de texto.";
     }
 
-    if (count($errorData) > 1) $errorData['error'] = true;
+    if (count(self::$errorData) > 1) self::$errorData['error'] = true;
 
-    return ['data' => $data, 'errorData' => $errorData];
+    return ['data' => self::$data, 'errorData' => self::$errorData];
   }
 }

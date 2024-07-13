@@ -38,6 +38,7 @@ class Category extends \Core\Model
         // dump($data);
         $this->insertQuery('categories', [
             'user_id' => $_SESSION['user_id'],
+            'slug' => $data['category_slug'],
             'category_name' => $data['category_name'],
             'category_description' => $data['category_description'],
             'img' => $data['img_name'],
@@ -51,6 +52,7 @@ class Category extends \Core\Model
     public function updateCategory($data)
     {
         $this->updateQuery('categories', [
+            'slug' => $data['category_slug'],
             'category_name' => $data['category_name'],
             'category_description' => $data['category_description'],
             'img' => $data['img_name'],

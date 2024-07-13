@@ -4,6 +4,9 @@ namespace App\Request;
 
 class RequestData
 {
+  public static $post = [];
+  public static $data = [];
+  public static $errorData = ['error' => false];
 
   public static function getPostData()
   {

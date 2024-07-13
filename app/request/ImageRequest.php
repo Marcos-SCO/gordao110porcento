@@ -9,39 +9,36 @@ class ImageRequest extends RequestData
 
   public static function validateImageParams($imageIsRequired = true)
   {
-    $post = self::getPostData();
-
-    $data = [];
-    $errorData = ['error' => false];
+    self::$post = self::getPostData();
 
     $imgFiles = indexParamExistsOrDefault($_FILES, 'img');
     $imgName = indexParamExistsOrDefault($imgFiles, 'name');
-    $postImg = indexParamExistsOrDefault($post, 'img');
+    $postImg = indexParamExistsOrDefault(self::$post, 'img');
 
-    if ($imgFiles) $data['img_files'] = $imgFiles;
-    if ($imgName) $data['img_name'] = $imgName;
-    if ($postImg) $data['post_img'] = $postImg;
+    if ($imgFiles) self::$data['img_files'] = $imgFiles;
+    if ($imgName) self::$data['img_name'] = $imgName;
+    if ($postImg) self::$data['post_img'] = $postImg;
    
     $isEmptyPostImg = $postImg == "" || $postImg == false;
-    if (!$isEmptyPostImg) $data['img_name'] = $postImg;
+    if (!$isEmptyPostImg) self::$data['img_name'] = $postImg;
 
-    if ($imageIsRequired && empty($data['img_name'])) {
+    if ($imageIsRequired && empty(self::$data['img_name'])) {
 
-      $errorData['error'] = true;
-      $errorData['img_error'] = "Insira uma imagem";
+      self::$errorData['error'] = true;
+      self::$errorData['img_error'] = "Insira uma imagem";
     }
 
-    if (!empty($data['img_files']) && !empty($data['img_name'])) {
+    if (!empty(self::$data['img_files']) && !empty(self::$data['img_name'])) {
 
       $imagesHandler = new ImagesHandler();
 
       $validatedImgRequest =
         $imagesHandler->verifySubmittedImgExtension();
 
-      $errorData['error'] = $validatedImgRequest[0];
-      $errorData['img_error'] = $validatedImgRequest[1];
+      self::$errorData['error'] = $validatedImgRequest[0];
+      self::$errorData['img_error'] = $validatedImgRequest[1];
     }
 
-    return ['data' => $data, 'errorData' => $errorData];
+    return ['data' => self::$data, 'errorData' => self::$errorData];
   }
 }

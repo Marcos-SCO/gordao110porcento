@@ -74,7 +74,7 @@ class Posts extends Controller
 
         if (isSubmittedInSession()) return redirect('posts');
 
-        $requestedData = array_merge_recursive(
+        $requestedData = array_merge(
             PostRequest::postFieldsValidation(),
             ImageRequest::validateImageParams(),
         );
@@ -84,10 +84,7 @@ class Posts extends Controller
         $errorData =
             indexParamExistsOrDefault($requestedData, 'errorData');
 
-        $getFirstErrorSign = isset($errorData['error'])
-            && array_filter($errorData['error'], function ($item) {
-                return $item && $item === true;
-            });
+        $getFirstErrorSign = RequestData::isErrorInRequest($errorData);
 
         if ($getFirstErrorSign) {
 
@@ -155,7 +152,7 @@ class Posts extends Controller
 
         if (isSubmittedInSession()) return redirect('posts/show/' . $id);
 
-        $requestedData = array_merge_recursive(
+        $requestedData = array_merge(
             PostRequest::postFieldsValidation(),
             ImageRequest::validateImageParams(),
         );
@@ -166,10 +163,7 @@ class Posts extends Controller
         $errorData =
             indexParamExistsOrDefault($requestedData, 'errorData');
 
-        $getFirstErrorSign = isset($errorData['error'])
-            && array_filter($errorData['error'], function ($item) {
-                return $item && $item === true;
-            });
+        $getFirstErrorSign = RequestData::isErrorInRequest($errorData);
 
         if ($getFirstErrorSign) {
 
