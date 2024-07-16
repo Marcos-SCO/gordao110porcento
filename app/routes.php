@@ -16,11 +16,12 @@ return [
     '/gallery/create/?' => 'Gallery@create',
     '/gallery/edit/($|[0-9])+/?' => 'Gallery@edit',
     
-    '/posts/?($|[0-9])+/?' => 'Posts@index',
-    '/posts/?show/($|[0-9])+/?' => 'Posts@show',
+    '/posts(?:/page)?/(\d+)?/?' => 'Posts@index',
+    // '/posts/?show/($|[0-9])+/?' => 'Posts@show',
+    '/post/([a-z0-9-]+)/?' => 'Posts@show',
     '/posts/create/?' => 'Posts@create',
     '/posts/edit/($|[0-9])+/?' => 'Posts@edit',
-    
+
     '/categories/?($|[0-9])+/?' => 'ProductCategories@index',
     '/categories/create/?' => 'ProductCategories@create',
     '/categories/edit/($|[0-9])+/?' => 'ProductCategories@edit',

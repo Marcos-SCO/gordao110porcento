@@ -18,11 +18,15 @@ if (!$posts) return;
     <?php foreach ($posts as $postItem) :
 
       $postId = objParamExistsOrDefault($postItem, 'id');
+      $postSlug = objParamExistsOrDefault($postItem, 'slug');
       $postTitle = objParamExistsOrDefault($postItem, 'title');
       $postImg = objParamExistsOrDefault($postItem, 'img');
 
+      $postUrl = $BASE . '/posts/';
+      if ($postSlug) $postUrl = $BASE . '/post/' . $postSlug;
+
     ?>
-      <a href="<?= $BASE ?>/posts/show/<?= $postId ?>">
+      <a href="<?= $postUrl ?>">
         <figure class="item overflow-hidden img-section-max">
           <img class="object-fit" src="<?= $BASE ?>/public/resources/img/posts/id_<?= $postId ?>/<?= $postImg ?>" alt="<?= $postTitle ?>" title="<?= $postTitle ?>" onerror="this.onerror=null;this.src='<?= $BASE ?>/public/resources/img/not_found/no_image.jpg';" oading="lazy" width="246" height="184">
 

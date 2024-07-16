@@ -22,7 +22,7 @@ class DynamicLinks
 
     if (!$sessionUserId) return;
     
-    $isValidUser = ($userId == $sessionUserId) or ($sessionAdmId == 1);
+    $isValidUser = ($userId == $sessionUserId) || ($sessionAdmId == 1);
 
     if (!$isValidUser) {
       echo "<div class='editDelete hidden'></div>";

@@ -7,10 +7,13 @@ $postTextString = objParamExistsOrDefault($data, 'body', '');
 $postText = preg_replace('/<\/?p[^>]*>/', '', $postTextString);
 
 $postId = objParamExistsOrDefault($data, 'id');
+$postSlug = objParamExistsOrDefault($data, 'slug');
+
 $postImg = objParamExistsOrDefault($data, 'img');
 $postTitle = objParamExistsOrDefault($data, 'title');
 
-$postUrl = $BASE . '/posts/show/' . $postId;
+$postUrl = $BASE . '/posts/';
+if ($postSlug) $postUrl = $BASE . '/post/' . $postSlug;
 
 $postImg = objParamExistsOrDefault($data, 'img');
 

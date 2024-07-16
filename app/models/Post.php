@@ -30,6 +30,7 @@ class Post extends \Core\Model
     {
         // dump($data);
         $this->insertQuery('posts', [
+            'slug' => $data['post_slug'],
             'user_id' => $_SESSION['user_id'],
             'title' => $data['title'],
             'body' => $data['body'],
@@ -43,6 +44,7 @@ class Post extends \Core\Model
     public function updatePost($data)
     {
         $this->updateQuery('posts', [
+            'slug' => $data['post_slug'],
             'title' => $data['title'],
             'body' => $data['body'],
             'img' => $data['img_name'],

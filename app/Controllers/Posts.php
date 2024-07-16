@@ -8,7 +8,7 @@ use App\Classes\Pagination;
 use App\Request\ImageRequest;
 use App\Request\PostRequest;
 use App\Request\RequestData;
-
+use App\Request\SlugsRequest;
 use App\Traits\GeneralImagesHandlerTrait;
 
 use Core\Controller;
@@ -34,7 +34,9 @@ class Posts extends Controller
 
         $table = 'posts';
 
-        $pageId = isset($requestData['posts']) && !empty($requestData['posts']) ? $requestData['posts'] : 1;
+        $pageId = isset($requestData['page']) && !empty($requestData['page']) ? $requestData['page'] : 1;
+
+        $urlPath = "posts/page";
 
         $results = Pagination::handler($table, $pageId, $limit = 8, '', $orderOption = 'ORDER BY id DESC');
 
@@ -44,7 +46,7 @@ class Posts extends Controller
             'controller' => 'Posts',
             'posts' => $results['tableResults'],
             'flash' => $flash,
-            'path' => 'posts',
+            'path' => $urlPath,
             'pageId' => $pageId,
             'prev' => $results['prev'],
             'next' => $results['next'],
@@ -77,9 +79,15 @@ class Posts extends Controller
         $requestedData = array_merge(
             PostRequest::postFieldsValidation(),
             ImageRequest::validateImageParams(),
+            SlugsRequest::slugExistenceValidation('posts', false, 'publicação', [
+                'slugField' => 'post_slug',
+                'slugFieldError' => 'post_slug_error'
+            ]),
         );
 
         $data = indexParamExistsOrDefault($requestedData, 'data');
+
+        $postSlug = indexParamExistsOrDefault($data, 'post_slug');
 
         $errorData =
             indexParamExistsOrDefault($requestedData, 'errorData');
@@ -103,22 +111,30 @@ class Posts extends Controller
 
         flash('post_message', 'Post adicionado com sucesso');
 
-        return redirect('posts/show/' . $lastInsertedPostId);
+        return redirect('post/' . $postSlug);
     }
 
     public function show($requestData)
     {
         removeSubmittedFromSession();
 
-        $postId = indexParamExistsOrDefault($requestData, 'show');
+        $postSlug =
+            indexParamExistsOrDefault($requestData, 'post');
 
-        $data = $this->model->getAllFrom('posts', $postId);
+        // $postId = indexParamExistsOrDefault($requestData, 'show');
 
-        $user = $this->model->getAllFrom('users', $data->user_id);
+        $data = $this->model->getAllFrom('posts', "$postSlug", 'slug');
+
+        if (!$data) return View::render('errors/404.php');
+
+        $userId = objParamExistsOrDefault($data, 'user_id');
+        $postTitle = objParamExistsOrDefault($data, 'title');
+
+        $user = $this->model->getAllFrom('users', $userId);
 
         return View::render('posts/show.php', [
             'dataPage' => 'posts/show',
-            'title' => $data->title,
+            'title' => $postTitle,
             'data' => $data,
             'user' => $user,
         ]);
@@ -155,6 +171,10 @@ class Posts extends Controller
         $requestedData = array_merge(
             PostRequest::postFieldsValidation(),
             ImageRequest::validateImageParams(),
+            SlugsRequest::slugExistenceValidation('posts', "AND id != $id", 'publicação', [
+                'slugField' => 'post_slug',
+                'slugFieldError' => 'post_slug_error'
+            ]),
         );
 
         $data = indexParamExistsOrDefault($requestedData, 'data');

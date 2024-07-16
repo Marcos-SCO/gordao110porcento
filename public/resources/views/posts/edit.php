@@ -3,6 +3,8 @@
 $formActionUrl = $BASE  . '/posts/update';
 
 $id = objParamExistsOrDefault($data, 'id');
+$slugField = objParamExistsOrDefault($data, 'slug');
+
 $title = objParamExistsOrDefault($data, 'title');
 $name = objParamExistsOrDefault($data, 'name');
 $body = objParamExistsOrDefault($data, 'body');
@@ -11,7 +13,11 @@ $img = objParamExistsOrDefault($data, 'img');
 
 $imgUrl =  $BASE . '/' .  imgOrDefault('posts', $img, $id);
 
-$postShowUrl = $BASE . '/posts/show/' . $id;
+$slugFieldError =
+    indexParamExistsOrDefault($error, 'post_slug_error', '');
+
+$postShowUrl = '#';
+if ($slugField) $postShowUrl = $BASE . '/post/' . $slugField;
 
 ?>
 
@@ -24,17 +30,27 @@ $postShowUrl = $BASE . '/posts/show/' . $id;
 <section class="postSection card card-body bg-light mt5">
     <h3>Informações da postagem <a href="<?= $postShowUrl ?>"><?= $title ?></a> </h3>
 
-    <form action="<?= $formActionUrl ?>" method="post" enctype="multipart/form-data" hx-post="<?= $formActionUrl ?>" hx-target="body" hx-swap="show:body:top">
+    <form action="<?= $formActionUrl ?>" method="post" enctype="multipart/form-data" hx-post="<?= $formActionUrl ?>" hx-target="body" hx-swap="show:body:top" data-js="posts-form">
 
         <input type="hidden" name="id" id="<?= $id ?>" value="<?= $id ?>">
 
         <div class="form-group">
             <label for="title">Titulo<sup>*</sup></label>
 
-            <input type="text" name="title" id="title" class="form-control form-control-lg <?= isset($error['title_error']) && $error['title_error'] != '' ? 'is-invalid' : '' ?>" value="<?= $title ?>">
+            <input type="text" name="title" id="title" data-slug-origin class="form-control form-control-lg <?= isset($error['title_error']) && $error['title_error'] != '' ? 'is-invalid' : '' ?>" value="<?= $title ?>">
 
             <span class="invalid-feedback">
                 <?= $error['title_error'] ?? '' ?>
+            </span>
+        </div>
+
+        <div class="form-group">
+            <label for="post_slug">Slug do post<sup>*</sup></label>
+
+            <input type="text" name="post_slug" data-slug-receptor id="post_slug" class="form-control form-control-lg <?= isset($slugFieldError) && $slugFieldError != '' ? 'is-invalid' : '' ?>" value="<?= $slugField ?? '' ?>">
+
+            <span class="invalid-feedback">
+                <?= $slugFieldError ?? '' ?>
             </span>
         </div>
 
@@ -63,6 +79,6 @@ $postShowUrl = $BASE . '/posts/show/' . $id;
             </span>
         </div>
 
-        <input type="submit" class="btn btn-success" value="Enviar">
+        <input type="submit" class="btn btn-success" value="Atualizar">
     </form>
 </section>
