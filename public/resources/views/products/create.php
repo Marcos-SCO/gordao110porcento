@@ -53,7 +53,7 @@ $productIdCategory = indexParamExistsOrDefault($data, 'product_id_category');
 
             <label for="product_name">Nome do produto<sup>*</sup></label>
 
-            <input type="text" name="product_name" id="product_name" data-slug-origin id="product_name" class="form-control form-control-lg <?= isset($error['product_name_error']) && $error['product_name_error'] != '' ? 'is-invalid' : '' ?>" value="<?= $data['product_name'] ?? '' ?>">
+            <input type="text" name="product_name" id="product_name" data-slug-origin class="form-control form-control-lg <?= isset($error['product_name_error']) && $error['product_name_error'] != '' ? 'is-invalid' : '' ?>" value="<?= $data['product_name'] ?? '' ?>">
 
             <span class="invalid-feedback">
                 <?= $error['product_name_error'] ?? '' ?>

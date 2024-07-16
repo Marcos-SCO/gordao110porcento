@@ -128,9 +128,12 @@ class Products extends Controller
 
     public function show($requestData)
     {
-        $productId = indexParamExistsOrDefault($requestData, 'show');
+        $productSlug =
+            indexParamExistsOrDefault($requestData, 'product');
 
-        $data = $this->model->getAllFrom('products', $productId);
+        // $productId = indexParamExistsOrDefault($requestData, 'show');
+
+        $data = $this->model->getAllFrom('products', "$productSlug", 'slug');
 
         // $categories = $this->model->getCategories();
 

@@ -29,7 +29,7 @@ $slugFieldError =
         <h2><?= $productName ?></h2>
     </header>
 
-    <form action="<?= $formActionUrl ?>" method="post" enctype="multipart/form-data" hax-post="<?= $formActionUrl ?>" hax-target="body" hax-swap="show:body:top" data-js="product-form">
+    <form action="<?= $formActionUrl ?>" method="post" enctype="multipart/form-data" hx-post="<?= $formActionUrl ?>" hx-target="body" hx-swap="show:body:top" data-js="product-form">
 
         <input type="hidden" name="id" id="<?= $productId ?>" value="<?= $productId ?>">
 

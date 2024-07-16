@@ -6,7 +6,8 @@ return [
     '/about/?' => 'About@index',
 
     '/products/?($|[0-9])+/?' => 'Products@index',
-    '/products/show/($|[0-9])+/?' => 'Products@show',
+    
+    '/product/([a-z0-9-]+)/?' => 'Products@show',
     '/products/edit/($|[0-9])+/?' => 'Products@edit',
 
     '/products/create/?' => 'Products@create',

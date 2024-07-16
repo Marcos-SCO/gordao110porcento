@@ -16,6 +16,11 @@ foreach ($products as $data) :
   if (!$productIdCategory) continue;
 
   $loopCount += 1;
+  
+  $productUrlLink = $BASE . '/products/';
+  $categoryUrlLink = $BASE . '/categories/';
+
+  $productSlug = objParamExistsOrDefault($data, 'slug');
 
   $dataItemId = objParamExistsOrDefault($data, 'id');
 
@@ -23,12 +28,8 @@ foreach ($products as $data) :
 
   $productName = objParamExistsOrDefault($data, 'product_name');
 
-  $categoryUrlLink = $BASE . '/categories/';
-
   $productDescription = objParamExistsOrDefault($data, 'product_description');
   $productPrice = objParamExistsOrDefault($data, 'price');
-
-  $productUrlLink = $BASE . '/products/show/' . $dataItemId;
 
   $categoryItem = indexParamExistsOrDefault($categoryElements, $productIdCategory);
 
@@ -36,9 +37,9 @@ foreach ($products as $data) :
 
   $categorySlug = indexParamExistsOrDefault($categoryItem, 'slug');
 
-  $categoryUrlLink = $BASE . '/categories/';
-
   if ($categorySlug) $categoryUrlLink = $BASE . '/category/' . $categorySlug;
+
+  if ($productSlug) $productUrlLink = $BASE . '/product/' . $productSlug;
 
 ?>
   <figure class="product-card card" data-js="loop-item" hx-boost="true" hx-target="body" hx-swap="outerHTML">
