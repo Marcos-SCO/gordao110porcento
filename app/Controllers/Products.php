@@ -9,7 +9,7 @@ use App\Models\ProductCategory;
 use App\Request\ImageRequest;
 use App\Request\ProductRequest;
 use App\Request\RequestData;
-
+use App\Request\SlugsRequest;
 use App\Traits\ProductsImagesHandlerTrait;
 use App\Traits\SlugsTrait;
 use Core\Controller;
@@ -88,6 +88,10 @@ class Products extends Controller
         $requestedData = array_merge(
             ProductRequest::productFieldsValidation(),
             ImageRequest::validateImageParams(),
+            SlugsRequest::slugExistenceValidation('products', false, 'produto', [
+                'slugField' => 'product_slug',
+                'slugFieldError' => 'product_slug_error'
+            ]),
         );
 
         $data = indexParamExistsOrDefault($requestedData, 'data');
@@ -182,6 +186,10 @@ class Products extends Controller
         $requestedData = array_merge(
             ProductRequest::productFieldsValidation(),
             ImageRequest::validateImageParams(),
+            SlugsRequest::slugExistenceValidation('products', "AND id != $id", 'produtos', [
+                'slugField' => 'product_slug',
+                'slugFieldError' => 'product_slug_error'
+            ]),
         );
 
         $data = indexParamExistsOrDefault($requestedData, 'data');

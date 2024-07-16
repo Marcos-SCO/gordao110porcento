@@ -1,6 +1,15 @@
-<?php 
+<?php
+
+$productId = objParamExistsOrDefault($data, 'id');
 
 $formActionUrl = $BASE . '/products/store';
+
+$slugField = indexParamExistsOrDefault($data, 'product_slug', '');
+
+$slugFieldError =
+    indexParamExistsOrDefault($error, 'product_slug_error', '');
+
+$productIdCategory = indexParamExistsOrDefault($data, 'product_id_category');
 
 ?>
 
@@ -15,34 +24,52 @@ $formActionUrl = $BASE . '/products/store';
         <h2>Adicionar Produto</h2>
     </header>
 
-    <form action="<?= $formActionUrl ?>" method="post" enctype="multipart/form-data" hx-post="<?= $formActionUrl ?>" hx-target="body" hx-swap="show:body:top">
+    <form action="<?= $formActionUrl ?>" method="post" enctype="multipart/form-data" hx-post="<?= $formActionUrl ?>" hx-target="body" hx-swap="show:body:top" data-js="product-form">
 
         <!-- Tipo de categoria -->
         <div class="form-group">
             <label for="product_id_category">Categoria</label>
 
-            <select name="product_id_category" id="product_id_category">
+            <select name="product_id_category" id="product_id_category" class="<?= isset($error['id_category_error']) && $error['id_category_error'] != '' ? 'is-invalid' : '' ?>">
+
                 <optgroup label="Tipo de usuário">
-                    <?php foreach ($categories as $category) : ?>
-                        <option value="<?= $category->id ?>"><?= $category->category_name ?></option>
+                    <option value="">Selecione a categoria</option>
+
+                    <?php foreach ($categories as $category) :
+                        $selected = ($category->id == $productIdCategory) ? 'selected' : '';
+
+                    ?>
+                        <option value="<?= $category->id ?>" <?= $selected ?>><?= $category->category_name ?></option>
                     <?php endforeach; ?>
                 </optgroup>
             </select>
 
-            <?= $error['id_category_error'] ?? '' ?>
+            <span class="invalid-feedback">
+                <?= $error['id_category_error'] ?? '' ?>
+            </span>
         </div>
 
         <div class="form-group">
 
             <label for="product_name">Nome do produto<sup>*</sup></label>
 
-            <input type="text" name="product_name" id="product_name" class="form-control form-control-lg <?= isset($error['product_name_error']) && $error['product_name_error'] != '' ? 'is-invalid' : '' ?>" value="<?= $data['product_name'] ?? '' ?>">
+            <input type="text" name="product_name" id="product_name" data-slug-origin id="product_name" class="form-control form-control-lg <?= isset($error['product_name_error']) && $error['product_name_error'] != '' ? 'is-invalid' : '' ?>" value="<?= $data['product_name'] ?? '' ?>">
 
             <span class="invalid-feedback">
                 <?= $error['product_name_error'] ?? '' ?>
             </span>
         </div>
-        
+
+        <div class="form-group">
+            <label for="product_slug">Slug do produto<sup>*</sup></label>
+
+            <input type="text" name="product_slug" data-slug-receptor id="product_slug" class="form-control form-control-lg <?= isset($slugFieldError) && $slugFieldError != '' ? 'is-invalid' : '' ?>" value="<?= $slugField ?? '' ?>">
+
+            <span class="invalid-feedback">
+                <?= $slugFieldError ?? '' ?>
+            </span>
+        </div>
+
         <div class="form-group">
             <label for="product_description">Descrição do produto<sup>*</sup></label>
 
@@ -77,5 +104,5 @@ $formActionUrl = $BASE . '/products/store';
 
         <input type="submit" class="btn btn-success" value="Enviar">
     </form>
-    
+
 </section>

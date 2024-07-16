@@ -52,6 +52,7 @@ class Product extends \Core\Model
     {
         // dump($data);
         $this->insertQuery('products', [
+            'slug' => $data['product_slug'],
             'user_id' => $_SESSION['user_id'],
             'id_category' => $data['product_id_category'],
             'product_name' => $data['product_name'],
@@ -70,6 +71,7 @@ class Product extends \Core\Model
     public function updateProduct($data)
     {
         $this->updateQuery('products', [
+            'slug' => $data['product_slug'],
             'id_category' => $data['product_id_category'],
             'product_name' => $data['product_name'],
             'product_description' => $data['product_description'],

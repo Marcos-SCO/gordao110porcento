@@ -1,6 +1,7 @@
 <?php 
 
 $productId = objParamExistsOrDefault($data, 'id');
+$productSlug = objParamExistsOrDefault($data, 'slug');
 
 $productIdCategory = valueParamExistsOrDefault($product_id_category);
 
@@ -8,6 +9,9 @@ $productName = objParamExistsOrDefault($data, 'product_name');
 $productImg = objParamExistsOrDefault($data, 'img');
 
 $formActionUrl = $BASE  . '/products/update/';
+
+$slugFieldError =
+    indexParamExistsOrDefault($error, 'product_slug_error', '');
 
 ?>
 
@@ -25,7 +29,7 @@ $formActionUrl = $BASE  . '/products/update/';
         <h2><?= $productName ?></h2>
     </header>
 
-    <form action="<?= $formActionUrl ?>" method="post" enctype="multipart/form-data" hx-post="<?= $formActionUrl ?>" hx-target="body" hx-swap="show:body:top">
+    <form action="<?= $formActionUrl ?>" method="post" enctype="multipart/form-data" hax-post="<?= $formActionUrl ?>" hax-target="body" hax-swap="show:body:top" data-js="product-form">
 
         <input type="hidden" name="id" id="<?= $productId ?>" value="<?= $productId ?>">
 
@@ -52,10 +56,20 @@ $formActionUrl = $BASE  . '/products/update/';
         <div class="form-group">
             <label for="product_name">Nome do produto<sup>*</sup></label>
 
-            <input type="text" name="product_name" id="product_name" class="form-control form-control-lg <?= isset($error['product_name_error']) && $error['product_name_error'] != '' ? 'is-invalid' : '' ?>" value="<?= $productName ?? '' ?>">
+            <input type="text" name="product_name" id="product_name" data-slug-origin id="product_name" class="form-control form-control-lg <?= isset($error['product_name_error']) && $error['product_name_error'] != '' ? 'is-invalid' : '' ?>" value="<?= $productName ?? '' ?>">
 
             <span class="invalid-feedback">
                 <?= $error['product_name_error'] ?? '' ?>
+            </span>
+        </div>
+
+        <div class="form-group">
+            <label for="product_slug">Slug do produto<sup>*</sup></label>
+
+            <input type="text" name="product_slug" data-slug-receptor id="product_slug" class="form-control form-control-lg <?= isset($slugFieldError) && $slugFieldError != '' ? 'is-invalid' : '' ?>" value="<?= $productSlug ?? '' ?>">
+
+            <span class="invalid-feedback">
+                <?= $slugFieldError ?? '' ?>
             </span>
         </div>
         
