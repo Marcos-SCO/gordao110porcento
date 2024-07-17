@@ -6,7 +6,10 @@ $userImg = objParamExistsOrDefault($data, 'img');
 
 $imagePath = imgOrDefault('users', $userImg, $userId);
 
-$userName = objParamExistsOrDefault($data, 'name');
+$userFirstName = objParamExistsOrDefault($data, 'name');
+
+$username = objParamExistsOrDefault($data, 'username');
+$usernameError = indexParamExistsOrDefault($error, 'username_error');
 
 $email = objParamExistsOrDefault($data, 'email');
 $emailError = indexParamExistsOrDefault($error, 'email_error');
@@ -20,7 +23,7 @@ $formActionUrl = $BASE  . '/users/update';
 <header class="imgBackgroundArea usersAdmBackground">
     <span class="text-left">
         <h2>Editar perfil</h2>
-        <h1><?= $userName; ?></h1>
+        <h1><?= $userFirstName; ?></h1>
     </span>
 </header>
 
@@ -42,7 +45,7 @@ $formActionUrl = $BASE  . '/users/update';
 
                 <div class="form-group">
                     <label for="name">Nome: <sup>*</sup></label>
-                    <input type="text" name="name" id="name" class="form-control form-control-lg <?= isset($error['name_error']) && $error['name_error']  != '' ? 'is-invalid' : '' ?>" value="<?= $userName ?? '' ?>">
+                    <input type="text" name="name" id="name" class="form-control form-control-lg <?= isset($error['name_error']) && $error['name_error']  != '' ? 'is-invalid' : '' ?>" value="<?= $userFirstName ?? '' ?>">
                     <span class=" invalid-feedback">
                         <?= $error['name_error'] ?? '' ?> </span>
                 </div>
@@ -55,6 +58,15 @@ $formActionUrl = $BASE  . '/users/update';
                     <span class=" invalid-feedback">
                         <?= $error['last_name_error'] ?? '' ?>
                     </span>
+                </div>
+
+                <!-- Username -->
+                <div class="form-group">
+                    <label for="username">Username: <sup>*</sup></label>
+
+                    <input type="text" name="username" id="username" class="form-control form-control-lg <?= $usernameError != '' ? 'is-invalid' : '' ?>" value="<?= $username ?? '' ?>">
+
+                    <span class=" invalid-feedback"><?= $usernameError ?? '' ?></span>
                 </div>
 
                 <!-- Email -->
@@ -82,7 +94,7 @@ $formActionUrl = $BASE  . '/users/update';
 
                 <span class="invalid-feedback"><?= $error['img_error'] ?? '' ?></span>
 
-                <img src="<?= $BASE ?>/<?= $imagePath; ?>" title="<?= $userName; ?>" onerror="this.onerror=null;this.src='<?= $BASE ?>/public/resources/img/not_found/no_image.jpg';">
+                <img src="<?= $BASE ?>/<?= $imagePath; ?>" title="<?= $userFirstName; ?>" onerror="this.onerror=null;this.src='<?= $BASE ?>/public/resources/img/not_found/no_image.jpg';">
 
             </div>
         </div>

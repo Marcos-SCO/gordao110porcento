@@ -18,6 +18,7 @@ class User extends Model
     {
         return $this->insertQuery('users', [
             'adm' => $data['adm'],
+            'username' => $data['username'],
             'name' => $data['name'],
             'last_name' => $data['last_name'],
             'email' => $data['email'],
@@ -36,6 +37,7 @@ class User extends Model
             'users',
             [
                 'adm' => $data['adm'],
+                'username' => $data['username'],
                 'name' => $data['name'],
                 'last_name' => $data['last_name'],
                 'email' => $data['email'],

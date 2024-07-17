@@ -8,6 +8,9 @@ $nameError = indexParamExistsOrDefault($error, 'name_error');
 $lastName = indexParamExistsOrDefault($data, 'last_name');
 $lastNameError = indexParamExistsOrDefault($error, 'last_name_error');
 
+$username = indexParamExistsOrDefault($data, 'username');
+$usernameError = indexParamExistsOrDefault($error, 'username_error');
+
 $email = indexParamExistsOrDefault($data, 'email');
 $emailError = indexParamExistsOrDefault($error, 'email_error');
 
@@ -56,6 +59,15 @@ $confirmPasswordError = indexParamExistsOrDefault($error, 'confirm_password_erro
             <input type="text" name="last_name" id="last_name" class="form-control form-control-lg <?= $lastNameError != '' ? 'is-invalid' : '' ?>" value="<?= $lastName ?? '' ?>">
 
             <span class=" invalid-feedback"><?= $lastNameError ?? '' ?></span>
+        </div>
+
+        <!-- Username -->
+        <div class="form-group">
+            <label for="username">Username: <sup>*</sup></label>
+
+            <input type="text" name="username" id="username" class="form-control form-control-lg <?= $usernameError != '' ? 'is-invalid' : '' ?>" value="<?= $username ?? '' ?>">
+
+            <span class=" invalid-feedback"><?= $usernameError ?? '' ?></span>
         </div>
 
         <!-- Email -->

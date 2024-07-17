@@ -70,21 +70,40 @@ class UserRequest extends RequestData
     return ['data' => self::$data, 'errorData' => self::$errorData];
   }
 
-  public static function emailValidationExistence($queryOption = false)
+  public static function validateUsernameInput($requestData = false)
   {
     self::$post = self::getPostData();
+    if (!self::$post) return;
 
-    $email = indexParamExistsOrDefault(self::$post, 'email');
+    $username = indexParamExistsOrDefault(self::$post, 'username');
 
-    $userExistsData = User::verifyIFExistsWith(['email' => $email], $queryOption);
+    if ($username) self::$data['username'] = mb_strtolower($username);
 
-    if ($userExistsData) {
+    if (empty($username)) {
 
-      self::$errorData['email_error'] = "Já existe um usuário com esse e-mail";
+      self::$errorData['username_error'] = "Digite o username";
     }
 
     if (count(self::$errorData) > 1) self::$errorData['error'] = true;
-    
+
+    return ['data' => self::$data, 'errorData' => self::$errorData];
+  }
+
+  public static function usernameValidationExistence($queryOption = false)
+  {
+    self::$post = self::getPostData();
+
+    $username = indexParamExistsOrDefault(self::$post, 'username');
+
+    $userExistsData = User::verifyIFExistsWith(['username' => $username], $queryOption);
+
+    if ($userExistsData) {
+
+      self::$errorData['username_error'] = "Já existe um usuário com esse username";
+    }
+
+    if (count(self::$errorData) > 1) self::$errorData['error'] = true;
+
     return ['data' => self::$data, 'errorData' => self::$errorData];
   }
 
@@ -107,6 +126,24 @@ class UserRequest extends RequestData
     if (!empty($email) && !$isValidEmail) {
 
       self::$errorData['email_error'] = "E-mail inválido";
+    }
+
+    if (count(self::$errorData) > 1) self::$errorData['error'] = true;
+
+    return ['data' => self::$data, 'errorData' => self::$errorData];
+  }
+
+  public static function emailValidationExistence($queryOption = false)
+  {
+    self::$post = self::getPostData();
+
+    $email = indexParamExistsOrDefault(self::$post, 'email');
+
+    $userExistsData = User::verifyIFExistsWith(['email' => $email], $queryOption);
+
+    if ($userExistsData) {
+
+      self::$errorData['email_error'] = "Já existe um usuário com esse e-mail";
     }
 
     if (count(self::$errorData) > 1) self::$errorData['error'] = true;

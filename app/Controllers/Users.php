@@ -117,6 +117,7 @@ class Users extends Controller
             UserRequest::nameFieldsValidation(),
             UserRequest::validatePasswords(),
             UserRequest::validateEmailInput(),
+            UserRequest::validateUsernameInput(),
         );
 
         $adm = indexParamExistsOrDefault(UserRequest::getPostData(), 'adm', 0);
@@ -129,7 +130,11 @@ class Users extends Controller
 
         if (!$getFirstErrorSign) {
 
-            $errorData = array_merge($errorData, UserRequest::emailValidationExistence()['errorData']);
+            $errorData = array_merge(
+                $errorData,
+                UserRequest::emailValidationExistence()['errorData'],
+                UserRequest::usernameValidationExistence()['errorData']
+            );
         }
 
         $isErrorResult = $errorData['error'] == true;
@@ -239,6 +244,7 @@ class Users extends Controller
         $requestedData = array_merge(
             UserRequest::nameFieldsValidation(),
             UserRequest::validateEmailInput(),
+            UserRequest::validateUsernameInput(),
             ImageRequest::validateImageParams(false),
         );
 
@@ -251,13 +257,16 @@ class Users extends Controller
         $errorData =
             indexParamExistsOrDefault($requestedData, 'errorData');
 
+        $notUserIdQuery = "AND id != $id";
+
         $errorData = array_merge(
             $errorData,
-            UserRequest::emailValidationExistence("AND id != $id")['errorData']
+            UserRequest::emailValidationExistence($notUserIdQuery)['errorData'],
+            UserRequest::usernameValidationExistence($notUserIdQuery)['errorData'],
         );
 
         $getFirstErrorSign = UserRequest::isErrorInRequest($errorData);
-       
+
         if ($getFirstErrorSign) {
 
             return $this->edit([
