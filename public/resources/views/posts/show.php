@@ -1,8 +1,19 @@
-<header class="postShow imgBackgroundArea" style="background-image:url('<?= $BASE . '/' . imgOrDefault('posts', $data->img, $data->id) ?>');" hx-boost="true" hx-target="body" hx-swap="outerHTML">
+<?php 
+
+$username = objParamExistsOrDefault($user, 'username');
+
+$postImgUrl = $BASE . '/' . imgOrDefault('posts', $data->img, $data->id);
+
+$userPageUrl = $BASE . '/users/';
+if ($username) $userPageUrl = $BASE . '/user/' . $username;
+
+?>
+
+<header class="postShow imgBackgroundArea" style="background-image:url('<?= $postImgUrl ?>');" hx-boost="true" hx-target="body" hx-swap="outerHTML">
     <h1><?= $data->title ?></h1>
 
     <small class='smallInfo'>
-        Escrito por <a href='<?= "$BASE/users/show/$user->id" ?>'><?= $user->name ?></a> em <?= dateFormat($data->created_at) ?>
+        Escrito por <a href='<?= $userPageUrl ?>'><?= $user->name ?></a> em <?= dateFormat($data->created_at) ?>
     </small>
 </header>
 
@@ -24,7 +35,7 @@
             <header>
                 <h3 class="text-left p-1 mb-2"><?= $data->title ?></h3>
             </header>
-            <img src="<?= $BASE ?>/<?= imgOrDefault('posts', $data->img, $data->id) ?>" title="<?= $data->title ?>" onerror="this.onerror=null;this.src='<?= $BASE ?>/public/resources/img/not_found/no_image.jpg';">
+            <img src="<?= $postImgUrl ?>" title="<?= $data->title ?>" onerror="this.onerror=null;this.src='<?= $BASE ?>/public/resources/img/not_found/no_image.jpg';">
 
             <figcaption class="postText"><?= $data->body ?></figcaption>
 
@@ -33,7 +44,7 @@
 
     <section class="aboutUser m-auto">
 
-        <a href="<?= $BASE ?>/users/show/<?= $user->id ?>">
+        <a href="<?= $userPageUrl ?>">
 
             <h5>Sobre o Autor</h5>
 

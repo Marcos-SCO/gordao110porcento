@@ -37,7 +37,8 @@ return [
     '/users/edit/($|[0-9])+/?' => 'Users@edit',
     '/users/create/?' => 'Users@create',
 
-    '/users/?show/($|[0-9]+)(?:/([0-9]+))?/' => 'Users@show',
+    // '/users/?show/($|[0-9]+)(?:/([0-9]+))?/' => 'Users@show',
+    '/user/($|[a-z0-9-_]+)(?:/page/(\d+))?/?' => 'Users@show',
 
   ],
 

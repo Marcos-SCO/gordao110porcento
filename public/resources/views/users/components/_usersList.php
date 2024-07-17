@@ -2,6 +2,8 @@
 
 $ulClassName =  $ulListName ?? 'activeList';
 
+$isSessionAdmin = $_SESSION['adm_id'] == 1;
+
 ?>
 
 <ul class="<?= $ulClassName ?> list-group">
@@ -15,14 +17,22 @@ $ulClassName =  $ulListName ?? 'activeList';
     // if (!$isUserStatusOne) continue;
 
     $userId = objParamExistsOrDefault($user, 'id');
+    $username = objParamExistsOrDefault($user, 'username');
     $userEmail = objParamExistsOrDefault($user, 'email');
     $userImg = objParamExistsOrDefault($user, 'img');
     $userName = objParamExistsOrDefault($user, 'name');
 
     $userImgUrl = $BASE . '/' . imgOrDefault('users', $userImg, $userId);
 
-    $userAction = ($_SESSION['adm_id'] == 1) ? 'edit' : 'show';
-    $userUrl = $BASE . '/users/' . $userAction . '/' . $userId;
+    $userPageUrl = $BASE . '/users';
+
+    if ($isSessionAdmin) {
+      $userPageUrl = $BASE . '/users/edit/' . $userId;
+    }
+
+    if (!$isSessionAdmin && $username) {
+      $userPageUrl = $BASE . '/user/' . $username;
+    }
 
 
     $isUserAdmin = $_SESSION['adm_id'] == 1 && $userId != 1;
@@ -36,7 +46,7 @@ $ulClassName =  $ulListName ?? 'activeList';
         </figure>
 
         <p class="px-2">
-          <a href="<?= $userUrl ?>" class="ml-1 mr-1">id <?= $userId ?> - <?= $userName ?> - <?= $userEmail ?></a>
+          <a href="<?= $userPageUrl ?>" class="ml-1 mr-1">id <?= $userId ?> - <?= $userName ?> - <?= $userEmail ?></a>
         </p>
       </div>
 

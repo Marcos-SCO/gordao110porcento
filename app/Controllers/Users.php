@@ -164,20 +164,18 @@ class Users extends Controller
     {
         if (!is_array($requestData)) $requestData = [];
 
-        $userPageId = isset($requestData['show']) && !empty($requestData['show']) ? $requestData['show'] : 1;
+        $username = indexParamExistsOrDefault($requestData, 'user');
 
-        $urlPath = "users/show/$userPageId";
+        $userPageId = indexParamExistsOrDefault($requestData, 'page', 1);
 
-        $lastKey = array_key_last($requestData);
+        $urlPath = "user/$username/page";
 
-        $pageId = !($lastKey == 'show') ? end($requestData) : 1;
+        $user = $this->model->getAllFrom('users', $username, 'username');
 
-        if ($userPageId && ($lastKey == 'show')) $pageId = $userPageId;
-
-        $user = $this->model->getAllFrom('users', $userPageId);
+        if (!$user)  return View::render('errors/404.php');
 
         // Pagination for posts with user id
-        $results = Pagination::handler('posts', $pageId, $limit = 4, ['user_id', $user->id], $orderOption = 'ORDER BY id DESC');
+        $results = Pagination::handler('posts', $userPageId, $limit = 4, ['user_id', $user->id], $orderOption = 'ORDER BY id DESC');
 
         // Display results
         $pageInfo = ($userPageId > 1) ? " | Página $userPageId" : '';
@@ -185,9 +183,9 @@ class Users extends Controller
         return View::render('users/show.php', [
             'title' => 'Funcionário ' . $user->name . $pageInfo,
             'dataPage' => 'users/show',
-            'pageId' => $pageId,
+            'pageId' => $userPageId,
             'user' => $user,
-            'page' => $pageId,
+            'page' => $userPageId,
             'path' => $urlPath,
             'posts' => $results['tableResults'],
             'prev' => $results['prev'],

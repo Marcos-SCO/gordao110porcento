@@ -76,8 +76,12 @@ class UserRequest extends RequestData
     if (!self::$post) return;
 
     $username = indexParamExistsOrDefault(self::$post, 'username');
+    
+    if ($username) {
+      $username =  preg_replace('/[^A-Za-z0-9\-]/', '', $username);
 
-    if ($username) self::$data['username'] = mb_strtolower($username);
+      self::$data['username'] = mb_strtolower($username);
+    }
 
     if (empty($username)) {
 

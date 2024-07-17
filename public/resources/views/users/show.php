@@ -1,6 +1,7 @@
 <?php
 
 $userId = objParamExistsOrDefault($user, 'id');
+$username = objParamExistsOrDefault($user, 'username');
 $userImg = objParamExistsOrDefault($user, 'img');
 $userBio = objParamExistsOrDefault($user, 'bio');
 
@@ -31,7 +32,7 @@ $emailUserProfile = objParamExistsOrDefault($user, 'email');
     </figure>
 </section>
 
-<?php if ($_SESSION['user_status'] != null) echo "<ul class='text-center' hx-boost='true' hx-target='body' hx-swap='outerHTML'><li><a href='$BASE/users/edit/$userId'>Id de usuário $userId | Nome: $nameUserProfile | E-mail: $emailUserProfile</a></li></ul>";
+<?php if ($_SESSION['user_status'] != null) echo "<ul class='text-center' hx-boost='true' hx-target='body' hx-swap='outerHTML'><li><a href='$BASE/users/edit/$userId'>Id de usuário $userId | Username: $username | Nome: $nameUserProfile | E-mail: $emailUserProfile</a></li></ul>";
 
 ?>
 
