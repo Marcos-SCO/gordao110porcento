@@ -29,6 +29,8 @@ class UsersAuth extends Controller
     $data = indexParamExistsOrDefault($requestedData, 'data');
     $errorData = indexParamExistsOrDefault($requestedData, 'errorData');
 
+    // dump($errorData);
+
     $getFirstErrorSign = RequestData::isErrorInRequest($errorData);
 
     if (!$getFirstErrorSign) {
@@ -80,13 +82,15 @@ class UsersAuth extends Controller
       indexParamExistsOrDefault($data, 'authenticatedUser');
 
     $userId = objParamExistsOrDefault($authenticatedUser, 'id');
+    
+    $username = objParamExistsOrDefault($authenticatedUser, 'username');
 
     // Create user session
     $this->userAuth->createUserSession($authenticatedUser);
 
     flash('register_success', 'Logado com sucesso!');
 
-    redirect('users/show/' . $userId);
+    redirect('user/' . $username);
   }
 
   public function logout()

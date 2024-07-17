@@ -97,7 +97,7 @@
 
         <li class="nav-item dropdown <?= activePageClass(['users', 'users/edit', 'users/show'], $dataPage); ?>" hx-history="false">
 
-          <a class="nav-link dropdown-toggle" style="background:#f8f9fa!important" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false"><?= $sessionUserName ?? "" ?></a>
+          <a class="nav-link dropdown-toggle" style="background:#f8f9fa!important" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false"><?= $sessionUserFirstName ?? "" ?></a>
 
           <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
 

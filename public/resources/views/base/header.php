@@ -18,7 +18,9 @@ $siteTitle = (!$isHomePage) && isset($title)
 
 $isUserLoggedIn = isLoggedIn();
 
-$sessionUserName = indexParamExistsOrDefault($_SESSION, 'user_name');
+$sessionUserFirstName = indexParamExistsOrDefault($_SESSION, 'user_firstName');
+
+$sessionUserName = indexParamExistsOrDefault($_SESSION, 'username');
 
 $sessionUserId = indexParamExistsOrDefault($_SESSION, 'user_id');
 
@@ -76,7 +78,7 @@ $sessionUserId = indexParamExistsOrDefault($_SESSION, 'user_id');
         <div class="headerBody z-index" data-js="header-inner-container">
             <?php // Header nav
             include_once __DIR__ . '/../base/headerNav.php';
-            
+
             ?>
         </div>
 

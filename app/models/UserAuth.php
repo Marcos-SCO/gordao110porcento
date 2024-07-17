@@ -7,9 +7,9 @@ use Core\Model;
 class UserAuth extends Model
 {
     // Login
-    public function authenticate($email, $password)
+    public function authenticate($userCredential, $password)
     {
-        $result = $this->customQuery("SELECT `status`, `id`, `adm`, `name`, `email`, `password` FROM users WHERE email = :email", ['email' => $email]);
+        $result = $this->customQuery("SELECT `status`, `id`, `username`, `adm`, `name`, `email`, `password` FROM users WHERE email = :email OR username = :username", ['email' => $userCredential, 'username' => $userCredential]);
 
         $hashedPassword = objParamExistsOrDefault($result, 'password');
 
@@ -27,13 +27,15 @@ class UserAuth extends Model
         $id = objParamExistsOrDefault($loggedInUser, 'id');
         $adm = objParamExistsOrDefault($loggedInUser, 'adm');
         $email = objParamExistsOrDefault($loggedInUser, 'email');
-        $name = objParamExistsOrDefault($loggedInUser, 'name');
+        $userFirstName = objParamExistsOrDefault($loggedInUser, 'name');
+        $username = objParamExistsOrDefault($loggedInUser, 'username');
 
         $_SESSION['user_status'] = $status;
         $_SESSION['user_id'] = $id;
         $_SESSION['adm_id'] = $adm;
         $_SESSION['user_email'] = $email;
-        $_SESSION['user_name'] = $name;
+        $_SESSION['user_firstName'] = $userFirstName;
+        $_SESSION['username'] = $username;
     }
 
     public function destroy()
@@ -42,7 +44,8 @@ class UserAuth extends Model
         unset($_SESSION['user_id']);
         unset($_SESSION['adm_id']);
         unset($_SESSION['user_email']);
-        unset($_SESSION['user_name']);
+        unset($_SESSION['username']);
+        unset($_SESSION['user_firstName']);
 
         session_destroy();
     }

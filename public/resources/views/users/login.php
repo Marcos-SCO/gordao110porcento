@@ -2,6 +2,13 @@
 
 $formActionUrl = $BASE . '/login';
 
+$data = isset($data) ? $data : false;
+$error = isset($error) ? $error : false;
+
+$userCredential = indexParamExistsOrDefault($data, 'userCredential');
+
+$userCredentialError = indexParamExistsOrDefault($error, 'userCredential_error');
+
 ?>
 
 <section class="login-section-container d-flex flex-column justify-content-center align-items-center container" data-js="login-section">
@@ -14,16 +21,16 @@ $formActionUrl = $BASE . '/login';
         <div class="form-container card card-body mt-5">
             <p>Preencha os campos</p>
 
-            <form action="<?= $formActionUrl ?>" method="post" hx-post="<?= $formActionUrl ?>" hx-target="body" hx-swap="outerHTML">
+            <form action="<?= $formActionUrl ?>" method="post" hax-post="<?= $formActionUrl ?>" hax-target="body" hax-swap="outerHTML">
 
                 <!-- Email -->
                 <div class="form-group mb-3">
-                    <label for="email" class="form-label">E-mail: <sup>*</sup></label>
+                    <label for="userCredential" class="form-label">E-mail (ou usuário): <sup>*</sup></label>
 
-                    <input type="email" name="email" id="email" class="form-control <?= isset($error['email_error']) && $error['email_error'] != '' ? 'is-invalid' : '' ?>" value="<?= $data['email'] ?? '' ?>">
+                    <input type="text" name="userCredential" id="userCredential" class="form-control <?= $userCredentialError != '' ? 'is-invalid' : '' ?>" value="<?= $userCredential ?? '' ?>">
 
                     <span class="invalid-feedback">
-                        <?= $error['email_error'] ?? '' ?>
+                        <?= $userCredentialError ?? '' ?>
                     </span>
                 </div>
 

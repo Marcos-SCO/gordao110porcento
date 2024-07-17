@@ -14,10 +14,12 @@ class UserAuthRequest extends RequestData
     self::$data = [];
     self::$errorData = ['error' => false];
 
-    $email = indexParamExistsOrDefault(self::$post, 'email');
+    $userCredential = indexParamExistsOrDefault(self::$post, 'userCredential');
+
     $password = indexParamExistsOrDefault(self::$post, 'password');
 
-    if ($email) self::$data['email'] = trim($email);
+    if ($userCredential) self::$data['userCredential'] = trim($userCredential);
+
     if ($password) self::$data['password'] = trim($password);
 
     // Check an set logged in user
@@ -25,15 +27,15 @@ class UserAuthRequest extends RequestData
       ? $userAuthInstance : new UserAuth();
 
     $authenticatedUser =
-      $userAuthInstance->authenticate(self::$data['email'], self::$data['password']);
+      $userAuthInstance->authenticate(self::$data['userCredential'], self::$data['password']);
 
     $userStatus = objParamExistsOrDefault($authenticatedUser, 'status');
 
     self::$data['authenticatedUser'] = $authenticatedUser;
 
     if (!$authenticatedUser) {
-      
-      self::$errorData['password_error'] = "Email ou senha incorretos";
+
+      self::$errorData['password_error'] = "Usuário ou senha incorretos";
     }
 
     // Don't let users with status 0 login
@@ -51,19 +53,17 @@ class UserAuthRequest extends RequestData
   {
     self::$post = self::getPostData();
 
-    $email = indexParamExistsOrDefault(self::$post, 'email');
+    $userCredential = indexParamExistsOrDefault(self::$post, 'userCredential');
+
     $password = indexParamExistsOrDefault(self::$post, 'password');
 
-    if ($email) self::$data['email'] = trim($email);
+    if ($userCredential) self::$data['userCredential'] = trim($userCredential);
+
     if ($password) self::$data['password'] = trim($password);
 
-    // Validate Email
-    if (empty(self::$data['email'])) {
-      self::$errorData['email_error'] = "Digite o E-mail";
-    }
-
-    if (!empty(self::$data['email']) && !filter_input(INPUT_POST, 'email', FILTER_VALIDATE_EMAIL)) {
-      self::$errorData['email_error'] = "E-mail inválido";
+    // Validate userCredential
+    if (empty(self::$data['userCredential'])) {
+      self::$errorData['userCredential_error'] = "Digite usuário ou e-mail";
     }
 
     if (empty(self::$data['password'])) {

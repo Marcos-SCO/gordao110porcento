@@ -11,7 +11,8 @@ isset($_SESSION['adm_id']) ? $_SESSION['adm_id'] : $_SESSION['adm_id'] = null;
 
 isset($_SESSION['user_email']) ? $_SESSION['user_email'] : $_SESSION['user_email'] = null;
 
-isset($_SESSION['user_name']) ? $_SESSION['user_name'] : $_SESSION['user_name'] = null;
+isset($_SESSION['username']) ? $_SESSION['username'] : $_SESSION['username'] = null;
+isset($_SESSION['user_firstName']) ? $_SESSION['user_firstName'] : $_SESSION['user_firstName'] = null;
 
 /**
  * Time zone São Paulo
