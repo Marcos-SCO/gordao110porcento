@@ -16,7 +16,14 @@ class User extends Model
     // insert
     public function insertUser($data)
     {
-        return $this->insertQuery('users', ['adm' => $data['adm'], 'name' => $data['name'], 'last_name' => $data['last_name'], 'email' => $data['email'], 'password' => $data['password'], 'created_at' => date("Y-m-d H:i:s")]);
+        return $this->insertQuery('users', [
+            'adm' => $data['adm'],
+            'name' => $data['name'],
+            'last_name' => $data['last_name'],
+            'email' => $data['email'],
+            'password' => $data['password'],
+            'created_at' => date("Y-m-d H:i:s")
+        ]);
     }
 
     // update
@@ -31,6 +38,7 @@ class User extends Model
                 'adm' => $data['adm'],
                 'name' => $data['name'],
                 'last_name' => $data['last_name'],
+                'email' => $data['email'],
                 'img' => $data['img_name'],
                 'bio' => $data['bio'],
                 'updated_at' => date("Y-m-d H:i:s"),
@@ -55,27 +63,24 @@ class User extends Model
         return $userStatus;
     }
 
-    public static function verifyIFExistsWith(array $userParams = [])
+    public static function verifyIFExistsWith(array $userParams = [], $queryOptions = false)
     {
-        $queryOption = "WHERE";
+        $queryParams = "WHERE";
 
         foreach ($userParams as $key => $value) {
             $value = is_string($value) ? '\'' . $value . '\'' : $value;
 
-            $queryOption .= " $key = {$value},";
+            $queryParams .= " $key = {$value},";
         }
 
-        $queryOption = rtrim($queryOption, ',');
+        $queryParams = rtrim($queryParams, ',');
+
+        if ($queryOptions) $queryParams .= ' ' . $queryOptions;
 
         $self = new self();
-        $self->selectQuery('users', $queryOption, 'email');
+        $self->selectQuery('users', $queryParams, 'email');
         // $self->selectQuery('users', $queryOption);
 
-        if ($self->rowCount() > 0) {
-
-            return true;
-        }
-
-        return false;
+        return $self->rowCount() > 0;
     }
 }

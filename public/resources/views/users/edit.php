@@ -8,6 +8,9 @@ $imagePath = imgOrDefault('users', $userImg, $userId);
 
 $userName = objParamExistsOrDefault($data, 'name');
 
+$email = objParamExistsOrDefault($data, 'email');
+$emailError = indexParamExistsOrDefault($error, 'email_error');
+
 $isAdminUser = $_SESSION['adm_id'] == 1 && $userId != 1;
 
 $formActionUrl = $BASE  . '/users/update';
@@ -52,6 +55,15 @@ $formActionUrl = $BASE  . '/users/update';
                     <span class=" invalid-feedback">
                         <?= $error['last_name_error'] ?? '' ?>
                     </span>
+                </div>
+
+                <!-- Email -->
+                <div class="form-group">
+                    <label for="email">E-mail: <sup>*</sup></label>
+
+                    <input name="email" id="email" class="form-control form-control-lg <?= $emailError != '' ? 'is-invalid' : '' ?>" value="<?= $email ?? '' ?>">
+
+                    <span class=" invalid-feedback"><?= $emailError ?? '' ?></span>
                 </div>
 
                 <div class="form-group">

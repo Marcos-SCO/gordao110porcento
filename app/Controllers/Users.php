@@ -129,7 +129,7 @@ class Users extends Controller
 
         if (!$getFirstErrorSign) {
 
-            $errorData = array_merge($errorData, UserRequest::existenceValidation()['errorData']);
+            $errorData = array_merge($errorData, UserRequest::emailValidationExistence()['errorData']);
         }
 
         $isErrorResult = $errorData['error'] == true;
@@ -238,6 +238,7 @@ class Users extends Controller
 
         $requestedData = array_merge(
             UserRequest::nameFieldsValidation(),
+            UserRequest::validateEmailInput(),
             ImageRequest::validateImageParams(false),
         );
 
@@ -250,9 +251,13 @@ class Users extends Controller
         $errorData =
             indexParamExistsOrDefault($requestedData, 'errorData');
 
-        $getFirstErrorSign = isset($errorData['error'])
-            && $errorData['error'] == true;
+        $errorData = array_merge(
+            $errorData,
+            UserRequest::emailValidationExistence("AND id != $id")['errorData']
+        );
 
+        $getFirstErrorSign = UserRequest::isErrorInRequest($errorData);
+       
         if ($getFirstErrorSign) {
 
             return $this->edit([

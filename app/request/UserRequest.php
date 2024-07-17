@@ -70,21 +70,21 @@ class UserRequest extends RequestData
     return ['data' => self::$data, 'errorData' => self::$errorData];
   }
 
-  public static function existenceValidation()
+  public static function emailValidationExistence($queryOption = false)
   {
     self::$post = self::getPostData();
 
     $email = indexParamExistsOrDefault(self::$post, 'email');
 
-    $userExistsData = User::verifyIFExistsWith(['email' => $email]);
+    $userExistsData = User::verifyIFExistsWith(['email' => $email], $queryOption);
 
     if ($userExistsData) {
 
-      self::$errorData['email_error'] = "Já existe um usuário com esse E-mail";
+      self::$errorData['email_error'] = "Já existe um usuário com esse e-mail";
     }
 
     if (count(self::$errorData) > 1) self::$errorData['error'] = true;
-
+    
     return ['data' => self::$data, 'errorData' => self::$errorData];
   }
 
