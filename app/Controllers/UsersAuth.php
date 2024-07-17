@@ -49,10 +49,10 @@ class UsersAuth extends Controller
   public function login()
   {
     // if user is already logged redirect to profile
-    $sessionUserId =
-      indexParamExistsOrDefault($_SESSION, 'user_id');
+    $sessionUsername =
+      indexParamExistsOrDefault($_SESSION, 'username');
 
-    if ($sessionUserId) redirect("users/show/$sessionUserId");
+    if ($sessionUsername) redirect("user/$sessionUsername");
 
     $isPostRequest = $_SERVER['REQUEST_METHOD'] == 'POST';
 
@@ -82,7 +82,7 @@ class UsersAuth extends Controller
       indexParamExistsOrDefault($data, 'authenticatedUser');
 
     $userId = objParamExistsOrDefault($authenticatedUser, 'id');
-    
+
     $username = objParamExistsOrDefault($authenticatedUser, 'username');
 
     // Create user session
