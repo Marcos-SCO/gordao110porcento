@@ -99,7 +99,7 @@ $productIdCategory = indexParamExistsOrDefault($data, 'product_id_category');
                 <?= $error['img_error'] ?? '' ?>
             </span>
 
-            <img src="<?= $BASE ?>/public/resources/img/default/default.png" title="Imagem padrão">
+            <img src="<?= $RESOURCES_PATH ?>/img/default/default.png" title="Imagem padrão">
         </div>
 
         <input type="submit" class="btn btn-success" value="Enviar">

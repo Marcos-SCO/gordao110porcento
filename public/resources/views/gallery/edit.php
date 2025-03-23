@@ -49,7 +49,7 @@ $imgUrlPath = $BASE . '/' . imgOrDefault('gallery', $img, $id);
                 <?= $error['img_error'] ?? '' ?>
             </span>
 
-            <img src="<?= $imgUrlPath ?>" alt="<?= $img ?>" title="<?= $imgTitle ?>" onerror="this.onerror=null;this.src='<?= $BASE ?>/public/resources/img/not_found/no_image.jpg';">
+            <img src="<?= $imgUrlPath ?>" alt="<?= $img ?>" title="<?= $imgTitle ?>" onerror="this.onerror=null;this.src='<?= $RESOURCES_PATH ?>/img/not_found/no_image.jpg';">
         </div>
 
         <input type="submit" class="btn btn-success" value="Atualizar">

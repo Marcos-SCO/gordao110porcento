@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 $formActionUrl = $BASE . '/gallery/store';
 
@@ -16,7 +16,7 @@ $formActionUrl = $BASE . '/gallery/store';
     </header>
 
     <form action="<?= $formActionUrl ?>" method="post" enctype="multipart/form-data" hx-post="<?= $formActionUrl ?>" hx-target="body" hx-swap="show:body:top">
-        
+
         <div class="form-group">
 
             <label for="img">Envie a imagem</label>
@@ -37,7 +37,7 @@ $formActionUrl = $BASE . '/gallery/store';
                 </span>
             </div>
 
-            <img src="<?= $BASE ?>/public/resources/img/default/default.png" alt="default.png" title="Imagem padrão" onerror="this.onerror=null;this.src='<?=$BASE?>/public/resources/img/not_found/no_image.jpg';">
+            <img src="<?= $RESOURCES_PATH ?>/img/default/default.png" alt="default.png" title="Imagem padrão" onerror="this.onerror=null;this.src='<?= $RESOURCES_PATH ?>/img/not_found/no_image.jpg';">
         </div>
 
         <input type="submit" class="btn btn-success" value="Enviar">

@@ -15,8 +15,8 @@ class View
      */
     public static function render(string $view, array $args = []): void
     {
-        $args['BASE'] = Config::URL_BASE;
-        $BASE = Config::URL_BASE;
+        $args['BASE'] = Config::$URL_BASE;
+        $args['RESOURCES_PATH'] = Config::$RESOURCES_PATH;
 
         extract($args, EXTR_SKIP);
 

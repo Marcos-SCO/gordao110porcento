@@ -28,7 +28,7 @@ if (!$posts) return;
     ?>
       <a href="<?= $postUrl ?>">
         <figure class="item overflow-hidden img-section-max">
-          <img class="object-fit" src="<?= $BASE ?>/public/resources/img/posts/id_<?= $postId ?>/<?= $postImg ?>" alt="<?= $postTitle ?>" title="<?= $postTitle ?>" onerror="this.onerror=null;this.src='<?= $BASE ?>/public/resources/img/not_found/no_image.jpg';" oading="lazy" width="246" height="184">
+          <img class="object-fit" src="<?= $RESOURCES_PATH ?>/img/posts/id_<?= $postId ?>/<?= $postImg ?>" alt="<?= $postTitle ?>" title="<?= $postTitle ?>" onerror="this.onerror=null;this.src='<?= $RESOURCES_PATH ?>/img/not_found/no_image.jpg';" oading="lazy" width="246" height="184">
 
           <figcaption class="img-fig"><?= $postTitle ?></figcaption>
         </figure>

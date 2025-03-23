@@ -42,7 +42,7 @@ $isSessionAdmin = $_SESSION['adm_id'] == 1;
 
       <div class="d-flex" hx-boost="true" hx-target="body" hx-swap="outerHTML">
         <figure class="userPic mr-2">
-          <img src="<?= $userImgUrl ?>" class="userImg" onerror="this.onerror=null;this.src='<?= $BASE ?>/public/resources/img/not_found/no_image.jpg';">
+          <img src="<?= $userImgUrl ?>" class="userImg" onerror="this.onerror=null;this.src='<?= $RESOURCES_PATH ?>/img/not_found/no_image.jpg';">
         </figure>
 
         <p class="px-2">

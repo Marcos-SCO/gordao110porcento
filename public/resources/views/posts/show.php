@@ -35,7 +35,7 @@ if ($username) $userPageUrl = $BASE . '/user/' . $username;
             <header>
                 <h3 class="text-left p-1 mb-2"><?= $data->title ?></h3>
             </header>
-            <img src="<?= $postImgUrl ?>" title="<?= $data->title ?>" onerror="this.onerror=null;this.src='<?= $BASE ?>/public/resources/img/not_found/no_image.jpg';">
+            <img src="<?= $postImgUrl ?>" title="<?= $data->title ?>" onerror="this.onerror=null;this.src='<?= $RESOURCES_PATH ?>/img/not_found/no_image.jpg';">
 
             <figcaption class="postText"><?= $data->body ?></figcaption>
 
@@ -82,7 +82,7 @@ if ($username) $userPageUrl = $BASE . '/user/' . $username;
                 </style>
 
                 <div class="imgUserBox">
-                    <img src="<?= $BASE ?>/<?= imgOrDefault('users', $user->img, $user->id) ?>" alt="<?= $user->img ?>" title="<?= $user->name ?>" class="imgFitUser" onerror="this.onerror=null;this.src='<?= $BASE ?>/public/resources/img/not_found/no_image.jpg';">
+                    <img src="<?= $BASE ?>/<?= imgOrDefault('users', $user->img, $user->id) ?>" alt="<?= $user->img ?>" title="<?= $user->name ?>" class="imgFitUser" onerror="this.onerror=null;this.src='<?= $RESOURCES_PATH ?>/img/not_found/no_image.jpg';">
                     <span><?= $user->name ?></span>
                 </div>
 

@@ -21,7 +21,7 @@ abstract class Conn
     protected static function connection()
     {
         // Set dsn
-        $dsn = 'mysql:host='.Config::DB_HOST.';port='.Config::DB_PORT.';dbname='.Config::DB_NAME.';charset='.Config::DB_CHARSET;
+        $dsn = 'mysql:host=' . Config::$DB_HOST . ';port=' . Config::$DB_PORT . ';dbname=' . Config::$DB_NAME . ';charset=' . Config::$DB_CHARSET;
 
         $options = [
             PDO::ATTR_PERSISTENT => TRUE,
@@ -31,12 +31,11 @@ abstract class Conn
         ];
 
         try {
-            $pdo = new PDO($dsn, Config::DB_USER, Config::DB_PASS, $options);
+            $pdo = new PDO($dsn, Config::$DB_USER, Config::$DB_PASS, $options);
 
             return $pdo = $pdo;
-
         } catch (PDOException $e) {
-            
+
             echo $e->getMessage();
         }
     }

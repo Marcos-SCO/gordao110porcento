@@ -37,11 +37,11 @@ $sessionUserId = indexParamExistsOrDefault($_SESSION, 'user_id');
     <meta name=author content='Marcos dos Santos Carvalho'>
 
     <!-- fav icons -->
-    <link rel="apple-touch-icon" sizes="180x180" href="<?= $BASE ?>/public/resources/img/favicon/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="<?= $BASE ?>/public/resources/img/favicon/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="<?= $BASE ?>/public/resources/img/favicon/favicon-16x16.png">
-    <link rel="manifest" href="<?= $BASE ?>/public/resources/img/favicon/site.webmanifest">
-    <link rel="mask-icon" href="<?= $BASE ?>/public/resources/img/favicon/safari-pinned-tab.svg" color="#5bbad5">
+    <link rel="apple-touch-icon" sizes="180x180" href="<?= $RESOURCES_PATH ?>/img/favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="<?= $RESOURCES_PATH ?>/img/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="<?= $RESOURCES_PATH ?>/img/favicon/favicon-16x16.png">
+    <link rel="manifest" href="<?= $RESOURCES_PATH ?>/img/favicon/site.webmanifest">
+    <link rel="mask-icon" href="<?= $RESOURCES_PATH ?>/img/favicon/safari-pinned-tab.svg" color="#5bbad5">
     <meta name="msapplication-TileColor" content="#da532c">
     <meta name="theme-color" content="#ffffff">
 
@@ -53,7 +53,7 @@ $sessionUserId = indexParamExistsOrDefault($_SESSION, 'user_id');
     <?php  // Google fonts <link href="https://fonts.googleapis.com/css2?family=Oleo+Script+Swash+Caps:wght@700&display=swap" rel="stylesheet"> 
     ?>
 
-    <link rel="stylesheet" href="<?= $BASE . '/public/dist/css/index.css'; ?>">
+    <link rel="stylesheet" href="<?= $BASE . '/dist/css/index.css'; ?>">
 
     <title><?= $siteTitle; ?></title>
 

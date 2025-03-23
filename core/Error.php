@@ -33,7 +33,7 @@ class Error
 
         // Set the error in the error log
         $log = $logsFolder . date('Y-m-d') . '.txt';
-        // If Config::SHOW_ERRORS === false than the errors are stored in the log folder
+        // If Config::$SHOW_ERRORS === false than the errors are stored in the log folder
         ini_set('error_log', $log);
 
         $message = "\n\n-------------------------------------------";
@@ -64,7 +64,7 @@ class Error
 
         http_response_code($code);
 
-        $showErrorsOnFrontEnd = Config::SHOW_ERRORS;
+        $showErrorsOnFrontEnd = Config::$SHOW_ERRORS;
 
         if ($showErrorsOnFrontEnd) {
             echo "<h1>Fatal error</h1>";

@@ -94,7 +94,7 @@ $formActionUrl = $BASE  . '/users/update';
 
                 <span class="invalid-feedback"><?= $error['img_error'] ?? '' ?></span>
 
-                <img src="<?= $BASE ?>/<?= $imagePath; ?>" title="<?= $userFirstName; ?>" onerror="this.onerror=null;this.src='<?= $BASE ?>/public/resources/img/not_found/no_image.jpg';">
+                <img src="<?= $BASE ?>/<?= $imagePath; ?>" title="<?= $userFirstName; ?>" onerror="this.onerror=null;this.src='<?= $RESOURCES_PATH ?>/img/not_found/no_image.jpg';">
 
             </div>
         </div>

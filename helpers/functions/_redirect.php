@@ -6,7 +6,7 @@ use App\Config\Config;
 function redirect($page)
 {
     header('Status: 301 Moved Permanently', false, 301);
-    header('Location: ' . Config::URL_BASE . '/' . $page);
+    header('Location: ' . Config::$URL_BASE . '/' . $page);
 
     die();
 }

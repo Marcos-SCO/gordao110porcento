@@ -1,6 +1,6 @@
 <?php
 
-$defaultImg =  $BASE . '/public/resources/img/slider/pizzasRefris_template_400.jpg';
+$defaultImg =  $RESOURCES_PATH . '/img/slider/pizzasRefris_template_400.jpg';
 
 ?>
 

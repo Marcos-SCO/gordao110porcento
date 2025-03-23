@@ -18,7 +18,7 @@ $isHomePage = $dataPage == 'home';
 </main>
 
 <!-- Footer -->
-<footer class="footerSection page-footer font-small blue pt-4" data-base-url="<?= $BASE; ?>" data-page="<?= $dataPage; ?>" hx-boost="true" hx-target="body" hx-swap="outerHTML">
+<footer class="footerSection page-footer font-small blue pt-4" data-base-url="<?= $BASE; ?>" data-resources-url="<?= $RESOURCES_PATH; ?>" data-page="<?= $dataPage; ?>" hx-boost="true" hx-target="body" hx-swap="outerHTML">
 
     <article style="position:relative">
 
@@ -50,11 +50,11 @@ $isHomePage = $dataPage == 'home';
                     <h5 class="text-uppercase">Categorias</h5>
                     <nav>
                         <ul class="list-unstyled">
-                            <li><a href="<?= $BASE ?>/categories/show/1">Habúrgueres</a></li>
-                            <li><a href="<?= $BASE ?>/categories/show/2">Pizzas</a></li>
-                            <li><a href="<?= $BASE ?>/categories/show/3">Porções</a></li>
-                            <li><a href="<?= $BASE ?>/categories/show/4">Combos</a></li>
-                            <li><a href="<?= $BASE ?>/categories/show/5">Bebidas</a></li>
+                            <li><a href="<?= $BASE ?>/category/hamburgueres/">Habúrgueres</a></li>
+                            <li><a href="<?= $BASE ?>/category/pizza/">Pizzas</a></li>
+                            <li><a href="<?= $BASE ?>/category/porcoes/">Porções</a></li>
+                            <li><a href="<?= $BASE ?>/category/combos/">Combos</a></li>
+                            <li><a href="<?= $BASE ?>/category/bebidas/">Bebidas</a></li>
                         </ul>
                     </nav>
                 </section>
@@ -122,20 +122,20 @@ $isTinyMce = in_array($dataPage, $tinyMceControllers);
 
 // tiny MCE 
 
-// if ($isTinyMce) echo "<!-- Tiny MCE --><script src='$BASE/public/resources/js/tinyMCE.js'></script>";
+// if ($isTinyMce) echo "<!-- Tiny MCE --><script src='$RESOURCES_PATH/js/tinyMCE.js'></script>";
 
 ?>
 
 <!-- Owl min -->
-<script src='<?= $BASE ?>/public/resources/js/libraries/owl.carousel.min.js' data-js="owl-min" defer>
+<script src='<?= $RESOURCES_PATH ?>/js/libraries/owl.carousel.min.js' data-js="owl-min" defer>
     window.$.fn.owlCarousel = $.fn.owlCarousel;
 </script>
 
 <!-- Htmx -->
-<script src="<?= $BASE ?>/public/resources/js/libraries/htmx.org@1.9.12.js"></script>
+<script src="<?= $RESOURCES_PATH ?>/js/libraries/htmx.org@1.9.12.js"></script>
 
 <!-- App -->
-<script src="<?= $BASE ?>/public/dist/js/index.js" type="module"></script>
+<script src="<?= $BASE ?>/dist/js/index.js" type="module"></script>
 
 </body>
 

@@ -65,7 +65,7 @@ $slugFieldError =
                 <?= $error['img_error'] ?? '' ?>
             </span>
 
-            <img src="<?= $BASE ?>/public/resources/img/default/default.png" alt="default.png" title="Imagem padrão" onerror="this.onerror=null;this.src='<?= $BASE ?>/public/resources/img/not_found/no_image.jpg';">
+            <img src="<?= $RESOURCES_PATH ?>/img/default/default.png" alt="default.png" title="Imagem padrão" onerror="this.onerror=null;this.src='<?= $RESOURCES_PATH ?>/img/not_found/no_image.jpg';">
         </div>
 
         <input type="submit" class="btn btn-success" value="Enviar">

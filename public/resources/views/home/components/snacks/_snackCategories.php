@@ -33,7 +33,7 @@ if (!$categories) return;
 
         <figure class="item">
 
-          <img class="mx-auto" src="<?= $imgUrl ?>" alt="<?= $categoryItemImg ?>" title="<?= $categoryItemName ?>" onerror="this.onerror=null;this.src='<?= $BASE ?>/public/resources/img/not_found/no_image.jpg';" loading="lazy" width="246" height="184">
+          <img class="mx-auto" src="<?= $imgUrl ?>" alt="<?= $categoryItemImg ?>" title="<?= $categoryItemName ?>" onerror="this.onerror=null;this.src='<?= $RESOURCES_PATH ?>/img/not_found/no_image.jpg';" loading="lazy" width="246" height="184">
 
           <figcaption><?= $categoryItemName ?></figcaption>
 

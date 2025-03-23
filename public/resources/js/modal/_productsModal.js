@@ -4,7 +4,7 @@ function productsModal() {
 
   if (!modalItemContainers) return;
 
-  const baseUrl = document.querySelector('footer')?.getAttribute('data-page');
+  const resoucesUrl = document.querySelector('footer')?.getAttribute('data-resources-url');
 
   const navHeader = document.querySelector('[data-js="navHeader"] [data-js="header-inner-container"]');
 
@@ -61,11 +61,11 @@ function productsModal() {
             </div>
             <div class="modal-body">
               <figure>
-                <img src="${url}/public/resources/img/products/category_${id_category}/id_${id}/${img}" alt="${img}" title="${product_name}" onerror="this.onerror=null;this.src='${baseUrl}/public/resources/img/not_found/no_image.jpg';">
+                <img src="${resoucesUrl}/img/products/category_${id_category}/id_${id}/${img}" alt="${img}" title="${product_name}" onerror="this.onerror=null;this.src='${resoucesUrl}/img/not_found/no_image.jpg';">
                 <figcaption>
                   <p>Categoria: 
                     <a 
-                      href='${url}categories/show/${id_category}' 
+                      href='${url}/categories/show/${id_category}' 
                       hx-boost="true" 
                       hx-target="body"
                       hx-swap="outerHTML show:top"

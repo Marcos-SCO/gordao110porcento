@@ -38,11 +38,11 @@ class Router
 
         $paramsData = [];
         foreach ($params as $index => $param) {
-            
+
             $index = $index > 0 ? $index : 1;
             $paramsData[$uri[$index - 1]] = $param;
         }
-        
+
         return $paramsData;
     }
 
@@ -70,8 +70,14 @@ class Router
     public function dispatch($routes)
     {
         // $uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
-        $pathInfo = $_SERVER['PATH_INFO'] ?? '/';
-        $uri = parse_url($pathInfo, PHP_URL_PATH);
+        
+        // Apache config
+        // $pathInfo = $_SERVER['PATH_INFO'] ?? '/';
+        // $uri = parse_url($pathInfo, PHP_URL_PATH);
+
+        // Nginx config uri
+        $pathInfo = rtrim($_SERVER['REQUEST_URI'], '/') . '/' ?? '/';
+        $uri = strtok($pathInfo, '?'); 
 
         $requestMethod = $_SERVER['REQUEST_METHOD'];
 

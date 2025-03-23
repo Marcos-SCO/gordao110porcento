@@ -23,7 +23,7 @@ $emailUserProfile = objParamExistsOrDefault($user, 'email');
 
 <section class="user d-flex flex-wrap align-items-center justify-items-center m-auto">
     <figure class="d-flex flex-wrap m-auto justify-content-center">
-        <img class="img-prevent-drag " src="<?= $userImgUrl ?>" title="<?= $nameUserProfile ?>" onerror="this.onerror=null;this.src='<?= $BASE ?>/public/resources/img/not_found/no_image.jpg';">
+        <img class="img-prevent-drag " src="<?= $userImgUrl ?>" title="<?= $nameUserProfile ?>" onerror="this.onerror=null;this.src='<?= $RESOURCES_PATH ?>/img/not_found/no_image.jpg';">
 
         <figcaption class="bg-light mt-5">
             <h5>Sobre <?= $nameUserProfile ?></h5>

@@ -56,7 +56,7 @@ $slugFieldError =
                 <?= $error['img_error'] ?? '' ?>
             </span>
 
-            <img src="<?= $BASE ?>/public/resources/img/default/default.png" alt="default.png" title="Imagem padrão">
+            <img src="<?= $RESOURCES_PATH ?>/img/default/default.png" alt="default.png" title="Imagem padrão">
         </div>
 
         <div class="form-group">

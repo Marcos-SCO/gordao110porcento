@@ -47,11 +47,11 @@ function preloadSliderImages(imageUrls, path = '') {
 }
 
 function heroSliderDomChangeElements(currentSlideItem) {
-    const baseUrl = document.querySelector('[data-base-url]')?.getAttribute('data-base-url');
+    const resourcesURl = document.querySelector('[data-resources-url]')?.getAttribute('data-resources-url');
 
-    if (!baseUrl) return;
+    if (!resourcesURl) return;
 
-    const path = baseUrl + '/public/resources/img/slider/';
+    const path = resourcesURl + '/img/slider/';
 
     // select slider elements
     const hero = document.querySelector('[data-js="heroSlider"]');
@@ -205,12 +205,12 @@ function heroBarsClick() {
 
 function heroSlider() {
 
-    const baseUrl = document.querySelector('[data-base-url]')
-        ?.getAttribute('data-base-url');
+    const resourcesUrl = document.querySelector('[data-resources-url]')
+        ?.getAttribute('data-resources-url');
 
-    if (!baseUrl) return;
+    if (!resourcesUrl) return;
 
-    const path = baseUrl + '/public/resources/img/slider/';
+    const path = resourcesUrl + '/img/slider/';
 
     const sliderObj = getSliderItens();
 

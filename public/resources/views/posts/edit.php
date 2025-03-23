@@ -65,7 +65,7 @@ if ($slugField) $postShowUrl = $BASE . '/post/' . $slugField;
                 <?= $error['img_error'] ?? '' ?>
             </span>
 
-            <img src="<?= $imgUrl ?>" alt="<?= $img ?>" title="<?= $title ?>" onerror="this.onerror=null;this.src='<?= $BASE ?>/public/resources/img/not_found/no_image.jpg';">
+            <img src="<?= $imgUrl ?>" alt="<?= $img ?>" title="<?= $title ?>" onerror="this.onerror=null;this.src='<?= $RESOURCES_PATH ?>/img/not_found/no_image.jpg';">
 
         </div>
 

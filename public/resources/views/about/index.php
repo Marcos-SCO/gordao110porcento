@@ -2,13 +2,13 @@
 
 $contactPageUrl = $BASE . '/contact/message/send';
 
-echo "<style>body { background-image: url('$BASE/public/resources/img/template/aboutBackgroundSection.png'); background-size: cover; background-attachment: fixed; background-repeat: no-repeat; background-position: top }</style>";
+echo "<style>body { background-image: url('$RESOURCES_PATH/img/template/aboutBackgroundSection.png'); background-size: cover; background-attachment: fixed; background-repeat: no-repeat; background-position: top }</style>";
 
 ?>
 
 <header class="homeHeaderAbout imgBackgroundArea d-flex flex-wrap justify-content-center flex-row">
     <span>
-        <img src="<?= $BASE ?>/public/resources/img/template/gordao110_logo_300px.png" alt="gordao110_logo.png" title="Gordão 110% logo">
+        <img src="<?= $RESOURCES_PATH ?>/img/template/gordao110_logo_300px.png" alt="gordao110_logo.png" title="Gordão 110% logo">
         <h3 class="text-left">Sobre nós</h3>
     </span>
 </header>
@@ -17,7 +17,7 @@ echo "<style>body { background-image: url('$BASE/public/resources/img/template/a
 
     <section class="about">
         <figure>
-            <img src="<?= $BASE ?>/public/resources/img/template/gordao_faxada_500.png" alt="gordao_faxada.png" title="Gordão 110% Faxada">
+            <img src="<?= $RESOURCES_PATH ?>/img/template/gordao_faxada_500.png" alt="gordao_faxada.png" title="Gordão 110% Faxada">
             <figcaption>
                 <strong class="font-swashCaps">
                     <h1 class="lightText">Gordão a 110%</h1>
@@ -27,14 +27,14 @@ echo "<style>body { background-image: url('$BASE/public/resources/img/template/a
         </figure>
 
         <figure>
-            <img src="<?= $BASE ?>/public/resources/img/template/clients_500.png" alt="clients_500.png" title="Clientes" data-anima="right">
+            <img src="<?= $RESOURCES_PATH ?>/img/template/clients_500.png" alt="clients_500.png" title="Clientes" data-anima="right">
             <figcaption>
                 <p><strong class="lightText">MISSÃO</strong><br>Desenvolver e comercializar lanches saudaveis, procurando sempre a inovação, ou seja criando variedades em cardapíos, agregando confiança e transparência aos nossos clientes.</p>
             </figcaption>
         </figure>
 
         <figure>
-            <img src="<?= $BASE ?>/public/resources/img/template/gordao_letreiros_600.png" alt="gordao_letreiros_600.png" title="Gordão Letreiros" data-anima="right">
+            <img src="<?= $RESOURCES_PATH ?>/img/template/gordao_letreiros_600.png" alt="gordao_letreiros_600.png" title="Gordão Letreiros" data-anima="right">
             <figcaption>
                 <p><strong class="lightText">VISÃO</strong><br>Ser a melhor lanchonete no seguimento, visando sempre o bem estar de nassos clientes. Comprometendo-se com a satisfação e valorizando nossas pessoas e visitantes.
                 </p>
@@ -42,7 +42,7 @@ echo "<style>body { background-image: url('$BASE/public/resources/img/template/a
         </figure>
 
         <figure>
-            <img src="<?= $BASE ?>/public/resources/img/template/restaurante_500.png" alt="restaurante_500.png" title="Clientes" data-anima="right">
+            <img src="<?= $RESOURCES_PATH ?>/img/template/restaurante_500.png" alt="restaurante_500.png" title="Clientes" data-anima="right">
             <figcaption>
                 <p><strong class="lightText">VALORES</strong><br>Trabalhando com responsabilidade, naturalidade emocional, educação cortesia e respeito, pontualidade e assiduidade, com facilidade de comunicação, com entusiasmo, com segurança no que fazemos, vontade e disposição, aqui esses valores serão sempre prioridades, tornando-se um diferencial.
                 </p>

@@ -3,7 +3,7 @@
 
   <!-- Show this only on mobile to medium screens -->
   <a class="navbar-brand d-lg-none" href="<?= $BASE ?>">
-    <img src="<?= $BASE ?>/public/resources/img/template/gordao110Logo100.png" alt="Gordão a 110%" title="Gordão a 110%">
+    <img src="<?= $RESOURCES_PATH ?>/img/template/gordao110Logo100.png" alt="Gordão a 110%" title="Gordão a 110%">
   </a>
 
   <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarToggle" aria-controls="navbarToggle" aria-expanded="false" aria-label="Toggle navigation">
@@ -34,7 +34,7 @@
 
     <!-- Show this only lg screens and up -->
     <a class="navbar-brand d-none d-lg-block" style="position:absolute;top:0;margin:0!important;" href="<?= $BASE ?>">
-      <img src="<?= $BASE ?>/public/resources/img/template/gordao110Logo100.png" alt="Gordão a 110%" title="Gordão a 110%">
+      <img src="<?= $RESOURCES_PATH ?>/img/template/gordao110Logo100.png" alt="Gordão a 110%" title="Gordão a 110%">
     </a>
 
     <ul class="navbar-nav">
@@ -103,7 +103,7 @@
 
             <li data-active-page="users/edit"><a class="dropdown-item" href="<?= $BASE ?>/users/edit/<?= $sessionUserId ?>">Meu perfil</a></li>
 
-            <li data-active-page="users/show"><a class="dropdown-item" href="<?= $BASE ?>/users/show/<?= $sessionUserId ?>">Página</a></li>
+            <li data-active-page="users/show"><a class="dropdown-item" href="<?= $BASE ?>/user/<?= $sessionUserName ?>">Página</a></li>
 
             <li data-active-page="users"><a class="dropdown-item" href="<?= $BASE ?>/users/">Usuários</a></li>
 

@@ -31,7 +31,7 @@ $loadingImgValue = $itemCounter <= 3 ? 'eager' : 'lazy';
   <a href="<?= $postUrl ?>">
 
     <div class="imgMax">
-      <img class="card-img-top" src="<?= $postImgUrl ?>" alt="<?= $postImg ?>" title="<?= $postTitle ?>" width="299.2" height="255" onerror="this.onerror=null;this.src='<?= $BASE ?>/public/resources/img/not_found/no_image.jpg';" loading="<?= $loadingImgValue; ?>">
+      <img class="card-img-top" src="<?= $postImgUrl ?>" alt="<?= $postImg ?>" title="<?= $postTitle ?>" width="299.2" height="255" onerror="this.onerror=null;this.src='<?= $RESOURCES_PATH ?>/img/not_found/no_image.jpg';" loading="<?= $loadingImgValue; ?>">
     </div>
 
     <figcaption class="blogBody card-body">
