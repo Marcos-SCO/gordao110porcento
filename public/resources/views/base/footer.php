@@ -14,6 +14,7 @@ $getQuery = getQueryString();
 $yearsInService = date('Y') - 1997;
 
 $isHomePage = $dataPage == 'home';
+$isPostPage = $dataPage == 'posts/show';
 
 ?>
 
@@ -126,6 +127,8 @@ $tinyMceControllers = ['posts/show', 'posts/edit'];
 // tiny MCE 
 
 // if ($isTinyMce) echo "<!-- Tiny MCE --><script src='$RESOURCES_PATH/js/tinyMCE.js'></script>";
+ 
+if ($isPostPage) echo '<script id="dsq-count-scr" src="//gordao110.disqus.com/count.js" async></script>';
 
 ?>
 

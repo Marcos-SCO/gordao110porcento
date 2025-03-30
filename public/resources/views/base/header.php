@@ -31,6 +31,8 @@ $sessionUserName = indexParamExistsOrDefault($_SESSION, 'username');
 
 $sessionUserId = indexParamExistsOrDefault($_SESSION, 'user_id');
 
+$isPostShowPage = $dataPage == 'posts/show';
+
 ?>
 
 <!DOCTYPE html>
@@ -42,6 +44,24 @@ $sessionUserId = indexParamExistsOrDefault($_SESSION, 'user_id');
     <meta name=description content="Gordão a 110% melhor lanchonete e restaurante da região. É gordão ou nada!">
     <meta name="keywords" content="Gordão, lanchonete, Gordo, Gordão, Gordo Lanchonete, Gordão a 110%, Gordo 110%, Lanchonete Gordão, 110% lanchonete, 110% Gordão Lanchonete, lanchonete a 110%, gordao a 110%, Lanchonete a 110%">
     <meta name=author content='Marcos dos Santos Carvalho'>
+
+    <?php if ($isPostShowPage) :
+
+        $postSlug = objParamExistsOrDefault($data, 'slug');
+        $postBody = objParamExistsOrDefault($data, 'body');
+        $postTitle = objParamExistsOrDefault($data, 'title');
+        $dataImg = objParamExistsOrDefault($data, 'img');
+        $dataId = objParamExistsOrDefault($data, 'id');
+
+        $postImgUrl = $BASE_WITH_PUBLIC . '/' . imgOrDefault('posts', $dataImg, $dataId);
+        
+    ?>
+        <meta property="og:title" content="<?= htmlspecialchars($postTitle) ?>">
+        <meta property="og:description" content="<?= substr(strip_tags($postBody), 0, 150) ?>...">
+        <meta property="og:image" content="<?= $postImgUrl ?>">
+        <meta property="og:url" content="<?= $BASE . '/post/' . $postSlug ?>">
+        <meta property="og:type" content="article">
+    <?php endif; ?>
 
     <!-- fav icons -->
     <link rel="apple-touch-icon" sizes="180x180" href="<?= $RESOURCES_PATH ?>/img/favicon/apple-touch-icon.png">

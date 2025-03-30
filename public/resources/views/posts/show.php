@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 $username = objParamExistsOrDefault($user, 'username');
 
@@ -6,6 +6,8 @@ $postImgUrl = $BASE_WITH_PUBLIC . '/' . imgOrDefault('posts', $data->img, $data-
 
 $userPageUrl = $BASE . '/users/';
 if ($username) $userPageUrl = $BASE . '/user/' . $username;
+
+$postSlug = objParamExistsOrDefault($data, 'slug');
 
 ?>
 
@@ -30,7 +32,7 @@ if ($username) $userPageUrl = $BASE . '/user/' . $username;
 
 <article class="pr-4 pl-4" hx-boost="true" hx-target="body" hx-swap="outerHTML">
 
-    <section class="postShowSection mb-3">
+    <section class="postShowSection mb-3" data-post-slug="<?= $postSlug ?>" data-base-url="<?= $BASE; ?>">
         <figure class="postFigure">
             <header>
                 <h3 class="text-left p-1 mb-2"><?= $data->title ?></h3>
@@ -93,31 +95,28 @@ if ($username) $userPageUrl = $BASE . '/user/' . $username;
 
     </section>
 
-    <!-- Disqus -->
-    <input type="hidden" value="<?= $data->id ?>" id="pageId">
-    <div id="disqus_thread" class="mb-5"></div>
-    <script>
-        /**
-         *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
-         *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
-
-        // const PAGE_URL = window.location.href;
-        // const PAGE_IDENTIFIER = document.getElementById('pageId').value;
-        // var disqus_config = function(PAGE_URL, PAGE_IDENTIFIER) {
-        //     this.page.url = PAGE_URL; 
-        //     this.page.identifier =     PAGE_IDENTIFIER; 
-        // };
-
-        // (function() { 
-        //     var d = document,
-        //         s = d.createElement('script');
-        //     s.src = 'https://gordao110porcento.disqus.com/embed.js';
-        //     s.setAttribute('data-timestamp', +new Date());
-        //     (d.head || d.body).appendChild(s);
-        // })();
-    </script>
-
-    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
 </article>
 
-<div id="disqus_thread"></div>
+<!-- Disqus -->
+<div id="disqus_thread" class="mb-5"></div>
+<script>
+    window.dataBaseUrl = document.querySelector('[data-base-url]')
+        ?.getAttribute('data-base-url');
+
+    window.dataPostSlug = document.querySelector('[data-post-slug]')?.getAttribute('data-post-slug');
+
+    var disqus_config = function() {
+        this.page.url = dataBaseUrl + '/post/' + dataPostSlug;
+        this.page.identifier = dataBaseUrl + '/post/' + dataPostSlug;
+    };
+
+    (function() {
+        var d = document,
+            s = d.createElement('script');
+        s.src = 'https://gordao110.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        s.onload = function() {};
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>

@@ -1,5 +1,8 @@
 function initTinyMce() {
-    if (!tinymce) return;
+    if (typeof tinymce === 'undefined') {
+        // console.error('TinyMCE não foi carregado.');
+        return;
+    }
 
     tinymce.init({
         selector: 'textarea',
