@@ -3,6 +3,8 @@
 // Pagination component
 include_once __DIR__ . '/../components/pagination.php';
 
+$requestUri = $_SERVER['REQUEST_URI'] ?? '/';
+
 $controller = isset($controller) ? $controller : false;
 
 $dataPage = isset($dataPage) ? $dataPage : mb_strtolower($controller);
@@ -118,12 +120,11 @@ $isHomePage = $dataPage == 'home';
 <?php
 
 $tinyMceControllers = ['posts/show', 'posts/edit'];
-$isTinyMce = in_array($dataPage, $tinyMceControllers);
+$isTinyMce = in_array($dataPage, $tinyMceControllers) || strpos(mb_strtolower($requestUri), 'edit') !== false;
 
 // tiny MCE 
 
-// if ($isTinyMce) echo "<!-- Tiny MCE --><script src='$RESOURCES_PATH/js/tinyMCE.js'></script>";
-echo "<!-- Tiny MCE --><script src='$RESOURCES_PATH/js/tinyMCE.js'></script>";
+if ($isTinyMce) echo "<!-- Tiny MCE --><script src='$RESOURCES_PATH/js/tinyMCE.js'></script>";
 
 ?>
 

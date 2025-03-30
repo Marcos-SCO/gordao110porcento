@@ -1,5 +1,7 @@
 <?php
 
+$requestUri = $_SERVER['REQUEST_URI'] ?? '/';
+
 $controller = isset($controller) ? $controller : false;
 
 $dataPage = isset($dataPage) ? $dataPage : mb_strtolower($controller);
@@ -8,9 +10,8 @@ $isHomePage = $dataPage == 'home';
 
 $isGalleryPage = $dataPage == 'gallery';
 
-$tinyMceControllers = ['posts/show'];
-// $isTinyMce = in_array($dataPage, $tinyMceControllers);
-$isTinyMce = true;
+$tinyMceControllers = ['posts/edit'];
+$isTinyMce = in_array($dataPage, $tinyMceControllers) || strpos(mb_strtolower($requestUri), 'edit') !== false;
 
 $siteName = 'Gordão a 110%';
 
@@ -67,6 +68,8 @@ $sessionUserId = indexParamExistsOrDefault($_SESSION, 'user_id');
     // tiny MCE 
     if ($isTinyMce) echo "<!-- Tiny MCE -->
     <script src='https://cdn.tiny.cloud/1/w9vyna3bu59c6uh4z92elhfysn2dp3eob3cllbd1lktzx6r9/tinymce/5/tinymce.min.js' referrerpolicy='origin'></script><script>tinymce.init({selector:'#tinyMCE'});</script>";
+
+    var_dump($isTinyMce);
 
     // Light Box 
     if ($isGalleryPage) echo "<!-- LightBox -->
