@@ -17,3 +17,5 @@ import './_heroSlider';
 import './_dataAnimation';
 
 import './forms';
+
+import './tinyMCE';

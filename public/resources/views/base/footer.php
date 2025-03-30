@@ -121,13 +121,11 @@ $isHomePage = $dataPage == 'home';
 
 $tinyMceControllers = ['posts/show', 'posts/edit'];
 
-$isTinyMce = in_array($dataPage, $tinyMceControllers)
-    || strpos($requestUri, 'edit') !== false
-    || strpos($requestUri, 'create') !== false;
+// $isTinyMce = in_array($dataPage, $tinyMceControllers) || strpos($requestUri, 'edit') !== false || strpos($requestUri, 'create') !== false;
 
 // tiny MCE 
 
-if ($isTinyMce) echo "<!-- Tiny MCE --><script src='$RESOURCES_PATH/js/tinyMCE.js'></script>";
+// if ($isTinyMce) echo "<!-- Tiny MCE --><script src='$RESOURCES_PATH/js/tinyMCE.js'></script>";
 
 ?>
 

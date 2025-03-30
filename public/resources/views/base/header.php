@@ -15,7 +15,8 @@ $tinyMceControllers = ['posts/edit'];
 
 $isTinyMce = in_array($dataPage, $tinyMceControllers)
     || strpos($requestUri, 'edit') !== false
-    || strpos($requestUri, 'create') !== false;
+    || strpos($requestUri, 'create') !== false
+    || strpos($requestUri, 'store') !== false;
 
 $siteName = 'Gordão a 110%';
 
