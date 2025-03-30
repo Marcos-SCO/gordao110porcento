@@ -106,6 +106,8 @@ class Products extends Controller
             return $this->create($data, $errorData);
         }
 
+        $this->visitingUserRedirect('products');
+
         // Create a folder in products
         $imageDynamicPath = $this->imagesHandler->getNewImgDynamicPath('products', $data['product_id_category']);
 
@@ -210,6 +212,8 @@ class Products extends Controller
             return $this->edit(['edit' => $id, 'error' => $errorData]);
         }
 
+        $this->visitingUserRedirect('products/edit/'. $id);
+
         $data = $this->moveUploadImageFolder($data);
 
         $this->model->updateProduct($data);
@@ -238,6 +242,8 @@ class Products extends Controller
 
         if (!$id) die('No id was provided');
         if (!$productIdCategory) die('No product_id_category was provided');
+
+        $this->visitingUserRedirect('products/edit/'. $id);
 
         $this->model->deleteProduct('products', ['id' => $id]);
 

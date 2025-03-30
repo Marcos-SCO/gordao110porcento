@@ -99,6 +99,8 @@ class Posts extends Controller
             return $this->create($data, $errorData);
         }
 
+        $this->visitingUserRedirect("posts");
+
         $addedPost = $this->model->addPost($data);
 
         $lastInsertedPostId = $this->model->lastId();
@@ -191,8 +193,10 @@ class Posts extends Controller
         }
 
         $data = $this->moveUploadImageFolder('posts', $data);
-
+        
         $postSlug = indexParamExistsOrDefault($data, 'post_slug');
+        
+        $this->visitingUserRedirect("posts/" . $postSlug);
 
         $this->model->updatePost($data);
 
@@ -210,6 +214,8 @@ class Posts extends Controller
         if (isSubmittedInSession()) return redirect('posts');
 
         $id = indexParamExistsOrDefault(PostRequest::getPostData(), 'id');
+
+        $this->visitingUserRedirect("posts");
 
         $this->model->deletePost('posts', ['id' => $id]);
 

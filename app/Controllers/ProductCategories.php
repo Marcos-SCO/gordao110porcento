@@ -141,6 +141,8 @@ class ProductCategories extends Controller
             return $this->create($data, $errorData);
         }
 
+        $this->visitingUserRedirect('categories');
+
         $addedCategory = $this->model->addCategory($data);
 
         if (!$addedCategory) die('Something went wrong while creating a category');
@@ -209,6 +211,8 @@ class ProductCategories extends Controller
             return $this->edit(['edit' => $id, 'error' => $errorData]);
         }
 
+        $this->visitingUserRedirect("categories/edit/$id/");
+
         $data = $this->moveUploadImageFolder('product_categories', $data);
 
         $this->model->updateCategory($data);
@@ -223,8 +227,10 @@ class ProductCategories extends Controller
     public function destroy()
     {
         if (isSubmittedInSession()) return redirect('categories');
-
+        
         $id = indexParamExistsOrDefault(RequestData::getPostData(), 'id');
+
+        $this->visitingUserRedirect("categories/edit/$id/");
 
         $this->model->deletePost('product_categories', ['id' => $id]);
 

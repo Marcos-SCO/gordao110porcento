@@ -54,7 +54,7 @@ function displayFlashMessage()
     $flashClass = indexParamExistsOrDefault($flashMessage, 'class');
     $flashMessage = indexParamExistsOrDefault($flashMessage, 'message');
 
-    echo "<div class='" . $flashClass . "' id='msg-flash' style='transition: transform .18s, opacity .18s, visibility 0s .18s;position:absolute;left:5%;top:17%;text-align: center;z-index:9999999999;'>" . $flashMessage . "</div>
+    echo "<div class='msg-flash " . $flashClass . "' id='msg-flash' style='transition: transform .18s, opacity .18s, visibility 0s .18s;position:absolute;left:5%;top:17%;text-align: center;z-index:9999999999;'><p>" . $flashMessage . "</p></div>
     
     <script>
         window.globalFlash = document.querySelector('#msg-flash'); 

@@ -26,4 +26,17 @@ class Controller
         redirect($redirectOption);
         return exit();
     }
+
+    public function visitingUserRedirect($redirectTo = 'home')
+    {
+        $userName = isset($_SESSION['username'])
+            ? $_SESSION['username'] : false;
+
+        $isVisitingUserName = $userName == 'visitinguser';
+        if (!$isVisitingUserName) return;
+
+        flash('register_success', "Usuário visitante não pode alterar coisas</br> (Visiting user can't change things)");
+
+        return redirect($redirectTo);
+    }
 }

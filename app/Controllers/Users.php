@@ -28,8 +28,12 @@ class Users extends Controller
         $this->imagesHandler = new ImagesHandler();
     }
 
+    
+
     public function status($requestData)
     {
+        $this->visitingUserRedirect('users');
+
         $requestData = array_keys($requestData);
 
         $id = indexParamExistsOrDefault($requestData, 1);
@@ -95,7 +99,7 @@ class Users extends Controller
 
         $this->ifNotAuthRedirect();
 
-        if (!($_SESSION['adm_id'] == 1))  return redirect('users');
+        if (!($_SESSION['adm_id'] == 1)) return redirect('users');
 
         View::render('users/create.php', [
             'title' => 'Cadastro de usuários',
@@ -148,6 +152,8 @@ class Users extends Controller
         $data['password'] = password_hash($data['password'], PASSWORD_DEFAULT);
 
         $data['adm'] = $adm;
+
+        $this->visitingUserRedirect('users');
 
         $insertedUser = $this->model->insertUser($data);
 
@@ -273,6 +279,8 @@ class Users extends Controller
                 'error' => $errorData
             ]);
         }
+
+        $this->visitingUserRedirect('users/edit/' . $id);
 
         $data = $this->moveUploadImageFolder('users', $data);
 

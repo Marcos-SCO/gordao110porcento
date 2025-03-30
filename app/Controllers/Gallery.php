@@ -88,6 +88,8 @@ class Gallery extends Controller
             return $this->create($data, $errorData);
         }
 
+        $this->visitingUserRedirect('gallery');
+
         $addedImg = $this->model->addImg($data);
 
         if (!$addedImg) die('Something get wrong when adding a img...');
@@ -180,6 +182,8 @@ class Gallery extends Controller
             return $this->edit(['edit' => $id, 'error' => $errorData]);
         }
 
+        $this->visitingUserRedirect('gallery/edit/' . $id);
+
         $data = $this->moveUploadImageFolder('gallery', $data);
 
         $this->model->updateImg($data);
@@ -192,8 +196,10 @@ class Gallery extends Controller
     public function destroy()
     {
         if (isSubmittedInSession()) return redirect('gallery');
-
+        
         $id = indexParamExistsOrDefault(GalleryRequest::getPostData(), 'id');
+
+        $this->visitingUserRedirect('gallery/edit/' . $id);
 
         $this->model->deletePost('gallery', ['id' => $id]);
 
