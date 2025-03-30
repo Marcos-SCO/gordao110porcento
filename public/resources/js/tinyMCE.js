@@ -36,7 +36,9 @@ function handleAllForms() {
 
     if (!form) return;
 
-    const isTinyMCEElement = form.querySelector('#tinyMCE');
+    const isTinyMCEElement =
+        form.querySelector('[data-tinyMCE-input]');
+        
     if (!isTinyMCEElement) return;
 
     form.addEventListener('submit', handleFormSubmit);

@@ -81,7 +81,7 @@ $formActionUrl = $BASE  . '/users/update';
                 <div class="form-group">
                     <label for="bio">Sobre: <sup>*</sup></label>
 
-                    <textarea type="text" name="bio" id="bio" class="form-control form-control-lg"><?= $data->bio ?? '' ?></textarea>
+                    <textarea type="text" name="bio" id="bio" class="form-control form-control-lg" data-tinyMCE-input><?= $data->bio ?? '' ?></textarea>
                 </div>
             </div>
 

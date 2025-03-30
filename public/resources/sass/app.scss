@@ -339,7 +339,7 @@ nav img {
   background-size: cover;
   background-repeat: no-repeat;
   color: #fff;
-  
+
   &::before {
     content: '';
     position: absolute;
@@ -347,15 +347,16 @@ nav img {
     left: 0;
     height: 100%;
     width: 100%;
-  
+
     background-image: url(../img/template/logoFaixa.png);
-  
+
     background-position: bottom right;
     background-size: contain;
     background-repeat: no-repeat
   }
 
-  h2, h1 {
+  h2,
+  h1 {
     text-shadow: 3px 3px 5px rgba(0, 0, 0, 0.3)
   }
 
@@ -500,7 +501,8 @@ footer .contactSection .map {
     position: absolute;
     position: absolute;
     top: -21px;
-    left: 9px
+    left: 9px;
+    font-weight: 600;
   }
 }
 
@@ -517,26 +519,29 @@ footer .contactSection .map {
 .headerEdit {
   position: relative;
   background-image: url(../img/template/stop.jpg);
-  background-position: top right !important
+  background-position: top right !important;
+
+  &::before {
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: #4b1504;
+    opacity: .5;
+    font-weight: bold;
+  }
+
+  &.imgBackgroundArea::before {
+    background-image: none
+  }
+
+  &::after {
+    content: 'ATENÇÂO! Caso aperte em deletar, todos os registros desta categoria serão apagados, inclusive as imagens.' !important;
+    position: relative;
+    max-width: 400px;
+    font-weight: bold;
+  }
 }
 
-.headerEdit::before {
-  position: absolute;
-  top: 0;
-  left: 0;
-  background-color: #4b1504;
-  opacity: .5
-}
-
-.headerEdit.imgBackgroundArea::before {
-  background-image: none
-}
-
-.headerEdit::after {
-  content: 'ATENÇÂO! Caso aperte em deletar, todos os registros desta categoria serão apagados, inclusive as imagens.' !important;
-  position: relative;
-  max-width: 400px
-}
 
 /* Edit delete end */
 

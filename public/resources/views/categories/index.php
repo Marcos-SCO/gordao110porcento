@@ -18,7 +18,7 @@ $categoryBase = $BASE . '/category/';
             $loopCount += 1;
 
             $dataItemId = objParamExistsOrDefault($data, 'id');
-            
+
             if (!$dataItemId) continue;
 
             $dataItemSlug = objParamExistsOrDefault($data, 'slug');
@@ -34,6 +34,9 @@ $categoryBase = $BASE . '/category/';
 
             $categoryDescription =
                 objParamExistsOrDefault($data, 'category_description');
+
+            $categoryDescription =
+                limitChars(objParamExistsOrDefault($data, 'category_description', ''), 90, '...');
 
         ?>
             <a href='<?= $categoryShowLink ?>' hx-get='<?= $categoryShowLink ?>' <?= getHtmxMainTagAttributes(); ?> data-js="loop-item">

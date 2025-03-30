@@ -32,11 +32,11 @@ if ($isSectionActiveUser) :
 
 ?>
     <section>
-        <header class="d-flex flex-column headerEdit imgBackgroundArea">
+        <div class="d-flex flex-column headerEdit imgBackgroundArea">
             <?php App\Classes\DynamicLinks::editDelete($BASE, 'categories', $data, "CUIDADO!, você está prestes a deletar a categoria de $categoryName;. Essa ação será ireversivel, quer mesmo continuar?");
 
             ?>
-        </header>
+        </div>
 
         <div class="adm">
             <div class="add d-flex flex-wrap p-2 justify-content-center">

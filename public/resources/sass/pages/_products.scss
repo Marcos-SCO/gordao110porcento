@@ -92,6 +92,10 @@
     z-index: 9;
   }
 
+  .card-title {
+    min-height: 60px;
+  }
+
   .card-text:first-child {
     min-height: 96px
   }
@@ -107,7 +111,13 @@
 .categoryHeader {
   display: flex;
   align-items: center;
-  flex-direction: column
+  flex-direction: column;
+
+  p {
+    max-width: 750px;
+    margin: .5rem auto 1.5rem;
+    font-weight: bold;
+  }
 }
 
 /* -------- Categories End -------- */

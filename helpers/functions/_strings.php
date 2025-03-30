@@ -3,10 +3,12 @@
 function limitChars($str, $limit, $stringEnd = '', $alwaysShowStringEnd = false)
 {
   $explodeStr = explode(' ', $str);
+  $strLength = strlen($str);
+
   $slicedArray = array_slice($explodeStr, 0, $limit);
 
   $stringEnd =
-    (count($explodeStr) > $limit) || $alwaysShowStringEnd
+    ($strLength > $limit) || $alwaysShowStringEnd
     ? $stringEnd : '';
 
   return substr(implode(' ', $slicedArray), 0, $limit) . $stringEnd;
