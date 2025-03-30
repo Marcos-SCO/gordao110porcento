@@ -101,6 +101,8 @@
             max-width: 250px;
             overflow: hidden;
 
+            object-fit: cover;
+
             @media screen and (min-width: 712px) {
                 width: auto;
                 height: auto;

@@ -26,7 +26,7 @@ $emailUserProfile = objParamExistsOrDefault($user, 'email');
         <img class="img-prevent-drag " src="<?= $userImgUrl ?>" title="<?= $nameUserProfile ?>" onerror="this.onerror=null;this.src='<?= $RESOURCES_PATH ?>/img/not_found/no_image.jpg';">
 
         <figcaption class="bg-light mt-5">
-            <h5>Sobre <?= $nameUserProfile ?></h5>
+            <h5 class="mb-3">Sobre <?= $nameUserProfile ?></h5>
             <p><?= $userBio ?></p>
         </figcaption>
     </figure>

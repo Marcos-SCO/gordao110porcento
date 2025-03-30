@@ -55,7 +55,7 @@ $formActionUrl = $BASE  . '/categories/update/';
             </span>
         </div>
 
-        <div class="form-group">
+        <div class="form-group mt-4">
             <label for="img">Coloque a imagem</label>
 
             <input type="file" name="img" id="img" class="form-control form-control-lg <?= isset($error['img_error']) && $error['img_error'] != '' ? 'is-invalid' : '' ?>" value="<?= $categoryImg ?? '' ?>">
@@ -69,6 +69,6 @@ $formActionUrl = $BASE  . '/categories/update/';
             <img src="<?= $BASE_WITH_PUBLIC ?>/<?= imgOrDefault('product_categories', $categoryImg, $categoryId) ?>" alt="<?= $categoryImg ?>" title="<?= $categoryName ?>" onerror="this.onerror=null;this.src='<?= $RESOURCES_PATH ?>/img/not_found/no_image.jpg';">
         </div>
 
-        <input type="submit" class="btn btn-success" value="Salvar">
+        <input type="submit" class="mt-4 btn btn-success" value="Salvar">
     </form>
 </section>

@@ -9,9 +9,9 @@
     justify-content: center;
     flex-wrap: wrap;
     margin: auto;
-    
+
     figure {
-        padding-bottom:.7rem
+        padding-bottom: .7rem
     }
 
     .blogBody {
@@ -19,14 +19,14 @@
         max-height: 211px;
         overflow: hidden;
     }
-    
+
     .blogSpan {
         align-self: flex-end;
         display: block;
         overflow: hidden;
         height: 150px
     }
-    
+
     .updated {
         margin-top: .5rem;
         margin-left: 1rem
@@ -130,32 +130,43 @@
     margin: auto
 }
 
-.postShowSection .postFigure {
-    max-width: 850px;
-    margin: auto;
-    padding: 1rem
-}
+.postShowSection {
+    .postFigure {
+        max-width: 850px;
+        margin: auto;
+        padding: 1rem;
 
-.postShowSection figure img {
-    margin: auto
-}
+        img {
+            display: flex;
+            flex-direction: column;
+            box-shadow: 12px 15px 0px #ff833e;
+            margin: 0 auto 1.5rem;
+        }
+    }
 
-@media screen and (min-width:430px) {
-    .postShowSection .postFigure img {
-        display: none !important
+    figure img {
+        margin: auto;
+    }
+
+    figcaption, .postText {
+        word-break: break-word;
+    }
+    
+    figcaption, .postText {
+        max-width: 850px;
+        margin: auto;
+        padding: 1rem;
+        word-break: break-word;
+    }
+
+    @media screen and (min-width: 430px) {
+        .postFigure img {
+            display: none !important;
+        }
     }
 }
 
-.postShowSection figcaption {
-    word-break: break-word
-}
 
-.postShowSection .postFigure img {
-    display: flex;
-    flex-direction: column;
-    box-shadow: 12px 15px 0px #ff833e;
-    margin: 0 auto 1.5rem
-}
 .aboutUser {
     max-width: 800px;
     margin: 1rem auto 3rem !important
@@ -282,10 +293,10 @@
 
 @media screen and (max-width:600px) {
     .homeHeaderAbout {
-        background-image: url(../img/template/gordao110_600.png)!important
+        background-image: url(../img/template/gordao110_600.png) !important
     }
 
     .homeBlog {
-        background-image: url(../img/template/blog_600.png)!important
+        background-image: url(../img/template/blog_600.png) !important
     }
 }

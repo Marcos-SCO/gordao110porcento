@@ -120,7 +120,10 @@ $isHomePage = $dataPage == 'home';
 <?php
 
 $tinyMceControllers = ['posts/show', 'posts/edit'];
-$isTinyMce = in_array($dataPage, $tinyMceControllers) || strpos(mb_strtolower($requestUri), 'edit') !== false;
+
+$isTinyMce = in_array($dataPage, $tinyMceControllers)
+    || strpos($requestUri, 'edit') !== false
+    || strpos($requestUri, 'create') !== false;
 
 // tiny MCE 
 

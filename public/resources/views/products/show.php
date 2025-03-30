@@ -21,7 +21,7 @@ $userUrl =  $BASE . '/users/show/' . $userId;
 
 ?>
 
-<section class="card" style="max-width: 500px;margin:1rem auto">
+<section class="card" style="max-width: 500px;margin:3rem auto">
     <header>
         <h1 class="text-center"><?= $productName ?></h1>
     </header>

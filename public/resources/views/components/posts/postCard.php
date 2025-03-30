@@ -4,7 +4,7 @@ if (!$data) return;
 
 $postTextString = objParamExistsOrDefault($data, 'body', '');
 
-$postText = preg_replace('/<\/?p[^>]*>/', '', $postTextString);
+$postText = htmlspecialchars_decode($postTextString);
 
 $postId = objParamExistsOrDefault($data, 'id');
 $postSlug = objParamExistsOrDefault($data, 'slug');

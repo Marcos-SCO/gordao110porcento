@@ -28,7 +28,7 @@ if ($slugField) $postShowUrl = $BASE . '/post/' . $slugField;
 </header>
 
 <section class="postSection card card-body bg-light mt5">
-    <h3>Informações da postagem <a href="<?= $postShowUrl ?>"><?= $title ?></a> </h3>
+    <h3 class="mb-4">Informações da postagem <a href="<?= $postShowUrl ?>"><?= $title ?></a> </h3>
 
     <form action="<?= $formActionUrl ?>" method="post" enctype="multipart/form-data" hx-post="<?= $formActionUrl ?>" hx-target="body" hx-swap="show:body:top" data-js="posts-form">
 
@@ -65,12 +65,12 @@ if ($slugField) $postShowUrl = $BASE . '/post/' . $slugField;
                 <?= $error['img_error'] ?? '' ?>
             </span>
 
-            <img src="<?= $imgUrl ?>" alt="<?= $img ?>" title="<?= $title ?>" onerror="this.onerror=null;this.src='<?= $RESOURCES_PATH ?>/img/not_found/no_image.jpg';">
+            <img src="<?= $imgUrl ?>" class="mt-4" alt="<?= $img ?>" title="<?= $title ?>" onerror="this.onerror=null;this.src='<?= $RESOURCES_PATH ?>/img/not_found/no_image.jpg';">
 
         </div>
 
         <div class="form-group">
-            <label for="tinyMCE">Digite o texto: <sup>*</sup></label>
+            <label for="tinyMCE" class="mt-4">Digite o texto: <sup>*</sup></label>
 
             <textarea name="body" id="tinyMCE" class="form-control form-control-lg <?= isset($error['body_error']) && $error['body_error'] != '' ? 'is-invalid' : '' ?>"><?= $body ?></textarea>
 
@@ -79,6 +79,6 @@ if ($slugField) $postShowUrl = $BASE . '/post/' . $slugField;
             </span>
         </div>
 
-        <input type="submit" class="btn btn-success" value="Atualizar">
+        <input type="submit" class="mt-4 btn btn-success" value="Atualizar">
     </form>
 </section>

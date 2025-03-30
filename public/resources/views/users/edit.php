@@ -85,10 +85,10 @@ $formActionUrl = $BASE  . '/users/update';
                 </div>
             </div>
 
-            <div class="imgGroup form-group img">
+            <div class="mt-4 imgGroup form-group img">
                 <label for="img">Imagem de perfil</label>
 
-                <input type="file" name="img" id="img" class="form-control form-control-lg <?= isset($error['img_error']) && $error['img_error'] != '' ? 'is-invalid' : '' ?>" value="<?= $userImg ?>">
+                <input type="file" name="img" id="img" class="mb-4 form-control form-control-lg <?= isset($error['img_error']) && $error['img_error'] != '' ? 'is-invalid' : '' ?>" value="<?= $userImg ?>">
 
                 <input type="hidden" name="img" value="<?= $userImg; ?>">
 
@@ -101,7 +101,7 @@ $formActionUrl = $BASE  . '/users/update';
 
         <div class="row">
             <div class="col">
-                <input type="submit" value="Atualizar" class="btn btn-success btn-block">
+                <input type="submit" value="Atualizar" class="mt-4 btn btn-success btn-block">
             </div>
         </div>
 

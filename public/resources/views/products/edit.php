@@ -107,6 +107,6 @@ $slugFieldError =
             <img src="<?= $BASE_WITH_PUBLIC ?>/<?= imgOrDefault('products', $productImg, $productId, "/category_$productIdCategory") ?>" title="<?= $productName ?>" onerror="this.onerror=null;this.src='<?= $RESOURCES_PATH ?>/img/not_found/no_image.jpg';">
         </div>
 
-        <input type="submit" class="btn btn-success" value="Atualizar">
+        <input type="submit" class="mt-4 btn btn-success" value="Atualizar">
     </form>
     </div>

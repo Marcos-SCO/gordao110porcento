@@ -364,7 +364,11 @@ footer {
   background-image: url(../img/template/footerImg.jpg);
   color: #fff;
   background-size: cover;
-  background-position: center
+  background-position: center;
+
+  address {
+    margin-bottom: 0 !important;
+  }
 }
 
 footer article {
@@ -413,7 +417,7 @@ footer .contactSection {
 
 footer .contactSection address {
   display: flex;
-  margin: 0 !important
+  margin: 0 !important;
 }
 
 footer .contactSection nav {
@@ -493,7 +497,7 @@ footer .contactSection .map {
 
 /* Edit pages */
 .formPageArea {
-  margin: auto;
+  margin: 1.5rem auto;
   max-width: 800px
 }
 
@@ -559,4 +563,16 @@ footer .contactSection .map {
 
 .card-group>.card {
   flex: none !important
+}
+
+.form-group {
+  margin-bottom: .8rem;
+
+  label {
+    margin-bottom: .5rem;
+  }
+
+  &:last-child {
+    margin-bottom: 0;
+  }
 }

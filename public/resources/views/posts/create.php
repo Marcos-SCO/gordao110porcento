@@ -60,7 +60,7 @@ $slugFieldError =
         </div>
 
         <div class="form-group">
-            <label for="body">Digite o texto: <sup>*</sup></label>
+            <label for="body" class="mt-4">Digite o texto: <sup>*</sup></label>
 
             <textarea name="body" id="tinyMCE" class="form-control form-control-lg <?= isset($error['body_error']) && $error['body_error'] != '' ? 'is-invalid' : '' ?>"><?= $body ?? '' ?></textarea>
 
