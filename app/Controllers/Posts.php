@@ -192,13 +192,17 @@ class Posts extends Controller
 
         $data = $this->moveUploadImageFolder('posts', $data);
 
+        $postSlug = indexParamExistsOrDefault($data, 'post_slug');
+
         $this->model->updatePost($data);
 
         flash('post_message', 'Post Atualizado');
 
         addSubmittedToSession();
 
-        return redirect('posts/edit/' . $id);
+        // return redirect('posts/edit/' . $id);
+
+        return redirect('post/' . $postSlug);
     }
 
     public function destroy()
