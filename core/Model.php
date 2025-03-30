@@ -169,7 +169,7 @@ class Model extends Conn
             FROM information_schema.TABLES
             WHERE TABLE_SCHEMA = :schema
             AND TABLE_NAME = :table", [
-            'schema' => Config::DB_NAME,
+            'schema' => Config::$DB_NAME,
             'table' => $table
         ]);
 
