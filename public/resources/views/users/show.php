@@ -5,7 +5,7 @@ $username = objParamExistsOrDefault($user, 'username');
 $userImg = objParamExistsOrDefault($user, 'img');
 $userBio = objParamExistsOrDefault($user, 'bio');
 
-$userImgUrl = $BASE . '/' . imgOrDefault('users', $userImg, $userId);
+$userImgUrl = $BASE_WITH_PUBLIC . '/' . imgOrDefault('users', $userImg, $userId);
 
 $nameUserProfile = objParamExistsOrDefault($user, 'name');
 $lastNameUserProfile = objParamExistsOrDefault($user, 'last_name');

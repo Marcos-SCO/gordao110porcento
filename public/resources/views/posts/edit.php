@@ -11,7 +11,7 @@ $body = objParamExistsOrDefault($data, 'body');
 
 $img = objParamExistsOrDefault($data, 'img');
 
-$imgUrl =  $BASE . '/' .  imgOrDefault('posts', $img, $id);
+$imgUrl =  $BASE_WITH_PUBLIC . '/' .  imgOrDefault('posts', $img, $id);
 
 $slugFieldError =
     indexParamExistsOrDefault($error, 'post_slug_error', '');

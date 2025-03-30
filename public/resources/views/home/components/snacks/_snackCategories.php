@@ -26,7 +26,7 @@ if (!$categories) return;
       $categoryUrl = $BASE . 'categories';
       if ($categoryItemSlug) $categoryUrl = $BASE . '/category/' . $categoryItemSlug;
 
-      $imgUrl = $BASE . '/' . imgOrDefault('product_categories', $categoryItemImg, $categoryItem->id);
+      $imgUrl = $BASE_WITH_PUBLIC . '/' . imgOrDefault('product_categories', $categoryItemImg, $categoryItem->id);
 
     ?>
       <a href="<?= $categoryUrl ?>">

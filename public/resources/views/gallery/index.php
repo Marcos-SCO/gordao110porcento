@@ -17,10 +17,10 @@
 
             <figure class="col-lg-3 col-md-4 col-6" data-js="loop-item">
 
-                <a href="<?= $BASE ?>/<?= imgOrDefault('gallery', $data->img, $data->id) ?>" data-toggle="lightbox" data-lightbox="mygallery" data-title="<?= $data->img_title ?>">
+                <a href="<?= $BASE_WITH_PUBLIC ?>/<?= imgOrDefault('gallery', $data->img, $data->id) ?>" data-toggle="lightbox" data-lightbox="mygallery" data-title="<?= $data->img_title ?>">
                 
                     <div class="galleryImgMax">
-                        <img src="<?= $BASE ?>/<?= imgOrDefault('gallery', $data->img, $data->id) ?>" alt="<?= $data->img ?>" title="<?= $data->img_title ?>" class="img-fluid img-thumbnail" onerror="this.onerror=null;this.src='<?= $RESOURCES_PATH ?>/img/not_found/no_image.jpg';">
+                        <img src="<?= $BASE_WITH_PUBLIC ?>/<?= imgOrDefault('gallery', $data->img, $data->id) ?>" alt="<?= $data->img ?>" title="<?= $data->img_title ?>" class="img-fluid img-thumbnail" onerror="this.onerror=null;this.src='<?= $RESOURCES_PATH ?>/img/not_found/no_image.jpg';">
                     </div>
 
                     <figcaption style="white-space: nowrap;overflow: hidden;text-overflow: ellipsis;">

@@ -2,6 +2,8 @@
 
 namespace Core;
 
+use App\Config\Config;
+
 class Router
 {
     protected function exactMatchUriInArrayRoutes($uri, $routes)
@@ -70,14 +72,22 @@ class Router
     public function dispatch($routes)
     {
         // $uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
-        
-        // Apache config
-        // $pathInfo = $_SERVER['PATH_INFO'] ?? '/';
-        // $uri = parse_url($pathInfo, PHP_URL_PATH);
 
-        // Nginx config uri
-        $pathInfo = rtrim($_SERVER['REQUEST_URI'], '/') . '/' ?? '/';
-        $uri = strtok($pathInfo, '?'); 
+        $isConfigApacheServer = Config::$IS_APACHE_SERVER;
+
+        if ($isConfigApacheServer) {
+            // Apache config
+
+            $pathInfo = $_SERVER['PATH_INFO'] ?? '/';
+
+            $uri = parse_url($pathInfo, PHP_URL_PATH);
+        }
+
+        if (!$isConfigApacheServer) {
+            // Nginx config uri
+            $pathInfo = rtrim($_SERVER['REQUEST_URI'], '/') . '/' ?? '/';
+            $uri = strtok($pathInfo, '?');
+        }
 
         $requestMethod = $_SERVER['REQUEST_METHOD'];
 

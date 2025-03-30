@@ -4,39 +4,129 @@
 
 # Gordão a 110%
 
-“Gordão a 110%” é um site institucional com funcionalidades dinâmicas.
+**Gordão a 110%** é um site institucional dinâmico voltado para o segmento de lanchonetes. 
 
-Você pode acessa-lo agora mesmo, de qualquer dispositivo, através do link: https://gordaoa110.000webhostapp.com/
+O site permite:
+- Gerenciamento de **categorias, produtos, imagens e postagens**
+- Cadastro de **usuários** com diferentes níveis administrativos
+- **Envio de e-mails** e anexos através do formulário de contato
+- **Comentários via Disqus** para interatividade nas postagens
+- **Painel administrativo** para controle de conteúdo
 
-Escolhi o ramo de lanchonetes como tema, e produzi a customização do começo ao fim.
+O projeto segue o padrão **MVC** e foi desenvolvido com **PHP, MySQL, JavaScript e CSS**, utilizando bibliotecas como **Bootstrap, Owl.js e Lightbox2**.
 
-No site é possível adicionar categorias, produtos, imagens, publicações, usuários e mandar e-mails.
+✅ **Totalmente responsivo e compatível com os principais navegadores**
 
-Categorias possuem uma descrição e imagem ilustrativa.
-Ao enviar produtos, informações sobre preço e categoria são incluídas.
+🔗 **Acesse agora:** [Gordão a 110%](https://gordaoa110.000webhostapp.com/)
 
-Imagens na galeria podem ser editadas ou excluidas.
-As postagens também possuem upload de imagem e edição de textos com o formulário do ‘TinyMCE’.
+📬 **Contato:**
+- [LinkedIn](https://www.linkedin.com/in/marcos-dos-santos-carvalho-67a51715a/)
+---
 
-Foi implementado nas publicações, o sistema de comentários do Discus. Visitando o site e tendo uma conta no Twitter ou Facebook, o usuário poderá comentar na plataforma.
+## 📌 About the Project
 
-É possível controlar o conteúdo quando logado, dependendo do nível administrativo, terão opções para bloquear ou mudar informações de outros perfis.
+**Gordão a 110%** is a dynamic institutional website designed for the fast-food industry. 
 
-Na seção de contato, qualquer visitante pode enviar mensagens, pdfs e docs por e-mail.
+It offers:
+- **Category, product, image, and post management**
+- **User accounts** with different administrative levels
+- **Email sending** with file attachments via the contact form
+- **Disqus comment system** for post interactions
+- **Admin panel** for content control
 
-Projeto feito em PHP, MySQL, JS e CSS.
+Built using the **MVC architecture**, the project is developed with **PHP, MySQL, JavaScript, and CSS**, utilizing libraries like **Bootstrap, Owl.js, and Lightbox2**.
 
-Foram empregadas bibliotecas como: Boostrap, Owl.js e Light2Box.
+✅ **Fully responsive and compatible with modern browsers**
 
-Para construção o padrão de arquitetura MVC foi adotado.
-O site está totalmente responsivo, podendo ser acessado por qualquer dispositivo.
+🔗 **Live Demo:** [Gordão a 110%](https://gordaoa110.000webhostapp.com/)
 
-A compatibilidade com os navegadores mais modernos também foi levada em conta e até mesmo o “Internet Explorer 11” recebeu uma adaptação.
+📬 **Contact:**
+- [LinkedIn](https://www.linkedin.com/in/marcos-dos-santos-carvalho-67a51715a/)
+---
 
-![Gordão a 110%](https://raw.githubusercontent.com/Marcos-SCO/gordao110porcento/master/public/resources/img/gallery/id_25/mockup_mobile-min.png)
 
-Caso queira me contactar, visite:
+## Docker Setup
 
-Linkedin: https://www.linkedin.com/in/marcos-dos-santos-carvalho-67a51715a/
+This project uses Docker to set up a local development environment with Nginx, PHP, MySQL (MariaDB), and phpMyAdmin.
 
-Site de contato: https://mscwps.000webhostapp.com
+## 📌 Prerequisites
+
+Before running the setup, ensure you have:
+- **Docker** installed
+- **Docker Compose** installed
+
+## 🚀 Getting Started
+
+### 1️⃣ Create a `.env` File
+Your `docker-compose.yml` uses environment variables. 
+Copy a `.env.example` file in the root folder:
+
+```sh
+cp .env.example .env
+```
+
+Modify the env variables (as needed):
+
+### 2️⃣ Build and Start the Containers
+Run the following command:
+```sh
+docker-compose up -d --build
+```
+This will:
+- Build the **app** container
+- Start **Nginx**, **MariaDB (MySQL)**, and **phpMyAdmin**
+- Attach the containers to the `gordao_110_network`
+
+### 3️⃣ Verify Running Containers
+To check if everything is running:
+```sh
+docker ps
+```
+
+### 4️⃣ Access the Services
+- **Application:** [http://localhost:8080](http://localhost:8080) (Change `8080` if needed)
+- **phpMyAdmin:** [http://localhost:8081](http://localhost:8081)
+  - **User:** `my_user` (from `.env`)
+  - **Password:** `my_secret_password`
+
+### 5️⃣ Import the Database Dump
+1. Open your **phpMyAdmin** by navigating to [http://localhost:8081](http://localhost:8081).
+2. Create a new database (e.g., `new_database`) or select an existing one.
+3. Once the database is selected, click on the **Import** tab.
+4. In the **File to Import** section, click **Choose File** and select the database dump from the following path:
+   - `docker/mysql/dump/db_gordao110.sql`
+5. Click **Go** to start the import process.
+6. Once completed, verify that all tables and data have been successfully imported.
+
+## 📌 Additional Commands
+
+### Stop the Containers
+```sh
+docker-compose down
+```
+
+### Restart Without Rebuilding
+```sh
+docker-compose up -d
+```
+
+### Check Logs
+```sh
+docker-compose logs -f
+```
+
+### Enter the App Container (for debugging)
+```sh
+docker exec -it <container_id> bash
+```
+
+### Remove All Containers & Volumes (⚠️ Deletes database data!)
+```sh
+docker-compose down -v
+```
+
+## 🛠️ Troubleshooting
+- **Port Conflicts:** Ensure no other services are running on the same ports.
+- **Permission Issues:** Run `sudo chown -R $USER:$USER .` to fix file permission issues.
+- **Database Connection Issues:** Ensure MySQL credentials in `.env` match those in `docker-compose.yml`.
+

@@ -9,7 +9,8 @@ $isHomePage = $dataPage == 'home';
 $isGalleryPage = $dataPage == 'gallery';
 
 $tinyMceControllers = ['posts/show'];
-$isTinyMce = in_array($dataPage, $tinyMceControllers);
+// $isTinyMce = in_array($dataPage, $tinyMceControllers);
+$isTinyMce = true;
 
 $siteName = 'Gordão a 110%';
 
@@ -50,10 +51,10 @@ $sessionUserId = indexParamExistsOrDefault($_SESSION, 'user_id');
     <!-- Font awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
-    <?php  // Google fonts <link href="https://fonts.googleapis.com/css2?family=Oleo+Script+Swash+Caps:wght@700&display=swap" rel="stylesheet"> 
+    <?php  // Google fonts <link href="https://fonts.googleapis.com/css2?family=Oleo+Script+Swash+Caps:wght@700&display=swap" rel="stylesheet">
     ?>
 
-    <link rel="stylesheet" href="<?= $BASE . '/dist/css/index.css'; ?>">
+    <link rel="stylesheet" href="<?= $BASE_WITH_PUBLIC . '/dist/css/index.css'; ?>">
 
     <title><?= $siteTitle; ?></title>
 
@@ -65,7 +66,7 @@ $sessionUserId = indexParamExistsOrDefault($_SESSION, 'user_id');
 
     // tiny MCE 
     if ($isTinyMce) echo "<!-- Tiny MCE -->
-    <script src='https://cdn.tiny.cloud/1/dksjdj5uue9ro7l3iyr2xu6basfnwgrqpkh8y5beu0m60kwl/tinymce/5/tinymce.min.js' referrerpolicy='origin'></script><script>tinymce.init({selector:'#tinyMCE'});</script>";
+    <script src='https://cdn.tiny.cloud/1/w9vyna3bu59c6uh4z92elhfysn2dp3eob3cllbd1lktzx6r9/tinymce/5/tinymce.min.js' referrerpolicy='origin'></script><script>tinymce.init({selector:'#tinyMCE'});</script>";
 
     // Light Box 
     if ($isGalleryPage) echo "<!-- LightBox -->

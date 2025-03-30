@@ -17,7 +17,7 @@ if ($postSlug) $postUrl = $BASE . '/post/' . $postSlug;
 
 $postImg = objParamExistsOrDefault($data, 'img');
 
-$postImgUrl = $BASE . '/' . imgOrDefault('posts', $postImg, $postId);
+$postImgUrl = $BASE_WITH_PUBLIC . '/' . imgOrDefault('posts', $postImg, $postId);
 
 $postUpdatedAt = objParamExistsOrDefault($data, 'updated_at');
 

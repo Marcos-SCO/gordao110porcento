@@ -16,11 +16,11 @@ function imgOrDefault($table, $img, $id, $tableOption = '')
 
 function getImgWithAttributes($imgPath, $imgAtributes = [])
 {
-    global $BASE;
+    global $BASE_WITH_PUBLIC;
 
-    $imgUrl = $BASE . '/' . $imgPath;
+    $imgUrl = $BASE_WITH_PUBLIC . '/' . $imgPath;
 
-    $errorImgUrl = $BASE  . '/resources/img/not_found/no_image.jpg';
+    $errorImgUrl = $BASE_WITH_PUBLIC  . '/resources/img/not_found/no_image.jpg';
 
     $attributesString = '';
 

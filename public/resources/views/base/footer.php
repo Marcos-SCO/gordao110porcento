@@ -117,12 +117,13 @@ $isHomePage = $dataPage == 'home';
 
 <?php
 
-$tinyMceControllers = ['posts/show'];
+$tinyMceControllers = ['posts/show', 'posts/edit'];
 $isTinyMce = in_array($dataPage, $tinyMceControllers);
 
 // tiny MCE 
 
 // if ($isTinyMce) echo "<!-- Tiny MCE --><script src='$RESOURCES_PATH/js/tinyMCE.js'></script>";
+echo "<!-- Tiny MCE --><script src='$RESOURCES_PATH/js/tinyMCE.js'></script>";
 
 ?>
 
@@ -135,7 +136,7 @@ $isTinyMce = in_array($dataPage, $tinyMceControllers);
 <script src="<?= $RESOURCES_PATH ?>/js/libraries/htmx.org@1.9.12.js"></script>
 
 <!-- App -->
-<script src="<?= $BASE ?>/dist/js/index.js" type="module"></script>
+<script src="<?= $BASE_WITH_PUBLIC ?>/dist/js/index.js" type="module"></script>
 
 </body>
 

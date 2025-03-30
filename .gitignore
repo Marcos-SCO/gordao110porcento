@@ -2,5 +2,6 @@
 /node_modules
 /logs/*.txt
 public/.htaccess
-app/config/config.php
+# app/config/config.php
+.env
 dist

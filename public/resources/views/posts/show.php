@@ -2,7 +2,7 @@
 
 $username = objParamExistsOrDefault($user, 'username');
 
-$postImgUrl = $BASE . '/' . imgOrDefault('posts', $data->img, $data->id);
+$postImgUrl = $BASE_WITH_PUBLIC . '/' . imgOrDefault('posts', $data->img, $data->id);
 
 $userPageUrl = $BASE . '/users/';
 if ($username) $userPageUrl = $BASE . '/user/' . $username;
@@ -36,10 +36,9 @@ if ($username) $userPageUrl = $BASE . '/user/' . $username;
                 <h3 class="text-left p-1 mb-2"><?= $data->title ?></h3>
             </header>
             <img src="<?= $postImgUrl ?>" title="<?= $data->title ?>" onerror="this.onerror=null;this.src='<?= $RESOURCES_PATH ?>/img/not_found/no_image.jpg';">
-
-            <figcaption class="postText"><?= $data->body ?></figcaption>
-
         </figure>
+
+        <div class="postText"><?= htmlspecialchars_decode($data->body); ?></div>
     </section>
 
     <section class="aboutUser m-auto">
@@ -82,7 +81,7 @@ if ($username) $userPageUrl = $BASE . '/user/' . $username;
                 </style>
 
                 <div class="imgUserBox">
-                    <img src="<?= $BASE ?>/<?= imgOrDefault('users', $user->img, $user->id) ?>" alt="<?= $user->img ?>" title="<?= $user->name ?>" class="imgFitUser" onerror="this.onerror=null;this.src='<?= $RESOURCES_PATH ?>/img/not_found/no_image.jpg';">
+                    <img src="<?= $BASE_WITH_PUBLIC ?>/<?= imgOrDefault('users', $user->img, $user->id) ?>" alt="<?= $user->img ?>" title="<?= $user->name ?>" class="imgFitUser" onerror="this.onerror=null;this.src='<?= $RESOURCES_PATH ?>/img/not_found/no_image.jpg';">
                     <span><?= $user->name ?></span>
                 </div>
 

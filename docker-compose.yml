@@ -39,6 +39,7 @@ services:
       - ./docker/mysql/volumes/mysql:/var/lib/mysql
       - ./docker/mysql/init:/docker-entrypoint-initdb.d
       - ./docker/mysql/my.cnf:/etc/mysql/my.cnf
+      # - ./docker/mysql/dump/db_gordao110.sql:/docker-entrypoint-initdb.d/db_gordao110.sql
     ports:
       # - 3306:3306
       - "${DOCKER_EXTERNAL_MYSQL_PORT}:3306"
