@@ -338,23 +338,35 @@ nav img {
   background-position: left, right;
   background-size: cover;
   background-repeat: no-repeat;
-  color: #fff
+  color: #fff;
+  
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+  
+    background-image: url(../img/template/logoFaixa.png);
+  
+    background-position: bottom right;
+    background-size: contain;
+    background-repeat: no-repeat
+  }
+
+  h2, h1 {
+    text-shadow: 3px 3px 5px rgba(0, 0, 0, 0.3)
+  }
+
+  h2 {
+  }
+
+  h1 {
+    font-weight: bold;
+  }
 }
 
-.imgBackgroundArea::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  height: 100%;
-  width: 100%;
-
-  background-image: url(../img/template/logoFaixa.png);
-
-  background-position: bottom right;
-  background-size: contain;
-  background-repeat: no-repeat
-}
 
 /* img background areas end */
 
