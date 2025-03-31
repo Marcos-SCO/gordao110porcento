@@ -3,7 +3,7 @@
 $userId = objParamExistsOrDefault($user, 'id');
 $username = objParamExistsOrDefault($user, 'username');
 $userImg = objParamExistsOrDefault($user, 'img');
-$userBio = objParamExistsOrDefault($user, 'bio');
+$userBio = objParamExistsOrDefault($user, 'bio', '');
 
 $userImgUrl = $BASE_WITH_PUBLIC . '/' . imgOrDefault('users', $userImg, $userId);
 
@@ -27,7 +27,7 @@ $emailUserProfile = objParamExistsOrDefault($user, 'email');
 
         <figcaption class="bg-light mt-5">
             <h5 class="mb-3">Sobre <?= $nameUserProfile ?></h5>
-            <p><?= $userBio ?></p>
+            <p><?= htmlspecialchars_decode($userBio) ?></p>
         </figcaption>
     </figure>
 </section>
