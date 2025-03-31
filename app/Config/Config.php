@@ -70,12 +70,13 @@ class Config
      * Show or hide error messages
      * @var boolean
      */
-    public static bool $SHOW_ERRORS = true;
+    public static bool $SHOW_ERRORS;
 
     // Static method to initialize variables
     public static function init()
     {
         self::loadEnv();
+        self::$SHOW_ERRORS = isset($_ENV['SHOW_ERRORS']) && $_ENV['SHOW_ERRORS'] === 'true';
         self::$IS_APACHE_SERVER = isset($_ENV['IS_APACHE_SERVER']) && $_ENV['IS_APACHE_SERVER'] === 'true';
         self::$DB_HOST = $_ENV['DOCKER_DB_HOST'] ?? 'localhost';
         self::$DB_NAME = $_ENV['DOCKER_MYSQL_DATABASE'] ?? 'fallback_db_name';
