@@ -51,8 +51,8 @@ $categoryBase = $BASE . '/category/';
                     ]);
                     ?>
 
-                    <figcaption class="card-body" style="height:142px;">
-                        <h5 class="card-title"><?= $categoryName ?></h5>
+                    <figcaption class="card-body" style="min-height:150px;">
+                        <h5 class="card-title" style="min-height: 30px"><?= $categoryName ?></h5>
                         <?= "<p class='card-text'>$categoryDescription</p>" ?>
                     </figcaption>
                 </figure>
