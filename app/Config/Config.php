@@ -82,9 +82,9 @@ class Config
         self::$DB_USER = $_ENV['DOCKER_MYSQL_USER'] ?? 'root';
         self::$DB_PASS = $_ENV['DOCKER_MYSQL_PASSWORD'] ?? '';
         self::$DB_PORT = isset($_ENV['DOCKER_MYSQL_PORT']) ? (int) $_ENV['DOCKER_MYSQL_PORT'] : 3306;
-        
+
         self::$URL_BASE = $_ENV['URL_BASE'] ?? 'http://localhost';
-        
+
         self::$RESOURCES_PATH = self::$URL_BASE . $_ENV['RESOURCES_PATH'] ?? '/public/resources';
     }
 }
