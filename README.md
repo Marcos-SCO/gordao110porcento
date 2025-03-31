@@ -1,7 +1,5 @@
 ![Gordão a 110%](https://raw.githubusercontent.com/Marcos-SCO/gordao110porcento/master/public/resources/img/template/gordao110_logo_300px.png)
 
-[![HitCount](https://hits.dwyl.com/Marcos-SCO/gordao110porcento.svg)](https://hits.dwyl.com/Marcos-SCO/gordao110porcento.sgv)
-
 # Gordão a 110%
 
 **Gordão a 110%** é um site institucional dinâmico voltado para o segmento de lanchonetes. 
@@ -17,7 +15,7 @@ O projeto segue o padrão **MVC** e foi desenvolvido com **PHP, MySQL, JavaScrip
 
 ✅ **Totalmente responsivo e compatível com os principais navegadores**
 
-🔗 **Acesse agora:** [Gordão a 110%](https://gordaoa110.000webhostapp.com/)
+🔗 **Acesse agora:** [Gordão a 110%](https://gordao110.infinityfreeapp.com/)
 
 📬 **Contato:**
 - [LinkedIn](https://www.linkedin.com/in/marcos-dos-santos-carvalho-67a51715a/)
@@ -38,7 +36,7 @@ Built using the **MVC architecture**, the project is developed with **PHP, MySQL
 
 ✅ **Fully responsive and compatible with modern browsers**
 
-🔗 **Live Demo:** [Gordão a 110%](https://gordaoa110.000webhostapp.com/)
+🔗 **Live Demo:** [Gordão a 110%](https://gordao110.infinityfreeapp.com/)
 
 📬 **Contact:**
 - [LinkedIn](https://www.linkedin.com/in/marcos-dos-santos-carvalho-67a51715a/)
