@@ -168,7 +168,7 @@ class Posts extends Controller
 
         $id = indexParamExistsOrDefault(PostRequest::getPostData(), 'id');
 
-        if (isSubmittedInSession()) return redirect('posts/show/' . $id);
+        if (isSubmittedInSession()) return redirect('posts/edit/' . $id);
 
         $requestedData = array_merge(
             PostRequest::postFieldsValidation(),
