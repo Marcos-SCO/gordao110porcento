@@ -18,6 +18,8 @@ class View
         $args['BASE'] = Config::$URL_BASE;
         $args['RESOURCES_PATH'] = Config::$RESOURCES_PATH;
         $args['IS_APACHE_SERVER'] = Config::$IS_APACHE_SERVER;
+        
+        $args['PHONE_NUMBER_NUMBER_LINK'] = Config::$PHONE_NUMBER_NUMBER_LINK;
 
         $args['BASE_WITH_PUBLIC'] = $args['IS_APACHE_SERVER']
             ? $args['BASE'] . '/public' : $args['BASE'];

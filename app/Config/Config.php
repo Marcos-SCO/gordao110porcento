@@ -72,6 +72,12 @@ class Config
      */
     public static bool $SHOW_ERRORS;
 
+    /**
+     * Phone Number string
+     * @var boolean
+     */
+    public static string $PHONE_NUMBER_NUMBER_LINK;
+
     // Static method to initialize variables
     public static function init()
     {
@@ -87,6 +93,8 @@ class Config
         self::$URL_BASE = $_ENV['URL_BASE'] ?? 'http://localhost';
 
         self::$RESOURCES_PATH = self::$URL_BASE . $_ENV['RESOURCES_PATH'] ?? '/public/resources';
+
+        self::$PHONE_NUMBER_NUMBER_LINK =  $_ENV['PHONE_NUMBER_NUMBER_LINK'] ?? '#phone';
     }
 }
 
