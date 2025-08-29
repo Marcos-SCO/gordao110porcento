@@ -108,7 +108,7 @@ $isPostPage = $dataPage == 'posts/show';
 
     </article>
 
-    <address class="copyRight d-block footer-copyright text-center py-3" style="position:relative;">© <span id="footerDate">2020 | <?= date('Y'); ?></span> Desenvolvido por <a href="https://www.linkedin.com/in/marcos-dos-santos-carvalho-67a51715a/" target="_blank" style="font-weight:bolder">Marcos dos Santos Carvalho</a>
+    <address class="copyRight d-block footer-copyright text-center py-3" style="position:relative;">© <span id="footerDate">2020 | <?= date('Y'); ?></span> Desenvolvido por <a href="https://www.linkedin.com/in/marcos-sco/" target="_blank" style="font-weight:bolder">Marcos dos Santos</a>
     </address>
 </footer>
 
