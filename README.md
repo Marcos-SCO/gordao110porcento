@@ -2,129 +2,124 @@
 
 # Gordão a 110%
 
-**Gordão a 110%** é um site institucional dinâmico voltado para o segmento de lanchonetes. 
+**Gordão a 110%** is a modern, dynamic web platform designed for fast-food restaurants and snack bars to manage their online presence efficiently. The project provides a complete content management system (CMS) tailored for food businesses, enabling easy control over menu items, categories, images, blog posts, and user accounts—all through a responsive and intuitive admin panel.
 
-O site permite:
-- Gerenciamento de **categorias, produtos, imagens e postagens**
-- Cadastro de **usuários** com diferentes níveis administrativos
-- **Envio de e-mails** e anexos através do formulário de contato
-- **Comentários via Disqus** para interatividade nas postagens
-- **Painel administrativo** para controle de conteúdo
+## ✨ Key Features
 
-O projeto segue o padrão **MVC** e foi desenvolvido com **PHP, MySQL, JavaScript e CSS**, utilizando bibliotecas como **Bootstrap, Owl.js e Lightbox2**.
+- **Menu & Category Management:** Easily create, update, and organize food categories and menu items, including images and descriptions.
+- **Blog & News Posts:** Publish and manage posts to keep customers informed about promotions, news, and events.
+- **User Roles & Permissions:** Register users with different administrative levels for secure and flexible content management.
+- **Contact Form with Email & Attachments:** Customers can reach out via a contact form that supports file uploads and sends emails directly to your inbox.
+- **Interactive Comments:** Integrates Disqus for customer engagement and feedback on blog posts.
+- **Admin Dashboard:** Centralized panel for managing all site content, users, and settings.
+- **Responsive Design:** Fully mobile-friendly and compatible with all major browsers.
+- **Modern Tech Stack:** Built with PHP (MVC architecture), MySQL, JavaScript, and CSS, leveraging Bootstrap, Owl.js, and Lightbox2 for a seamless user experience.
 
-✅ **Totalmente responsivo e compatível com os principais navegadores**
+## 🚀 Live Demo
 
-🔗 **Acesse agora:** [Gordão a 110%](https://gordao110.infinityfreeapp.com/)
+Check out the live version: [Gordão a 110%](https://gordao110.infinityfreeapp.com/)
 
-📬 **Contato:**
-- [LinkedIn](https://www.linkedin.com/in/marcos-dos-santos-carvalho-67a51715a/)
+
+## 🛠️ Technology Stack
+
+- **Backend:** PHP (MVC pattern)
+- **Database:** MySQL (MariaDB)
+- **Frontend:** HTML5, CSS3, JavaScript (Bootstrap, Owl.js, Lightbox2)
+- **Containerization:** Docker & Docker Compose
+- **Other:** Disqus integration, phpMyAdmin for database management
+
 ---
 
-## 📌 About the Project
+## 🐳 Docker Setup
 
-**Gordão a 110%** is a dynamic institutional website designed for the fast-food industry. 
+This project uses Docker to provide a ready-to-use local development environment with Nginx, PHP, MySQL (MariaDB), and phpMyAdmin.
 
-It offers:
-- **Category, product, image, and post management**
-- **User accounts** with different administrative levels
-- **Email sending** with file attachments via the contact form
-- **Disqus comment system** for post interactions
-- **Admin panel** for content control
+### Prerequisites
 
-Built using the **MVC architecture**, the project is developed with **PHP, MySQL, JavaScript, and CSS**, utilizing libraries like **Bootstrap, Owl.js, and Lightbox2**.
+- [Docker](https://www.docker.com/get-started) installed
+- [Docker Compose](https://docs.docker.com/compose/install/) installed
 
-✅ **Fully responsive and compatible with modern browsers**
+### Getting Started
 
-🔗 **Live Demo:** [Gordão a 110%](https://gordao110.infinityfreeapp.com/)
+#### 1️⃣ Create a `.env` File
 
-📬 **Contact:**
-- [LinkedIn](https://www.linkedin.com/in/marcos-dos-santos-carvalho-67a51715a/)
----
-
-
-## Docker Setup
-
-This project uses Docker to set up a local development environment with Nginx, PHP, MySQL (MariaDB), and phpMyAdmin.
-
-## 📌 Prerequisites
-
-Before running the setup, ensure you have:
-- **Docker** installed
-- **Docker Compose** installed
-
-## 🚀 Getting Started
-
-### 1️⃣ Create a `.env` File
-Your `docker-compose.yml` uses environment variables. 
-Copy a `.env.example` file in the root folder:
+Copy the example environment file:
 
 ```sh
 cp .env.example .env
 ```
 
-Modify the env variables (as needed):
+Edit the `.env` file to set your desired environment variables.
 
-### 2️⃣ Build and Start the Containers
-Run the following command:
+#### 2️⃣ Build and Start the Containers
+
 ```sh
 docker-compose up -d --build
 ```
-This will:
-- Build the **app** container
-- Start **Nginx**, **MariaDB (MySQL)**, and **phpMyAdmin**
-- Attach the containers to the `gordao_110_network`
 
-### 3️⃣ Verify Running Containers
-To check if everything is running:
+This will build and start the application, database, and phpMyAdmin containers.
+
+#### 3️⃣ Verify Running Containers
+
 ```sh
 docker ps
 ```
 
-### 4️⃣ Access the Services
-- **Application:** [http://localhost:8080](http://localhost:8080) (Change `8080` if needed)
+#### 4️⃣ Access the Services
+
+- **Website:** [http://localhost:8080](http://localhost:8080)
 - **phpMyAdmin:** [http://localhost:8081](http://localhost:8081)
   - **User:** `my_user` (from `.env`)
   - **Password:** `my_secret_password`
 
-### 5️⃣ Import the Database Dump
-1. Open your **phpMyAdmin** by navigating to [http://localhost:8081](http://localhost:8081).
-2. Create a new database (e.g., `new_database`) or select an existing one.
-3. Once the database is selected, click on the **Import** tab.
-4. In the **File to Import** section, click **Choose File** and select the database dump from the following path:
+#### 5️⃣ Import the Database
+
+1. Open phpMyAdmin at [http://localhost:8081](http://localhost:8081).
+2. Create/select your database (e.g., `new_database`).
+3. Go to the **Import** tab and select the SQL dump:
    - `docker/mysql/dump/db_gordao110.sql`
-5. Click **Go** to start the import process.
-6. Once completed, verify that all tables and data have been successfully imported.
+4. Click **Go** to import.
 
-## 📌 Additional Commands
+---
 
-### Stop the Containers
-```sh
-docker-compose down
-```
+## ⚡ Useful Commands
 
-### Restart Without Rebuilding
-```sh
-docker-compose up -d
-```
+- **Stop containers:**  
+  ```sh
+  docker-compose down
+  ```
+- **Restart (no rebuild):**  
+  ```sh
+  docker-compose up -d
+  ```
+- **View logs:**  
+  ```sh
+  docker-compose logs -f
+  ```
+- **Enter app container:**  
+  ```sh
+  docker exec -it <container_id> bash
+  ```
+- **Remove all containers & volumes (deletes DB!):**  
+  ```sh
+  docker-compose down -v
+  ```
 
-### Check Logs
-```sh
-docker-compose logs -f
-```
+---
 
-### Enter the App Container (for debugging)
-```sh
-docker exec -it <container_id> bash
-```
+## 🧩 Troubleshooting
 
-### Remove All Containers & Volumes (⚠️ Deletes database data!)
-```sh
-docker-compose down -v
-```
+- **Port Conflicts:** Make sure ports 8080/8081 are free.
+- **Permissions:** Run `sudo chown -R $USER:$USER .` if you have file permission issues.
+- **Database Connection:** Ensure `.env` credentials match those in `docker-compose.yml`.
 
-## 🛠️ Troubleshooting
-- **Port Conflicts:** Ensure no other services are running on the same ports.
-- **Permission Issues:** Run `sudo chown -R $USER:$USER .` to fix file permission issues.
-- **Database Connection Issues:** Ensure MySQL credentials in `.env` match those in `docker-compose.yml`.
+---
+
+## 📬 Contact
+
+- [LinkedIn](https://www.linkedin.com/in/marcos-dos-santos-carvalho-67a51715a/)
+
+---
+
+**Gordão a 110%** — The complete digital solution for your snack bar or fast-food business!
 
